@@ -1,0 +1,141 @@
+/* Departments Page Styles */
+.departments-hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3');
+    background-size: cover;
+    background-position: center;
+    padding: 8rem 0 6rem;
+    margin-top: -76px;
+    position: relative;
+    border-radius: 0 0 20% 20% / 30px;
+}
+
+.departments-hero-section h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.departments-hero-section .breadcrumb {
+    margin-bottom: 0;
+}
+
+.departments-hero-section .breadcrumb-item,
+.departments-hero-section .breadcrumb-item a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.departments-hero-section .breadcrumb-item.active {
+    color: #fff;
+}
+
+.departments-hero-section .breadcrumb-item + .breadcrumb-item::before {
+    color: #fff;
+    content: ">";
+}
+
+/* Department Section Title */
+.departments-section .text-primary {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.departments-section .display-5 {
+    color: #2d4b6e;
+    margin-top: 0.5rem;
+}
+
+/* Department Cards */
+.department-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+}
+
+.department-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.department-info {
+    padding: 1.25rem;
+    background: #f8f9fa;
+}
+
+.department-info h3 {
+    color: #2d4b6e;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.phone {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 8px;
+}
+
+.social-link {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #0dcaf0;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: #0dcaf0;
+    color: #fff;
+}
+
+@media (max-width: 991.98px) {
+    .departments-hero-section h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .departments-hero-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .department-card img {
+        height: 200px;
+    }
+    
+    .contact-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .social-links {
+        width: 100%;
+        justify-content: center;
+    }
+} 

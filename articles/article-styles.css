@@ -1,0 +1,115 @@
+.article-hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+    background-size: cover;
+    background-position: center;
+    padding: 150px 0 100px;
+    position: relative;
+    margin-bottom: 50px;
+}
+
+.article-hero h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.article-meta {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 1rem;
+    display: flex;
+    gap: 20px;
+}
+
+.article-meta span {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.article-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #444;
+}
+
+.article-content p {
+    margin-bottom: 1.5rem;
+}
+
+.article-content img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin: 2rem 0;
+}
+
+/* Comments Section */
+.comments-section {
+    margin-top: 4rem;
+    padding-top: 2rem;
+    border-top: 1px solid #eee;
+}
+
+.comment-form {
+    margin-bottom: 3rem;
+}
+
+.comment-form textarea {
+    border-radius: 15px;
+    padding: 1rem;
+    min-height: 120px;
+}
+
+.comment {
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
+.comment-author {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.comment-author img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-author-info h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #2d4b6e;
+}
+
+.comment-author-info span {
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.comment-content p {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 0.5rem;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.comment-actions button {
+    background: none;
+    border: none;
+    color: #0dcaf0;
+    font-size: 0.9rem;
+    padding: 0;
+    cursor: pointer;
+}
+
+.comment-actions button:hover {
+    color: #0ab5d8;
+} 
