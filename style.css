@@ -1,3 +1,8 @@
+/* Root Variables */
+:root {
+    --pal-primary: royalblue;
+}
+
 /* Header styles */
 body {
     padding-top: 76px;
@@ -20,7 +25,7 @@ body {
 }
 
 .navbar-scrolled .navbar-brand {
-    color: #2d4b6e;
+    color: var(--pal-primary);
 }
 
 .nav-link {

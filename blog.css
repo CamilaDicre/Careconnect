@@ -1,3 +1,8 @@
+/* Root Variables */
+:root {
+    --pal-primary: royalblue;
+}
+
 /* Blog Page Styles */
 .blog-hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
@@ -63,7 +68,7 @@
     position: absolute;
     bottom: 15px;
     left: 15px;
-    background: #0dcaf0;
+    background: var(--pal-primary);
     color: #fff;
     padding: 2px 10px;
     border-radius: 12px;
@@ -97,7 +102,7 @@
 
 .blog-meta i {
     font-size: 1rem;
-    color: #0dcaf0;
+    color: var(--pal-primary);
 }
 
 /* Pagination */
@@ -114,13 +119,13 @@
 }
 
 .blog-pagination .page-item.active .page-link {
-    background-color: #0dcaf0;
+    background-color: var(--pal-primary);
     color: #fff;
 }
 
 .blog-pagination .page-link:hover {
     background-color: #e9ecef;
-    color: #0dcaf0;
+    color: var(--pal-primary);
 }
 
 .blog-pagination .page-item:last-child .page-link {
