@@ -40,7 +40,7 @@ body {
 }
 
 .nav-link:hover, .nav-link.active {
-    color: #0dcaf0 !important;
+    color: var(--pal-primary) !important;
 }
 
 .navbar-toggler {
@@ -91,7 +91,7 @@ body {
 }
 
 .search-button:hover {
-    color: #0dcaf0;
+    color: var(--pal-primary);
 }
 
 /* Dark mode toggle button */
@@ -207,6 +207,10 @@ body {
     line-height: 1.6;
     font-size: 0.95rem;
     margin-bottom: 0;
+}
+
+.navbar a {
+    color: white;
 }
 
 /* Responsive adjustments */
