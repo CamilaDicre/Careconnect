@@ -3,6 +3,11 @@
     --pal-primary: royalblue;
 }
 
+/* Font Setting */
+* {
+    font-family: 'Josefin Sans', Arial;
+} /* NOTE: This will only work if the page has the Google Fonts CSS Link */
+
 /* Header styles */
 body {
     padding-top: 76px;
@@ -22,6 +27,7 @@ body {
 .navbar-brand {
     color: white;
     font-weight: 700;
+    font-family: "Poppins";
 }
 
 .navbar-scrolled .navbar-brand {
@@ -40,7 +46,7 @@ body {
 }
 
 .nav-link:hover, .nav-link.active {
-    color: #0dcaf0 !important;
+    color: var(--pal-primary) !important;
 }
 
 .navbar-toggler {
@@ -91,7 +97,7 @@ body {
 }
 
 .search-button:hover {
-    color: #0dcaf0;
+    color: var(--pal-primary);
 }
 
 /* Dark mode toggle button */
@@ -207,6 +213,10 @@ body {
     line-height: 1.6;
     font-size: 0.95rem;
     margin-bottom: 0;
+}
+
+.navbar a {
+    color: white;
 }
 
 /* Responsive adjustments */
