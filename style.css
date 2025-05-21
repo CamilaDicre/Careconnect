@@ -3,6 +3,11 @@
     --pal-primary: royalblue;
 }
 
+/* Font Setting */
+* {
+    font-family: 'Josefin Sans', Arial;
+} /* NOTE: This will only work if the page has the Google Fonts CSS Link */
+
 /* Header styles */
 body {
     padding-top: 76px;
@@ -22,6 +27,7 @@ body {
 .navbar-brand {
     color: white;
     font-weight: 700;
+    font-family: "Poppins";
 }
 
 .navbar-scrolled .navbar-brand {
