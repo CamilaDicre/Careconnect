@@ -111,27 +111,31 @@ body {
     color: #555;
 }
 
+.navbar-scrolled #darkModeToggle i {
+    color: rgb(8, 5, 27) !important;
+} 
+
 /* Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80');
+                url(assets/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
-    min-height: 100vh;
+    min-height:100dvh;
     margin-top: -76px;
     position: relative;
     overflow: hidden;
-    border-radius: 0 0 20% 20% / 30px;
 }
 
 .hero-section h1 {
     font-size: 4rem;
     line-height: 1.2;
+    font-family: 'Poppins';
 }
 
 .hero-section .text-primary {
-    color: #0dcaf0 !important;
+    color: var(--pal-primary) !important;
     font-size: 1.1rem;
     letter-spacing: 2px;
 }
@@ -140,13 +144,18 @@ body {
     border-width: 2px;
     padding: 12px 30px;
     font-weight: 500;
+    margin-top: 10px;
     transition: all 0.3s ease;
-    margin-top: 20px;
 }
 
 .btn-outline-light:hover {
-    background-color: #0dcaf0;
-    border-color: #0dcaf0;
+    background-color: var(--pal-primary);
+    border-color: var(--pal-primary);
+}
+
+.btn-primary {
+    background: var(--pal-primary) !important;
+    border-color: var(--pal-primary) !important;
 }
 
 /* Features Section */
@@ -398,7 +407,7 @@ body {
 /* Statistics Section */
 .statistics-section {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                url('https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-4.0.3') center/cover fixed;
+                url(assets/BlueLogoBlueBackgroundTilted.png) center/cover fixed;
     padding: 100px 0;
     color: white;
 }
@@ -509,7 +518,7 @@ body {
 
 /* Appointment Section */
 .appointment-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3') center/cover no-repeat;
+    height: 90dvh;
     position: relative;
 }
 
