@@ -364,7 +364,6 @@ body {
 }
 
 .service-card {
-    padding: 30px;
     background: #fff;
     border-radius: 15px;
     transition: all 0.3s ease;
@@ -395,13 +394,21 @@ body {
     color: #2d4b6e;
     font-size: 1.5rem;
     font-weight: 600;
-    margin-bottom: 15px;
 }
 
 .service-content p {
     color: #666;
     line-height: 1.7;
     margin-bottom: 0;
+}
+
+.service-image {
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.service-button a {
+    text-decoration: none;
 }
 
 /* Statistics Section */
