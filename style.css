@@ -733,3 +733,17 @@ body {
     font-size: 0.9rem;
     font-weight: 500;
 }
+
+.login-popup {
+    position: absolute;
+    top: 60px;
+    right: 10px;
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    z-index: 1000;
+    width: 250px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  }
+  
