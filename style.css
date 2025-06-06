@@ -574,6 +574,7 @@ body {
 
 .appointment-form .btn-primary {
     margin-top: 10px;
+    transition: all 0.25s;
 }
 
 @media (max-width: 768px) {
