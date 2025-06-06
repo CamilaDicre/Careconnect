@@ -1,4 +1,4 @@
-// Function to load HTML components
+
 async function loadComponent(elementId, componentPath) {
     try {
         const response = await fetch(componentPath);
