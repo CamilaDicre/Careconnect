@@ -631,7 +631,7 @@ body {
 }
 
 .testimonial-content h3 {
-    color: #2d4b6e;
+    color: #4e98ed;
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 1rem;
@@ -778,7 +778,7 @@ body {
 }
 
 .newsletter-form .form-control:focus {
-    box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+    box-shadow: 0 0 0 0.25rem rgba(14, 146, 223, 0.25);
 }
 
 .newsletter-form .btn-primary {
@@ -789,14 +789,70 @@ body {
 
 .login-popup {
     position: absolute;
-    top: 60px;
-    right: 10px;
+    top: calc(100% + 10px);
+    right: 0;
     background: white;
-    padding: 15px;
-    border: 1px solid #ccc;
+    padding: 20px;
     border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     z-index: 1000;
-    width: 250px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-  }
-  
+    width: 280px;
+    border: 1px solid #eee;
+}
+
+.login-popup::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    right: 20px;
+    width: 16px;
+    height: 16px;
+    background: white;
+    transform: rotate(45deg);
+    border-left: 1px solid #eee;
+    border-top: 1px solid #eee;
+}
+
+.login-popup .form-control {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+
+.login-popup .btn-primary {
+    width: 100%;
+    margin-top: 10px;
+}
+
+#loginError {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
+
+/* Login and Signup Button Styles */
+#loginToggle, #signupButton {
+    transition: all 0.3s ease;
+    padding: 8px 20px;
+    border-radius: 5px;
+    background-color: transparent !important;
+    border: 2px solid var(--pal-primary);
+    color: var(--pal-primary);
+}
+
+#loginToggle:hover, #signupButton:hover {
+    background-color: var(--pal-primary) !important;
+    color: white;
+}
+
+/* Override any Bootstrap button styles */
+.btn-outline-primary {
+    background-color: transparent !important;
+    border-color: var(--pal-primary) !important;
+    color: var(--pal-primary) !important;
+}
+
+.btn-outline-primary:hover {
+    background-color: var(--pal-primary) !important;
+    color: white !important;
+} 
