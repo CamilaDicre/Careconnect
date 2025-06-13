@@ -28,40 +28,33 @@
                 </div>
             </div>
 
-<!-- Área de inicio de sesión -->
-<div class="d-flex align-items-center ms-3" id="loginContainer">
-    <!-- Si no está logueado -->
-    <div id="loginSection">
-        <button class="btn btn-outline-primary" id="loginToggle">Iniciar Sesión</button>
-        <div id="loginForm" class="login-popup d-none">
-            <input type="text" id="username" class="form-control mb-2" placeholder="Usuario">
-            <input type="password" id="password" class="form-control mb-2" placeholder="Contraseña">
-            <button class="btn btn-primary w-100" onclick="login()">Entrar</button>
-            <p id="loginError" class="text-danger mt-2 mb-0"></p>
-        </div>
-    </div>
+            <!-- Right side buttons container -->
+            <div class="d-flex align-items-center gap-2 ms-auto position-relative">
+                <!-- Login Button -->
+                <button class="btn btn-outline-primary" id="loginToggle">Log in</button>
+                
+                <!-- Sign Up Button -->
+                <button class="btn btn-outline-primary" id="signupButton">Sign Up</button>
+                
+                <!-- Theme Toggle Button -->
+                <button class="btn btn-outline-secondary" id="darkModeToggle" title="Toggle dark mode">
+                    <i class="bi bi-moon-fill"></i>
+                </button>
 
-    <!-- Si ya está logueado -->
-    <div id="userSection" class="d-none align-items-center">
-        <span class="me-2 fw-bold" id="userGreeting"></span>
-        <button class="btn btn-outline-danger" onclick="logout()">Cerrar sesión</button>
-    </div>
-</div>
+                <!-- Login Form Popup -->
+                <div id="loginForm" class="login-popup d-none">
+                    <input type="text" id="username" class="form-control mb-2" placeholder="Username">
+                    <input type="password" id="password" class="form-control mb-2" placeholder="Password">
+                    <button class="btn btn-primary w-100" onclick="login()">Login</button>
+                    <p id="loginError" class="text-danger mt-2 mb-0"></p>
+                </div>
+            </div>
 
-
-
-            <!-- Dark mode toggle on the right -->
-            <button class="btn btn-primary ms-auto d-lg-block m-2">
-                Log In
-            </button>
-            <button class="btn btn-primary ms-auto d-lg-block m-2">
-                Sign Up
-            </button>
-
-            <button class="btn btn-link text-dark ms-auto d-none d-lg-block" id="darkModeToggle">
-                <i class="bi bi-moon-fill text-light"></i>
-            </button>
-            
+            <!-- User Section (shown when logged in) -->
+            <div id="userSection" class="d-none align-items-center">
+                <span class="me-2 fw-bold" id="userGreeting"></span>
+                <button class="btn btn-outline-danger" onclick="logout()">Logout</button>
+            </div>
         </div>
     </nav>
 </header> 

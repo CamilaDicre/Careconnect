@@ -6,11 +6,24 @@ const users = [
   document.addEventListener("DOMContentLoaded", () => {
     const loginToggle = document.getElementById("loginToggle");
     const loginForm = document.getElementById("loginForm");
+    const signupButton = document.getElementById("signupButton");
+  
+    // Close login form when clicking outside
+    document.addEventListener("click", (event) => {
+        if (!loginForm.contains(event.target) && !loginToggle.contains(event.target)) {
+            loginForm.classList.add("d-none");
+        }
+    });
   
     if (loginToggle) {
-      loginToggle.addEventListener("click", () => {
+      loginToggle.addEventListener("click", (event) => {
+        event.stopPropagation();
         loginForm.classList.toggle("d-none");
       });
+    }
+  
+    if (signupButton) {
+      signupButton.addEventListener("click", redirectToSignup);
     }
   
     updateLoginUI();
@@ -25,8 +38,14 @@ const users = [
     if (user) {
       localStorage.setItem("loggedInUser", username);
       updateLoginUI();
+      // Redirect to home page after successful login
+      window.location.href = "/index.html";
     } else {
-      document.getElementById("loginError").textContent = "Credenciales incorrectas";
+      document.getElementById("loginError").textContent = "Invalid credentials";
+      // Redirect to signup page after failed login
+      setTimeout(() => {
+        window.location.href = "/signup.html";
+      }, 1500); // Wait 1.5 seconds before redirecting to show the error message
     }
   }
   
@@ -49,5 +68,10 @@ const users = [
       loginSection?.classList.remove("d-none");
       userSection?.classList.add("d-none");
     }
+  }
+  
+  // Add function to handle signup button click
+  function redirectToSignup() {
+    window.location.href = "/signup.html";
   }
   
