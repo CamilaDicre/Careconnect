@@ -855,4 +855,187 @@ body {
 .btn-outline-primary:hover {
     background-color: var(--pal-primary) !important;
     color: white !important;
+}
+
+/* Dashboard Section Styles */
+.dashboard-section {
+    background-color: #f8f9fa;
+    padding: 80px 0;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    height: 100%;
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Medicine Card Styles */
+.medicine-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.medicine-card:hover {
+    border-color: var(--pal-primary);
+    transform: translateY(-3px);
+}
+
+.medicine-icon {
+    width: 50px;
+    height: 50px;
+    background: #f0f4f9;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.medicine-icon i {
+    font-size: 1.5rem;
+    color: var(--pal-primary);
+}
+
+.medicine-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #2d4b6e;
+}
+
+/* Caregiver Card Styles */
+.caregiver-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    border: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+.caregiver-card:hover {
+    border-color: var(--pal-primary);
+    transform: translateY(-3px);
+}
+
+.caregiver-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #fff;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.caregiver-info h4 {
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+    color: #2d4b6e;
+}
+
+/* Calendar Styles */
+.calendar-container {
+    background: #fff;
+    border-radius: 12px;
+}
+
+.calendar-header {
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.calendar-grid {
+    padding: 15px;
+}
+
+.calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    text-align: center;
+    font-weight: 500;
+    color: #666;
+    margin-bottom: 10px;
+}
+
+.calendar-days {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    text-align: center;
+}
+
+.calendar-days div {
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.calendar-days div:hover {
+    background: #f0f4f9;
+    color: var(--pal-primary);
+}
+
+.calendar-days .active {
+    background: var(--pal-primary);
+    color: white;
+}
+
+/* Event Styles */
+.event-item {
+    display: flex;
+    gap: 15px;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.event-item:last-child {
+    border-bottom: none;
+}
+
+.event-time {
+    min-width: 80px;
+    font-weight: 500;
+    color: var(--pal-primary);
+}
+
+.event-details h6 {
+    color: #2d4b6e;
+    font-weight: 600;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .dashboard-card {
+        margin-bottom: 20px;
+    }
+    
+    .medicine-card, .caregiver-card {
+        margin-bottom: 15px;
+    }
+    
+    .calendar-weekdays, .calendar-days {
+        gap: 5px;
+    }
+    
+    .calendar-days div {
+        padding: 5px;
+        font-size: 0.9rem;
+    }
 } 
