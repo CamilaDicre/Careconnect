@@ -1,3 +1,5 @@
+console.log("login.js loaded!");
+
 const users = [
     { username: "admin", password: "admin123" },
     { username: "usuario", password: "pass123" },
@@ -8,15 +10,17 @@ const users = [
     const loginForm = document.getElementById("loginForm");
     const signupButton = document.getElementById("signupButton");
   
-    // Close login form when clicking outside
-    document.addEventListener("click", (event) => {
+    // Only add event if both elements exist
+    if (loginToggle && loginForm) {
+      // Close login form when clicking outside
+      document.addEventListener("click", (event) => {
         if (!loginForm.contains(event.target) && !loginToggle.contains(event.target)) {
-            loginForm.classList.add("d-none");
+          loginForm.classList.add("d-none");
         }
-    });
+      });
   
-    if (loginToggle) {
       loginToggle.addEventListener("click", (event) => {
+        console.log("Login button clicked!");
         event.stopPropagation();
         loginForm.classList.toggle("d-none");
       });
