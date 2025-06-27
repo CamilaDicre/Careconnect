@@ -185,4 +185,63 @@
     .team-img-wrapper img {
         height: 250px;
     }
+}
+
+/* Team Carousel Styles */
+#teamCarousel .carousel-inner {
+    width: 100%;
+}
+#teamCarousel .carousel-item {
+    transition: transform 0.6s ease, opacity 0.6s ease;
+}
+#teamCarousel .team-card {
+    background: #fff;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.07);
+    padding: 20px;
+    margin: 0 10px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#teamCarousel .team-img-wrapper.team-img-square {
+    width: 110px;
+    height: 110px;
+    background: #f0f0f0;
+    border: 2px solid #e3e3e3;
+    border-radius: 12px;
+    margin: 0 auto 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #bdbdbd;
+}
+#teamCarousel .team-social {
+    margin-top: 10px;
+}
+#teamCarousel .team-social a {
+    color: #90caf9;
+    margin: 0 5px;
+    font-size: 1.2rem;
+    transition: color 0.2s;
+}
+#teamCarousel .team-social a:hover {
+    color: #1a237e;
+}
+@media (max-width: 991.98px) {
+    #teamCarousel .col-lg-3 {
+        flex: 0 0 50%;
+        max-width: 50%;
+    }
+}
+@media (max-width: 767.98px) {
+    #teamCarousel .col-lg-3, #teamCarousel .col-md-6 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+    #teamCarousel .team-card {
+        margin-bottom: 20px;
+    }
 } 

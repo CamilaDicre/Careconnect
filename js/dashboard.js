@@ -14,6 +14,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const startingDay = firstDay.getDay();
         const totalDays = lastDay.getDate();
 
+        // Días con cita (ejemplo: 10 y 18)
+        const eventDays = [10, 18];
+
         // Update month and year display
         monthDisplay.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${currentYear}`;
 
@@ -32,6 +35,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const dayElement = document.createElement('div');
             dayElement.textContent = day;
 
+            // Marcar días con cita
+            if (eventDays.includes(day)) {
+                dayElement.classList.add('event-day');
+            }
+
             // Highlight current day
             if (day === currentDate.getDate() && 
                 currentMonth === currentDate.getMonth() && 
@@ -41,15 +49,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
             // Add click event for selecting days
             dayElement.addEventListener('click', () => {
-                // Remove active class from all days
                 document.querySelectorAll('.calendar-days div').forEach(el => {
                     el.classList.remove('active');
                 });
-                // Add active class to clicked day
                 dayElement.classList.add('active');
             });
 
             calendarDays.appendChild(dayElement);
+        }
+        // Rellenar la última fila si es necesario
+        const totalCells = startingDay + totalDays;
+        const extraCells = (7 - (totalCells % 7)) % 7;
+        for (let i = 0; i < extraCells; i++) {
+            const emptyDay = document.createElement('div');
+            emptyDay.classList.add('text-muted');
+            calendarDays.appendChild(emptyDay);
         }
     }
 

@@ -79,3 +79,54 @@ const users = [
     window.location.href = "/signup.html";
   }
   
+  // Reemplazar el manejo de errores para mostrar alertas visuales
+  function showAlert(message, type = 'danger', target = 'loginError') {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = `alert alert-${type} alert-dismissible fade show mt-2`;
+    alertDiv.role = 'alert';
+    alertDiv.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+    const targetElem = document.getElementById(target);
+    if (targetElem) {
+        targetElem.innerHTML = '';
+        targetElem.appendChild(alertDiv);
+    }
+  }
+  
+  // Login form event
+  const loginForm = document.getElementById('loginForm');
+  if (loginForm) {
+    loginForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('username').value.trim();
+      const password = document.getElementById('password').value.trim();
+      const user = users.find(u => u.username === username && u.password === password);
+      if (!user) {
+        showAlert('Incorrect username or password.', 'danger', 'loginError');
+      } else {
+        localStorage.setItem('loggedInUser', username);
+        window.location.href = 'dashboard.html';
+      }
+    });
+  }
+  
+  // Register form event
+  const registerForm = document.getElementById('registerForm');
+  if (registerForm) {
+    registerForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+      const username = document.getElementById('regUsername').value.trim();
+      const password = document.getElementById('regPassword').value.trim();
+      const password2 = document.getElementById('regPassword2').value.trim();
+      if (!username || !password || !password2) {
+        showAlert('All fields are required.', 'danger', 'registerError');
+        return;
+      }
+      if (password !== password2) {
+        showAlert('Passwords do not match.', 'danger', 'registerError');
+        return;
+      }
+      // Simulación de registro exitoso
+      showAlert('Registration successful! You can now log in.', 'success', 'registerError');
+    });
+  }
+  

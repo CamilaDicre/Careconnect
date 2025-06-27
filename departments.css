@@ -150,4 +150,10 @@
         width: 100%;
         justify-content: center;
     }
+}
+
+/* Fix: Ensure footer is visually separated and not affected by department styles */
+#footer-component, .footer-section {
+    margin-top: 40px !important;
+    clear: both;
 } 
