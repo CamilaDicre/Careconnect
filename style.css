@@ -787,6 +787,39 @@ body {
     font-weight: 500;
 }
 
+<<<<<<< HEAD
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+  color: black;
+  font-size: 2rem;
+}
+
+/* Alternativa: usar flechas personalizadas con contenido */
+.carousel-control-prev-icon::after,
+.carousel-control-next-icon::after {
+  content: '‹'; /* o '◀' */
+  color: black;
+  font-size: 2rem;
+}
+
+.carousel-control-next-icon::after {
+  content: '›'; /* o '▶' */
+}
+
+.service-image {
+    width: 100%;
+    height: 250px; /* Aumenta este valor según lo que necesites */
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-image: url("ruta-a-tu-flecha-negra.svg"); /* Personaliza con ícono negro */
+  }
+=======
 .login-popup {
     position: absolute;
     top: calc(100% + 10px);
@@ -855,6 +888,7 @@ body {
 .btn-outline-primary:hover {
     background-color: var(--pal-primary) !important;
     color: white !important;
+<<<<<<< HEAD
 }
 
 /* Dashboard Section Styles */
@@ -1164,3 +1198,7 @@ body.dark-mode .feature-icon i,
 body.dark-mode .medicine-icon i {
     color: #90caf9 !important;
 } 
+=======
+} 
+>>>>>>> 54aa245419eb74713ab7dd6348b0725e41fd61bc
+>>>>>>> dea0262a5fd2453f44f979159596f384b08a4253
