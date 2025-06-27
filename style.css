@@ -787,6 +787,39 @@ body {
     font-weight: 500;
 }
 
+<<<<<<< HEAD
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+  color: black;
+  font-size: 2rem;
+}
+
+/* Alternativa: usar flechas personalizadas con contenido */
+.carousel-control-prev-icon::after,
+.carousel-control-next-icon::after {
+  content: '‹'; /* o '◀' */
+  color: black;
+  font-size: 2rem;
+}
+
+.carousel-control-next-icon::after {
+  content: '›'; /* o '▶' */
+}
+
+.service-image {
+    width: 100%;
+    height: 250px; /* Aumenta este valor según lo que necesites */
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-image: url("ruta-a-tu-flecha-negra.svg"); /* Personaliza con ícono negro */
+  }
+=======
 .login-popup {
     position: absolute;
     top: calc(100% + 10px);
@@ -856,3 +889,4 @@ body {
     background-color: var(--pal-primary) !important;
     color: white !important;
 } 
+>>>>>>> 54aa245419eb74713ab7dd6348b0725e41fd61bc
