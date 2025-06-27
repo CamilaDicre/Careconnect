@@ -129,15 +129,19 @@ body {
 }
 
 .hero-section h1 {
-    font-size: 4rem;
+    font-size: 4.1rem;
     line-height: 1.2;
     font-family: 'Poppins';
 }
 
 .hero-section .text-primary {
     color: var(--pal-primary) !important;
-    font-size: 1.1rem;
+    font-size: 1.5rem;
     letter-spacing: 2px;
+}
+
+.hero-section .btn {
+    font-size: 1.2rem;
 }
 
 .btn-outline-light {
@@ -787,7 +791,10 @@ body {
     font-weight: 500;
 }
 
-<<<<<<< HEAD
+.carousel h2 {
+    color: #2d4b6e;;
+}
+
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   background-image: none;
@@ -819,8 +826,8 @@ body {
   .carousel-control-next-icon {
     background-image: url("ruta-a-tu-flecha-negra.svg"); /* Personaliza con ícono negro */
   }
-=======
-.login-popup {
+
+  .login-popup {
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
@@ -889,4 +896,3 @@ body {
     background-color: var(--pal-primary) !important;
     color: white !important;
 } 
->>>>>>> 54aa245419eb74713ab7dd6348b0725e41fd61bc
