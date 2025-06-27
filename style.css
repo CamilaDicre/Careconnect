@@ -1038,4 +1038,129 @@ body {
         padding: 5px;
         font-size: 0.9rem;
     }
+}
+
+body.dark-mode {
+    background: #181a1b !important;
+    color: #f1f1f1 !important;
+}
+body.dark-mode .navbar,
+body.dark-mode .navbar-scrolled {
+    background: #23272b !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.3) !important;
+}
+body.dark-mode .dashboard-card,
+body.dark-mode .service-card,
+body.dark-mode .feature-card,
+body.dark-mode .appointment-form,
+body.dark-mode .testimonial-card,
+body.dark-mode .calendar-container,
+body.dark-mode .blog-card,
+body.dark-mode .medicine-card,
+body.dark-mode .caregiver-card,
+body.dark-mode .login-popup,
+body.dark-mode .footer-section,
+body.dark-mode .about-section,
+body.dark-mode .services-section,
+body.dark-mode .medical-services,
+body.dark-mode .statistics-section,
+body.dark-mode .testimonials-section,
+body.dark-mode .blog-section {
+    background: #23272b !important;
+    color: #f1f1f1 !important;
+    border-color: #333 !important;
+}
+body.dark-mode .service-icon,
+body.dark-mode .service-icon-box,
+body.dark-mode .medicine-icon {
+    background: #181a1b !important;
+}
+body.dark-mode .navbar-brand,
+body.dark-mode .nav-link,
+body.dark-mode .text-primary,
+body.dark-mode .service-content h3,
+body.dark-mode .feature-card h4,
+body.dark-mode .caregiver-info h4,
+body.dark-mode .medicine-info h4,
+body.dark-mode .stat-item h2,
+body.dark-mode .blog-title,
+body.dark-mode .testimonial-content h3 {
+    color: #90caf9 !important;
+}
+body.dark-mode .service-content p,
+body.dark-mode .feature-card p,
+body.dark-mode .caregiver-info p,
+body.dark-mode .medicine-info p,
+body.dark-mode .stat-item p,
+body.dark-mode .blog-content,
+body.dark-mode .testimonial-content p,
+body.dark-mode .about-section .text-muted,
+body.dark-mode .text-muted {
+    color: #b0b0b0 !important;
+}
+body.dark-mode .btn-primary,
+body.dark-mode .btn-outline-primary,
+body.dark-mode .btn-outline-light {
+    background-color: #1a237e !important;
+    border-color: #90caf9 !important;
+    color: #fff !important;
+}
+body.dark-mode .btn-outline-primary:hover,
+body.dark-mode .btn-outline-light:hover {
+    background-color: #90caf9 !important;
+    color: #181a1b !important;
+}
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #23272b !important;
+    color: #f1f1f1 !important;
+    border-color: #333 !important;
+}
+body.dark-mode .form-control::placeholder {
+    color: #b0b0b0 !important;
+}
+body.dark-mode .login-popup {
+    background: #23272b !important;
+    border-color: #333 !important;
+}
+body.dark-mode .login-popup::before {
+    background: #23272b !important;
+    border-left: 1px solid #333 !important;
+    border-top: 1px solid #333 !important;
+}
+body.dark-mode .footer-section,
+body.dark-mode .copyright-bar {
+    background: #181a1b !important;
+    color: #b0b0b0 !important;
+}
+body.dark-mode .footer-section .footer-links a,
+body.dark-mode .footer-section .newsletter-form .form-control,
+body.dark-mode .footer-section .newsletter-form .btn {
+    color: #b0b0b0 !important;
+    background: #23272b !important;
+    border-color: #333 !important;
+}
+body.dark-mode .footer-section .footer-links a:hover {
+    color: #90caf9 !important;
+}
+body.dark-mode .blog-category {
+    background: #1a237e !important;
+    color: #fff !important;
+}
+body.dark-mode .calendar-days div.active {
+    background: #90caf9 !important;
+    color: #181a1b !important;
+}
+body.dark-mode .calendar-days div:hover {
+    background: #333 !important;
+    color: #90caf9 !important;
+}
+body.dark-mode .event-item {
+    border-bottom: 1px solid #333 !important;
+}
+body.dark-mode .stat-item i,
+body.dark-mode .service-icon i,
+body.dark-mode .feature-icon i,
+body.dark-mode .medicine-icon i {
+    color: #90caf9 !important;
 } 
