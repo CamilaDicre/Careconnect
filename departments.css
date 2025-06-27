@@ -1,7 +1,7 @@
 /* Departments Page Styles */
 .departments-hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3');
+                url('https://s2.ppllstatics.com/rc/www/multimedia/2023/04/14/medicamentos45-U190498393018WSC--1920x1080@El%20Correo.jpeg');
     background-size: cover;
     background-position: center;
     padding: 8rem 0 6rem;
@@ -14,6 +14,7 @@
     font-size: 3.5rem;
     color: #fff;
     margin-bottom: 0.5rem;
+
 }
 
 .departments-hero-section .breadcrumb {
@@ -69,13 +70,24 @@
 
 .department-info {
     padding: 1.25rem;
-    background: #f8f9fa;
+    background: #e4e8eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .department-info h3 {
     color: #2d4b6e;
     font-size: 1.3rem;
     margin-bottom: 0.75rem;
+}
+
+.my-button {
+    background-color: aqua;
+    padding: 25px;
+    border-bottom: black;
+    color: #f8f9fa;
+    cursor: pointer;
 }
 
 .contact-info {
