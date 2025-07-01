@@ -791,7 +791,6 @@ body {
     font-weight: 500;
 }
 
-<<<<<<< HEAD
 /* Dashboard Popup Styles */
 #dashboardPopup {
     position: fixed;
@@ -808,17 +807,6 @@ body {
     overflow-y: auto;
     padding: 0;
     display: block;
-=======
-.carousel h2 {
-    color: #2d4b6e;;
-}
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-image: none;
-  color: black;
-  font-size: 2rem;
->>>>>>> 3788c17688baa0e3b0e2a95020c4c399f746fd86
 }
 #dashboardPopup.d-none {
     display: none !important;
@@ -830,28 +818,10 @@ body {
     z-index: 1999;
     display: block;
 }
-<<<<<<< HEAD
 #dashboardOverlay.d-none {
     display: none !important;
 }
 #dashboardPopup .close-dashboard {
-=======
-
-.service-image {
-    width: 100%;
-    height: 250px; /* Aumenta este valor según lo que necesites */
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-image: url("ruta-a-tu-flecha-negra.svg"); /* Personaliza con ícono negro */
-  }
-
-  .login-popup {
->>>>>>> 3788c17688baa0e3b0e2a95020c4c399f746fd86
     position: absolute;
     top: 18px;
     right: 18px;
@@ -892,8 +862,6 @@ body.dark-mode #dashboardPopup {
     text-shadow: none;
     max-width: 600px;
 }
-<<<<<<< HEAD
-=======
 
 .login-popup .btn-primary {
     width: 100%;
@@ -931,5 +899,4 @@ body.dark-mode #dashboardPopup {
 .btn-outline-primary:hover {
     background-color: var(--pal-primary) !important;
     color: white !important;
-} 
->>>>>>> 3788c17688baa0e3b0e2a95020c4c399f746fd86
+}
