@@ -142,6 +142,7 @@ body {
 
 .hero-section .btn {
     font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .hero-section .electronics {
@@ -152,7 +153,13 @@ body {
 
 .hero-section .electronics img:first-child {
     position: absolute;
-    margin-left: 300px;
+    margin-left: 150px;
+}
+
+.hero-section .electronics img:last-child {
+    position: absolute;
+    margin-right: 200px;
+    margin-top: 50px;
 }
 
 .btn-outline-light {
