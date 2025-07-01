@@ -78,10 +78,10 @@ function initializeCounters() {
             current += increment;
             
             if (current < target) {
-                counter.textContent = Math.ceil(current);
+                counter.textContent = Math.ceil(current) + counter.getAttribute('data-prefix');
                 requestAnimationFrame(updateCount);
             } else {
-                counter.textContent = target;
+                counter.textContent = target + counter.getAttribute('data-prefix');
             }
         }
         
