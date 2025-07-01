@@ -136,12 +136,23 @@ body {
 
 .hero-section .text-primary {
     color: var(--pal-primary) !important;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     letter-spacing: 2px;
 }
 
 .hero-section .btn {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+}
+
+.hero-section .electronics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section .electronics img:first-child {
+    position: absolute;
+    margin-left: 300px;
 }
 
 .btn-outline-light {
@@ -230,6 +241,7 @@ body {
 
 .navbar a {
     color: white;
+    font-size: 1.2rem;
 }
 
 /* Responsive adjustments */
