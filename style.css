@@ -838,3 +838,23 @@ body.dark-mode #dashboardPopup {
         padding: 0;
     }
 }
+
+.login-bg {
+    background: linear-gradient(135deg, #e3f0ff 0%, #f8f9fa 100%);
+}
+.login-header {
+    background: none;
+    margin-bottom: -30px;
+}
+.login-header h2, .login-header p {
+    color: #fff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 1px 0 #222;
+}
+
+.login-invite-bg {
+    background: none !important;
+    box-shadow: none !important;
+    color: #002050 !important;
+    text-shadow: none;
+    max-width: 600px;
+}

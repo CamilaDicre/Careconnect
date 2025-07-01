@@ -1,13 +1,12 @@
 /* Contact Page Styles */
 .contact-hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    /* background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
                 url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?ixlib=rb-4.0.3');
     background-size: cover;
-    background-position: center;
+    background-position: center; */
     padding: 8rem 0 6rem;
-    margin-top: -76px;
     position: relative;
-    border-radius: 0 0 20% 20% / 30px;
+    /* border-radius: 0 0 20% 20% / 30px; */
 }
 
 /* Override any curve or diagonal effects from index.html */

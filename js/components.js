@@ -22,4 +22,9 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     // Load footer
     loadComponent('footer-component', '/components/footer.html');
+
+    if (window.location.pathname.endsWith('login.html')) {
+        var loginSignupBtn = document.getElementById('loginSignupButton');
+        if (loginSignupBtn) loginSignupBtn.style.display = 'none';
+    }
 }); 
