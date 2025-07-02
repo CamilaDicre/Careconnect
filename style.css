@@ -129,15 +129,37 @@ body {
 }
 
 .hero-section h1 {
-    font-size: 4rem;
+    font-size: 4.1rem;
     line-height: 1.2;
     font-family: 'Poppins';
 }
 
 .hero-section .text-primary {
     color: var(--pal-primary) !important;
-    font-size: 1.1rem;
+    font-size: 1.7rem;
     letter-spacing: 2px;
+}
+
+.hero-section .btn {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-section .electronics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section .electronics img:first-child {
+    position: absolute;
+    margin-left: 150px;
+}
+
+.hero-section .electronics img:last-child {
+    position: absolute;
+    margin-right: 200px;
+    margin-top: 50px;
 }
 
 .btn-outline-light {
@@ -226,6 +248,7 @@ body {
 
 .navbar a {
     color: white;
+    font-size: 1.2rem;
 }
 
 /* Responsive adjustments */
@@ -787,7 +810,43 @@ body {
     font-weight: 500;
 }
 
-.login-popup {
+.carousel h2 {
+    color: #2d4b6e;;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none;
+  color: black;
+  font-size: 2rem;
+}
+
+/* Alternativa: usar flechas personalizadas con contenido */
+.carousel-control-prev-icon::after,
+.carousel-control-next-icon::after {
+  content: '‹'; /* o '◀' */
+  color: black;
+  font-size: 2rem;
+}
+
+.carousel-control-next-icon::after {
+  content: '›'; /* o '▶' */
+}
+
+.service-image {
+    width: 100%;
+    height: 250px; /* Aumenta este valor según lo que necesites */
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+  }
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-image: url("ruta-a-tu-flecha-negra.svg"); /* Personaliza con ícono negro */
+  }
+
+  .login-popup {
     position: absolute;
     top: calc(100% + 10px);
     right: 0;
