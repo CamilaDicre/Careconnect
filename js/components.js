@@ -1,4 +1,3 @@
-
 async function loadComponent(elementId, componentPath) {
     try {
         const response = await fetch(componentPath);
@@ -12,8 +11,8 @@ async function loadComponent(elementId, componentPath) {
 // Load components when the page is ready
 document.addEventListener('DOMContentLoaded', function() {
     // Load header
-    loadComponent('header-component', '/components/header.html');
+    loadComponent('header-component', 'components/header.html');
     
     // Load footer
-    loadComponent('footer-component', '/components/footer.html');
+    loadComponent('footer-component', 'components/footer.html');
 }); 
