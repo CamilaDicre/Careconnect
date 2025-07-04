@@ -30,25 +30,22 @@
             </div>
 
             <!-- Right side buttons container -->
-            <div class="d-flex align-items-center gap-2 ms-auto position-relative">
+            <div id="loginSection" class="d-flex align-items-center gap-2 ms-auto position-relative">
                 <!-- Login Button -->
-                <button class="btn btn-outline-primary" id="loginToggle">Log in</button>
-                
-                <!-- Sign Up Button -->
-                <button class="btn btn-outline-primary" id="signupButton">Sign Up</button>
+                <button class="btn btn-outline-primary d-flex align-items-center" id="loginSignupButton" onclick="window.location.href='login.html'">
+                    <span>Log in</span>
+                    <span class="mx-1">/</span>
+                    <span>Sign Up</span>
+                </button>
                 
                 <!-- Theme Toggle Button -->
                 <button class="btn" id="darkModeToggle" title="Toggle dark mode">
                     <i class="bi bi-moon-fill"></i>
                 </button>
-
-                <!-- Login Form Popup -->
-                <div id="loginForm" class="login-popup d-none">
-                    <input type="text" id="username" class="form-control mb-2" placeholder="Username">
-                    <input type="password" id="password" class="form-control mb-2" placeholder="Password">
-                    <button class="btn btn-primary w-100" onclick="login()">Login</button>
-                    <p id="loginError" class="text-danger mt-2 mb-0"></p>
-                </div>
+                <!-- Profile Button -->
+                <button class="btn btn-outline-primary" id="profileToggle" onclick="window.location.href='dashboard.html'" title="Profile">
+                    <i class="bi bi-person-circle"></i>
+                </button>
             </div>
 
             <!-- User Section (shown when logged in) -->
