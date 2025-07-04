@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Medicinas para Enfermedades</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding-top: 30px;
+    }
+
+    .medicine-card {
+      background-color: #ffffff;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      margin: 30px;
+      display: inline-block;
+      vertical-align: top;
+      text-align: left;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .medicine-card img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .medicine-card h2 {
+      margin-top: 15px;
+      color: #333;
+    }
+
+    .medicine-card p {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #5cb85c;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .button:hover {
+      background-color: #4cae4c;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Medicinas para Tratamientos de Enfermedades</h1>
+
+    <div class="medicine-card">
+      <img src="https://via.placeholder.com/300x200.png?text=GastroFix" alt="GastroFix">
+      <h2>GastroFix</h2>
+      <p>Alivia el dolor de estómago y facilita la digestión. Ideal para malestares estomacales leves.</p>
+      <button class="button" onclick="location.href='medicina-detalle.html?medicina=GastroFix'">Más Info</button>
+    </div>
+
+    <div class="medicine-card">
+      <img src="https://via.placeholder.com/300x200.png?text=PeptoBismol" alt="PeptoBismol">
+      <h2>PeptoBismol</h2>
+      <p>Ayuda a reducir el malestar estomacal, la acidez y la diarrea. Eficaz en pocos minutos.</p>
+      <button class="button" onclick="location.href='medicina-detalle.html?medicina=PeptoBismol'">Más Info</button>
+    </div>
+
+    <!-- Puedes agregar más medicinas aquí -->
+    <div class="medicine-card">
+      <img src="https://via.placeholder.com/300x200.png?text=DolorFlex" alt="DolorFlex">
+      <h2>DolorFlex</h2>
+      <p>Alivia el dolor muscular y articular, ayudando a reducir la inflamación.</p>
+      <button class="button" onclick="location.href='medicina-detalle.html?medicina=DolorFlex'">Más Info</button>
+    </div>
+
+  </div>
+
+</body>
+</html>
