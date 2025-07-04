@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 async function loadComponent(elementId, componentPath, callback) {
     try {
         const response = await fetch(componentPath);
@@ -27,4 +28,23 @@ document.addEventListener('DOMContentLoaded', function() {
         var loginSignupBtn = document.getElementById('loginSignupButton');
         if (loginSignupBtn) loginSignupBtn.style.display = 'none';
     }
+=======
+async function loadComponent(elementId, componentPath) {
+    try {
+        const response = await fetch(componentPath);
+        const html = await response.text();
+        document.getElementById(elementId).innerHTML = html;
+    } catch (error) {
+        console.error('Error loading component:', error);
+    }
+}
+
+// Load components when the page is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Load header
+    loadComponent('header-component', 'components/header.html');
+    
+    // Load footer
+    loadComponent('footer-component', 'components/footer.html');
+>>>>>>> 9d7b88c1af6013c69bd288d56a3395a7d5a8f659
 }); 

@@ -919,3 +919,62 @@ body.dark-mode #dashboardPopup {
     background-color: var(--pal-primary) !important;
     color: white !important;
 }
+
+.dashboard-float-section {
+    position: relative;
+    margin-top: -120px; /* Sube el dashboard sobre el hero */
+    z-index: 10;
+}
+.dashboard-float-section .container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    padding: 2.5rem 2rem;
+}
+@media (max-width: 991.98px) {
+    .dashboard-float-section {
+        margin-top: -60px;
+    }
+    .dashboard-float-section .container {
+        padding: 1.2rem 0.5rem;
+    }
+}
+
+.dashboard-float-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 60vh;
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+.dashboard-float-wrapper .dashboard-section {
+    pointer-events: auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    padding: 2.5rem 2rem;
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+}
+@media (max-width: 991.98px) {
+    .dashboard-float-wrapper {
+        top: 40vh;
+    }
+    .dashboard-float-wrapper .dashboard-section {
+        padding: 1.2rem 0.5rem;
+    }
+}
+@media (max-width: 600px) {
+    .dashboard-float-wrapper {
+        top: 25vh;
+    }
+    .dashboard-float-wrapper .dashboard-section {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 0.5rem 0.2rem;
+    }
+}
