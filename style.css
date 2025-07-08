@@ -941,10 +941,10 @@ body.dark-mode #dashboardPopup {
 }
 
 .dashboard-float-wrapper {
-    position: absolute;
+    /* position: absolute; */
     left: 0;
     right: 0;
-    top: 60vh;
+    /* top: 60vh; */
     z-index: 20;
     display: flex;
     justify-content: center;
