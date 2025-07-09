@@ -241,6 +241,10 @@ header .nav-link {
     }
 }
 
+.reasons-section .reasons-heading-container {
+    color: #2d4b6e;
+}
+
 /* End Reasons Section */
 
 /* Features Section */
