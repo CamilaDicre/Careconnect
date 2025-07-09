@@ -8,6 +8,16 @@ document.addEventListener('DOMContentLoaded', function() {
     initializeNavbarScroll();
     initializeDarkMode();
     initializeCounters();
+    // Hide dashboard if not logged in
+    const dashboardWrapper = document.getElementById('dashboardWrapper');
+    if (dashboardWrapper) {
+        const user = localStorage.getItem('loggedInUser');
+        if (!user) {
+            dashboardWrapper.style.display = 'none';
+        } else {
+            dashboardWrapper.style.display = '';
+        }
+    }
 });
 
 /**
@@ -37,6 +47,16 @@ function initializeDarkMode() {
                 icon.classList.replace('bi-moon-fill', 'bi-sun-fill');
             } else {
                 icon.classList.replace('bi-sun-fill', 'bi-moon-fill');
+            }
+            // Toggle button color
+            if (document.body.classList.contains('dark-mode')) {
+                darkModeToggle.style.backgroundColor = '#222';
+                darkModeToggle.style.color = '#fff';
+                icon.style.color = '#fff';
+            } else {
+                darkModeToggle.style.backgroundColor = '';
+                darkModeToggle.style.color = '';
+                icon.style.color = '';
             }
         });
     }

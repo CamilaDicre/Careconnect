@@ -13,6 +13,10 @@ body {
     padding-top: 76px;
 }
 
+header .navbar {
+    padding: 30px 0px;
+}
+
 .navbar {
     padding: 20px 0;
     transition: all 0.3s ease;
@@ -34,11 +38,13 @@ body {
     color: var(--pal-primary);
 }
 
-.nav-link {
+header .nav-link {
     color: white !important;
     font-weight: 500;
-    padding: 0.5rem 1rem !important;
-    transition: color 0.3s ease;
+    padding: 12px 30px !important;
+    border-radius: 50px;
+    margin-left: 1vw;
+    transition: all 0.3s ease;
 }
 
 .navbar-scrolled .nav-link {
@@ -136,12 +142,38 @@ body {
 
 .hero-section .text-primary {
     color: var(--pal-primary) !important;
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     letter-spacing: 2px;
 }
 
 .hero-section .btn {
-    font-size: 1.2rem;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+}
+
+.hero-section .electronics {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-section .electronics img {
+    transition: all 0.25s;
+}
+
+.hero-section .electronics img:first-child {
+    position: absolute;
+    margin-left: 150px;
+}
+
+.hero-section .electronics img:last-child {
+    position: absolute;
+    margin-right: 200px;
+    margin-top: 80px;
+}
+
+.hero-section .electronics img:hover {
+    transform: translateY(-20px);
 }
 
 .btn-outline-light {
@@ -161,6 +193,55 @@ body {
     background: var(--pal-primary) !important;
     border-color: var(--pal-primary) !important;
 }
+
+/* Reasons Section */
+/*.reasons-section {
+    background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
+}
+*/
+
+.reasons-section .person {
+    width: 350px;
+    height: 400px;
+
+    background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
+}
+
+.reasons-section .reason:first-child {
+    transform: translateY(-20px);
+}
+
+.reasons-section .reason:last-child {
+    transform: translateY(20px);
+}
+
+.reason-container {
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.25s;
+}
+
+.reason-container h2 {
+    color: var(--pal-primary);
+    font-family: 'Poppins';
+    font-weight: bold;
+}
+
+.reason-container:hover {
+    transform: translateY(-10px);
+    background-color: var(--pal-primary);
+    & h2 {
+        color: white;
+    }
+}
+
+/* End Reasons Section */
 
 /* Features Section */
 .features-section {
@@ -230,6 +311,7 @@ body {
 
 .navbar a {
     color: white;
+    font-size: 1.2rem;
 }
 
 /* Responsive adjustments */
@@ -461,6 +543,8 @@ body {
 
 .stat-item {
     padding: 20px;
+    border-radius: 15px;
+    transition: all 0.25s;
 }
 
 .stat-item i {
@@ -478,6 +562,10 @@ body {
     font-size: 1.2rem;
     margin-bottom: 0;
     color: #f8f9fa;
+}
+
+.stat-item:hover {
+    transform: translateY(-10px);
 }
 
 .text-primary {
@@ -597,6 +685,10 @@ body {
     transition: all 0.25s;
 }
 
+.appointment-section h2 {
+    color: #2d4b6e;
+}
+
 @media (max-width: 768px) {
     .appointment-section .col-lg-6:first-child {
         margin-bottom: 3rem;
@@ -632,6 +724,10 @@ body {
     position: absolute;
     top: -20px;
     left: -10px;
+}
+
+.testimonials-section h2 {
+    color: #2d4b6e;
 }
 
 .testimonial-content h3 {
@@ -791,72 +887,76 @@ body {
     font-weight: 500;
 }
 
-.carousel h2 {
-    color: #2d4b6e;;
+/* Dashboard Popup Styles */
+#dashboardPopup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2000;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.25);
+    width: 90vw;
+    max-width: 800px;
+    max-height: 90vh;
+    overflow-y: auto;
+    padding: 0;
+    display: block;
 }
-
-.carousel-control-prev-icon,
-.carousel-control-next-icon {
-  background-image: none;
-  color: black;
-  font-size: 2rem;
+#dashboardPopup.d-none {
+    display: none !important;
 }
-
-/* Alternativa: usar flechas personalizadas con contenido */
-.carousel-control-prev-icon::after,
-.carousel-control-next-icon::after {
-  content: '‹'; /* o '◀' */
-  color: black;
-  font-size: 2rem;
+#dashboardOverlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 1999;
+    display: block;
 }
-
-.carousel-control-next-icon::after {
-  content: '›'; /* o '▶' */
+#dashboardOverlay.d-none {
+    display: none !important;
 }
-
-.service-image {
-    width: 100%;
-    height: 250px; /* Aumenta este valor según lo que necesites */
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-
-  .carousel-control-prev-icon,
-  .carousel-control-next-icon {
-    background-image: url("ruta-a-tu-flecha-negra.svg"); /* Personaliza con ícono negro */
-  }
-
-  .login-popup {
+#dashboardPopup .close-dashboard {
     position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    z-index: 1000;
-    width: 280px;
-    border: 1px solid #eee;
+    top: 18px;
+    right: 18px;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    color: #888;
+    z-index: 10;
+}
+body.dark-mode #dashboardPopup {
+    background: #23272b;
+    color: #f1f1f1;
+}
+@media (max-width: 600px) {
+    #dashboardPopup {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 0;
+    }
 }
 
-.login-popup::before {
-    content: '';
-    position: absolute;
-    top: -8px;
-    right: 20px;
-    width: 16px;
-    height: 16px;
-    background: white;
-    transform: rotate(45deg);
-    border-left: 1px solid #eee;
-    border-top: 1px solid #eee;
+.login-bg {
+    background: linear-gradient(135deg, #e3f0ff 0%, #f8f9fa 100%);
+}
+.login-header {
+    background: none;
+    margin-bottom: -30px;
+}
+.login-header h2, .login-header p {
+    color: #fff !important;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.35), 0 1px 0 #222;
 }
 
-.login-popup .form-control {
-    margin-bottom: 10px;
-    border: 1px solid #ddd;
-    padding: 10px;
+.login-invite-bg {
+    background: none !important;
+    box-shadow: none !important;
+    color: #002050 !important;
+    text-shadow: none;
+    max-width: 600px;
 }
 
 .login-popup .btn-primary {
@@ -895,4 +995,63 @@ body {
 .btn-outline-primary:hover {
     background-color: var(--pal-primary) !important;
     color: white !important;
-} 
+}
+
+.dashboard-float-section {
+    position: relative;
+    margin-top: -120px; /* Sube el dashboard sobre el hero */
+    z-index: 10;
+}
+.dashboard-float-section .container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    padding: 2.5rem 2rem;
+}
+@media (max-width: 991.98px) {
+    .dashboard-float-section {
+        margin-top: -60px;
+    }
+    .dashboard-float-section .container {
+        padding: 1.2rem 0.5rem;
+    }
+}
+
+.dashboard-float-wrapper {
+    /* position: absolute; */
+    left: 0;
+    right: 0;
+    /* top: 60vh; */
+    z-index: 20;
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+}
+.dashboard-float-wrapper .dashboard-section {
+    pointer-events: auto;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.15);
+    padding: 2.5rem 2rem;
+    max-width: 650px;
+    width: 100%;
+    margin: 0 auto;
+}
+@media (max-width: 991.98px) {
+    .dashboard-float-wrapper {
+        top: 40vh;
+    }
+    .dashboard-float-wrapper .dashboard-section {
+        padding: 1.2rem 0.5rem;
+    }
+}
+@media (max-width: 600px) {
+    .dashboard-float-wrapper {
+        top: 25vh;
+    }
+    .dashboard-float-wrapper .dashboard-section {
+        max-width: 98vw;
+        min-width: 0;
+        padding: 0.5rem 0.2rem;
+    }
+}
