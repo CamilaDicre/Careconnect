@@ -13,6 +13,10 @@ body {
     padding-top: 76px;
 }
 
+header .navbar {
+    padding: 30px 0px;
+}
+
 .navbar {
     padding: 20px 0;
     transition: all 0.3s ease;
@@ -34,11 +38,13 @@ body {
     color: var(--pal-primary);
 }
 
-.nav-link {
+header .nav-link {
     color: white !important;
     font-weight: 500;
-    padding: 0.5rem 1rem !important;
-    transition: color 0.3s ease;
+    padding: 12px 30px !important;
+    border-radius: 50px;
+    margin-left: 1vw;
+    transition: all 0.3s ease;
 }
 
 .navbar-scrolled .nav-link {
@@ -151,6 +157,10 @@ body {
     justify-content: center;
 }
 
+.hero-section .electronics img {
+    transition: all 0.25s;
+}
+
 .hero-section .electronics img:first-child {
     position: absolute;
     margin-left: 150px;
@@ -159,7 +169,11 @@ body {
 .hero-section .electronics img:last-child {
     position: absolute;
     margin-right: 200px;
-    margin-top: 50px;
+    margin-top: 80px;
+}
+
+.hero-section .electronics img:hover {
+    transform: translateY(-20px);
 }
 
 .btn-outline-light {
@@ -179,6 +193,55 @@ body {
     background: var(--pal-primary) !important;
     border-color: var(--pal-primary) !important;
 }
+
+/* Reasons Section */
+/*.reasons-section {
+    background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
+}
+*/
+
+.reasons-section .person {
+    width: 350px;
+    height: 400px;
+
+    background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
+}
+
+.reasons-section .reason:first-child {
+    transform: translateY(-20px);
+}
+
+.reasons-section .reason:last-child {
+    transform: translateY(20px);
+}
+
+.reason-container {
+    padding: 20px;
+    width: 300px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    transition: all 0.25s;
+}
+
+.reason-container h2 {
+    color: var(--pal-primary);
+    font-family: 'Poppins';
+    font-weight: bold;
+}
+
+.reason-container:hover {
+    transform: translateY(-10px);
+    background-color: var(--pal-primary);
+    & h2 {
+        color: white;
+    }
+}
+
+/* End Reasons Section */
 
 /* Features Section */
 .features-section {
@@ -480,6 +543,8 @@ body {
 
 .stat-item {
     padding: 20px;
+    border-radius: 15px;
+    transition: all 0.25s;
 }
 
 .stat-item i {
@@ -497,6 +562,10 @@ body {
     font-size: 1.2rem;
     margin-bottom: 0;
     color: #f8f9fa;
+}
+
+.stat-item:hover {
+    transform: translateY(-10px);
 }
 
 .text-primary {
@@ -616,6 +685,10 @@ body {
     transition: all 0.25s;
 }
 
+.appointment-section h2 {
+    color: #2d4b6e;
+}
+
 @media (max-width: 768px) {
     .appointment-section .col-lg-6:first-child {
         margin-bottom: 3rem;
@@ -651,6 +724,10 @@ body {
     position: absolute;
     top: -20px;
     left: -10px;
+}
+
+.testimonials-section h2 {
+    color: #2d4b6e;
 }
 
 .testimonial-content h3 {
