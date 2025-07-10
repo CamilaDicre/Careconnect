@@ -834,8 +834,11 @@ header .nav-link {
 
 /* Contact Hero Section */
 .contact-hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url(assets/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     padding: 150px 0 100px;
     position: relative;
     margin-bottom: 50px;
@@ -1054,4 +1057,13 @@ body.dark-mode #dashboardPopup {
         min-width: 0;
         padding: 0.5rem 0.2rem;
     }
+}
+
+.caregiver-image {
+    width: 120px;      /* O el tamaño que prefieras */
+    height: 120px;     /* O el tamaño que prefieras */
+    object-fit: cover; /* Esto recorta la imagen para que no se deforme */
+    border-radius: 50%; /* Opcional: para que sean circulares */
+    display: block;
+    margin: 0 auto 1rem auto; /* Centra la imagen y agrega espacio abajo */
 }
