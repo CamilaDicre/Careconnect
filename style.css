@@ -710,6 +710,25 @@ header .nav-link {
     transition: all 0.3s ease;
 }
 
+.testimonial-author .rounded-circle {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
+
+.testimonial-author h4,
+.testimonial-author p {
+    line-height: 1.2;
+    margin-bottom: 0;
+}
+
+.testimonial-author {
+    align-items: center !important;
+    display: flex;
+    min-height: 56px;
+    margin-top: 2.5rem !important;
+}
+
 .testimonial-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
@@ -1129,4 +1148,9 @@ body.dark-mode #dashboardPopup {
     height: 200px;
     max-width: 100%;
   }
+}
+
+.service-title-lg {
+  font-size: 2rem;
+  font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif;
 }
