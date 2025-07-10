@@ -1055,3 +1055,78 @@ body.dark-mode #dashboardPopup {
         padding: 0.5rem 0.2rem;
     }
 }
+
+/* Ajustes para el carrusel de servicios en index.html */
+.services-section .carousel-inner .carousel-item .row > div[class^="col"] {
+  display: flex;
+  align-items: stretch;
+}
+
+.services-section .carousel-inner .service-card {
+  height: 100%;
+  min-height: 430px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  box-sizing: border-box;
+}
+
+.services-section .carousel-inner .service-display {
+  width: 100%;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 12px 12px 0 0;
+  background: #f8f9fa;
+}
+
+.services-section .carousel-inner .service-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.services-section .carousel-inner .service-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.services-section .carousel-inner .service-button {
+  margin-top: auto;
+}
+
+/* Revierto los estilos globales para no afectar 'Our Values' */
+
+/* Solo aplico el estilo a la imagen de la primera sección de servicios (Why You Should Choose Careconnect?) */
+.services-section:first-of-type .image-container {
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.services-section:first-of-type .image-container img {
+  width: 100%;
+  max-width: 450px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  display: block;
+}
+
+@media (max-width: 991.98px) {
+  .services-section:first-of-type .image-container img {
+    height: 200px;
+    max-width: 100%;
+  }
+}
