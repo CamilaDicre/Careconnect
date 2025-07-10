@@ -241,6 +241,10 @@ header .nav-link {
     }
 }
 
+.reasons-section .reasons-heading-container {
+    color: #2d4b6e;
+}
+
 /* End Reasons Section */
 
 /* Features Section */
@@ -422,7 +426,7 @@ header .nav-link {
 }
 
 .services-section {
-    padding: 150px 0;
+    padding: 150px 50px;
     background-color: #f8f9fa;
 }
 
@@ -531,6 +535,40 @@ header .nav-link {
 
 .service-button a {
     text-decoration: none;
+}
+
+/* Carousel Section */
+.carousel {
+    padding: 50px 50px;
+}
+
+.service-card {
+    height: 100%;
+}
+
+.service-display {
+    height: 60%;
+}
+
+.service-display img {
+    width: 100%;
+    height: 100%;
+}
+
+/* Service Cards Font Size */
+.service-content {
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+}
+
+.service-content {
+    & h3 {
+        font-size: 2rem;
+    }
+    & p {
+        font-size: 1.2rem;
+    }
 }
 
 /* Statistics Section */
