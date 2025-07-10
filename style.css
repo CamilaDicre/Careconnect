@@ -373,6 +373,10 @@ header .nav-link {
 .about-section {
     padding: 100px 0;
     background-color: #fff;
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyIconsWhiteBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .about-section h2 {
@@ -1051,6 +1055,10 @@ body.dark-mode #dashboardPopup {
     position: relative;
     margin-top: -120px; /* Sube el dashboard sobre el hero */
     z-index: 10;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/BlueLogoBlueBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 .dashboard-float-section .container {
     background: #fff;
@@ -1109,4 +1117,26 @@ body.dark-mode #dashboardPopup {
 .service-title-lg {
   font-size: 2rem;
   font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif;
+}
+
+/* Careers background */
+.careers-section {
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyLogoWhiteBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.careers-page {
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyLogoWhiteBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.dashboard-page {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/BlueLogoBlueBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
