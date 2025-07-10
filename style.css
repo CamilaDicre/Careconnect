@@ -748,6 +748,25 @@ header .nav-link {
     transition: all 0.3s ease;
 }
 
+.testimonial-author .rounded-circle {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+}
+
+.testimonial-author h4,
+.testimonial-author p {
+    line-height: 1.2;
+    margin-bottom: 0;
+}
+
+.testimonial-author {
+    align-items: center !important;
+    display: flex;
+    min-height: 56px;
+    margin-top: 2.5rem !important;
+}
+
 .testimonial-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
@@ -872,34 +891,27 @@ header .nav-link {
 
 /* Contact Hero Section */
 .contact-hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1579684385127-1ef15d508118?ixlib=rb-4.0.3') no-repeat center center;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url(assets/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
     padding: 150px 0 100px;
     position: relative;
-    margin-bottom: 50px;
 }
 
-.contact-hero-section::after {
-    content: '';
-    position: absolute;
-    bottom: -1px;
-    left: 0;
-    width: 100%;
-    height: 70px;
-    background: #fff;
-    clip-path: polygon(0 100%, 100% 100%, 100% 0);
+.caregiver-image {
+    width: 120px;      /* O el tamaño que prefieras */
+    height: 120px;     /* O el tamaño que prefieras */
+    object-fit: cover; /* Esto recorta la imagen para que no se deforme */
+    border-radius: 50%; /* Opcional: para que sean circulares */
+    display: block;
+    margin: 0 auto 1rem auto; /* Centra la imagen y agrega espacio abajo */
 }
 
-.contact-hero-section .breadcrumb-item + .breadcrumb-item::before {
-    color: #fff;
-}
-
-.contact-hero-section .breadcrumb-item.active {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.min-vh-50 {
-    min-height: 50vh;
+/* Ajustes para el carrusel de servicios en index.html */
+.services-section .carousel-inner .carousel-item .row > div[class^="col"] {
+    max-width: 100%;
 }
 
 /* Newsletter Form */
@@ -1092,4 +1104,9 @@ body.dark-mode #dashboardPopup {
         min-width: 0;
         padding: 0.5rem 0.2rem;
     }
+}
+
+.service-title-lg {
+  font-size: 2rem;
+  font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif;
 }
