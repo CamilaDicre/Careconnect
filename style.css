@@ -1140,3 +1140,59 @@ body.dashboard-page {
     background-position: center;
     background-attachment: fixed;
 }
+
+/* Dashboard Mejoras para Visibilidad */
+body.dashboard-page h1, body.dashboard-page h2, body.dashboard-page h3, body.dashboard-page h4 {
+    font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
+    font-weight: 700;
+    color: var(--pal-primary);
+}
+body.dashboard-page h1 {
+    font-size: 3rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page h2 {
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page h4 {
+    font-size: 1.2rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page p, body.dashboard-page li, body.dashboard-page .text-muted {
+    font-size: 1.25rem !important;
+    line-height: 1.7;
+}
+.dashboard-card, .medicine-card, .caregiver-card {
+    padding: 2rem 1.5rem !important;
+    font-size: 1.2rem !important;
+}
+.dashboard-card h3, .dashboard-card h4 {
+    font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
+}
+.dashboard-card button, .dashboard-card .btn {
+    font-size: 1.1rem !important;
+    padding: 0.6rem 1.2rem !important;
+}
+.dashboard-card i, .medicine-icon i, .caregiver-info i {
+    font-size: 2rem !important;
+}
+.dashboard-section {
+    max-width: 900px !important;
+    padding: 3rem 2rem !important;
+}
+@media (max-width: 991.98px) {
+    .dashboard-section {
+        padding: 1.5rem 0.5rem !important;
+    }
+    body.dashboard-page h1 {
+        font-size: 2.2rem !important;
+    }
+    body.dashboard-page h2 {
+        font-size: 1.5rem !important;
+    }
+}
