@@ -382,6 +382,10 @@ header .nav-link {
 .about-section {
     padding: 100px 0;
     background-color: #fff;
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyIconsWhiteBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 
 .about-section h2 {
@@ -1066,6 +1070,10 @@ body.dark-mode #dashboardPopup {
     position: relative;
     margin-top: -120px; /* Sube el dashboard sobre el hero */
     z-index: 10;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/BlueLogoBlueBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 .dashboard-float-section .container {
     background: #fff;
@@ -1124,4 +1132,82 @@ body.dark-mode #dashboardPopup {
 .service-title-lg {
   font-size: 2rem;
   font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif;
+}
+
+/* Careers background */
+.careers-section {
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyLogoWhiteBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.careers-page {
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyLogoWhiteBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body.dashboard-page {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/BlueLogoBlueBackgroundTilted.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Dashboard Mejoras para Visibilidad */
+body.dashboard-page h1, body.dashboard-page h2, body.dashboard-page h3, body.dashboard-page h4 {
+    font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
+    font-weight: 700;
+    color: var(--pal-primary);
+}
+body.dashboard-page h1 {
+    font-size: 3rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page h2 {
+    font-size: 2.2rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page h3 {
+    font-size: 1.5rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page h4 {
+    font-size: 1.2rem !important;
+    line-height: 1.2;
+}
+body.dashboard-page p, body.dashboard-page li, body.dashboard-page .text-muted {
+    font-size: 1.25rem !important;
+    line-height: 1.7;
+}
+.dashboard-card, .medicine-card, .caregiver-card {
+    padding: 2rem 1.5rem !important;
+    font-size: 1.2rem !important;
+}
+.dashboard-card h3, .dashboard-card h4 {
+    font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
+}
+.dashboard-card button, .dashboard-card .btn {
+    font-size: 1.1rem !important;
+    padding: 0.6rem 1.2rem !important;
+}
+.dashboard-card i, .medicine-icon i, .caregiver-info i {
+    font-size: 2rem !important;
+}
+.dashboard-section {
+    max-width: 900px !important;
+    padding: 3rem 2rem !important;
+}
+@media (max-width: 991.98px) {
+    .dashboard-section {
+        padding: 1.5rem 0.5rem !important;
+    }
+    body.dashboard-page h1 {
+        font-size: 2.2rem !important;
+    }
+    body.dashboard-page h2 {
+        font-size: 1.5rem !important;
+    }
 }
