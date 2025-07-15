@@ -91,5 +91,27 @@
     <script src="js/components.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="js/login.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginTab = document.getElementById('login-tab');
+            const registerTab = document.getElementById('register-tab');
+            const body = document.body;
+
+            function updateBodyClass() {
+                if (registerTab.classList.contains('active')) {
+                    body.classList.add('signup-bg');
+                    body.classList.remove('login-bg');
+                } else {
+                    body.classList.add('login-bg');
+                    body.classList.remove('signup-bg');
+                }
+            }
+
+            loginTab.addEventListener('shown.bs.tab', updateBodyClass);
+            registerTab.addEventListener('shown.bs.tab', updateBodyClass);
+            // Inicializar al cargar
+            updateBodyClass();
+        });
+    </script>
 </body>
 </html> 

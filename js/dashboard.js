@@ -8,14 +8,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
 
+    // Días con cita: formato { day: número, name: string }
+    const eventDays = [
+        { day: 10, name: 'Dra. Martínez' },
+        { day: 18, name: 'Enfermero Juan' },
+        { day: 22, name: 'Dr. López' }
+    ];
+
     function updateCalendar() {
         const firstDay = new Date(currentYear, currentMonth, 1);
         const lastDay = new Date(currentYear, currentMonth + 1, 0);
         const startingDay = firstDay.getDay();
         const totalDays = lastDay.getDate();
-
-        // Días con cita (ejemplo: 10 y 18)
-        const eventDays = [10, 18];
 
         // Update month and year display
         monthDisplay.textContent = `${firstDay.toLocaleString('default', { month: 'long' })} ${currentYear}`;
@@ -35,9 +39,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const dayElement = document.createElement('div');
             dayElement.textContent = day;
 
-            // Marcar días con cita
-            if (eventDays.includes(day)) {
+            // Buscar si el día tiene cita
+            const event = eventDays.find(e => e.day === day);
+            if (event) {
                 dayElement.classList.add('event-day');
+                // Círculo pequeño
+                const circle = document.createElement('span');
+                circle.className = 'event-dot';
+                dayElement.appendChild(document.createElement('br'));
+                dayElement.appendChild(circle);
+                // Tooltip
+                dayElement.title = `Cita con ${event.name}`;
             }
 
             // Highlight current day

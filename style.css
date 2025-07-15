@@ -993,8 +993,11 @@ body.dark-mode #dashboardPopup {
     }
 }
 
-.login-bg {
-    background: linear-gradient(135deg, #e3f0ff 0%, #f8f9fa 100%);
+body.login-bg {
+    background: url(assets/BlueIconsBlueBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
 .login-header {
     background: none;
@@ -1055,10 +1058,8 @@ body.dark-mode #dashboardPopup {
     position: relative;
     margin-top: -120px; /* Sube el dashboard sobre el hero */
     z-index: 10;
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/BlueLogoBlueBackgroundTilted.png);
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
+    background: #fff !important;
+    background-image: none !important;
 }
 .dashboard-float-section .container {
     background: #fff;
@@ -1135,10 +1136,20 @@ body.careers-page {
 }
 
 body.dashboard-page {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url(assets/BlueLogoBlueBackgroundTilted.png);
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/GreyLogoWhiteBackgroundTilted.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+    min-height: 100vh;
+}
+
+body.dashboard-page h1.display-3.hero-text {
+    color: transparent !important;
+    background: none !important;
+    text-shadow: none !important;
+    -webkit-text-stroke: 0;
+    text-stroke: 0;
+    font-weight: 900;
 }
 
 /* Dashboard Mejoras para Visibilidad */
@@ -1195,4 +1206,60 @@ body.dashboard-page p, body.dashboard-page li, body.dashboard-page .text-muted {
     body.dashboard-page h2 {
         font-size: 1.5rem !important;
     }
+}
+
+body.dashboard-page .dashboard-float-section .container .row .col-lg-8 {
+    background: none !important;
+    backdrop-filter: none !important;
+    box-shadow: none !important;
+    padding: 2.5rem 1.5rem 1.5rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 !important;
+}
+
+body.dashboard-page h1.display-3.hero-text {
+    background: transparent !important;
+    color: transparent !important;
+    -webkit-text-stroke: 2px var(--pal-primary);
+    text-stroke: 2px var(--pal-primary);
+}
+
+.event-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #90caf9;
+    border-radius: 50%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    box-shadow: 0 0 2px #1976d2;
+    border: 1.5px solid #1976d2;
+}
+
+.calendar-days .event-day {
+    background: #f5fafd !important;
+    color: #1976d2 !important;
+    font-weight: 700;
+    position: relative;
+}
+
+.event-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    background: #90caf9;
+    border-radius: 50%;
+    box-shadow: 0 0 2px #1976d2;
+    border: 1.5px solid #1976d2;
+    position: absolute;
+    right: 4px;
+    bottom: 4px;
+    margin: 0;
+}
+
+body.signup-bg {
+    background: url(assets/BlueLogoBlueBackgroundTilted2.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
 }
