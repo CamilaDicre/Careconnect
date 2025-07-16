@@ -1,13 +1,6 @@
 /* Departments Page Styles */
 .departments-hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url('https://s2.ppllstatics.com/rc/www/multimedia/2023/04/14/medicamentos45-U190498393018WSC--1920x1080@El%20Correo.jpeg');
-    background-size: cover;
-    background-position: center;
-    padding: 8rem 0 6rem;
-    margin-top: -76px;
-    position: relative;
-    border-radius: 0 0 20% 20% / 30px;
+    background: none !important;
 }
 
 .departments-hero-section h1 {
@@ -168,4 +161,15 @@
 #footer-component, .footer-section {
     margin-top: 40px !important;
     clear: both;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/GreyIconsWhiteBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 } 

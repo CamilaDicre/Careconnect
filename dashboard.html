@@ -40,23 +40,43 @@
             background: transparent;
             cursor: default;
         }
+        .calendar-container {
+            padding: 2.5rem 0 2.5rem 0 !important;
+            font-size: 1.25rem !important;
+            max-width: 600px;
+            margin: 0 auto !important;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 390px;
+        }
+        .calendar-header h4 {
+            font-size: 1.5rem !important;
+        }
+        .calendar-days div, .calendar-weekdays div {
+            min-width: 52px !important;
+            min-height: 56px !important;
+            font-size: 1.1rem !important;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body class="dashboard-page">
     <main>
         <!-- Hero Section -->
-        <section class="dashboard-float-section position-relative" style="min-height:60vh;">
+        <section class="dashboard-float-section position-relative" style="min-height:60vh; background: transparent !important;">
             <div class="container">
                 <div class="row min-vh-10 align-items-center justify-content-center">
                     <div class="col-lg-8 text-white text-center">
                         <span class="text-primary fw-bold mb-2 d-block" style="font-size:1.1rem;">Care Dashboard</span>
-                        <h1 class="display-3 fw-bold mb-2 hero-text" style="color: var(--pal-primary); text-shadow: 0 2px 8px rgba(0,0,0,0.15); font-family: 'Poppins', sans-serif; background: transparent !important;">Welcome to Your Dashboard!</h1>
-                        <nav aria-label="breadcrumb">
-                            <ol class="breadcrumb justify-content-center mb-1">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
-                            </ol>
-                        </nav>
+                        <h1 class="display-3 fw-bold mb-2 hero-text">Welcome to Your Dashboard!</h1>
+                        <!-- Botón de regreso al home -->
+                        <a href="index.html" id="back-home-btn" class="position-absolute start-0 mt-4 ms-4 d-flex align-items-center" style="top: 32px; z-index:2000; color:#1976d2; text-decoration:none; font-weight:500; font-size:1.1rem;">
+                            <i class="bi bi-house" style="font-size:1.5rem; margin-right:0.5rem;"></i>Home
+                        </a>
                     </div>
                 </div>
             </div>

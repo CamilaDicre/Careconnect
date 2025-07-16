@@ -65,6 +65,21 @@
   </style>
 </head>
 <body>
+  <!-- Menú hamburguesa para filtrar por tipo de malestar -->
+  <div id="filter-menu" style="position:fixed; top:24px; left:24px; z-index:1000;">
+    <button id="menu-toggle" style="background:none; border:none; font-size:2rem; cursor:pointer;">
+      <span>&#9776;</span>
+    </button>
+    <div id="menu-dropdown" style="display:none; background:#fff; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12); margin-top:8px; min-width:180px;">
+      <ul style="list-style:none; margin:0; padding:10px 0;">
+        <li><a href="#" class="filter-option" data-filter="all" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Todos</a></li>
+        <li><a href="#" class="filter-option" data-filter="estomago" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Estómago</a></li>
+        <li><a href="#" class="filter-option" data-filter="dolor" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Dolor</a></li>
+        <li><a href="#" class="filter-option" data-filter="articulaciones" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Articulaciones</a></li>
+        <!-- Agrega más filtros según necesites -->
+      </ul>
+    </div>
+  </div>
 
   <div class="container">
     <h1>Medicinas para Tratamientos de Enfermedades</h1>
@@ -92,6 +107,30 @@
     </div>
 
   </div>
+
+  <script>
+    // Mostrar/ocultar menú
+    document.getElementById('menu-toggle').onclick = function() {
+      var menu = document.getElementById('menu-dropdown');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    };
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+      var menu = document.getElementById('menu-dropdown');
+      var toggle = document.getElementById('menu-toggle');
+      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+    // Filtro (solo ejemplo, no filtra aún)
+    document.querySelectorAll('.filter-option').forEach(function(opt) {
+      opt.onclick = function(e) {
+        e.preventDefault();
+        alert('Filtrar por: ' + this.dataset.filter);
+        document.getElementById('menu-dropdown').style.display = 'none';
+      };
+    });
+  </script>
 
 </body>
 </html>
