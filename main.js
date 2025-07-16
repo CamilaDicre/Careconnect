@@ -39,6 +39,7 @@ function initializeNavbarScroll() {
  */
 function initializeDarkMode() {
     const darkModeToggle = document.getElementById('darkModeToggle');
+    console.log(darkModeToggle)
     if (darkModeToggle) {
         darkModeToggle.addEventListener('click', function() {
             document.body.classList.toggle('dark-mode');
@@ -60,6 +61,15 @@ function initializeDarkMode() {
             }
         });
     }
+}
+
+function darkMode() {
+    if (theme == false) {
+        darkModeToggle.firstChild.classList.replace('bi-moon-fill', 'bi-sun-fill');
+    } else {
+        darkModeToggle.firstChild.classList.replace('bi-sun-fill', 'bi-moon-fill');
+    }
+
 }
 
 /**
