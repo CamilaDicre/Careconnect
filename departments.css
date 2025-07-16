@@ -1,12 +1,6 @@
 /* Departments Page Styles */
 .departments-hero-section {
-    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url('assets/GreyIconsWhiteBackgroundSpread.png');
-    background-size: cover;
-    background-position: center;
-    padding: 8rem 0 6rem;
-    margin-top: -76px;
-    position: relative;
-    border-radius: 0 0 20% 20% / 30px;
+    background: none !important;
 }
 
 .departments-hero-section h1 {
@@ -167,4 +161,15 @@
 #footer-component, .footer-section {
     margin-top: 40px !important;
     clear: both;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/GreyIconsWhiteBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 } 

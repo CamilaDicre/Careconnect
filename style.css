@@ -994,7 +994,7 @@ body.dark-mode #dashboardPopup {
 }
 
 body.login-bg {
-    background: url(assets/BlueIconsBlueBackgroundSpread.png);
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -1258,8 +1258,12 @@ body.dashboard-page h1.display-3.hero-text {
 }
 
 body.signup-bg {
-    background: url(assets/BlueLogoBlueBackgroundTilted2.png);
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/BlueLogoBlueBackgroundTilted2.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
+}
+
+h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
+    font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
 }
