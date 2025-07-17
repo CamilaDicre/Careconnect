@@ -1,3 +1,8 @@
+
+:root {
+    --pal-primary: royalblue;
+}
+
 /* Contact Page Styles */
 .contact-hero-section {
     padding: 8rem 0 6rem;
@@ -17,8 +22,8 @@
 }
 
 .contact-hero-section .text-primary {
-    color: #0dcaf0 !important;
-    font-size: 1.1rem;
+    color: var(--pal-primary) !important;
+    font-size: 1.2rem;
     letter-spacing: 2px;
 }
 
@@ -82,7 +87,7 @@
 
 .contact-card h3 {
     color: #2d4b6e;
-    font-size: 1.5rem;
+    font-size: 1.7  rem;
     margin-bottom: 1rem;
     font-weight: 600;
 }
@@ -90,7 +95,7 @@
 .contact-card p {
     color: #666;
     margin-bottom: 0;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .contact-form-wrapper {
@@ -102,7 +107,7 @@
 
 .contact-form-wrapper h2 {
     color: #2d4b6e;
-    font-size: 2rem;
+    font-size: 1.7rem;
     margin-bottom: 2rem;
     font-weight: 600;
 }
@@ -111,12 +116,12 @@
     padding: 0.8rem 1.2rem;
     border: 1px solid #eee;
     border-radius: 30px;
-    margin-bottom: 1rem;
-    font-size: 1rem;
+    margin-bottom: 1.2rem;
+    font-size: 1.2rem;
 }
 
 .contact-form-wrapper .form-control:focus {
-    border-color: #0dcaf0;
+    border-color: var(--pal-primary);
     box-shadow: none;
 }
 
@@ -125,9 +130,9 @@
 }
 
 .contact-form-wrapper .btn-primary {
-    padding: 0.8rem 2rem;
+    padding: 10px 50px;
     font-weight: 500;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
 }
 
 .contact-map {
