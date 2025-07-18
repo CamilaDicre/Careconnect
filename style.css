@@ -155,8 +155,17 @@ header .nav-link {
 }
 
 .hero-section .btn {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
+    letter-spacing: 2px;
     margin-bottom: 20px;
+}
+
+.hero-section .hero-cta {
+    padding: 10px 50px !important;
+}
+
+.hero-section span {
+    font-weight: 500 !important;
 }
 
 .hero-section .electronics {
@@ -207,6 +216,10 @@ header .nav-link {
     background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
 }
 */
+
+.reasons-section span {
+    color: var(--pal-primary) !important;
+}
 
 .reasons-section .person {
     width: 350px;
@@ -296,7 +309,7 @@ header .nav-link {
 }
 
 .feature-icon i {
-    font-size: 1.5rem;
+    font-size: 1.7rem;
     color: var(--pal-primary);
 }
 
@@ -417,12 +430,6 @@ header .nav-link {
     transform: translateY(-2px);
 }
 
-
-.hero-section .hero-cta {
-    padding: 10px 50px !important;
-    font-weight: bold;
-}
-
 /* Services Section */
 
 .image-container {
@@ -480,6 +487,11 @@ header .nav-link {
 .service-content h3 {
     color: #2d4b6e;
     font-weight: 600;
+}
+
+.service-content .value,
+.service-content .service {
+    font-weight: 500 !important;
 }
 
 .service-content p {
@@ -590,6 +602,11 @@ header .nav-link {
     }
 }
 
+.carousel  h2.display-4 {
+    color: #2d4b6e;
+    margin-bottom: 50px;
+}
+
 /* Statistics Section */
 .statistics-section {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
@@ -627,6 +644,10 @@ header .nav-link {
 
 .text-primary {
     color: var(--pal-primary) !important;
+}
+
+.stat-item h3.counter {
+  color: var(--pal-primary) !important;
 }
 
 /* Blog Section */
@@ -724,7 +745,7 @@ header .nav-link {
     border: 1px solid #eee;
     border-radius: 30px;
     margin-bottom: 10px;
-    font-size: 14px;
+    font-size: 1.2rem;
 }
 
 .appointment-form .form-control:focus,
@@ -738,12 +759,19 @@ header .nav-link {
 }
 
 .appointment-form .btn-primary {
-    margin-top: 10px;
+    margin-top: 20px;
+    font-size: 1.2rem;
     transition: all 0.25s;
 }
 
 .appointment-section h2 {
     color: #2d4b6e;
+}
+
+.appointment-section p {
+    font-size: 1.2rem;
+    color: #666;
+    width: 80%;
 }
 
 @media (max-width: 768px) {
@@ -776,6 +804,7 @@ header .nav-link {
 .testimonial-author h4,
 .testimonial-author p {
     line-height: 1.2;
+    font-size: 1.2rem;
     margin-bottom: 0;
 }
 
@@ -807,8 +836,8 @@ header .nav-link {
 }
 
 .testimonial-content h3 {
-    color: #4e98ed;
-    font-size: 1.3rem;
+    color: var(--pal-primary);
+    font-size: 1.7rem;
     font-weight: 600;
     margin-bottom: 1rem;
     position: relative;
@@ -816,10 +845,17 @@ header .nav-link {
 }
 
 .testimonial-content p {
-    font-size: 1rem;
+    font-size: 1.2rem;
     line-height: 1.7;
     position: relative;
     z-index: 1;
+}
+
+.testimonial-main {
+  font-size: 1.2rem;
+  color: var(--pal-primary) !important;
+  font-weight: 400;
+  margin-bottom: 1rem;
 }
 
 .testimonial-author img {
@@ -897,6 +933,10 @@ header .nav-link {
 
 .footer-section .social-links a:hover {
     color: #fff !important;
+}
+
+.footer-section, .footer-section p, .footer-section a, .footer-section h3, .footer-section li {
+  font-size: 1.25rem;
 }
 
 .copyright-bar {
@@ -1163,7 +1203,6 @@ body.dashboard-page h1.display-3.hero-text {
     background: none !important;
     text-shadow: none !important;
     -webkit-text-stroke: 0;
-    text-stroke: 0;
     font-weight: 900;
 }
 
@@ -1236,7 +1275,6 @@ body.dashboard-page h1.display-3.hero-text {
     background: transparent !important;
     color: transparent !important;
     -webkit-text-stroke: 2px var(--pal-primary);
-    text-stroke: 2px var(--pal-primary);
 }
 
 .event-dot {
@@ -1282,3 +1320,15 @@ body.signup-bg {
 h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
     font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
 }
+
+/* Header cambia a fondo blanco y letras negras al hacer scroll */
+header.scrolled {
+  background: #fff !important;
+  color: #000 !important;
+  transition: background 0.3s, color 0.3s;
+}
+header.scrolled a,
+header.scrolled nav,
+header.scrolled .logo {
+  color: #000 !important;
+} 
