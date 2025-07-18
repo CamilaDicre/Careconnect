@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Careconnect - Caregiver Registration</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  <style>
+    body {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/BlueIconsBlueBackgroundSpread.png);
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      min-height: 100vh;
+      margin: 0;
+      font-family: 'Poppins', Arial, sans-serif;
+    }
+    #back-home-btn {
+      position: absolute;
+      left: 2vw;
+      top: 2vw;
+      z-index: 2000;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      background: rgba(255,255,255,0.08);
+      padding: 0.55rem 1.2rem 0.55rem 1rem;
+      border-radius: 1.5rem;
+      box-shadow: 0 4px 18px rgba(0,0,0,0.18);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      border: 2px solid #fff;
+      transition: background 0.2s, box-shadow 0.2s, color 0.2s, border 0.2s;
+      letter-spacing: 1px;
+      backdrop-filter: blur(2px);
+    }
+    #back-home-btn:hover {
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      border: 2px solid #fff;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.22);
+      text-decoration: none;
+    }
+    #back-home-btn i {
+      font-size: 1.3rem;
+      margin-right: 0.5rem;
+    }
+    .caregiver-container {
+      max-width: 500px;
+      margin: 48px auto 32px auto;
+      background: rgba(255,255,255,0.97);
+      border-radius: 32px;
+      box-shadow: 0 8px 40px rgba(25,118,210,0.13);
+      padding: 2.5rem 2rem 2rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+    .caregiver-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 1.2rem;
+      animation: logoEntrance 1.1s cubic-bezier(0.23, 1, 0.32, 1);
+      position: relative;
+      z-index: 2;
+    }
+    .caregiver-logo::before {
+      display: none;
+    }
+    .caregiver-logo img {
+      width: 100px;
+      height: 100px;
+      border-radius: 0;
+      background: transparent;
+      margin-bottom: 0.3rem;
+      position: relative;
+      z-index: 2;
+    }
+    .caregiver-logo span {
+      font-size: 2.3rem;
+      font-weight: 800;
+      color: #1565c0;
+      letter-spacing: 2.5px;
+      text-shadow: 0 2px 6px rgba(25,118,210,0.10), 0 1px 0 #fff;
+      margin-top: 0.2rem;
+      position: relative;
+      z-index: 2;
+    }
+    @keyframes logoEntrance {
+      0% { opacity: 0; transform: scale(0.7) translateY(40px) rotate(-8deg); filter: blur(2px); }
+      60% { opacity: 1; transform: scale(1.08) translateY(-10px) rotate(2deg); filter: blur(0); }
+      100% { opacity: 1; transform: scale(1) translateY(0) rotate(0deg); filter: blur(0); }
+    }
+    .caregiver-header {
+      text-align: center;
+      margin-bottom: 1.2rem;
+    }
+    .caregiver-header h1 {
+      font-size: 1.7rem;
+      color: #1976d2;
+      margin: 0 0 0.5rem 0;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+    .caregiver-header p {
+      color: #1976d2;
+      font-size: 1.08rem;
+      margin-bottom: 0.5rem;
+    }
+    .caregiver-form {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+    .form-section {
+      background: none;
+      border-radius: 0;
+      padding: 0 0 0.5rem 0;
+      margin-bottom: 0.7rem;
+      box-shadow: none;
+      border: none;
+    }
+    .caregiver-form label {
+      display: block;
+      font-size: 1.18rem;
+      font-weight: 700;
+      color: #1565c0;
+      margin-bottom: 0.18rem;
+      margin-top: 1.1rem;
+      letter-spacing: 0.7px;
+      transition: color 0.2s;
+      text-align: center;
+    }
+    .input-group {
+      position: relative;
+      margin-bottom: 1.1rem;
+      background: #f6f8fc;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+      display: flex;
+      align-items: center;
+      padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+    }
+    .input-group i {
+      position: absolute;
+      left: 1.1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #1976d2;
+      font-size: 1.35rem;
+      opacity: 0.95;
+      pointer-events: none;
+      transition: color 0.2s;
+    }
+    .caregiver-form input, .caregiver-form select, .caregiver-form textarea {
+      width: 100%;
+      font-size: 1.15rem;
+      padding: 0.95rem 1.1rem 0.95rem 2.7rem;
+      border-radius: 12px;
+      border: none;
+      background: transparent;
+      margin-bottom: 0.1rem;
+      margin-top: 0.1rem;
+      box-sizing: border-box;
+      transition: box-shadow 0.2s, background 0.2s;
+      resize: none;
+      outline: none;
+      color: #222;
+      font-weight: 500;
+      text-align: center;
+    }
+    .caregiver-form input:focus, .caregiver-form select:focus, .caregiver-form textarea:focus {
+      background: #e3eafc;
+      box-shadow: 0 0 0 2px #1976d2;
+    }
+    .caregiver-form select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-image: url('data:image/svg+xml;utf8,<svg fill="%231976d2" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+      background-repeat: no-repeat;
+      background-position: right 1.2rem center;
+      background-size: 1.3rem;
+      padding-right: 2.5rem;
+    }
+    .caregiver-form textarea {
+      min-height: 90px;
+      max-height: 220px;
+    }
+    .caregiver-main-btn {
+      width: 100%;
+      font-size: 1.18rem;
+      font-weight: 700;
+      border-radius: 14px;
+      padding: 0.9rem 0;
+      background: linear-gradient(90deg, #1976d2 60%, #63a4ff 100%);
+      color: #fff;
+      border: none;
+      margin-top: 1.1rem;
+      margin-bottom: 0.3rem;
+      box-shadow: 0 2px 12px rgba(25, 118, 210, 0.13);
+      transition: background 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    .caregiver-main-btn:hover {
+      background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
+    }
+    @media (max-width: 600px) {
+      .caregiver-container {
+        padding: 1.2rem 0.2rem 1.2rem 0.2rem;
+        max-width: 98vw;
+      }
+      .form-section {
+        padding: 0.7rem 0.2rem 0.5rem 0.2rem;
+      }
+    }
+    .caregiver-form input[type="number"]::-webkit-inner-spin-button,
+    .caregiver-form input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+    .caregiver-form input[type="number"] {
+      -moz-appearance: textfield;
+    }
+    .caregiver-form input[type="date"] {
+      /* Custom date text input styles */
+      background: #f6f8fc;
+      border-radius: 12px;
+      border: none;
+      box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+      padding: 0.95rem 1.1rem 0.95rem 2.7rem;
+      font-size: 1.15rem;
+      color: #222;
+      font-weight: 500;
+      text-align: center;
+      transition: box-shadow 0.2s, background 0.2s;
+      outline: none;
+      margin-bottom: 0.1rem;
+      margin-top: 0.1rem;
+      letter-spacing: 1px;
+    }
+    .caregiver-form input#birthdate:focus {
+      background: #e3eafc;
+      box-shadow: 0 0 0 2px #1976d2;
+    }
+    .caregiver-form input#birthdate::placeholder {
+      color: #b6c7e3;
+      opacity: 1;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <a href="login.html#register" id="back-home-btn"><i class="bi bi-arrow-left"></i>Back to register</a>
+  <div class="caregiver-container">
+    <div class="caregiver-logo">
+      <div style="display:flex; align-items:center; justify-content:center; gap:2px;">
+        <img src="assets/Frame - 1.svg" alt="Careconnect Logo" style="width: 100px; height: 100px; border-radius: 0; background: transparent;">
+        <span style="font-family: 'Poppins', Arial, sans-serif; font-size: 2.3rem; font-weight: 700; color: #1565c0; letter-spacing: 2.5px; text-shadow: 0 2px 6px rgba(25,118,210,0.10), 0 1px 0 #fff;">areconnect</span>
+      </div>
+    </div>
+    <div class="caregiver-header">
+      <div style="font-size:1.08rem; color:#1976d2; margin-bottom:0.5rem; font-weight:500; letter-spacing:0.5px;">Please fill in your personal and professional information</div>
+    </div>
+    <form class="caregiver-form">
+      <div class="form-section">
+        <label for="fullName">Full Name</label>
+        <div class="input-group">
+          <i class="bi bi-person"></i>
+          <input type="text" id="fullName" name="fullName" placeholder="Your full name" required>
+        </div>
+        <label for="email">Email</label>
+        <div class="input-group">
+          <i class="bi bi-envelope"></i>
+          <input type="email" id="email" name="email" placeholder="Your email" required>
+        </div>
+        <label for="phone">Phone Number</label>
+        <div class="input-group">
+          <i class="bi bi-telephone"></i>
+          <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+        </div>
+        <label for="birthdate">Date of Birth</label>
+        <div class="input-group">
+          <i class="bi bi-calendar"></i>
+          <input type="text" id="birthdate" name="birthdate" required placeholder="DD-MM-YYYY (e.g. 25-12-1970)" pattern="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d\d$" maxlength="10" autocomplete="off" inputmode="numeric">
+        </div>
+        <label for="gender">Gender</label>
+        <div class="input-group">
+          <i class="bi bi-gender-ambiguous"></i>
+          <select id="gender" name="gender" required>
+            <option value="">Select gender</option>
+            <option value="female">Female</option>
+            <option value="male">Male</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+        <label for="address">Address</label>
+        <div class="input-group">
+          <i class="bi bi-geo-alt"></i>
+          <input type="text" id="address" name="address" placeholder="Your address" required>
+        </div>
+      </div>
+      <div class="form-section">
+        <label for="experience">Experience (years)</label>
+        <div class="input-group">
+          <i class="bi bi-briefcase"></i>
+          <input type="number" id="experience" name="experience" min="0" max="60" placeholder="Years of experience" required inputmode="numeric" style="text-align:center;">
+        </div>
+        <label for="education">Education</label>
+        <div class="input-group">
+          <i class="bi bi-mortarboard"></i>
+          <input type="text" id="education" name="education" placeholder="Your education" required>
+        </div>
+        <label for="certifications">Certifications</label>
+        <div class="input-group">
+          <i class="bi bi-award"></i>
+          <input type="text" id="certifications" name="certifications" placeholder="Any certifications (optional)">
+        </div>
+        <label for="skills">Skills</label>
+        <div class="input-group">
+          <i class="bi bi-stars"></i>
+          <textarea id="skills" name="skills" placeholder="List your skills, separated by commas" required></textarea>
+        </div>
+        <label for="languages">Languages</label>
+        <div class="input-group">
+          <i class="bi bi-translate"></i>
+          <input type="text" id="languages" name="languages" placeholder="Languages you speak" required>
+        </div>
+        <label for="bio">Short Bio</label>
+        <div class="input-group">
+          <i class="bi bi-chat-left-text"></i>
+          <textarea id="bio" name="bio" placeholder="Tell us about yourself" required></textarea>
+        </div>
+        <label for="availability">Availability</label>
+        <div class="input-group">
+          <i class="bi bi-clock"></i>
+          <select id="availability" name="availability" required>
+            <option value="">Select availability</option>
+            <option value="fulltime">Full-time</option>
+            <option value="parttime">Part-time</option>
+            <option value="weekends">Weekends</option>
+            <option value="nights">Nights</option>
+          </select>
+        </div>
+      </div>
+      <button type="submit" class="caregiver-main-btn">Submit Profile</button>
+    </form>
+  </div>
+  <script>
+    document.querySelector('.caregiver-form').onsubmit = function(e) {
+      e.preventDefault();
+      window.location.href = 'caregiver-review.html';
+    };
+  </script>
+</body>
+</html> 
