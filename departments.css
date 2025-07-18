@@ -1,9 +1,13 @@
+:root {
+    --pal-primary: royalblue;
+}
+
 /* Departments Page Styles */
 .departments-hero-section {
-    background: none !important;
     padding-top: 8rem !important;
     padding-bottom: 6rem !important;
     margin-top: 0 !important;
+    background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/BlueLogoBlueBackgroundTilted.png);
 }
 
 .departments-hero-section h1 {
@@ -33,10 +37,15 @@
     content: ">";
 }
 
+.departments-section {
+    background-color: white;
+}
+
 /* Department Section Title */
 .departments-section .text-primary {
     font-size: 0.9rem;
     letter-spacing: 1px;
+    color: var(--pal-primary);
 }
 
 .departments-section .display-5 {
@@ -49,7 +58,7 @@
     background: #fff;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.141);
     margin-bottom: 15px;
     transition: transform 0.3s ease;
 }
@@ -66,7 +75,7 @@
 
 .department-info {
     padding: 1.25rem;
-    background: #e4e8eb;
+    background: whitesmoke;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,14 +83,19 @@
 
 .department-info h3 {
     color: black;
-    font-size: 1.3rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.7rem;
+    margin-bottom: 1.2rem;
+    font-weight: bold;
+    color: #2d4b6e;
 }
 
 .my-button {
-    background-color: royalblue;
-    padding: 5px;
-    border-radius: 15px;
+    background-color: var(--pal-primary);
+    padding: 10px 50px;
+    border-radius: 50px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
     color: white;
     cursor: pointer;
     
@@ -129,7 +143,7 @@
 }
 
 .social-link:hover {
-    background: #0dcaf0;
+    background: var(--pal-primary);
     color: #fff;
 }
 
@@ -168,7 +182,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/GreyIconsWhiteBackgroundSpread.png);
+background-color: white;
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
