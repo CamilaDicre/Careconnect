@@ -1332,3 +1332,7 @@ header.scrolled nav,
 header.scrolled .logo {
   color: #000 !important;
 } 
+
+.service-button {
+  border-radius: 50rem !important;
+}
