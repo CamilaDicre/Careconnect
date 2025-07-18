@@ -63,15 +63,6 @@ function initializeDarkMode() {
     }
 }
 
-function darkMode() {
-    if (theme == false) {
-        darkModeToggle.firstChild.classList.replace('bi-moon-fill', 'bi-sun-fill');
-    } else {
-        darkModeToggle.firstChild.classList.replace('bi-sun-fill', 'bi-moon-fill');
-    }
-
-}
-
 /**
  * Initializes counter animation functionality
  */
