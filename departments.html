@@ -51,7 +51,10 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="fw-bold mb-3">Medicines</h1>
+                        <h1 class="fw-bold mb-3">Malestares</h1>
+                        <nav aria-label="breadcrumb">
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -60,10 +63,6 @@
         <!-- Departments Section -->
         <section class="departments-section py-5">
             <div class="container">
-                <div class="text-center mb-5">
-                    <span class="text-primary text-uppercase fw-bold mb-2 d-block">SERVICES</span>
-                    <h2 class="display-5 fw-bold">Our Medicines</h2>
-                </div>
                 <div class="row g-3">
                     <!-- Department 1 -->
                     <div class="col-lg-4 col-md-6">
@@ -71,57 +70,110 @@
                             <img src="https://cegagdl.com/wp-content/uploads/2020/12/Dolor-estomacal.jpg" alt="Stomach Ache" class="img-fluid">
                             <div class="department-info">
                                 <h3>Stomach Ache</h3>
-                                <button class="my-button" onclick="location.href='medicine.html?medicina=GastroFix'">Learn more</button>
+                                <div class="medicine-info" style="display: none;">
+                                    <ul>
+                                        <li><strong>Antacid (Tums, Rolaids)</strong> - Neutralizes stomach acid</li>
+                                        <li><strong>Simethicone (Gas-X)</strong> - Relieves gas and bloating</li>
+                                        <li><strong>Bismuth Subsalicylate (Pepto-Bismol)</strong> - Treats upset stomach</li>
+                                        <li><strong>Omeprazole (Prilosec)</strong> - Reduces acid production</li>
+                                    </ul>
+                                </div>
+                                <button onclick="goToMalestar(this)">Learn more</button>
                             </div>
                         </div>
                     </div>
+
                     <!-- Department 2 -->
                     <div class="col-lg-4 col-md-6">
                         <div class="department-card">
-                            <img src="https://beebom.com/wp-content/uploads/2018/03/blood-pressure-meter.jpg?w=730&h=487&crop=1&quality=75" alt="Hypertension" class="img-fluid">
+                            <img src="https://beebom.com/wp-content/uploads/2018/03/blood-pressure-meter.jpg?w=730&h=487&crop=1&quality=75" alt="Hipertension" class="img-fluid">
                             <div class="department-info">
-                                <h3>Hypertension</h3>
-                                <button class="my-button" onclick="location.href='medicine.html?medicina=GastroFix'">Learn more</button>
+                                <h3>Hipertension</h3>
+                                <div class="medicine-info" style="display: none;">
+                                    <ul>
+                                        <li><strong>ACE Inhibitors (Lisinopril)</strong> - Relaxes blood vessels</li>
+                                        <li><strong>Beta Blockers (Metoprolol)</strong> - Reduces heart rate</li>
+                                        <li><strong>Calcium Channel Blockers (Amlodipine)</strong> - Relaxes arteries</li>
+                                        <li><strong>Diuretics (Hydrochlorothiazide)</strong> - Removes excess fluid</li>
+                                    </ul>
+                                </div>
+                                <button onclick="goToMalestar(this)">Learn more</button>
                             </div>
                         </div>
                     </div>
+
                     <!-- Department 3 -->
                     <div class="col-lg-4 col-md-6">
                         <div class="department-card">
                             <img src="https://gullahcuisine.net/wp-content/uploads/2020/12/hombres-con-dolor-de-cabeza-2048x1365.jpg" alt="Headache" class="img-fluid">
                             <div class="department-info">
                                 <h3>Headache</h3>
-                                <button class="my-button" onclick="location.href='medicine.html?medicina=GastroFix'">Learn more</button>
+                                <div class="medicine-info" style="display: none;">
+                                    <ul>
+                                        <li><strong>Acetaminophen (Tylenol)</strong> - Pain reliever, gentle on stomach</li>
+                                        <li><strong>Ibuprofen (Advil, Motrin)</strong> - Anti-inflammatory pain reliever</li>
+                                        <li><strong>Aspirin</strong> - Pain reliever with anti-inflammatory</li>
+                                        <li><strong>Sumatriptan (Imitrex)</strong> - For migraine headaches</li>
+                                    </ul>
+                                </div>
+                                <button onclick="goToMalestar(this)">Learn more</button>
                             </div>
                         </div>
                     </div>
+
                     <!-- Department 4 -->
                     <div class="col-lg-4 col-md-6">
                         <div class="department-card">
                             <img src="https://i1.wp.com/www.deportesaludable.com/wp-content/uploads/2018/11/Resfriado.jpg?fit=1600%2C1050&ssl=1" alt="Colds" class="img-fluid">
                             <div class="department-info">
                                 <h3>Colds</h3>
-                                <button class="my-button" onclick="location.href='medicine.html?medicina=GastroFix'">Learn more</button>
+                                <div class="medicine-info" style="display: none;">
+                                    <ul>
+                                        <li><strong>Decongestants (Pseudoephedrine)</strong> - Reduces nasal congestion</li>
+                                        <li><strong>Antihistamines (Diphenhydramine)</strong> - Helps runny nose and sneezing</li>
+                                        <li><strong>Cough Suppressants (Dextromethorphan)</strong> - Reduces coughing</li>
+                                        <li><strong>Expectorants (Guaifenesin)</strong> - Thins mucus</li>
+                                    </ul>
+                                </div>
+                                <button onclick="goToMalestar(this)">Learn more</button>
                             </div>
                         </div>
                     </div>
+
                     <!-- Department 5 -->
                     <div class="col-lg-4 col-md-6">
                         <div class="department-card">
                             <img src="https://th.bing.com/th/id/OIP.KQnWAYsxadv4lAdYwGDIbQHaEE?rs=1&pid=ImgDetMain" alt="Gastritis" class="img-fluid">
                             <div class="department-info">
                                 <h3>Gastritis</h3>
-                                <button class="my-button" onclick="location.href='medicine.html?medicina=GastroFix'">Learn more</button>
+                                <div class="medicine-info" style="display: none;">
+                                    <ul>
+                                        <li><strong>Proton Pump Inhibitors (Omeprazole)</strong> - Reduces stomach acid</li>
+                                        <li><strong>H2 Blockers (Ranitidine, Famotidine)</strong> - Decreases acid production</li>
+                                        <li><strong>Antacids (Mylanta, Maalox)</strong> - Neutralizes stomach acid</li>
+                                        <li><strong>Sucralfate (Carafate)</strong> - Protects stomach lining</li>
+                                    </ul>
+                                </div>
+                                <button onclick="goToMalestar(this)">Learn more</button>
                             </div>
                         </div>
                     </div>
+
                     <!-- Department 6 -->
                     <div class="col-lg-4 col-md-6">
                         <div class="department-card">
                             <img src="https://www.firstcontacthealth.com/wp-content/uploads/2022/11/shoulder-pain-01.jpg" alt="Joint Pain" class="img-fluid">
                             <div class="department-info">
                                 <h3>Joint Pain</h3>
-                                <button class="my-button" onclick="location.href='medicine.html?medicina=GastroFix'">Learn more</button>
+                                <div class="medicine-info" style="display: none;">
+                                    <ul>
+                                        <li><strong>NSAIDs (Ibuprofen, Naproxen)</strong> - Anti-inflammatory for joints</li>
+                                        <li><strong>Topical Pain Relievers (Voltaren Gel)</strong> - Applied directly to skin</li>
+                                        <li><strong>Acetaminophen (Tylenol)</strong> - Pain reliever, easier on stomach</li>
+                                        <li><strong>Glucosamine/Chondroitin</strong> - Supplements for joint health</li>
+                                    </ul>
+                                </div>
+                                <button onclick="goToMalestar(this)">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -132,10 +184,16 @@
 
     <!-- Footer Component -->
     <div id="footer-component"></div>
-
     <!--Script code-->
     <script src="js/components.js"></script>
-    <!-- main.js y login.js se cargan dinámicamente desde components.js después de cargar el header -->
+    <script src="main.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        function goToMalestar(button) {
+            const malestar = button.parentElement.querySelector('h3').textContent.trim();
+            window.location.href = `medicinas.html?name=${encodeURIComponent(malestar)}`;
+        }
+    </script>
 </body>
 </html>
