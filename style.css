@@ -1203,7 +1203,6 @@ body.dashboard-page h1.display-3.hero-text {
     background: none !important;
     text-shadow: none !important;
     -webkit-text-stroke: 0;
-    text-stroke: 0;
     font-weight: 900;
 }
 
@@ -1276,7 +1275,6 @@ body.dashboard-page h1.display-3.hero-text {
     background: transparent !important;
     color: transparent !important;
     -webkit-text-stroke: 2px var(--pal-primary);
-    text-stroke: 2px var(--pal-primary);
 }
 
 .event-dot {
@@ -1322,3 +1320,15 @@ body.signup-bg {
 h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display-5, .display-6 {
     font-family: 'Poppins', 'Josefin Sans', Arial, sans-serif !important;
 }
+
+/* Header cambia a fondo blanco y letras negras al hacer scroll */
+header.scrolled {
+  background: #fff !important;
+  color: #000 !important;
+  transition: background 0.3s, color 0.3s;
+}
+header.scrolled a,
+header.scrolled nav,
+header.scrolled .logo {
+  color: #000 !important;
+} 
