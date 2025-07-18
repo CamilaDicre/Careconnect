@@ -646,6 +646,10 @@ header .nav-link {
     color: var(--pal-primary) !important;
 }
 
+.stat-item h3.counter {
+  color: var(--pal-primary) !important;
+}
+
 /* Blog Section */
 .blog-section {
     padding: 150px 0;
@@ -847,6 +851,13 @@ header .nav-link {
     z-index: 1;
 }
 
+.testimonial-main {
+  font-size: 1.2rem;
+  color: var(--pal-primary) !important;
+  font-weight: 400;
+  margin-bottom: 1rem;
+}
+
 .testimonial-author img {
     width: 60px;
     height: 60px;
@@ -922,6 +933,10 @@ header .nav-link {
 
 .footer-section .social-links a:hover {
     color: #fff !important;
+}
+
+.footer-section, .footer-section p, .footer-section a, .footer-section h3, .footer-section li {
+  font-size: 1.25rem;
 }
 
 .copyright-bar {
