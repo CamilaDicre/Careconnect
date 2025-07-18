@@ -55,6 +55,21 @@
     margin-top: 0;
 }
 
+/* Fade-in para las tarjetas de contacto */
+.contact-card {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: contactFadeIn 0.8s ease forwards;
+}
+.contact-card:nth-child(2) { animation-delay: 0.15s; }
+.contact-card:nth-child(3) { animation-delay: 0.3s; }
+@keyframes contactFadeIn {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 .contact-card {
     background: #fff;
     padding: 2.5rem;
@@ -120,19 +135,26 @@
     font-size: 1.2rem;
 }
 
+/* Animación de foco en campos del formulario */
 .contact-form-wrapper .form-control:focus {
     border-color: var(--pal-primary);
-    box-shadow: none;
+    box-shadow: 0 0 0 2px rgba(65, 105, 225, 0.15);
+    transition: box-shadow 0.2s, border-color 0.2s;
 }
 
 .contact-form-wrapper textarea.form-control {
     resize: none;
 }
 
+/* Animación de hover en el botón de enviar */
 .contact-form-wrapper .btn-primary {
     padding: 10px 50px !important;
     font-weight: 600;
     font-size: 1.2rem;
+    transition: transform 0.15s, background 0.2s;
+}
+.contact-form-wrapper .btn-primary:hover, .contact-form-wrapper .btn-primary:focus {
+    background: #4169e1;
 }
 
 .contact-map {
@@ -141,6 +163,12 @@
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.25s;
+}
+
+/* Animación de sombra en el mapa al hacer hover */
+.contact-map:hover {
+    box-shadow: 0 20px 40px rgba(65, 105, 225, 0.13);
 }
 
 .contact-map iframe {
@@ -188,6 +216,28 @@
     transform: translateY(-10px);
 }
 
+/* Animación sutil en el video al hacer hover */
+.phone-button video {
+    transition: transform 0.25s;
+}
+.phone-button video:hover {
+    transform: scale(1.04);
+}
+
 .navbar-scrolled {
     background-color: white;
+}
+
+/* Mensaje de éxito animado */
+.form-success {
+    display: none;
+    text-align: center;
+    color: #2ecc40;
+    font-size: 1.3rem;
+    margin-top: 1rem;
+    animation: fadeInSuccess 0.7s;
+}
+@keyframes fadeInSuccess {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: none; }
 }
