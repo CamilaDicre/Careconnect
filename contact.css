@@ -130,8 +130,8 @@
 }
 
 .contact-form-wrapper .btn-primary {
-    padding: 10px 50px;
-    font-weight: 500;
+    padding: 10px 50px !important;
+    font-weight: 600;
     font-size: 1.2rem;
 }
 
@@ -165,4 +165,29 @@
     .contact-map {
         min-height: 350px;
     }
+}
+
+@keyframes Popup {
+    0% {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
+
+.contact-hero-section img {
+    transition: all 0.25s;
+    animation: 1s ease-in 0s 1 Popup;
+}
+
+.contact-hero-section img:hover {
+    transform: translateY(-10px);
+}
+
+.navbar-scrolled {
+    background-color: white;
 }
