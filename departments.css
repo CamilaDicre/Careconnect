@@ -49,7 +49,7 @@
 }
 
 .departments-section .display-5 {
-    color: #2d4b6e;
+    color: #0c69d2;
     margin-top: 0.5rem;
 }
 
@@ -98,7 +98,8 @@
     font-size: 1.2rem;
     color: white;
     cursor: pointer;
-    
+    font-weight: bold;
+    font-size: larger;
 }
 
 .contenedor-imagenes {
