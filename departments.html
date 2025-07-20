@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Departments - Medick</title>
+    <title>Medicines - Careconnect</title>
     <!--CSS Links-->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="departments.css">
@@ -51,7 +51,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="fw-bold mb-3">Malestares</h1>
+                        <h1 class="fw-bold mb-3">Medicines</h1>
                         <nav aria-label="breadcrumb">
                             </ol>
                         </nav>
@@ -78,7 +78,7 @@
                                         <li><strong>Omeprazole (Prilosec)</strong> - Reduces acid production</li>
                                     </ul>
                                 </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <button onclick="goToMalestar(this)" class="my-button">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
                                         <li><strong>Diuretics (Hydrochlorothiazide)</strong> - Removes excess fluid</li>
                                     </ul>
                                 </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <button onclick="goToMalestar(this)" class="my-button">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -116,7 +116,7 @@
                                         <li><strong>Sumatriptan (Imitrex)</strong> - For migraine headaches</li>
                                     </ul>
                                 </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <button onclick="goToMalestar(this)" class="my-button">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                                         <li><strong>Expectorants (Guaifenesin)</strong> - Thins mucus</li>
                                     </ul>
                                 </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <button onclick="goToMalestar(this)" class="my-button">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -154,7 +154,7 @@
                                         <li><strong>Sucralfate (Carafate)</strong> - Protects stomach lining</li>
                                     </ul>
                                 </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <button onclick="goToMalestar(this)" class="my-button">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                                         <li><strong>Glucosamine/Chondroitin</strong> - Supplements for joint health</li>
                                     </ul>
                                 </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <button onclick="goToMalestar(this)" class="my-button">Learn more</button>
                             </div>
                         </div>
                     </div>
@@ -192,7 +192,7 @@
     <script>
         function goToMalestar(button) {
             const malestar = button.parentElement.querySelector('h3').textContent.trim();
-            window.location.href = `medicinas.html?name=${encodeURIComponent(malestar)}`;
+            window.location.href = `medicine.html?name=${encodeURIComponent(malestar)}`;
         }
     </script>
 </body>

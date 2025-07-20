@@ -79,10 +79,20 @@ function initializeCounters() {
             current += increment;
             
             if (current < target) {
-                counter.textContent = Math.ceil(current) + counter.getAttribute('data-prefix');
+                if (counter.getAttribute('data-prefix') == '$') {
+                    counter.textContent = counter.getAttribute('data-prefix') + Math.ceil(current);
+                }
+                else {
+                    counter.textContent = Math.ceil(current) + counter.getAttribute('data-prefix');
+                }
                 requestAnimationFrame(updateCount);
             } else {
-                counter.textContent = target + counter.getAttribute('data-prefix');
+                if (counter.getAttribute('data-prefix') == '$') {
+                    counter.textContent = counter.getAttribute('data-prefix') + target;
+                }
+                else {
+                    counter.textContent = target + counter.getAttribute('data-prefix');
+                }
             }
         }
         

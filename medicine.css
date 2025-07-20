@@ -1,15 +1,44 @@
+:root {
+  --pal-primary: royalblue;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), #f4f4f9;
-    margin: 0;
-    padding: 0;
+    font-family: 'Josefin Sans', Arial, sans-serif;
+    margin: 0px;
+    padding: 0px;
     text-align: center;
   }
+
+.fixed-medicines-header {
+  padding: 100px 0px;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url(assets/BlueIconsBlueBackgroundSpread.png);
+}
+
+.fixed-medicines-header h1 {
+  font-size: 4.1rem;
+  color: white;
+}
+
+.fixed-medicines-header a {
+  font-size: 1.7rem;
+  text-decoration: none;
+  color: var(--pal-primary);
+}
 
   .container {
     width: 80%;
     margin: 0 auto;
     padding-top: 30px;
+  }
+
+  .department-info h2 {
+    color: #2d4b6e;
+    font-size: 4.1rem;
   }
 
   .medicine-card {
@@ -33,7 +62,6 @@ body {
 
   .medicine-card h2 {
     margin-top: 15px;
-    color: #333;
   }
 
   .medicine-card p {
@@ -54,6 +82,30 @@ body {
   .button:hover {
     background-color: #4cae4c;
   }
+
+.medicine-container {
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-shadow:0 2px 12px #e4e8eb;
+}
+
+.medicine-container {
+  color: #2d4b6e;
+}
+
+.medicine-container h3 {
+  font-size: 1.7rem;
+}
+
+.medicine-container p {
+  font-size: 1.2rem;
+}
+
+.medicine-container b {
+  color: var(--pal-primary);
+}
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', Arial, sans-serif !important;

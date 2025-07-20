@@ -35,7 +35,7 @@ header .navbar {
 }
 
 .navbar-scrolled .navbar-brand {
-    color: var(--pal-primary);
+    color: var(--pal-primary) !important;
 }
 
 header .nav-link {
@@ -395,7 +395,6 @@ header .nav-link {
 .about-section {
     padding: 100px 0;
     background-color: #fff;
-    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(assets/GreyIconsWhiteBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
