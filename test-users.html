@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Usuarios - Careconnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/auth-styles.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .test-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .test-btn {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .test-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.05);
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        .status-success {
+            background: #28a745;
+        }
+        .status-error {
+            background: #dc3545;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh;">
+    <div class="test-container">
+        <div class="text-center mb-5">
+            <h1 style="color: #1976d2; font-weight: 700; margin-bottom: 10px;">
+                <i class="bi bi-shield-check me-3"></i>Test de Usuarios Admin
+            </h1>
+            <p class="text-muted">Verificar que los usuarios administradores se cargaron correctamente</p>
+        </div>
+
+        <div class="test-card">
+            <h4><i class="bi bi-gear me-2"></i>Estado del Sistema</h4>
+            <div id="system-status">
+                <p><span class="status-indicator status-success"></span>Cargando estado...</p>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h4><i class="bi bi-people me-2"></i>Usuarios Disponibles</h4>
+            <div id="users-list">
+                <p>Cargando usuarios...</p>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h4><i class="bi bi-key me-2"></i>Pruebas de Login</h4>
+            <div id="login-tests">
+                <p>Selecciona un usuario para probar el login:</p>
+                <div id="test-buttons"></div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <a href="login.html" class="btn btn-primary btn-lg me-3">
+                <i class="bi bi-arrow-right me-2"></i>Ir al Login
+            </a>
+            <a href="reset-users.html" class="btn btn-warning btn-lg me-3">
+                <i class="bi bi-arrow-clockwise me-2"></i>Reset Usuarios
+            </a>
+            <a href="admin-dashboard.html" class="btn btn-success btn-lg">
+                <i class="bi bi-shield-check me-2"></i>Panel Admin
+            </a>
+        </div>
+    </div>
+
+    <script src="js/auth-system.js"></script>
+    <script>
+        // Función para verificar el estado del sistema
+        function checkSystemStatus() {
+            const statusDiv = document.getElementById('system-status');
+            const users = JSON.parse(localStorage.getItem('careconnect_users') || '[]');
+            
+            if (users.length > 0) {
+                statusDiv.innerHTML = `
+                    <p><span class="status-indicator status-success"></span>Sistema cargado correctamente</p>
+                    <p><span class="status-indicator status-success"></span>${users.length} usuarios disponibles</p>
+                    <p><span class="status-indicator status-success"></span>Usuarios admin: ${users.filter(u => u.userType === 'admin').length}</p>
+                `;
+            } else {
+                statusDiv.innerHTML = `
+                    <p><span class="status-indicator status-error"></span>No hay usuarios cargados</p>
+                    <p><span class="status-indicator status-error"></span>Necesitas resetear los usuarios</p>
+                `;
+            }
+        }
+
+        // Función para mostrar la lista de usuarios
+        function showUsersList() {
+            const usersDiv = document.getElementById('users-list');
+            const users = JSON.parse(localStorage.getItem('careconnect_users') || '[]');
+            
+            if (users.length > 0) {
+                const usersHtml = users.map(user => `
+                    <div style="background: rgba(255,255,255,0.1); padding: 10px; margin: 5px 0; border-radius: 8px;">
+                        <strong>${user.fullName}</strong> (${user.email})
+                        <span style="background: rgba(255,255,255,0.2); padding: 2px 8px; border-radius: 12px; font-size: 12px; margin-left: 10px;">
+                            ${user.userType}
+                        </span>
+                    </div>
+                `).join('');
+                
+                usersDiv.innerHTML = usersHtml;
+            } else {
+                usersDiv.innerHTML = '<p>No hay usuarios disponibles</p>';
+            }
+        }
+
+        // Función para crear botones de prueba
+        function createTestButtons() {
+            const buttonsDiv = document.getElementById('test-buttons');
+            const users = JSON.parse(localStorage.getItem('careconnect_users') || '[]');
+            const adminUsers = users.filter(u => u.userType === 'admin');
+            
+            if (adminUsers.length > 0) {
+                const buttonsHtml = adminUsers.map(user => `
+                    <button class="test-btn" onclick="testLogin('${user.email}', '${user.password}')">
+                        <i class="bi bi-person me-1"></i>${user.fullName}
+                    </button>
+                `).join('');
+                
+                buttonsDiv.innerHTML = buttonsHtml;
+            } else {
+                buttonsDiv.innerHTML = '<p>No hay usuarios admin disponibles</p>';
+            }
+        }
+
+        // Función para probar login
+        function testLogin(email, password) {
+            const users = JSON.parse(localStorage.getItem('careconnect_users') || '[]');
+            const user = users.find(u => u.email === email && u.password === password);
+            
+            if (user) {
+                alert(`✅ Login exitoso!\nUsuario: ${user.fullName}\nEmail: ${user.email}\nRol: ${user.userType}`);
+                
+                // Simular login
+                localStorage.setItem('current_user_id', user.id);
+                
+                // Redirigir después de 2 segundos
+                setTimeout(() => {
+                    if (user.userType === 'admin') {
+                        window.location.href = 'admin-dashboard.html';
+                    } else if (user.userType === 'patient') {
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        window.location.href = 'register-caregiver.html';
+                    }
+                }, 2000);
+            } else {
+                alert(`❌ Error en login!\nEmail: ${email}\nContraseña: ${password}\n\nVerifica las credenciales.`);
+            }
+        }
+
+        // Función para forzar reset de usuarios
+        function forceReset() {
+            if (confirm('¿Forzar reset de usuarios?')) {
+                localStorage.removeItem('careconnect_users');
+                localStorage.removeItem('current_user_id');
+                location.reload();
+            }
+        }
+
+        // Cargar datos al iniciar
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSystemStatus();
+            showUsersList();
+            createTestButtons();
+        });
+    </script>
+</body>
+</html> 

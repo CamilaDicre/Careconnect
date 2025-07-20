@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/auth-styles.css">
 </head>
 <body class="dashboard-page">
     <div style="position:fixed;top:10px;right:10px;z-index:9999;background:#fff;padding:8px 16px;border-radius:8px;box-shadow:0 2px 8px #0001;">
@@ -22,24 +23,28 @@
     <main id="dashboard-content" style="margin-left:350px;transition:margin-left 0.4s ease;">
       <!-- Aquí se mostrará la sección seleccionada -->
       <user-profile></user-profile>
+      <user-records></user-records>
     </main>
     
     <!-- Notificación personalizada -->
-    <div id="notification" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-100px);background:linear-gradient(135deg,#4facfe,#00f2fe);color:white;padding:20px 30px;border-radius:16px;box-shadow:0 12px 40px rgba(79,172,254,0.3);z-index:10000;opacity:0;transition:all 0.6s ease;max-width:350px;font-family:'Poppins',sans-serif;font-weight:500;text-align:center;backdrop-filter:blur(10px);">
+    <div id="notification" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-100px);background:linear-gradient(135deg,#4facfe,#00f2fe);color:white;padding:16px 24px;border-radius:12px;box-shadow:0 8px 25px rgba(79,172,254,0.25);z-index:10000;opacity:0;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);max-width:320px;font-family:'Poppins',sans-serif;font-weight:500;text-align:center;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);">
       <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-        <i class="bi bi-check-circle-fill" style="font-size:24px;"></i>
-        <span id="notification-text" style="font-size:16px;">Sesión cerrada correctamente</span>
+        <i class="bi bi-check-circle-fill" style="font-size:20px;"></i>
+        <span id="notification-text" style="font-size:15px;">Sesión cerrada correctamente</span>
       </div>
     </div>
     
     <!-- Overlay de transición de página -->
-    <div id="page-transition" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#4facfe,#00f2fe);z-index:99999;opacity:0;visibility:hidden;transition:all 1.2s ease;display:flex;align-items:center;justify-content:center;">
+    <div id="page-transition" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);z-index:99999;opacity:0;visibility:hidden;transition:all 0.8s cubic-bezier(0.4, 0, 0.2, 1);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);">
       <div style="text-align:center;color:white;font-family:'Poppins',sans-serif;">
-        <i class="bi bi-arrow-right-circle-fill" style="font-size:48px;margin-bottom:20px;display:block;"></i>
-        <h3 style="margin:0;font-weight:600;font-size:24px;">Redirigiendo...</h3>
-        <p style="margin:10px 0 0 0;font-size:16px;opacity:0.9;">Esperamos verlo de nuevo</p>
+        <div style="background:linear-gradient(135deg,#4facfe,#00f2fe);width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;box-shadow:0 8px 25px rgba(79,172,254,0.3);">
+          <i class="bi bi-arrow-right-circle-fill" style="font-size:32px;"></i>
+        </div>
+        <h3 style="margin:0;font-weight:600;font-size:22px;">¡Hasta pronto!</h3>
+        <p style="margin:10px 0 0 0;font-size:15px;opacity:0.9;">Cerrando sesión...</p>
       </div>
     </div>
+    <script src="js/auth-system.js"></script>
     <script src="dashboard/welcome-overlay.js"></script>
     <script src="dashboard/care-sidebar.js"></script>
     <script src="dashboard/user-profile.js"></script>
@@ -48,10 +53,18 @@
     <script src="dashboard/calendar-view.js"></script>
     <script src="dashboard/caregiver-search.js"></script>
     <script src="dashboard/patient-requests.js"></script>
+    <script src="dashboard/user-records.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-    // Selector temporal para alternar entre paciente y cuidador
-    window.userType = 'patient';
+    // Verificar autenticación
+    if (!authSystem.isAuthenticated()) {
+        window.location.href = 'login.html';
+    }
+
+    // Configurar tipo de usuario según la sesión
+    window.userType = authSystem.currentUser.userType;
+    document.getElementById('userTypeSelect').value = window.userType;
+    
     document.getElementById('userTypeSelect').addEventListener('change', function(e) {
       window.userType = e.target.value;
       // Aquí podrías recargar los componentes según el tipo de usuario
@@ -65,33 +78,33 @@
       // Configurar colores según el tipo
       if (type === 'success') {
         notification.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
-        notification.style.boxShadow = '0 12px 40px rgba(79,172,254,0.3)';
+        notification.style.boxShadow = '0 8px 25px rgba(79,172,254,0.25)';
         notification.innerHTML = `
           <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-            <i class="bi bi-check-circle-fill" style="font-size:24px;"></i>
-            <span style="font-size:16px;">${message}</span>
+            <i class="bi bi-check-circle-fill" style="font-size:20px;"></i>
+            <span style="font-size:15px; font-weight: 500;">${message}</span>
           </div>
         `;
       } else if (type === 'error') {
         notification.style.background = 'linear-gradient(135deg, #ff9a9e, #fecfef)';
-        notification.style.boxShadow = '0 12px 40px rgba(255,154,158,0.3)';
+        notification.style.boxShadow = '0 8px 25px rgba(255,154,158,0.25)';
         notification.innerHTML = `
           <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
-            <i class="bi bi-exclamation-triangle-fill" style="font-size:24px;"></i>
-            <span style="font-size:16px;">${message}</span>
+            <i class="bi bi-exclamation-triangle-fill" style="font-size:20px;"></i>
+            <span style="font-size:15px; font-weight: 500;">${message}</span>
           </div>
         `;
       }
       
-      // Mostrar notificación con transición suave
+      // Mostrar notificación con transición más suave
       notification.style.opacity = '1';
       notification.style.transform = 'translate(-50%, -50%) translateY(0)';
       
-      // Ocultar después de 4 segundos con transición suave
+      // Ocultar después de 2.5 segundos (más rápido)
       setTimeout(() => {
         notification.style.opacity = '0';
-        notification.style.transform = 'translate(-50%, -50%) translateY(-50px)';
-      }, 4000);
+        notification.style.transform = 'translate(-50%, -50%) translateY(-30px)';
+      }, 2500);
     }
     
     // Función para mostrar transición de página
@@ -103,18 +116,7 @@
     
     // Función de logout
     function logout() {
-      // Aquí puedes agregar lógica para limpiar la sesión
-      showNotification('Sesión cerrada correctamente', 'success');
-      
-      // Mostrar transición de página después de la notificación
-      setTimeout(() => {
-        showPageTransition();
-        
-        // Redirigir después de mostrar la transición por más tiempo
-        setTimeout(() => {
-          window.location.href = 'index.html';
-        }, 3000);
-      }, 2500);
+      authSystem.logout();
     }
     </script>
 </body>

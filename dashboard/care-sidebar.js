@@ -18,6 +18,18 @@ class CareSidebar extends HTMLElement {
     return window.userType || 'patient';
   }
   getUserData() {
+    // Usar datos del sistema de autenticación si está disponible
+    if (window.authSystem && window.authSystem.currentUser) {
+      const user = window.authSystem.currentUser;
+      const isPatient = user.userType === 'patient';
+      
+      return {
+        name: user.fullName,
+        photo: isPatient ? 'assets/people/woman-whiteshirt.png' : 'assets/people/man-yellowshirt.png'
+      };
+    }
+    
+    // Fallback a datos por defecto
     if (this.getUserType() === 'patient') {
       return {
         name: 'María González',
@@ -25,7 +37,7 @@ class CareSidebar extends HTMLElement {
       };
     } else {
       return {
-        name: 'Dr. Carlos Rodríguez',
+        name: 'Cuidador',
         photo: 'assets/people/man-yellowshirt.png'
       };
     }

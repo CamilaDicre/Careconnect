@@ -4,8 +4,9 @@ class WelcomeOverlay extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
   connectedCallback() {
-    this.render();
-    setTimeout(() => this.hide(), 4000);
+    // Comentado para eliminar el mensaje de bienvenida
+    // this.render();
+    // setTimeout(() => this.hide(), 4000);
   }
   hide() {
     this.shadowRoot.querySelector('.overlay').style.opacity = '0';

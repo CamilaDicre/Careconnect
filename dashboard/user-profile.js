@@ -10,6 +10,22 @@ class UserProfile extends HTMLElement {
     return window.userType || 'patient';
   }
   getProfileData() {
+    // Usar datos del sistema de autenticación si está disponible
+    if (window.authSystem && window.authSystem.currentUser) {
+      const user = window.authSystem.currentUser;
+      const isPatient = user.userType === 'patient';
+      
+      return {
+        name: user.fullName,
+        age: isPatient ? 68 : 45,
+        gender: isPatient ? 'Femenino' : 'Masculino',
+        photo: isPatient ? 'assets/people/woman-whiteshirt.png' : 'assets/people/man-yellowshirt.png',
+        type: isPatient ? 'Paciente' : 'Cuidador',
+        areas: isPatient ? null : ['Medicina General', 'Geriatría', 'Cuidado Domiciliario']
+      };
+    }
+    
+    // Fallback a datos por defecto
     if (this.getUserType() === 'patient') {
       return {
         name: 'María González',
@@ -21,7 +37,7 @@ class UserProfile extends HTMLElement {
       };
     } else {
       return {
-        name: 'Dr. Carlos Rodríguez',
+        name: 'Cuidador',
         age: 45,
         gender: 'Masculino',
         photo: 'assets/people/man-yellowshirt.png',

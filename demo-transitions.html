@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo - Transiciones Mejoradas - Careconnect</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/auth-styles.css">
+    <style>
+        .demo-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 40px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+        .demo-section {
+            margin-bottom: 40px;
+            padding: 30px;
+            border-radius: 15px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+        .demo-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: 600;
+            margin: 10px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .transition-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+        .feature-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 15px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh;">
+    <div class="demo-container">
+        <div class="text-center mb-5">
+            <h1 style="color: #1976d2; font-weight: 700; margin-bottom: 10px;">
+                <i class="bi bi-stars me-3"></i>Demo: Transiciones Mejoradas
+            </h1>
+            <p class="text-muted">Sistema de autenticación con transiciones suaves y filtrado inteligente</p>
+        </div>
+
+        <!-- Sección de Transiciones -->
+        <div class="demo-section">
+            <h3 style="color: #1976d2; margin-bottom: 20px;">
+                <i class="bi bi-arrow-repeat me-2"></i>Transiciones Personalizadas
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-heart-pulse"></i>
+                        </div>
+                        <h5>Pacientes</h5>
+                        <p class="text-muted">Transición suave al dashboard principal con mensaje personalizado</p>
+                        <button class="demo-button" onclick="demoTransition('patient')">
+                            Probar Transición
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h5>Cuidadores</h5>
+                        <p class="text-muted">Redirección al registro de cuidadores con animación elegante</p>
+                        <button class="demo-button" onclick="demoTransition('caregiver')">
+                            Probar Transición
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+                        <h5>Administradores</h5>
+                        <p class="text-muted">Acceso al panel de administración con transición premium</p>
+                        <button class="demo-button" onclick="demoTransition('admin')">
+                            Probar Transición
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección de Notificaciones -->
+        <div class="demo-section">
+            <h3 style="color: #1976d2; margin-bottom: 20px;">
+                <i class="bi bi-bell me-2"></i>Notificaciones Mejoradas
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <h5><i class="bi bi-check-circle text-success me-2"></i>Notificaciones de Éxito</h5>
+                        <p class="text-muted">Transiciones más suaves y rápidas (2.5s)</p>
+                        <button class="demo-button" onclick="showNotification('¡Operación exitosa!', 'success')">
+                            Mostrar Notificación
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <h5><i class="bi bi-exclamation-triangle text-warning me-2"></i>Notificaciones de Error</h5>
+                        <p class="text-muted">Diseño más suave con sombras reducidas</p>
+                        <button class="demo-button" onclick="showNotification('Error en la operación', 'error')">
+                            Mostrar Error
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vista Previa de Transición -->
+        <div class="demo-section">
+            <h3 style="color: #1976d2; margin-bottom: 20px;">
+                <i class="bi bi-eye me-2"></i>Vista Previa de Transición
+            </h3>
+            
+            <div class="transition-preview" id="transition-preview">
+                <div style="text-align: center;">
+                    <div style="background: linear-gradient(135deg, #4facfe, #00f2fe); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(79,172,254,0.3);">
+                        <i class="bi bi-person-check" style="font-size: 36px; color: white;"></i>
+                    </div>
+                    <h4 style="margin: 0 0 10px 0; font-weight: 700;">¡Bienvenido!</h4>
+                    <p style="margin: 0; opacity: 0.9;">Selecciona un tipo de usuario para ver la transición</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Características Mejoradas -->
+        <div class="demo-section">
+            <h3 style="color: #1976d2; margin-bottom: 20px;">
+                <i class="bi bi-gear me-2"></i>Características Mejoradas
+            </h3>
+            
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <h6><i class="bi bi-speedometer2 me-2"></i>Transiciones Más Rápidas</h6>
+                        <ul class="text-muted">
+                            <li>Reducción de 4s a 2.5s en notificaciones</li>
+                            <li>Transiciones de 1.2s a 0.8s</li>
+                            <li>Animaciones más fluidas</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="feature-card">
+                        <h6><i class="bi bi-palette me-2"></i>Diseño Más Suave</h6>
+                        <ul class="text-muted">
+                            <li>Sombras reducidas (25% opacidad)</li>
+                            <li>Bordes más suaves</li>
+                            <li>Backdrop blur mejorado</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botones de Acción -->
+        <div class="text-center mt-5">
+            <a href="login.html" class="demo-button">
+                <i class="bi bi-arrow-right me-2"></i>Ir al Login
+            </a>
+            <a href="dashboard.html" class="demo-button">
+                <i class="bi bi-speedometer2 me-2"></i>Ver Dashboard
+            </a>
+            <a href="admin-dashboard.html" class="demo-button">
+                <i class="bi bi-shield-check me-2"></i>Panel Admin
+            </a>
+        </div>
+    </div>
+
+    <!-- Notificación -->
+    <div id="notification" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-100px);background:linear-gradient(135deg,#4facfe,#00f2fe);color:white;padding:16px 24px;border-radius:12px;box-shadow:0 8px 25px rgba(79,172,254,0.25);z-index:10000;opacity:0;transition:all 0.4s cubic-bezier(0.4, 0, 0.2, 1);max-width:320px;font-family:'Poppins',sans-serif;font-weight:500;text-align:center;backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,0.1);">
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+            <i class="bi bi-check-circle-fill" style="font-size:20px;"></i>
+            <span style="font-size:15px;">Notificación de ejemplo</span>
+        </div>
+    </div>
+
+    <script>
+        function demoTransition(userType) {
+            const preview = document.getElementById('transition-preview');
+            
+            let message, icon, color;
+            switch(userType) {
+                case 'patient':
+                    message = '¡Bienvenido al Dashboard de Pacientes!';
+                    icon = 'bi-heart-pulse';
+                    color = 'linear-gradient(135deg, #4facfe, #00f2fe)';
+                    break;
+                case 'caregiver':
+                    message = '¡Bienvenido al Registro de Cuidadores!';
+                    icon = 'bi-people';
+                    color = 'linear-gradient(135deg, #a8edea, #fed6e3)';
+                    break;
+                case 'admin':
+                    message = '¡Bienvenido al Panel de Administración!';
+                    icon = 'bi-shield-check';
+                    color = 'linear-gradient(135deg, #ffecd2, #fcb69f)';
+                    break;
+            }
+
+            preview.innerHTML = `
+                <div style="text-align: center;">
+                    <div style="background: ${color}; width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                        <i class="bi ${icon}" style="font-size: 36px; color: white;"></i>
+                    </div>
+                    <h4 style="margin: 0 0 10px 0; font-weight: 700;">¡Hola, Usuario!</h4>
+                    <p style="margin: 0 0 20px 0; opacity: 0.9;">${message}</p>
+                    <div style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+                        <div style="width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite;"></div>
+                        <div style="width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite 0.2s;"></div>
+                        <div style="width: 8px; height: 8px; background: white; border-radius: 50%; animation: pulse 1.5s infinite 0.4s;"></div>
+                    </div>
+                </div>
+            `;
+
+            // Simular redirección después de 2 segundos
+            setTimeout(() => {
+                preview.innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="background: linear-gradient(135deg, #667eea, #764ba2); width: 80px; height: 80px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 8px 32px rgba(0,0,0,0.3);">
+                            <i class="bi bi-arrow-right-circle-fill" style="font-size: 36px; color: white;"></i>
+                        </div>
+                        <h4 style="margin: 0 0 10px 0; font-weight: 700;">Redirigiendo...</h4>
+                        <p style="margin: 0; opacity: 0.9;">Transición completada</p>
+                    </div>
+                `;
+            }, 2000);
+        }
+
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
+                notification.style.boxShadow = '0 8px 25px rgba(79,172,254,0.25)';
+                notification.innerHTML = `
+                    <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                        <i class="bi bi-check-circle-fill" style="font-size:20px;"></i>
+                        <span style="font-size:15px; font-weight: 500;">${message}</span>
+                    </div>
+                `;
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(135deg, #ff9a9e, #fecfef)';
+                notification.style.boxShadow = '0 8px 25px rgba(255,154,158,0.25)';
+                notification.innerHTML = `
+                    <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size:20px;"></i>
+                        <span style="font-size:15px; font-weight: 500;">${message}</span>
+                    </div>
+                `;
+            }
+            
+            notification.style.opacity = '1';
+            notification.style.transform = 'translate(-50%, -50%) translateY(0)';
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translate(-50%, -50%) translateY(-30px)';
+            }, 2500);
+        }
+
+        // Agregar estilos de animación
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0%, 100% { opacity: 0.3; transform: scale(0.8); }
+                50% { opacity: 1; transform: scale(1.2); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

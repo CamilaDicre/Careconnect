@@ -267,6 +267,7 @@
             </div>
         </div>
     </div>
+    <script src="js/auth-system.js"></script>
     <script>
         // Lógica de cambio de tarjetas
         const loginCard = document.getElementById('login-card');
@@ -290,18 +291,19 @@
             document.getElementById('show-login').click();
         };
 
-        // Redirección personalizada al registrar
-        document.querySelector('#register-card form').onsubmit = function(e) {
-            e.preventDefault();
-            const role = document.getElementById('reg-role').value;
-            if (role === 'paciente') {
-                window.location.href = 'dashboard.html';
-            } else if (role === 'cuidador') {
-                window.location.href = 'register-caregiver.html';
-            } else {
-                alert('Please select what you are looking for.');
+        // Verificar si ya hay una sesión activa
+        document.addEventListener('DOMContentLoaded', function() {
+            if (authSystem.isAuthenticated()) {
+                const user = authSystem.currentUser;
+                if (user.userType === 'admin') {
+                    window.location.href = 'admin-dashboard.html';
+                } else if (user.userType === 'patient') {
+                    window.location.href = 'dashboard.html';
+                } else if (user.userType === 'caregiver') {
+                    window.location.href = 'register-caregiver.html';
+                }
             }
-        };
+        });
     </script>
 </body>
 </html> 
