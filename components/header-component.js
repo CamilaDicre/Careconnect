@@ -1020,7 +1020,7 @@ class HeaderComponent extends HTMLElement {
                     <div class="careconnect-container">
                         <!-- Logo and Brand on the left -->
                         <div class="careconnect-brand-container careconnect-d-flex careconnect-align-items-center">
-                            <img src="../assets/Frame - 1.svg" class="careconnect-logo-image" style="width: 50px; height: 50px;" alt="A letter C with a heart inside, the logo of the app Careconnect.">
+                            <img src="assets/Frame - 1.svg" class="careconnect-logo-image" style="width: 50px; height: 50px;" alt="A letter C with a heart inside, the logo of the app Careconnect.">
                             <a class="careconnect-brand careconnect-fw-bold careconnect-fs-4 careconnect-mb-0" href="../index.html">Careconnect</a>
                         </div>
                         

@@ -10,14 +10,18 @@ class UserProfile extends HTMLElement {
     return window.userType || 'patient';
   }
   getProfileData() {
-    if (this.getUserType() === 'patient') {
+    // Leer nombre y rol desde localStorage si existen
+    const storedName = localStorage.getItem('careconnectUserName');
+    const storedRole = localStorage.getItem('careconnectUserRole');
+    const userType = this.getUserType();
+    if (storedName && storedRole) {
       return {
-        name: 'María González',
-        age: 68,
-        gender: 'Femenino',
-        photo: 'assets/people/woman-whiteshirt.png',
-        type: 'Paciente',
-        areas: null
+        name: storedName,
+        age: userType === 'patient' ? 68 : 45,
+        gender: userType === 'patient' ? 'Femenino' : 'Masculino',
+        photo: userType === 'patient' ? 'assets/people/woman-whiteshirt.png' : 'assets/people/man-yellowshirt.png',
+        type: storedRole === 'paciente' ? 'Paciente' : 'Cuidador',
+        areas: userType === 'patient' ? null : ['Medicina General', 'Geriatría', 'Cuidado Domiciliario']
       };
     } else {
       return {

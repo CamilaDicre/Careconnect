@@ -98,6 +98,10 @@
                 return;
             }
             
+            // Guardar el nombre en localStorage
+            localStorage.setItem('careconnectUserName', name);
+            localStorage.setItem('careconnectUserRole', role);
+            
             // Mostrar estado de carga en el botón
             const submitBtn = this.querySelector('.auth-main-btn');
             const originalText = submitBtn.textContent;
