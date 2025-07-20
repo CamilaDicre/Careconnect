@@ -1,0 +1,722 @@
+/* Auth.css - Estilos específicos para autenticación */
+
+/* Variables globales */
+:root {
+    --auth-primary: #1976d2;
+    --auth-primary-dark: #1565c0;
+    --auth-secondary: #63a4ff;
+    --auth-text: #333;
+    --auth-border: #b6c7e3;
+    --auth-bg: #f6f8fc;
+    --auth-white: #fff;
+    --auth-shadow: rgba(25, 118, 210, 0.13);
+    --auth-shadow-hover: rgba(25, 118, 210, 0.18);
+}
+
+/* Estilos base del body */
+body {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(../assets/BlueIconsBlueBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    box-sizing: border-box;
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Botón de regreso mejorado */
+.back-home-btn {
+    position: fixed;
+    left: 20px;
+    top: 20px;
+    z-index: 2000;
+    color: var(--auth-white);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    background: rgba(255,255,255,0.1);
+    padding: 12px 16px;
+    border-radius: 25px;
+    box-shadow: 0 4px 18px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border: 2px solid rgba(255,255,255,0.3);
+    transition: all 0.3s ease;
+    letter-spacing: 0.5px;
+    backdrop-filter: blur(10px);
+    max-width: 200px;
+}
+
+.back-home-btn:hover {
+    background: rgba(255,255,255,0.2);
+    color: var(--auth-white);
+    border-color: rgba(255,255,255,0.5);
+    box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+.back-home-btn i {
+    font-size: 1.1rem;
+    transition: transform 0.3s ease;
+}
+
+.back-home-btn:hover i {
+    transform: translateX(-3px);
+}
+
+/* Contenedor principal de autenticación */
+.auth-container {
+    max-width: 450px;
+    width: 100%;
+    background: var(--auth-white);
+    border-radius: 32px;
+    box-shadow: 0 8px 40px var(--auth-shadow);
+    padding: 2.5rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header de autenticación */
+.auth-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.auth-logo {
+    width: 90px;
+    height: 90px;
+    margin-bottom: 0.5rem;
+    animation: logoEntrance 1.2s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+@keyframes logoEntrance {
+    0% {
+        opacity: 0;
+        transform: scale(0.7) translateY(40px) rotate(-8deg);
+        filter: blur(2px);
+    }
+    60% {
+        opacity: 1;
+        transform: scale(1.08) translateY(-10px) rotate(2deg);
+        filter: blur(0);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0) rotate(0deg);
+        filter: blur(0);
+    }
+}
+
+.auth-header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.3rem;
+    color: var(--auth-primary);
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.auth-subtitle {
+    color: var(--auth-primary);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Toggle de autenticación */
+.auth-toggle {
+    display: flex;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    gap: 0.5rem;
+}
+
+.auth-toggle-btn {
+    flex: 1;
+    font-size: 1.15rem;
+    font-weight: 600;
+    border: 2px solid var(--auth-primary);
+    border-radius: 18px;
+    padding: 0.8rem 0;
+    background: var(--auth-white);
+    color: var(--auth-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 12px var(--auth-shadow);
+}
+
+.auth-toggle-btn.active, 
+.auth-toggle-btn:focus {
+    background: linear-gradient(90deg, var(--auth-primary-dark) 60%, var(--auth-primary) 100%);
+    color: var(--auth-white);
+    border-color: var(--auth-primary-dark);
+    box-shadow: 0 4px 18px var(--auth-shadow-hover);
+    transform: translateY(-1px);
+}
+
+/* Tarjeta de autenticación */
+.auth-card {
+    width: 100%;
+    background: var(--auth-white);
+    border-radius: 24px;
+    box-shadow: 0 2px 12px rgba(25, 118, 210, 0.07);
+    padding: 1.5rem 1rem 1rem 1rem;
+    margin-bottom: 0.5rem;
+    animation: fadeIn 0.5s;
+}
+
+@keyframes fadeIn {
+    from { 
+        opacity: 0; 
+        transform: translateY(30px);
+    }
+    to { 
+        opacity: 1; 
+        transform: translateY(0);
+    }
+}
+
+.auth-card label {
+    display: block;
+    font-size: 1.08rem;
+    font-weight: 600;
+    color: var(--auth-primary);
+    margin-bottom: 0.2rem;
+    margin-top: 0.7rem;
+}
+
+.auth-card input, 
+.auth-card select {
+    width: 100%;
+    font-size: 1.13rem;
+    padding: 0.9rem 1.1rem;
+    border-radius: 14px;
+    border: 1.5px solid var(--auth-border);
+    background: var(--auth-bg);
+    margin-bottom: 0.5rem;
+    margin-top: 0.1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+}
+
+.auth-card input:focus, 
+.auth-card select:focus {
+    border-color: var(--auth-primary);
+    background: var(--auth-white);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    transform: translateY(-1px);
+}
+
+.auth-card i {
+    margin-right: 0.5rem;
+    color: var(--auth-primary);
+    font-size: 1.1rem;
+    vertical-align: middle;
+}
+
+/* Botón principal */
+.auth-main-btn {
+    width: 100%;
+    font-size: 1.18rem;
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 0.9rem 0;
+    background: linear-gradient(90deg, var(--auth-primary) 60%, var(--auth-secondary) 100%);
+    color: var(--auth-white);
+    border: none;
+    margin-top: 1.1rem;
+    margin-bottom: 0.3rem;
+    box-shadow: 0 2px 12px var(--auth-shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.auth-main-btn:hover {
+    background: linear-gradient(90deg, var(--auth-primary-dark) 60%, var(--auth-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--auth-shadow-hover);
+}
+
+.auth-main-btn:active {
+    transform: translateY(0);
+}
+
+/* Enlaces extra */
+.auth-extra {
+    text-align: center;
+    margin-top: 0.2rem;
+}
+
+.auth-link {
+    color: var(--auth-primary);
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.auth-link:hover {
+    color: var(--auth-primary-dark);
+    text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 15px;
+        align-items: flex-start;
+        padding-top: 80px;
+    }
+    
+    .back-home-btn {
+        left: 15px;
+        top: 15px;
+        padding: 10px 14px;
+        font-size: 0.9rem;
+        max-width: 180px;
+    }
+    
+    .back-home-btn span {
+        display: none;
+    }
+    
+    .back-home-btn i {
+        font-size: 1.2rem;
+        margin: 0;
+    }
+    
+    .auth-container {
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        max-width: 100%;
+        margin-top: 20px;
+    }
+    
+    .auth-card {
+        padding: 1.2rem 0.8rem 0.8rem 0.8rem;
+    }
+    
+    .auth-logo {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .auth-header h1 {
+        font-size: 2rem;
+    }
+    
+    .auth-toggle-btn {
+        font-size: 1.1rem;
+        padding: 0.7rem 0;
+    }
+    
+    .auth-card input,
+    .auth-card select {
+        font-size: 1.1rem;
+        padding: 0.8rem 1rem;
+    }
+    
+    .auth-main-btn {
+        font-size: 1.15rem;
+        padding: 0.8rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+        padding-top: 70px;
+    }
+    
+    .back-home-btn {
+        left: 10px;
+        top: 10px;
+        padding: 8px 12px;
+        font-size: 0.85rem;
+    }
+    
+    .auth-container {
+        padding: 1.5rem 1rem 1rem 1rem;
+        border-radius: 24px;
+    }
+    
+    .auth-card {
+        padding: 1rem 0.5rem 0.5rem 0.5rem;
+        border-radius: 18px;
+    }
+    
+    .auth-logo {
+        width: 60px;
+        height: 60px;
+    }
+    
+    .auth-header h1 {
+        font-size: 1.8rem;
+    }
+    
+    .auth-subtitle {
+        font-size: 1rem;
+    }
+    
+    .auth-toggle-btn {
+        font-size: 1rem;
+        padding: 0.6rem 0;
+    }
+    
+    .auth-card label {
+        font-size: 1rem;
+    }
+    
+    .auth-card input,
+    .auth-card select {
+        font-size: 1rem;
+        padding: 0.7rem 0.9rem;
+    }
+    
+    .auth-main-btn {
+        font-size: 1.1rem;
+        padding: 0.7rem 0;
+    }
+    
+    .auth-link {
+        font-size: 1rem;
+    }
+}
+
+/* Estados de carga */
+.auth-main-btn.loading {
+    position: relative;
+    color: transparent;
+}
+
+.auth-main-btn.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 2px solid transparent;
+    border-top: 2px solid var(--auth-white);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: translate(-50%, -50%) rotate(0deg); }
+    100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Animaciones adicionales */
+.auth-container {
+    animation: slideUp 0.6s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mejoras de accesibilidad */
+.auth-card input:focus,
+.auth-card select:focus,
+.auth-toggle-btn:focus,
+.auth-main-btn:focus {
+    outline: 2px solid var(--auth-primary);
+    outline-offset: 2px;
+}
+
+/* Estados de error */
+.auth-card input.error,
+.auth-card select.error {
+    border-color: #d32f2f;
+    background: #ffebee;
+}
+
+.auth-error {
+    color: #d32f2f;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+    display: block;
+}
+
+/* Estilos específicos para register-caregiver */
+.caregiver-container {
+    max-width: 500px;
+    margin: 48px auto 32px auto;
+    background: rgba(255,255,255,0.97);
+    border-radius: 32px;
+    box-shadow: 0 8px 40px var(--auth-shadow);
+    padding: 2.5rem 2rem 2rem 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.caregiver-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.2rem;
+    animation: logoEntrance 1.1s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    z-index: 2;
+}
+
+.caregiver-logo img {
+    width: 100px;
+    height: 100px;
+    border-radius: 0;
+    background: transparent;
+    margin-bottom: 0.3rem;
+    position: relative;
+    z-index: 2;
+}
+
+.caregiver-logo span {
+    font-size: 2.3rem;
+    font-weight: 800;
+    color: var(--auth-primary-dark);
+    letter-spacing: 2.5px;
+    text-shadow: 0 2px 6px rgba(25,118,210,0.10), 0 1px 0 #fff;
+    margin-top: 0.2rem;
+    position: relative;
+    z-index: 2;
+}
+
+.caregiver-header {
+    text-align: center;
+    margin-bottom: 1.2rem;
+}
+
+.caregiver-header h1 {
+    font-size: 1.7rem;
+    color: var(--auth-primary);
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.caregiver-header p {
+    color: var(--auth-primary);
+    font-size: 1.08rem;
+    margin-bottom: 0.5rem;
+}
+
+.caregiver-form {
+    width: 100%;
+    margin-top: 0.5rem;
+}
+
+.form-section {
+    background: none;
+    border-radius: 0;
+    padding: 0 0 0.5rem 0;
+    margin-bottom: 0.7rem;
+    box-shadow: none;
+    border: none;
+}
+
+.caregiver-form label {
+    display: block;
+    font-size: 1.18rem;
+    font-weight: 700;
+    color: var(--auth-primary-dark);
+    margin-bottom: 0.18rem;
+    margin-top: 1.1rem;
+    letter-spacing: 0.7px;
+    transition: color 0.2s;
+    text-align: center;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.1rem;
+    background: var(--auth-bg);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+    display: flex;
+    align-items: center;
+    padding: 0.1rem 0.2rem 0.1rem 0.2rem;
+}
+
+.input-group i {
+    position: absolute;
+    left: 1.1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--auth-primary);
+    font-size: 1.35rem;
+    opacity: 0.95;
+    pointer-events: none;
+    transition: color 0.2s;
+}
+
+.caregiver-form input, 
+.caregiver-form select, 
+.caregiver-form textarea {
+    width: 100%;
+    font-size: 1.15rem;
+    padding: 0.95rem 1.1rem 0.95rem 2.7rem;
+    border-radius: 12px;
+    border: none;
+    background: transparent;
+    margin-bottom: 0.1rem;
+    margin-top: 0.1rem;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    resize: none;
+    outline: none;
+    color: #222;
+    font-weight: 500;
+    text-align: center;
+}
+
+.caregiver-form input:focus, 
+.caregiver-form select:focus, 
+.caregiver-form textarea:focus {
+    background: #e3eafc;
+    box-shadow: 0 0 0 2px var(--auth-primary);
+    transform: translateY(-1px);
+}
+
+.caregiver-form select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%231976d2" height="20" viewBox="0 0 24 24" width="20" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 1.2rem center;
+    background-size: 1.3rem;
+    padding-right: 2.5rem;
+}
+
+.caregiver-form textarea {
+    min-height: 90px;
+    max-height: 220px;
+}
+
+.caregiver-main-btn {
+    width: 100%;
+    font-size: 1.18rem;
+    font-weight: 700;
+    border-radius: 14px;
+    padding: 0.9rem 0;
+    background: linear-gradient(90deg, var(--auth-primary) 60%, var(--auth-secondary) 100%);
+    color: var(--auth-white);
+    border: none;
+    margin-top: 1.1rem;
+    margin-bottom: 0.3rem;
+    box-shadow: 0 2px 12px var(--auth-shadow);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.caregiver-main-btn:hover {
+    background: linear-gradient(90deg, var(--auth-primary-dark) 60%, var(--auth-primary) 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px var(--auth-shadow-hover);
+}
+
+.caregiver-main-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive para register-caregiver */
+@media (max-width: 768px) {
+    .caregiver-container {
+        margin: 80px auto 32px auto;
+        padding: 2rem 1.5rem 1.5rem 1.5rem;
+        max-width: 100%;
+    }
+    
+    .caregiver-logo img {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .caregiver-logo span {
+        font-size: 2rem;
+    }
+    
+    .caregiver-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .caregiver-form label {
+        font-size: 1.1rem;
+    }
+    
+    .caregiver-form input,
+    .caregiver-form select,
+    .caregiver-form textarea {
+        font-size: 1.1rem;
+        padding: 0.8rem 1rem 0.8rem 2.5rem;
+    }
+    
+    .caregiver-main-btn {
+        font-size: 1.15rem;
+        padding: 0.8rem 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .caregiver-container {
+        margin: 70px auto 32px auto;
+        padding: 1.5rem 1rem 1rem 1rem;
+        border-radius: 24px;
+    }
+    
+    .caregiver-logo img {
+        width: 70px;
+        height: 70px;
+    }
+    
+    .caregiver-logo span {
+        font-size: 1.8rem;
+    }
+    
+    .caregiver-header h1 {
+        font-size: 1.3rem;
+    }
+    
+    .caregiver-form label {
+        font-size: 1rem;
+    }
+    
+    .caregiver-form input,
+    .caregiver-form select,
+    .caregiver-form textarea {
+        font-size: 1rem;
+        padding: 0.7rem 0.9rem 0.7rem 2.3rem;
+    }
+    
+    .caregiver-main-btn {
+        font-size: 1.1rem;
+        padding: 0.7rem 0;
+    }
+} 

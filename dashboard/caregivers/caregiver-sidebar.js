@@ -1,47 +1,49 @@
-class CareSidebar extends HTMLElement {
+class CaregiverSidebar extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
     this.sections = [];
     this.isCollapsed = false;
   }
+  
   connectedCallback() {
     this.render();
     this.attachEvents();
     this.adjustMainContent();
     
-    // Agregar listener para resize de ventana
+    // Add window resize listener
     window.addEventListener('resize', () => {
       this.adjustMainContent();
     });
   }
+  
   getUserType() {
-    return window.userType || 'patient';
+    return window.userType || 'caregiver';
   }
+  
   getUserData() {
     return {
-      name: 'Maria Gonzalez',
+      name: 'Sarah Johnson',
       photo: '../assets/people/woman-whiteshirt.png'
     };
   }
+  
   getSections() {
     return [
       { id: 'overview', label: 'Overview', icon: 'bi-house' },
       { id: 'profile', label: 'My Profile', icon: 'bi-person-circle' },
-      { id: 'medicines', label: 'Medications', icon: 'bi-capsule' },
-      { id: 'charts', label: 'Health Charts', icon: 'bi-graph-up' },
-      { id: 'calendar', label: 'Calendar', icon: 'bi-calendar-event' },
-      { id: 'caregivers', label: 'Find Caregivers', icon: 'bi-search' },
-      { id: 'virtual-care', label: 'Virtual Care', icon: 'bi-camera-video' },
-      { id: 'appointment-booking', label: 'Book Appointment', icon: 'bi-calendar-plus' },
-      { id: 'health-monitoring', label: 'Health Monitoring', icon: 'bi-heart-pulse' },
-      { id: 'emergency-contacts', label: 'Emergency Contacts', icon: 'bi-telephone' }
+      { id: 'patients', label: 'Patient Management', icon: 'bi-people' },
+      { id: 'schedule', label: 'Schedule & Calendar', icon: 'bi-calendar-event' },
+      { id: 'monitoring', label: 'Health Monitoring', icon: 'bi-heart-pulse' },
+      { id: 'reports', label: 'Care Reports', icon: 'bi-clipboard-data' }
     ];
   }
+  
   render() {
     const sections = this.getSections();
     const userData = this.getUserData();
     this.sections = sections;
+    
     this.shadowRoot.innerHTML = `
       <style>
         * {
@@ -285,7 +287,7 @@ class CareSidebar extends HTMLElement {
             transform: translateX(-100%);
           }
           
-          #dashboard-content {
+          #caregiver-content {
             margin-left: 0 !important;
           }
         }
@@ -325,7 +327,7 @@ class CareSidebar extends HTMLElement {
               </div>
               <div class="user-details">
                 <h4>${userData.name}</h4>
-                <p>Patient</p>
+                <p>Professional Caregiver</p>
               </div>
             </div>
           </div>
@@ -340,21 +342,21 @@ class CareSidebar extends HTMLElement {
             <i class="bi bi-person-circle"></i>
             <span>My Profile</span>
           </button>
-          <button class="sidebar-btn" data-section="medicines">
-            <i class="bi bi-capsule"></i>
-            <span>Medications</span>
+          <button class="sidebar-btn" data-section="patients">
+            <i class="bi bi-people"></i>
+            <span>Patient Management</span>
           </button>
-          <button class="sidebar-btn" data-section="charts">
-            <i class="bi bi-graph-up"></i>
-            <span>Health Charts</span>
-          </button>
-          <button class="sidebar-btn" data-section="calendar">
+          <button class="sidebar-btn" data-section="schedule">
             <i class="bi bi-calendar-event"></i>
-            <span>Calendar</span>
+            <span>Schedule & Calendar</span>
           </button>
-          <button class="sidebar-btn" data-section="caregivers">
-            <i class="bi bi-search"></i>
-            <span>Find Caregivers</span>
+          <button class="sidebar-btn" data-section="monitoring">
+            <i class="bi bi-heart-pulse"></i>
+            <span>Health Monitoring</span>
+          </button>
+          <button class="sidebar-btn" data-section="reports">
+            <i class="bi bi-clipboard-data"></i>
+            <span>Care Reports</span>
           </button>
           
           <button class="sidebar-btn logout-btn" onclick="logout()">
@@ -365,6 +367,7 @@ class CareSidebar extends HTMLElement {
       </nav>
     `;
   }
+  
   attachEvents() {
     const menu = this.shadowRoot.querySelector('.sidebar-menu');
     if (!menu) return;
@@ -379,7 +382,7 @@ class CareSidebar extends HTMLElement {
       });
     });
     
-    // Agregar evento para el logo como botón toggle
+    // Add event for logo as toggle button
     const logoToggle = this.shadowRoot.querySelector('#logo-toggle');
     if (logoToggle) {
       logoToggle.addEventListener('click', () => {
@@ -387,16 +390,17 @@ class CareSidebar extends HTMLElement {
       });
     }
     
-    // Por defecto, activa la primera sección
-    const firstBtn = menu.querySelector('.sidebar-btn');
-    if (firstBtn) {
-      firstBtn.classList.add('active');
-      this.showSection(firstBtn.dataset.section);
+    // By default, activate the overview section
+    const overviewBtn = menu.querySelector('[data-section="overview"]');
+    if (overviewBtn) {
+      overviewBtn.classList.add('active');
+      this.showSection('overview');
     }
   }
+  
   toggleSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
-    const main = document.getElementById('dashboard-content');
+    const main = document.getElementById('caregiver-content');
     
     this.isCollapsed = !this.isCollapsed;
     
@@ -417,9 +421,10 @@ class CareSidebar extends HTMLElement {
       detail: { collapsed: this.isCollapsed }
     }));
   }
+  
   showSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
-    const main = document.getElementById('dashboard-content');
+    const main = document.getElementById('caregiver-content');
     
     nav.classList.remove('minimized');
     if (main) {
@@ -427,9 +432,10 @@ class CareSidebar extends HTMLElement {
     }
     this.isCollapsed = false;
   }
+  
   hideSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
-    const main = document.getElementById('dashboard-content');
+    const main = document.getElementById('caregiver-content');
     
     nav.classList.add('minimized');
     if (main) {
@@ -437,15 +443,16 @@ class CareSidebar extends HTMLElement {
     }
     this.isCollapsed = true;
   }
+  
   adjustMainContent() {
-    const main = document.getElementById('dashboard-content');
+    const main = document.getElementById('caregiver-content');
     const nav = this.shadowRoot.querySelector('nav');
     
     if (main) {
       main.style.transition = 'margin-left 0.4s ease';
     }
     
-    // Inicializar sidebar expandido por defecto en todos los dispositivos
+    // Initialize sidebar expanded by default on all devices
     if (nav) {
       nav.classList.remove('minimized');
       if (main) {
@@ -453,8 +460,9 @@ class CareSidebar extends HTMLElement {
       }
     }
   }
+  
   showSection(section) {
-    const main = document.getElementById('dashboard-content');
+    const main = document.getElementById('caregiver-content');
     if (!main) return;
     
     // Add smooth but short transition
@@ -467,25 +475,25 @@ class CareSidebar extends HTMLElement {
       
       switch(section) {
         case 'overview':
-          sectionContent = '<overview-section></overview-section>';
+          sectionContent = '<caregiver-overview></caregiver-overview>';
           break;
         case 'profile':
-          sectionContent = '<user-profile></user-profile>';
+          sectionContent = '<caregiver-profile></caregiver-profile>';
           break;
-        case 'medicines':
-          sectionContent = '<medicine-list></medicine-list>';
+        case 'patients':
+          sectionContent = '<patient-management></patient-management>';
           break;
-        case 'charts':
-          sectionContent = '<health-charts></health-charts>';
+        case 'schedule':
+          sectionContent = '<schedule-calendar></schedule-calendar>';
           break;
-        case 'calendar':
-          sectionContent = '<calendar-view></calendar-view>';
+        case 'monitoring':
+          sectionContent = '<health-monitoring></health-monitoring>';
           break;
-        case 'caregivers':
-          sectionContent = '<caregiver-search></caregiver-search>';
+        case 'reports':
+          sectionContent = '<care-reports></care-reports>';
           break;
         default:
-          sectionContent = '<overview-section></overview-section>';
+          sectionContent = '<caregiver-overview></caregiver-overview>';
       }
       
       // Add footer to all sections
@@ -494,7 +502,7 @@ class CareSidebar extends HTMLElement {
           <div style="flex: 1;">
             ${sectionContent}
           </div>
-          <dashboard-footer></dashboard-footer>
+          <caregiver-footer></caregiver-footer>
         </div>
       `;
       
@@ -505,4 +513,5 @@ class CareSidebar extends HTMLElement {
     }, 200);
   }
 }
-customElements.define('care-sidebar', CareSidebar); 
+
+customElements.define('caregiver-sidebar', CaregiverSidebar); 

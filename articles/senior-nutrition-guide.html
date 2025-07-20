@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Nutrition Guide for Seniors - Careconnect</title>
+    <!--CSS Links-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <!--Bootstrap Links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--Google Fonts Links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--light-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography for Seniors */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--gray-900);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+        }
+
+        /* Article Hero Section */
+        .article-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url(../assets/BlueLogoBlueBackgroundTilted.png);
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0 4rem;
+            margin-top: -76px;
+            position: relative;
+            border-radius: 0 0 20% 20% / 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .article-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Article Content */
+        .article-content {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-section {
+            margin-bottom: 3rem;
+        }
+
+        .article-section h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        .article-section h3 {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .article-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Tips Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .tip-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Food Groups */
+        .food-groups {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .food-group {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .food-group:hover {
+            border-color: var(--success-color);
+            box-shadow: var(--shadow-md);
+        }
+
+        .food-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .food-group h4 {
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+        }
+
+        .food-group p {
+            color: var(--gray-600);
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .food-group ul {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+        }
+
+        /* Meal Plan */
+        .meal-plan {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .meal-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .meal-item:last-child {
+            border-bottom: none;
+        }
+
+        .meal-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .meal-info h5 {
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-info p {
+            color: var(--gray-600);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 0 1rem;
+            }
+
+            .article-hero h1 {
+                font-size: 2rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .article-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .article-section h3 {
+                font-size: 1.3rem;
+            }
+
+            .food-groups {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component -->
+    <header-component></header-component>
+
+    <main>
+        <!-- Article Hero -->
+        <section class="article-hero">
+            <div class="container">
+                <h1>Complete Nutrition Guide for Seniors</h1>
+                <p class="lead">Learn how to maintain a healthy diet that supports your energy, immune system, and overall well-being as you age.</p>
+                <div class="article-meta">
+                    <span><i class="bi bi-calendar3"></i> March 5, 2024</span>
+                    <span><i class="bi bi-clock"></i> 8 min read</span>
+                    <span><i class="bi bi-person"></i> Dr. Elena Rodriguez</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <section class="article-content">
+            <div class="article-container">
+                <div class="article-section">
+                    <h2>Why Nutrition Matters for Seniors</h2>
+                    <p>As we age, our nutritional needs change. A healthy diet becomes even more important for maintaining energy, preventing illness, and supporting overall health and independence.</p>
+                    
+                    <p>Key reasons why nutrition is crucial for seniors:</p>
+                    <ul>
+                        <li><strong>Energy Levels:</strong> Proper nutrition provides the energy needed for daily activities</li>
+                        <li><strong>Immune Function:</strong> A healthy diet strengthens your immune system</li>
+                        <li><strong>Bone Health:</strong> Calcium and vitamin D help maintain strong bones</li>
+                        <li><strong>Heart Health:</strong> A balanced diet supports cardiovascular health</li>
+                        <li><strong>Mental Health:</strong> Good nutrition supports brain function and mood</li>
+                        <li><strong>Disease Prevention:</strong> Proper nutrition helps prevent chronic diseases</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Getting Started</h4>
+                        <p>Small changes in your diet can make a big difference. Start by adding one healthy food to your daily routine, then gradually build from there. Remember, it's never too late to improve your nutrition.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Essential Nutrients for Seniors</h2>
+                    <p>As we age, our bodies need specific nutrients to stay healthy and strong. Here are the most important ones:</p>
+
+                    <div class="food-groups">
+                        <div class="food-group">
+                            <div class="food-icon">
+                                <i class="bi bi-droplet"></i>
+                            </div>
+                            <h4>Protein</h4>
+                            <p>Helps maintain muscle mass and strength</p>
+                            <ul>
+                                <li>Lean meats (chicken, turkey)</li>
+                                <li>Fish and seafood</li>
+                                <li>Eggs</li>
+                                <li>Beans and lentils</li>
+                                <li>Greek yogurt</li>
+                            </ul>
+                        </div>
+
+                        <div class="food-group">
+                            <div class="food-icon">
+                                <i class="bi bi-sun"></i>
+                            </div>
+                            <h4>Vitamin D</h4>
+                            <p>Essential for bone health and immune function</p>
+                            <ul>
+                                <li>Fatty fish (salmon, tuna)</li>
+                                <li>Egg yolks</li>
+                                <li>Fortified milk</li>
+                                <li>Sunlight exposure</li>
+                                <li>Supplements (if needed)</li>
+                            </ul>
+                        </div>
+
+                        <div class="food-group">
+                            <div class="food-icon">
+                                <i class="bi bi-circle"></i>
+                            </div>
+                            <h4>Calcium</h4>
+                            <p>Builds and maintains strong bones</p>
+                            <ul>
+                                <li>Dairy products</li>
+                                <li>Leafy green vegetables</li>
+                                <li>Fortified cereals</li>
+                                <li>Almonds</li>
+                                <li>Sardines</li>
+                            </ul>
+                        </div>
+
+                        <div class="food-group">
+                            <div class="food-icon">
+                                <i class="bi bi-droplet-fill"></i>
+                            </div>
+                            <h4>Fiber</h4>
+                            <p>Supports digestive health and heart health</p>
+                            <ul>
+                                <li>Whole grains</li>
+                                <li>Fruits and vegetables</li>
+                                <li>Beans and legumes</li>
+                                <li>Nuts and seeds</li>
+                                <li>Oatmeal</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Building a Healthy Plate</h2>
+                    <p>Creating balanced meals doesn't have to be complicated. Use this simple approach to build healthy meals:</p>
+
+                    <h3>The Plate Method</h3>
+                    <ul>
+                        <li><strong>Half Your Plate:</strong> Fruits and vegetables (aim for different colors)</li>
+                        <li><strong>Quarter of Your Plate:</strong> Lean protein (chicken, fish, beans)</li>
+                        <li><strong>Quarter of Your Plate:</strong> Whole grains (brown rice, whole wheat bread)</li>
+                        <li><strong>Add:</strong> A small amount of healthy fats (olive oil, nuts)</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Sample Meal</h4>
+                        <p><strong>Lunch Example:</strong> Grilled chicken breast (protein), steamed broccoli and carrots (vegetables), brown rice (whole grain), and a small handful of almonds (healthy fat).</p>
+                    </div>
+
+                    <h3>Portion Control Tips</h3>
+                    <ul>
+                        <li><strong>Use Smaller Plates:</strong> Makes portions look larger</li>
+                        <li><strong>Measure Portions:</strong> Use measuring cups or a food scale</li>
+                        <li><strong>Eat Slowly:</strong> Gives your body time to feel full</li>
+                        <li><strong>Stop When Satisfied:</strong> Don't eat until you're stuffed</li>
+                    </ul>
+                </div>
+
+                <div class="article-section">
+                    <h2>Sample Meal Plans</h2>
+                    <p>Here are some healthy meal ideas that are easy to prepare and nutritious:</p>
+
+                    <div class="meal-plan">
+                        <h3>Daily Meal Plan</h3>
+                        
+                        <div class="meal-item">
+                            <div class="meal-icon">
+                                <i class="bi bi-sunrise"></i>
+                            </div>
+                            <div class="meal-info">
+                                <h5>Breakfast</h5>
+                                <p>Oatmeal with berries and nuts, Greek yogurt, and a glass of fortified orange juice</p>
+                            </div>
+                        </div>
+
+                        <div class="meal-item">
+                            <div class="meal-icon">
+                                <i class="bi bi-sun"></i>
+                            </div>
+                            <div class="meal-info">
+                                <h5>Lunch</h5>
+                                <p>Grilled chicken salad with mixed greens, tomatoes, cucumbers, and olive oil dressing</p>
+                            </div>
+                        </div>
+
+                        <div class="meal-item">
+                            <div class="meal-icon">
+                                <i class="bi bi-moon"></i>
+                            </div>
+                            <div class="meal-info">
+                                <h5>Dinner</h5>
+                                <p>Baked salmon with steamed vegetables and quinoa, followed by a small piece of fruit</p>
+                            </div>
+                        </div>
+
+                        <div class="meal-item">
+                            <div class="meal-icon">
+                                <i class="bi bi-apple"></i>
+                            </div>
+                            <div class="meal-info">
+                                <h5>Snacks</h5>
+                                <p>Apple slices with peanut butter, or a small handful of mixed nuts</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Meal Planning Tips</h4>
+                        <ul>
+                            <li>Plan meals for the week ahead</li>
+                            <li>Prepare ingredients in advance</li>
+                            <li>Cook larger portions and freeze leftovers</li>
+                            <li>Keep healthy snacks readily available</li>
+                            <li>Ask caregivers to help with meal preparation</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Special Dietary Considerations</h2>
+                    <p>Certain health conditions require specific dietary adjustments. Always consult your doctor or a registered dietitian for personalized advice.</p>
+
+                    <h3>For Diabetes</h3>
+                    <ul>
+                        <li><strong>Carbohydrate Control:</strong> Monitor portion sizes of starchy foods</li>
+                        <li><strong>Regular Meals:</strong> Eat at consistent times each day</li>
+                        <li><strong>Fiber-Rich Foods:</strong> Help control blood sugar levels</li>
+                        <li><strong>Limit Sugary Foods:</strong> Choose natural sweeteners when possible</li>
+                    </ul>
+
+                    <h3>For Heart Health</h3>
+                    <ul>
+                        <li><strong>Reduce Salt:</strong> Use herbs and spices instead of salt</li>
+                        <li><strong>Choose Lean Proteins:</strong> Fish, poultry, and plant-based proteins</li>
+                        <li><strong>Increase Fiber:</strong> Whole grains, fruits, and vegetables</li>
+                        <li><strong>Limit Saturated Fats:</strong> Choose healthy oils and nuts</li>
+                    </ul>
+
+                    <h3>For Bone Health</h3>
+                    <ul>
+                        <li><strong>Calcium-Rich Foods:</strong> Dairy, leafy greens, fortified foods</li>
+                        <li><strong>Vitamin D:</strong> Fatty fish, fortified milk, sunlight</li>
+                        <li><strong>Protein:</strong> Helps maintain bone strength</li>
+                        <li><strong>Limit Alcohol:</strong> Can interfere with calcium absorption</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <h4><i class="bi bi-exclamation-triangle"></i> Medical Conditions</h4>
+                        <p><strong>Always consult your doctor or registered dietitian before making significant dietary changes,</strong> especially if you have diabetes, heart disease, kidney problems, or other chronic conditions. Your healthcare provider can help create a personalized nutrition plan.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Hydration for Seniors</h2>
+                    <p>Staying hydrated is crucial for health, but seniors often don't feel thirsty even when they need water.</p>
+
+                    <h3>Hydration Guidelines</h3>
+                    <ul>
+                        <li><strong>Daily Water Intake:</strong> Aim for 6-8 glasses of water daily</li>
+                        <li><strong>Monitor Urine Color:</strong> Light yellow indicates good hydration</li>
+                        <li><strong>Drink with Meals:</strong> Have water with each meal</li>
+                        <li><strong>Carry Water:</strong> Keep a water bottle nearby</li>
+                        <li><strong>Set Reminders:</strong> Use phone alarms to remember to drink</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Hydration Tips</h4>
+                        <p><strong>Mrs. Thompson's Method:</strong> She keeps a water bottle on her nightstand and drinks a glass when she wakes up. She also sets her phone to remind her to drink water every 2 hours during the day.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Overcoming Common Eating Challenges</h2>
+                    <p>Many seniors face challenges that can affect their nutrition. Here are solutions for common problems:</p>
+
+                    <h3>Loss of Appetite</h3>
+                    <ul>
+                        <li><strong>Eat Smaller, Frequent Meals:</strong> 5-6 small meals instead of 3 large ones</li>
+                        <li><strong>Make Food Appealing:</strong> Use colorful plates and garnishes</li>
+                        <li><strong>Eat with Others:</strong> Social meals can increase appetite</li>
+                        <li><strong>Try New Recipes:</strong> Variety can make eating more enjoyable</li>
+                    </ul>
+
+                    <h3>Difficulty Chewing or Swallowing</h3>
+                    <ul>
+                        <li><strong>Choose Soft Foods:</strong> Cooked vegetables, tender meats, smoothies</li>
+                        <li><strong>Cut Food into Small Pieces:</strong> Makes chewing easier</li>
+                        <li><strong>Use Sauces and Gravies:</strong> Makes food easier to swallow</li>
+                        <li><strong>Consult a Speech Therapist:</strong> For severe swallowing problems</li>
+                    </ul>
+
+                    <h3>Limited Mobility</h3>
+                    <ul>
+                        <li><strong>Use Delivery Services:</strong> Grocery and meal delivery</li>
+                        <li><strong>Ask for Help:</strong> Family, friends, or caregivers can assist</li>
+                        <li><strong>Prepare Simple Meals:</strong> Focus on easy-to-make nutritious foods</li>
+                        <li><strong>Use Kitchen Tools:</strong> Electric can openers, food processors</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Caregiver Support</h4>
+                        <p>Certified caregivers can help with meal planning, grocery shopping, cooking, and ensuring you eat regular, nutritious meals. They can also help monitor your nutrition and report any concerns to your healthcare team.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Working with Nutrition Professionals</h2>
+                    <p>Registered dietitians and nutritionists can provide personalized guidance for your specific needs.</p>
+
+                    <h3>When to See a Nutrition Professional</h3>
+                    <ul>
+                        <li>You have a chronic health condition (diabetes, heart disease)</li>
+                        <li>You've experienced significant weight loss or gain</li>
+                        <li>You have difficulty eating or swallowing</li>
+                        <li>You need help managing multiple medications and diet</li>
+                        <li>You want to improve your overall nutrition</li>
+                    </ul>
+
+                    <h3>What to Expect</h3>
+                    <ul>
+                        <li><strong>Assessment:</strong> Review of your health history and current diet</li>
+                        <li><strong>Personalized Plan:</strong> Customized nutrition recommendations</li>
+                        <li><strong>Education:</strong> Learning about nutrition and healthy eating</li>
+                        <li><strong>Follow-up:</strong> Regular check-ins to monitor progress</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Success Story</h4>
+                        <p><strong>Mr. and Mrs. Garcia:</strong> After Mr. Garcia was diagnosed with diabetes, they both met with a registered dietitian. The dietitian helped them create meal plans that were both healthy and enjoyable. Mrs. Garcia learned to cook diabetic-friendly meals, and they both improved their health.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="bi bi-shield-check"></i> Medical Disclaimer</h4>
+                    <p><strong>This article is for informational purposes only and should not replace professional medical advice.</strong> Always consult with your doctor or certified healthcare provider before making significant changes to your diet. Individual nutritional needs vary, and what works for one person may not be appropriate for another.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Component -->
+        <cta-component 
+            title="Need Help with Your Nutrition?"
+            description="Connect with certified caregivers and nutrition professionals who can help you maintain a healthy diet and improve your overall well-being."
+            primary-btn-text="Find a Caregiver"
+            secondary-btn-text="Learn More"
+            primary-btn-link="../pages/contact.html"
+            secondary-btn-link="../pages/articles.html">
+        </cta-component>
+    </main>
+
+    <!-- Footer Component -->
+    <footer-component></footer-component>
+
+    <!--Script code-->
+    <script src="../components/header-component.js"></script>
+    <script src="../components/footer-component.js"></script>
+    <script src="../components/cta-component.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

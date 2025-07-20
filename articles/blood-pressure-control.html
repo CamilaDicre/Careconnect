@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Pressure Control: Practical Tips for Seniors - Careconnect</title>
+    <!--CSS Links-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <!--Bootstrap Links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--Google Fonts Links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--light-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography for Seniors */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--gray-900);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+        }
+
+        /* Article Hero Section */
+        .article-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url(../assets/BlueLogoBlueBackgroundTilted.png);
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0 4rem;
+            margin-top: -76px;
+            position: relative;
+            border-radius: 0 0 20% 20% / 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .article-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Article Content */
+        .article-content {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-section {
+            margin-bottom: 3rem;
+        }
+
+        .article-section h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        .article-section h3 {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .article-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Tips Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .tip-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* BP Reading Guide */
+        .bp-guide {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .bp-category {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .bp-category:last-child {
+            border-bottom: none;
+        }
+
+        .bp-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .bp-normal { background: var(--success-color); }
+        .bp-elevated { background: var(--warning-color); }
+        .bp-high { background: var(--danger-color); }
+
+        .bp-info h5 {
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .bp-info p {
+            color: var(--gray-600);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 0 1rem;
+            }
+
+            .article-hero h1 {
+                font-size: 2rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .article-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .article-section h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component -->
+    <header-component></header-component>
+
+    <main>
+        <!-- Article Hero -->
+        <section class="article-hero">
+            <div class="container">
+                <h1>Blood Pressure Control: Practical Tips for Seniors</h1>
+                <p class="lead">Discover how to maintain healthy blood pressure through lifestyle changes, medication management, and daily monitoring.</p>
+                <div class="article-meta">
+                    <span><i class="bi bi-calendar3"></i> March 12, 2024</span>
+                    <span><i class="bi bi-clock"></i> 6 min read</span>
+                    <span><i class="bi bi-person"></i> Dr. Carlos Mendez</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <section class="article-content">
+            <div class="article-container">
+                <div class="article-section">
+                    <h2>Understanding Blood Pressure</h2>
+                    <p>Blood pressure is the force of blood pushing against the walls of your arteries. It's measured with two numbers: systolic (top number) and diastolic (bottom number).</p>
+                    
+                    <p>As we age, our blood vessels become less flexible, making it harder for blood to flow smoothly. This can lead to high blood pressure (hypertension), which increases the risk of heart disease, stroke, and kidney problems.</p>
+
+                    <div class="bp-guide">
+                        <h3>Understanding Your Blood Pressure Readings</h3>
+                        
+                        <div class="bp-category">
+                            <div class="bp-icon bp-normal">
+                                <i class="bi bi-check-circle"></i>
+                            </div>
+                            <div class="bp-info">
+                                <h5>Normal</h5>
+                                <p>Less than 120/80 mmHg - Your blood pressure is in a healthy range.</p>
+                            </div>
+                        </div>
+
+                        <div class="bp-category">
+                            <div class="bp-icon bp-elevated">
+                                <i class="bi bi-exclamation-triangle"></i>
+                            </div>
+                            <div class="bp-info">
+                                <h5>Elevated</h5>
+                                <p>120-129/less than 80 mmHg - You're at risk for high blood pressure.</p>
+                            </div>
+                        </div>
+
+                        <div class="bp-category">
+                            <div class="bp-icon bp-high">
+                                <i class="bi bi-exclamation-circle"></i>
+                            </div>
+                            <div class="bp-info">
+                                <h5>High Blood Pressure</h5>
+                                <p>130/80 mmHg or higher - Requires medical attention and lifestyle changes.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Daily Blood Pressure Monitoring</h2>
+                    <p>Regular monitoring helps you and your doctor track your blood pressure trends and adjust treatment as needed.</p>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Monitoring Tips</h4>
+                        <ul>
+                            <li>Measure at the same time each day</li>
+                            <li>Rest for 5 minutes before taking a reading</li>
+                            <li>Avoid caffeine, exercise, and smoking 30 minutes before</li>
+                            <li>Sit with your back straight and feet flat on the floor</li>
+                            <li>Keep your arm at heart level</li>
+                        </ul>
+                    </div>
+
+                    <h3>How to Use a Home Blood Pressure Monitor</h3>
+                    <ol>
+                        <li>Wrap the cuff around your upper arm (not over clothing)</li>
+                        <li>Position the cuff so the bottom edge is 1 inch above your elbow</li>
+                        <li>Rest your arm on a table with your palm facing up</li>
+                        <li>Press the start button and remain still</li>
+                        <li>Record both numbers in your logbook</li>
+                        <li>Wait 2-3 minutes and take a second reading</li>
+                    </ol>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Example</h4>
+                        <p><strong>Mr. Davis's Routine:</strong> Every morning at 8 AM, Mr. Davis sits at his kitchen table and takes his blood pressure. He records the readings in a notebook and brings it to his doctor appointments. This helps his doctor see patterns and adjust his medication when needed.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Lifestyle Changes for Better Blood Pressure</h2>
+                    <p>Small changes in your daily routine can make a big difference in your blood pressure.</p>
+
+                    <h3>Diet Changes</h3>
+                    <ul>
+                        <li><strong>Reduce Salt:</strong> Aim for less than 1,500mg of sodium per day</li>
+                        <li><strong>Eat More Potassium:</strong> Bananas, spinach, and sweet potatoes</li>
+                        <li><strong>Choose Whole Grains:</strong> Brown rice, whole wheat bread, oatmeal</li>
+                        <li><strong>Limit Alcohol:</strong> No more than 1 drink per day for women, 2 for men</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> DASH Diet</h4>
+                        <p>The DASH (Dietary Approaches to Stop Hypertension) diet emphasizes fruits, vegetables, whole grains, and lean proteins while limiting salt, red meat, and sweets. Many people see blood pressure improvements within 2 weeks of following this plan.</p>
+                    </div>
+
+                    <h3>Exercise Recommendations</h3>
+                    <ul>
+                        <li><strong>Walking:</strong> 30 minutes daily at a moderate pace</li>
+                        <li><strong>Swimming:</strong> Gentle on joints and great for cardiovascular health</li>
+                        <li><strong>Tai Chi:</strong> Improves balance and reduces stress</li>
+                        <li><strong>Light Strength Training:</strong> 2-3 times per week with light weights</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Success Story</h4>
+                        <p><strong>Mrs. Garcia:</strong> After her doctor diagnosed high blood pressure, Mrs. Garcia started walking 20 minutes every morning. She also switched from regular salt to a salt substitute. Within 3 months, her blood pressure dropped from 150/95 to 130/85.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Stress Management</h2>
+                    <p>Chronic stress can contribute to high blood pressure. Learning to manage stress is an important part of blood pressure control.</p>
+
+                    <h3>Relaxation Techniques</h3>
+                    <ul>
+                        <li><strong>Deep Breathing:</strong> Take slow, deep breaths for 5-10 minutes daily</li>
+                        <li><strong>Meditation:</strong> Start with 10 minutes of quiet reflection</li>
+                        <li><strong>Progressive Muscle Relaxation:</strong> Tense and relax each muscle group</li>
+                        <li><strong>Yoga:</strong> Gentle poses that focus on breathing and stretching</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Quick Stress Relief</h4>
+                        <p>When you feel stressed, try the 4-7-8 breathing technique: Inhale for 4 counts, hold for 7 counts, exhale for 8 counts. Repeat 4 times.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Common Blood Pressure Medications</h2>
+                    <p>Your doctor may prescribe medication to help control your blood pressure. Here are some common types:</p>
+
+                    <div class="medication-list">
+                        <div class="medication-item">
+                            <div class="medication-icon">
+                                <i class="bi bi-capsule"></i>
+                            </div>
+                            <div class="medication-info">
+                                <h5>ACE Inhibitors</h5>
+                                <p>Help relax blood vessels. Common side effects include dry cough and dizziness.</p>
+                            </div>
+                        </div>
+
+                        <div class="medication-item">
+                            <div class="medication-icon">
+                                <i class="bi bi-droplet"></i>
+                            </div>
+                            <div class="medication-info">
+                                <h5>Diuretics</h5>
+                                <p>Help your body eliminate excess salt and water. May increase urination frequency.</p>
+                            </div>
+                        </div>
+
+                        <div class="medication-item">
+                            <div class="medication-icon">
+                                <i class="bi bi-pill"></i>
+                            </div>
+                            <div class="medication-info">
+                                <h5>Calcium Channel Blockers</h5>
+                                <p>Relax blood vessels and slow heart rate. May cause ankle swelling.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4><i class="bi bi-exclamation-triangle"></i> Important</h4>
+                        <p><strong>Always consult your doctor or certified caregiver before starting, stopping, or changing any medication.</strong> Never adjust your medication dosage without professional medical advice. Some medications can interact with each other or cause side effects.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>When to Seek Medical Attention</h2>
+                    <p>Contact your healthcare provider immediately if you experience:</p>
+                    <ul>
+                        <li>Blood pressure readings consistently above 180/120 mmHg</li>
+                        <li>Severe headache, especially with vision changes</li>
+                        <li>Chest pain or shortness of breath</li>
+                        <li>Dizziness or fainting</li>
+                        <li>Nausea or vomiting</li>
+                        <li>Numbness or weakness in face, arms, or legs</li>
+                        <li>Difficulty speaking or understanding speech</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Emergency Preparedness</h4>
+                        <p>Keep a list of emergency contacts, including your doctor's phone number, in an easily accessible place. Consider wearing a medical alert bracelet if you have high blood pressure.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Working with Your Healthcare Team</h2>
+                    <p>Managing blood pressure is a team effort. Your healthcare team may include:</p>
+
+                    <ul>
+                        <li><strong>Primary Care Doctor:</strong> Coordinates your overall care</li>
+                        <li><strong>Cardiologist:</strong> Heart and blood vessel specialist</li>
+                        <li><strong>Certified Caregiver:</strong> Helps with daily monitoring and medication reminders</li>
+                        <li><strong>Registered Dietitian:</strong> Provides nutrition guidance</li>
+                        <li><strong>Pharmacist:</strong> Ensures medications work well together</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Team Approach</h4>
+                        <p><strong>Mr. and Mrs. Wilson:</strong> Mr. Wilson's caregiver helps him remember to take his blood pressure medication twice daily. She also accompanies him to doctor appointments and helps him track his readings. This teamwork has kept his blood pressure well-controlled for over a year.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="bi bi-shield-check"></i> Medical Disclaimer</h4>
+                    <p><strong>This article is for informational purposes only and should not replace professional medical advice.</strong> Always consult with your doctor or certified healthcare provider before making any changes to your blood pressure management plan. Individual needs vary, and what works for one person may not be appropriate for another.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Component -->
+        <cta-component 
+            title="Need Help Managing Your Blood Pressure?"
+            description="Connect with certified caregivers and healthcare professionals who can help you monitor and manage your blood pressure effectively."
+            primary-btn-text="Find a Caregiver"
+            secondary-btn-text="Learn More"
+            primary-btn-link="../pages/contact.html"
+            secondary-btn-link="../pages/articles.html">
+        </cta-component>
+    </main>
+
+    <!-- Footer Component -->
+    <footer-component></footer-component>
+
+    <!--Script code-->
+    <script src="../components/header-component.js"></script>
+    <script src="../components/footer-component.js"></script>
+    <script src="../components/cta-component.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 
