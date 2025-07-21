@@ -12,19 +12,20 @@ class WelcomeOverlay extends HTMLElement {
     setTimeout(() => this.remove(), 800);
   }
   getUserData() {
-    if (window.userType === 'patient') {
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    if (loggedInUser) {
       return {
-        name: 'María',
+        name: loggedInUser,
         greeting: '¡Qué bueno verte de nuevo!',
         message: 'Esperamos que tengas un día maravilloso'
       };
-    } else {
-      return {
-        name: 'Dr. Carlos',
-        greeting: '¡Bienvenido de vuelta!',
-        message: 'Listo para cuidar de nuestros pacientes'
-      };
     }
+    // Fallback genérico si no hay usuario
+    return {
+      name: '',
+      greeting: '¡Bienvenido/a!',
+      message: 'Por favor inicia sesión para una experiencia personalizada'
+    };
   }
   render() {
     const userData = this.getUserData();

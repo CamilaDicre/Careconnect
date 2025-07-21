@@ -3,6 +3,8 @@ console.log("login.js loaded!");
 const users = [
     { username: "admin", password: "admin123" },
     { username: "usuario", password: "pass123" },
+    { username: "Ameth", password: "password123" },
+    { username: "Josue", password: "testpass456" },
   ];
   
   document.addEventListener("DOMContentLoaded", () => {
