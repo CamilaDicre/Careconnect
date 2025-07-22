@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Choose the Right Caregiver - Careconnect</title>
+    <!--CSS Links-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <!--Bootstrap Links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--Google Fonts Links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--light-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography for Seniors */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--gray-900);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+        }
+
+        /* Article Hero Section */
+        .article-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url(../assets/BlueLogoBlueBackgroundTilted.png);
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0 4rem;
+            margin-top: -76px;
+            position: relative;
+            border-radius: 0 0 20% 20% / 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .article-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Article Content */
+        .article-content {
+            background: white;
+            padding: 4rem 0;
+        }
+
+        .article-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .article-section {
+            margin-bottom: 3rem;
+        }
+
+        .article-section h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        .article-section h3 {
+            font-size: 1.5rem;
+            color: var(--gray-800);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .article-section p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Tips Box */
+        .tip-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .tip-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Warning Box */
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Example Box */
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Checklist */
+        .checklist {
+            background: white;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--gray-100);
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .checklist-info h5 {
+            color: var(--gray-800);
+            margin-bottom: 0.5rem;
+        }
+
+        .checklist-info p {
+            color: var(--gray-600);
+            font-size: 1rem;
+            margin: 0;
+        }
+
+        /* Question Box */
+        .question-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .question-box h4 {
+            color: var(--accent-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .article-container {
+                padding: 0 1rem;
+            }
+
+            .article-hero h1 {
+                font-size: 2rem;
+            }
+
+            .article-meta {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .article-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .article-section h3 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component -->
+    <header-component></header-component>
+
+    <main>
+        <!-- Article Hero -->
+        <section class="article-hero">
+            <div class="container">
+                <h1>How to Choose the Right Caregiver</h1>
+                <p class="lead">Essential tips for finding and working with certified caregivers who can support your health and daily needs safely and professionally.</p>
+                <div class="article-meta">
+                    <span><i class="bi bi-calendar3"></i> March 3, 2024</span>
+                    <span><i class="bi bi-clock"></i> 6 min read</span>
+                    <span><i class="bi bi-person"></i> Careconnect Team</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <section class="article-content">
+            <div class="article-container">
+                <div class="article-section">
+                    <h2>Why Choosing the Right Caregiver Matters</h2>
+                    <p>Selecting the right caregiver is one of the most important decisions you'll make for your health and well-being. A good caregiver can provide not just physical assistance, but also emotional support, companionship, and peace of mind for you and your family.</p>
+                    
+                    <p>Key benefits of choosing the right caregiver:</p>
+                    <ul>
+                        <li><strong>Safety:</strong> Professional caregivers are trained in safety protocols</li>
+                        <li><strong>Companionship:</strong> Reduces loneliness and improves mental health</li>
+                        <li><strong>Medical Support:</strong> Help with medication management and health monitoring</li>
+                        <li><strong>Family Relief:</strong> Gives family members peace of mind</li>
+                        <li><strong>Independence:</strong> Helps you maintain independence longer</li>
+                        <li><strong>Quality of Life:</strong> Enables you to stay in your own home</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Getting Started</h4>
+                        <p>Take your time when choosing a caregiver. This is an important decision that affects your daily life and safety. Don't rush the process, and trust your instincts when meeting potential caregivers.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Types of Caregivers Available</h2>
+                    <p>Understanding the different types of caregivers helps you choose the right one for your specific needs.</p>
+
+                    <h3>Professional Caregivers</h3>
+                    <ul>
+                        <li><strong>Certified Nursing Assistants (CNAs):</strong> Trained in basic medical care and personal assistance</li>
+                        <li><strong>Home Health Aides:</strong> Provide personal care and basic health monitoring</li>
+                        <li><strong>Licensed Practical Nurses (LPNs):</strong> Can provide more advanced medical care</li>
+                        <li><strong>Registered Nurses (RNs):</strong> Provide skilled medical care and medication management</li>
+                    </ul>
+
+                    <h3>Non-Medical Caregivers</h3>
+                    <ul>
+                        <li><strong>Companion Caregivers:</strong> Provide companionship and light household help</li>
+                        <li><strong>Personal Care Aides:</strong> Help with daily activities like bathing and dressing</li>
+                        <li><strong>Homemakers:</strong> Focus on household tasks and meal preparation</li>
+                        <li><strong>Family Caregivers:</strong> Family members who provide care</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Example</h4>
+                        <p><strong>Mrs. Johnson's Choice:</strong> After her stroke, Mrs. Johnson needed help with medication management and physical therapy exercises. She chose a CNA who was experienced with stroke recovery and could help with both medical and personal care needs.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Essential Qualities to Look For</h2>
+                    <p>Beyond qualifications, certain personal qualities make a caregiver truly exceptional.</p>
+
+                    <div class="checklist">
+                        <div class="checklist-item">
+                            <div class="checklist-icon">
+                                <i class="bi bi-shield-check"></i>
+                            </div>
+                            <div class="checklist-info">
+                                <h5>Trustworthiness</h5>
+                                <p>Can you trust them with your personal information and home access?</p>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item">
+                            <div class="checklist-icon">
+                                <i class="bi bi-heart"></i>
+                            </div>
+                            <div class="checklist-info">
+                                <h5>Compassion</h5>
+                                <p>Do they genuinely care about your well-being and comfort?</p>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item">
+                            <div class="checklist-icon">
+                                <i class="bi bi-clock"></i>
+                            </div>
+                            <div class="checklist-info">
+                                <h5>Reliability</h5>
+                                <p>Will they show up on time and complete their duties consistently?</p>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item">
+                            <div class="checklist-icon">
+                                <i class="bi bi-chat-dots"></i>
+                            </div>
+                            <div class="checklist-info">
+                                <h5>Communication Skills</h5>
+                                <p>Can they communicate clearly with you, your family, and healthcare providers?</p>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item">
+                            <div class="checklist-icon">
+                                <i class="bi bi-lightning"></i>
+                            </div>
+                            <div class="checklist-info">
+                                <h5>Problem-Solving Ability</h5>
+                                <p>Can they handle unexpected situations calmly and effectively?</p>
+                            </div>
+                        </div>
+
+                        <div class="checklist-item">
+                            <div class="checklist-icon">
+                                <i class="bi bi-award"></i>
+                            </div>
+                            <div class="checklist-info">
+                                <h5>Professionalism</h5>
+                                <p>Do they maintain appropriate boundaries and professional behavior?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Questions to Ask Potential Caregivers</h2>
+                    <p>Prepare a list of important questions to ask during interviews. This helps you assess their qualifications and compatibility.</p>
+
+                    <div class="question-box">
+                        <h4><i class="bi bi-question-circle"></i> Experience and Training</h4>
+                        <ul>
+                            <li>How long have you been a caregiver?</li>
+                            <li>What training and certifications do you have?</li>
+                            <li>Have you worked with someone with my specific health conditions?</li>
+                            <li>What continuing education do you pursue?</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <h4><i class="bi bi-question-circle"></i> Availability and Schedule</h4>
+                        <ul>
+                            <li>What hours are you available?</li>
+                            <li>How do you handle emergencies or schedule changes?</li>
+                            <li>Do you have backup caregivers if you're unavailable?</li>
+                            <li>What is your policy on holidays and weekends?</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <h4><i class="bi bi-question-circle"></i> Services and Skills</h4>
+                        <ul>
+                            <li>What specific services can you provide?</li>
+                            <li>Are you comfortable with medical tasks like medication management?</li>
+                            <li>Can you help with household tasks and meal preparation?</li>
+                            <li>Do you have experience with mobility assistance?</li>
+                        </ul>
+                    </div>
+
+                    <div class="question-box">
+                        <h4><i class="bi bi-question-circle"></i> Background and Safety</h4>
+                        <ul>
+                            <li>Have you had a background check?</li>
+                            <li>Can you provide references from previous clients?</li>
+                            <li>Are you bonded and insured?</li>
+                            <li>What is your approach to maintaining client privacy?</li>
+                        </ul>
+                    </div>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Interview Tips</h4>
+                        <p>Conduct interviews in person when possible. Pay attention to how the caregiver interacts with you and your family. Trust your instincts - if something doesn't feel right, continue your search.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Red Flags to Watch For</h2>
+                    <p>Be aware of warning signs that indicate a caregiver may not be the right choice.</p>
+
+                    <h3>Professional Red Flags</h3>
+                    <ul>
+                        <li><strong>Unwilling to provide references</strong> or background information</li>
+                        <li><strong>Cannot provide proof</strong> of training or certifications</li>
+                        <li><strong>Unclear about services</strong> they can and cannot provide</li>
+                        <li><strong>Unprofessional behavior</strong> during interviews</li>
+                        <li><strong>Pressure to make quick decisions</strong> or sign contracts</li>
+                    </ul>
+
+                    <h3>Personal Red Flags</h3>
+                    <ul>
+                        <li><strong>Disrespectful</strong> or dismissive of your concerns</li>
+                        <li><strong>Unwilling to answer questions</strong> about their experience</li>
+                        <li><strong>Poor communication skills</strong> or language barriers</li>
+                        <li><strong>Unreliable</strong> during the interview process</li>
+                        <li><strong>Uncomfortable</strong> with your specific health needs</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <h4><i class="bi bi-exclamation-triangle"></i> Trust Your Instincts</h4>
+                        <p>If something doesn't feel right about a potential caregiver, don't ignore those feelings. Your safety and comfort are paramount. It's better to continue searching than to settle for someone who doesn't meet your needs.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Working with Caregiver Agencies</h2>
+                    <p>Many families choose to work with professional agencies that can provide additional benefits and protections.</p>
+
+                    <h3>Benefits of Agency Caregivers</h3>
+                    <ul>
+                        <li><strong>Pre-screened candidates:</strong> Agencies conduct background checks</li>
+                        <li><strong>Backup coverage:</strong> If your caregiver is unavailable</li>
+                        <li><strong>Supervision:</strong> Agencies monitor caregiver performance</li>
+                        <li><strong>Insurance coverage:</strong> Protection against accidents or damage</li>
+                        <li><strong>Training requirements:</strong> Ongoing education for caregivers</li>
+                        <li><strong>Dispute resolution:</strong> Help with any issues that arise</li>
+                    </ul>
+
+                    <h3>Questions for Agencies</h3>
+                    <ul>
+                        <li>What screening process do you use for caregivers?</li>
+                        <li>How do you handle caregiver replacement if needed?</li>
+                        <li>What training do you provide to caregivers?</li>
+                        <li>How do you monitor caregiver performance?</li>
+                        <li>What are your rates and payment policies?</li>
+                        <li>Do you provide 24/7 support for clients?</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Agency Success Story</h4>
+                        <p><strong>Mr. and Mrs. Davis:</strong> They chose a reputable agency for Mrs. Davis's care after her surgery. The agency provided a well-trained caregiver who helped with medication management and physical therapy. When the original caregiver was sick, the agency immediately provided a qualified replacement.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Creating a Care Plan</h2>
+                    <p>A detailed care plan helps ensure your caregiver understands your needs and preferences.</p>
+
+                    <h3>What to Include in Your Care Plan</h3>
+                    <ul>
+                        <li><strong>Daily Schedule:</strong> Your preferred routine and timing</li>
+                        <li><strong>Medical Information:</strong> Conditions, medications, and healthcare providers</li>
+                        <li><strong>Personal Preferences:</strong> Food likes/dislikes, activities you enjoy</li>
+                        <li><strong>Emergency Contacts:</strong> Family members and healthcare providers</li>
+                        <li><strong>Household Information:</strong> Important details about your home</li>
+                        <li><strong>Communication Preferences:</strong> How you prefer to communicate</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Care Plan Tips</h4>
+                        <p>Review and update your care plan regularly, especially when your health needs change. Share the plan with family members and healthcare providers to ensure everyone is on the same page.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Building a Good Relationship</h2>
+                    <p>Once you've chosen a caregiver, building a positive working relationship is key to successful care.</p>
+
+                    <h3>Communication Strategies</h3>
+                    <ul>
+                        <li><strong>Regular Check-ins:</strong> Discuss how things are going</li>
+                        <li><strong>Clear Expectations:</strong> Be specific about what you need</li>
+                        <li><strong>Respect Boundaries:</strong> Maintain professional relationships</li>
+                        <li><strong>Open Communication:</strong> Address concerns promptly</li>
+                        <li><strong>Appreciation:</strong> Show gratitude for good care</li>
+                    </ul>
+
+                    <h3>Setting Boundaries</h3>
+                    <ul>
+                        <li><strong>Professional Relationship:</strong> Maintain appropriate boundaries</li>
+                        <li><strong>Privacy:</strong> Respect each other's personal space</li>
+                        <li><strong>Communication:</strong> Establish preferred communication methods</li>
+                        <li><strong>Schedule:</strong> Be clear about availability and expectations</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h4><i class="bi bi-check-circle"></i> Successful Relationship</h4>
+                        <p><strong>Mrs. Rodriguez and her caregiver Maria:</strong> They established clear communication from the start. Mrs. Rodriguez created a care plan that Maria follows, and they have weekly check-ins to discuss any concerns or changes needed. This open communication has led to a successful, long-term care relationship.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>When to Consider Changing Caregivers</h2>
+                    <p>Sometimes, despite careful selection, a caregiver relationship may not work out. Know when it's time to make a change.</p>
+
+                    <h3>Signs It's Time for a Change</h3>
+                    <ul>
+                        <li><strong>Consistent lateness</strong> or missed appointments</li>
+                        <li><strong>Poor communication</strong> or lack of responsiveness</li>
+                        <li><strong>Inadequate care</strong> or missed tasks</li>
+                        <li><strong>Personality conflicts</strong> that affect your well-being</li>
+                        <li><strong>Safety concerns</strong> or inappropriate behavior</li>
+                        <li><strong>Your needs have changed</strong> and the caregiver can't adapt</li>
+                    </ul>
+
+                    <div class="warning-box">
+                        <h4><i class="bi bi-exclamation-triangle"></i> Making the Change</h4>
+                        <p>If you need to change caregivers, do so professionally and respectfully. Give appropriate notice when possible, and provide feedback to help the caregiver improve. If working with an agency, contact them immediately about any serious concerns.</p>
+                    </div>
+                </div>
+
+                <div class="article-section">
+                    <h2>Legal and Financial Considerations</h2>
+                    <p>Understanding the legal and financial aspects of hiring a caregiver protects both you and your caregiver.</p>
+
+                    <h3>Important Legal Considerations</h3>
+                    <ul>
+                        <li><strong>Employment Status:</strong> Independent contractor vs. employee</li>
+                        <li><strong>Tax Obligations:</strong> Understanding tax requirements</li>
+                        <li><strong>Insurance Coverage:</strong> Liability and workers' compensation</li>
+                        <li><strong>Contracts:</strong> Clear agreements about services and payment</li>
+                        <li><strong>Privacy Laws:</strong> HIPAA compliance for medical information</li>
+                    </ul>
+
+                    <h3>Financial Planning</h3>
+                    <ul>
+                        <li><strong>Budget Planning:</strong> Determine what you can afford</li>
+                        <li><strong>Payment Methods:</strong> How and when to pay</li>
+                        <li><strong>Insurance Coverage:</strong> What your insurance covers</li>
+                        <li><strong>Tax Deductions:</strong> Potential tax benefits</li>
+                        <li><strong>Long-term Planning:</strong> Planning for future care needs</li>
+                    </ul>
+
+                    <div class="tip-box">
+                        <h4><i class="bi bi-lightbulb"></i> Professional Advice</h4>
+                        <p>Consider consulting with a lawyer or financial advisor who specializes in elder care to ensure you're meeting all legal and financial obligations when hiring a caregiver.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="bi bi-shield-check"></i> Important Disclaimer</h4>
+                    <p><strong>This article provides general guidance and should not replace professional legal or financial advice.</strong> Laws and regulations regarding caregiver employment vary by location. Always consult with appropriate professionals for your specific situation.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Component -->
+        <cta-component 
+            title="Ready to Find Your Perfect Caregiver?"
+            description="Connect with certified, professional caregivers who can provide the support and care you need. Our platform makes it easy to find qualified caregivers in your area."
+            primary-btn-text="Find a Caregiver"
+            secondary-btn-text="Learn More"
+            primary-btn-link="../pages/contact.html"
+            secondary-btn-link="../pages/articles.html">
+        </cta-component>
+    </main>
+
+    <!-- Footer Component -->
+    <footer-component></footer-component>
+
+    <!--Script code-->
+    <script src="../components/header-component.js"></script>
+    <script src="../components/footer-component.js"></script>
+    <script src="../components/cta-component.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html> 

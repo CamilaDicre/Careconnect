@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caregiver Dashboard - CareConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+        
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            transition: margin-left 0.3s ease;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        
+        .main-content.sidebar-collapsed {
+            margin-left: 80px;
+        }
+        
+        .content-area {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            min-height: calc(100vh - 40px);
+            overflow: hidden;
+        }
+        
+        .section-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .section-content.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                margin-left: 0;
+                padding: 10px;
+            }
+            
+            .main-content.sidebar-collapsed {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar Component -->
+        <caregiver-sidebar></caregiver-sidebar>
+        
+        <!-- Main Content -->
+        <div class="main-content" id="mainContent">
+            <div class="content-area">
+                <!-- Overview Section -->
+                <div class="section-content active" id="overview-section">
+                    <caregiver-overview></caregiver-overview>
+                </div>
+                
+                <!-- Patient Management Section -->
+                <div class="section-content" id="patient-management-section">
+                    <patient-management></patient-management>
+                </div>
+                
+                <!-- Schedule & Calendar Section -->
+                <div class="section-content" id="schedule-section">
+                    <schedule-calendar></schedule-calendar>
+                </div>
+                
+                <!-- Virtual Care Section -->
+                <div class="section-content" id="virtual-care-section">
+                    <virtual-care></virtual-care>
+                </div>
+                
+                <!-- Medication Management Section -->
+                <div class="section-content" id="medication-section">
+                    <medication-management></medication-management>
+                </div>
+                
+                <!-- Documents Section -->
+                <div class="section-content" id="documents-section">
+                    <caregiver-documents></caregiver-documents>
+                </div>
+                
+                <!-- Earnings & Statistics Section -->
+                <div class="section-content" id="earnings-section">
+                    <earnings-statistics></earnings-statistics>
+                </div>
+                
+                <!-- Profile Section -->
+                <div class="section-content" id="profile-section">
+                    <caregiver-profile></caregiver-profile>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="caregiver-sidebar.js"></script>
+    <script src="caregiver-overview.js"></script>
+    <script src="patient-management.js"></script>
+    <script src="schedule-calendar.js"></script>
+    <script src="virtual-care.js"></script>
+    <script src="medication-management.js"></script>
+    <script src="caregiver-documents.js"></script>
+    <script src="earnings-statistics.js"></script>
+    <script src="caregiver-profile.js"></script>
+    <script src="caregiver-footer.js"></script>
+    
+    <script>
+        // Dashboard functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.querySelector('caregiver-sidebar');
+            const mainContent = document.getElementById('mainContent');
+            
+            // Handle sidebar toggle
+            sidebar.addEventListener('sidebarToggle', function(e) {
+                mainContent.classList.toggle('sidebar-collapsed', e.detail.collapsed);
+            });
+            
+            // Handle section navigation
+            sidebar.addEventListener('sectionChange', function(e) {
+                const targetSection = e.detail.section;
+                
+                // Hide all sections
+                document.querySelectorAll('.section-content').forEach(section => {
+                    section.classList.remove('active');
+                });
+                
+                // Show target section
+                const targetElement = document.getElementById(targetSection + '-section');
+                if (targetElement) {
+                    targetElement.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+</html> 
