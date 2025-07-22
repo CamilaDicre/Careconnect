@@ -28,11 +28,12 @@
         </div>
         <div class="auth-card" id="login-card">
             <form>
-                <label for="login-user"><i class="bi bi-person"></i> Username or Email</label>
-                <input type="text" id="login-user" placeholder="Your username or email" required>
-                <label for="login-pass"><i class="bi bi-lock"></i> Password</label>
-                <input type="password" id="login-pass" placeholder="Your password" required>
-                <button type="submit" class="auth-main-btn">Sign In</button>
+                <label for="login-user"><i class="bi bi-person"></i> Usuario o Email</label>
+                <input type="text" id="login-user" placeholder="Tu usuario o email" required>
+                <label for="login-pass"><i class="bi bi-lock"></i> Contraseña</label>
+                <input type="password" id="login-pass" placeholder="Tu contraseña" required>
+                <div id="loginError" style="color:red; margin-top:8px;"></div>
+                <button type="submit" class="auth-main-btn">Iniciar sesión</button>
             </form>
             <div class="auth-extra">
                 <a href="#" class="auth-link" id="to-register">Don't have an account? Register</a>
@@ -59,93 +60,6 @@
             </div>
         </div>
     </div>
-    <script>
-        // Lógica de cambio de tarjetas
-        const loginCard = document.getElementById('login-card');
-        const registerCard = document.getElementById('register-card');
-        document.getElementById('show-login').onclick = function() {
-            loginCard.style.display = '';
-            registerCard.style.display = 'none';
-            this.classList.add('active');
-            document.getElementById('show-register').classList.remove('active');
-        };
-        document.getElementById('show-register').onclick = function() {
-            loginCard.style.display = 'none';
-            registerCard.style.display = '';
-            this.classList.add('active');
-            document.getElementById('show-login').classList.remove('active');
-        };
-        document.getElementById('to-register').onclick = function() {
-            document.getElementById('show-register').click();
-        };
-        document.getElementById('to-login').onclick = function() {
-            document.getElementById('show-login').click();
-        };
-
-        // Redirección personalizada al registrar
-        document.querySelector('#register-card form').onsubmit = function(e) {
-            e.preventDefault();
-            
-            // Obtener los valores del formulario
-            const name = document.getElementById('reg-name').value;
-            const email = document.getElementById('reg-email').value;
-            const password = document.getElementById('reg-pass').value;
-            const role = document.getElementById('reg-role').value;
-            
-            // Validar que todos los campos estén completos
-            if (!name || !email || !password || !role) {
-                alert('Please fill in all fields.');
-                return;
-            }
-            
-            // Guardar el nombre en localStorage
-            localStorage.setItem('careconnectUserName', name);
-            localStorage.setItem('careconnectUserRole', role);
-            
-            // Mostrar estado de carga en el botón
-            const submitBtn = this.querySelector('.auth-main-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Creating account...';
-            submitBtn.classList.add('loading');
-            
-            // Simular proceso de registro (1 segundo)
-            setTimeout(() => {
-                if (role === 'paciente') {
-                    window.location.href = '../dashboard/dashboard.html';
-                } else if (role === 'cuidador') {
-                    window.location.href = '../register-caregiver.html';
-                } else {
-                    alert('Please select what you are looking for.');
-                }
-            }, 1000);
-        };
-
-        // Login directo al dashboard con cualquier credencial
-        document.querySelector('#login-card form').onsubmit = function(e) {
-            e.preventDefault();
-            
-            // Obtener los valores del formulario
-            const email = document.getElementById('login-user').value;
-            const password = document.getElementById('login-pass').value;
-            
-            // Validar que los campos no estén vacíos
-            if (!email || !password) {
-                alert('Please enter both email and password.');
-                return;
-            }
-            
-            // Mostrar estado de carga en el botón
-            const submitBtn = this.querySelector('.auth-main-btn');
-            const originalText = submitBtn.textContent;
-            submitBtn.textContent = 'Signing in...';
-            submitBtn.classList.add('loading');
-            
-            // Simular proceso de login (1 segundo)
-            setTimeout(() => {
-                // Redirigir al dashboard
-                window.location.href = '../dashboard/dashboard.html';
-            }, 1000);
-        };
-    </script>
+    <script src="../js/login.js"></script>
 </body>
 </html> 

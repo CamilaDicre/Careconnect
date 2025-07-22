@@ -10,6 +10,10 @@ class HeaderComponent extends HTMLElement {
     }
 
     render() {
+        // Detectar si estamos en /pages/ o en la raíz
+        const isInPages = window.location.pathname.includes('/pages/');
+        const prefix = isInPages ? '' : 'pages/';
+        const logoSrc = isInPages ? '../assets/Frame - 1.svg' : 'assets/Frame - 1.svg';
         this.shadowRoot.innerHTML = `
             <style>
                 /* Root Variables */
@@ -1019,31 +1023,31 @@ class HeaderComponent extends HTMLElement {
                 <nav class="careconnect-navbar careconnect-navbar-expand-lg careconnect-fixed-top">
                     <div class="careconnect-container">
                         <!-- Logo and Brand on the left -->
-                        <div class="careconnect-brand-container careconnect-d-flex careconnect-align-items-center">
-                            <img src="assets/Frame - 1.svg" class="careconnect-logo-image" style="width: 50px; height: 50px;" alt="A letter C with a heart inside, the logo of the app Careconnect.">
-                            <a class="careconnect-brand careconnect-fw-bold careconnect-fs-4 careconnect-mb-0" href="../index.html">Careconnect</a>
+                        <div class="careconnect-brand-container careconnect-d-flex careconnect-align-items-center" style="gap: 4px;">
+                            <img src="${logoSrc}" class="careconnect-logo-image" style="width: 50px; height: 50px;" alt="Careconnect logo">
+                            <a class="careconnect-brand careconnect-fw-bold careconnect-fs-4 careconnect-mb-0" href="${isInPages ? '../index.html' : 'index.html'}" style="margin-left: 0;">areconnect</a>
                         </div>
                         
                         <!-- Center Navigation -->
                         <ul class="careconnect-navbar-nav">
                             <li class="careconnect-nav-item">
-                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="../index.html">Home</a>
+                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="${isInPages ? '../index.html' : 'index.html'}">Home</a>
                             </li>
                             <li class="careconnect-nav-item">
-                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="../pages/about.html">About</a>
+                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="${isInPages ? 'about.html' : 'pages/about.html'}">About</a>
                             </li>
                             <li class="careconnect-nav-item">
-                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="../pages/articles.html">Articles</a>
+                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="${isInPages ? 'articles.html' : 'pages/articles.html'}">Articles</a>
                             </li>
                             <li class="careconnect-nav-item">
-                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="../pages/contact.html">Contact</a>
+                                <a class="careconnect-nav-link careconnect-nav-link-hover" href="${isInPages ? 'contact.html' : 'pages/contact.html'}">Contact</a>
                             </li>
                         </ul>
 
                         <!-- Right side buttons container -->
                         <div id="careconnectLoginSection" class="careconnect-d-flex careconnect-align-items-center careconnect-gap-3">
                             <!-- Login Button -->
-                            <button class="careconnect-btn careconnect-btn-outline-primary careconnect-d-flex careconnect-align-items-center careconnect-rounded-pill careconnect-login-btn-hover" id="careconnectLoginSignupButton" onclick="window.location.href='../pages/login.html'">
+                            <button class="careconnect-btn careconnect-btn-outline-primary careconnect-d-flex careconnect-align-items-center careconnect-rounded-pill careconnect-login-btn-hover" id="careconnectLoginSignupButton" onclick="window.location.href='${isInPages ? 'login.html' : 'pages/login.html'}'">
                                 <span>Log in</span>
                                 <span class="careconnect-mx-1">/</span>
                                 <span>Sign Up</span>

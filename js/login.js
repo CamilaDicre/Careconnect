@@ -1,10 +1,10 @@
 console.log("login.js loaded!");
 
 const users = [
-    { username: "admin", password: "admin123" },
-    { username: "usuario", password: "pass123" },
-    { username: "Ameth", password: "password123" },
-    { username: "Josue", password: "testpass456" },
+    { username: "admin", password: "admin123", role: "admin" },
+    { username: "usuario", password: "pass123", role: "paciente" },
+    { username: "Ameth", password: "password123", role: "admin" },
+    { username: "Josue", password: "testpass456", role: "cuidador" },
   ];
   
   document.addEventListener("DOMContentLoaded", () => {
@@ -33,25 +33,86 @@ const users = [
     }
   
     updateLoginUI();
+
+    // Conectar el submit del formulario de login.html
+    const loginFormHTML = document.querySelector('#login-card form');
+    if (loginFormHTML) {
+      loginFormHTML.addEventListener('submit', function(e) {
+        e.preventDefault();
+        login();
+      });
+    }
+
+    // Registro de usuario desde el formulario de register-card
+    const registerFormHTML = document.querySelector('#register-card form');
+    if (registerFormHTML) {
+      registerFormHTML.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const name = document.getElementById('reg-name').value.trim();
+        const email = document.getElementById('reg-email').value.trim();
+        const password = document.getElementById('reg-pass').value.trim();
+        const role = document.getElementById('reg-role').value;
+        if (!name || !email || !password || !role) {
+          alert('Please fill in all fields.');
+          return;
+        }
+        let users = getUsers();
+        if (users.find(u => u.username === name)) {
+          alert('Username already exists.');
+          return;
+        }
+        users.push({ username: name, email, password, role });
+        saveUsers(users);
+        alert('Registration successful! You can now log in.');
+        document.getElementById('show-login').click();
+      });
+    }
   });
   
-  function login() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value;
+  // Utilidad para obtener usuarios desde localStorage o usar los hardcodeados
+  function getUsers() {
+    const stored = localStorage.getItem('users');
+    if (stored) {
+      return JSON.parse(stored);
+    }
+    // Si no hay usuarios guardados, usar los de ejemplo y guardarlos
+    const defaultUsers = [
+      { username: "admin", password: "admin123", role: "admin" },
+      { username: "usuario", password: "pass123", role: "paciente" },
+      { username: "Ameth", password: "password123", role: "admin" },
+      { username: "Josue", password: "testpass456", role: "cuidador" },
+    ];
+    localStorage.setItem('users', JSON.stringify(defaultUsers));
+    return defaultUsers;
+  }
   
+  function saveUsers(users) {
+    localStorage.setItem('users', JSON.stringify(users));
+  }
+  
+  function login() {
+    const username = document.getElementById("login-user").value.trim();
+    const password = document.getElementById("login-pass").value;
+    console.log('Intentando login con:', username, password);
+  
+    const users = getUsers();
     const user = users.find(u => u.username === username && u.password === password);
   
     if (user) {
       localStorage.setItem("loggedInUser", username);
+      localStorage.setItem("userRole", user.role);
       updateLoginUI();
-      // Redirect to home page after successful login
-      window.location.href = "/index.html";
+      // Redirigir según el rol
+      if (user.role === "admin") {
+        window.location.href = "../dashboard/admin-dashboard.html";
+      } else if (user.role === "cuidador") {
+        window.location.href = "../dashboard/caregivers/caregiver-dashboard.html";
+      } else {
+        window.location.href = "../dashboard/dashboard.html";
+      }
     } else {
-      document.getElementById("loginError").textContent = "Invalid credentials";
-      // Redirect to signup page after failed login
-      setTimeout(() => {
-        window.location.href = "/signup.html";
-      }, 1500); // Wait 1.5 seconds before redirecting to show the error message
+      console.log('Login fallido, mostrando mensaje de error');
+      showAlert('Usuario o contraseña incorrecto, revise y vuelva a intentar', 'danger', 'loginError');
     }
   }
   
@@ -69,7 +130,9 @@ const users = [
     if (user) {
       loginSection?.classList.add("d-none");
       userSection?.classList.remove("d-none");
-      userGreeting.textContent = `Hola, ${user}`;
+      if (userGreeting) {
+        userGreeting.textContent = `Hola, ${user}`;
+      }
     } else {
       loginSection?.classList.remove("d-none");
       userSection?.classList.add("d-none");
@@ -83,52 +146,29 @@ const users = [
   
   // Reemplazar el manejo de errores para mostrar alertas visuales
   function showAlert(message, type = 'danger', target = 'loginError') {
+    console.log('showAlert:', message, type, target);
     const alertDiv = document.createElement('div');
     alertDiv.className = `alert alert-${type} alert-dismissible fade show mt-2`;
     alertDiv.role = 'alert';
-    alertDiv.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>';
+    alertDiv.style.background = type === 'danger' ? '#ffdddd' : '#ddffdd';
+    alertDiv.style.color = type === 'danger' ? '#b30000' : '#155724';
+    alertDiv.style.border = '1px solid #b30000';
+    alertDiv.style.padding = '10px 16px';
+    alertDiv.style.fontWeight = 'bold';
+    alertDiv.style.fontSize = '1rem';
+    alertDiv.style.borderRadius = '8px';
+    alertDiv.innerHTML = message + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" style="float:right;"></button>';
     const targetElem = document.getElementById(target);
     if (targetElem) {
         targetElem.innerHTML = '';
         targetElem.appendChild(alertDiv);
+        setTimeout(() => {
+          if (targetElem.contains(alertDiv)) {
+            targetElem.innerHTML = '';
+          }
+        }, 5000);
+    } else {
+      console.log('No se encontró el elemento para mostrar el error:', target);
     }
-  }
-  
-  // Login form event
-  const loginForm = document.getElementById('loginForm');
-  if (loginForm) {
-    loginForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('username').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const user = users.find(u => u.username === username && u.password === password);
-      if (!user) {
-        showAlert('Incorrect username or password.', 'danger', 'loginError');
-      } else {
-        localStorage.setItem('loggedInUser', username);
-        window.location.href = 'dashboard.html';
-      }
-    });
-  }
-  
-  // Register form event
-  const registerForm = document.getElementById('registerForm');
-  if (registerForm) {
-    registerForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-      const username = document.getElementById('regUsername').value.trim();
-      const password = document.getElementById('regPassword').value.trim();
-      const password2 = document.getElementById('regPassword2').value.trim();
-      if (!username || !password || !password2) {
-        showAlert('All fields are required.', 'danger', 'registerError');
-        return;
-      }
-      if (password !== password2) {
-        showAlert('Passwords do not match.', 'danger', 'registerError');
-        return;
-      }
-      // Simulación de registro exitoso
-      showAlert('Registration successful! You can now log in.', 'success', 'registerError');
-    });
   }
   

@@ -9,6 +9,8 @@ class CaregiverOverview extends HTMLElement {
   }
   
   render() {
+    // Obtener el nombre del cuidador logueado
+    let nombre = localStorage.getItem('loggedInUser') || 'Cuidador';
     this.shadowRoot.innerHTML = `
       <style>
         * {
@@ -321,7 +323,7 @@ class CaregiverOverview extends HTMLElement {
       <div class="caregiver-overview-container">
         <!-- Welcome Section -->
         <div class="welcome-section">
-          <h1 class="welcome-title">Welcome, Ms. Johnson!</h1>
+          <h1 class="welcome-title">Welcome, ${nombre}!</h1>
           <p class="welcome-subtitle">Here's your professional overview for today</p>
         </div>
         

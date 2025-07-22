@@ -22,9 +22,13 @@ class CaregiverSidebar extends HTMLElement {
   }
   
   getUserData() {
+    const username = localStorage.getItem('loggedInUser') || 'Cuidador';
+    // Generar iniciales
+    const initials = username.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
     return {
-      name: 'Sarah Johnson',
-      photo: '../assets/people/woman-whiteshirt.png'
+      name: username,
+      photo: '', // No foto personalizada por defecto
+      initials: initials
     };
   }
   
@@ -314,7 +318,7 @@ class CaregiverSidebar extends HTMLElement {
         <!-- Logo section -->
         <div class="logo-section">
           <div class="logo-content" id="logo-toggle">
-            <img src="../assets/Frame - 1.svg" alt="Logo" class="logo-icon">
+            <img src="../../assets/Frame - 1.svg" alt="Logo" class="logo-icon">
             <h1 class="logo-text">areConnect</h1>
           </div>
         </div>
@@ -323,7 +327,7 @@ class CaregiverSidebar extends HTMLElement {
           <div class="header-left">
             <div class="user-info">
               <div class="user-photo">
-                <img src="${userData.photo}" alt="Profile photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\"bi bi-person\\"></i>';">
+                ${userData.photo ? `<img src="${userData.photo}" alt="Avatar">` : `<span style="font-size:32px;font-weight:700;color:#667eea;">${userData.initials}</span>`}
               </div>
               <div class="user-details">
                 <h4>${userData.name}</h4>

@@ -5,7 +5,7 @@ class WelcomeOverlay extends HTMLElement {
   }
   connectedCallback() {
     this.render();
-    setTimeout(() => this.hide(), 4000);
+    setTimeout(() => this.hide(), 3000);
   }
   hide() {
     this.shadowRoot.querySelector('.overlay').style.opacity = '0';

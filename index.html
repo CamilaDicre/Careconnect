@@ -19,6 +19,10 @@
 <body>
     <!-- Header Component -->
     <header-component></header-component>
+    <!-- Botón de login visible -->
+    <div style="position: absolute; top: 30px; right: 40px; z-index: 1001;">
+      <a href="pages/login.html" class="btn btn-primary rounded-pill px-4 py-2">Iniciar sesión</a>
+    </div>
 
     <main>
         <!-- Hero Section -->
@@ -574,7 +578,7 @@
         const appointmentForm = document.querySelector('.appointment-form form');
         if (appointmentForm) {
           appointmentForm.addEventListener('submit', function(e) {
-            if (!localStorage.getItem('careconnectUserName')) {
+            if (!localStorage.getItem('loggedInUser')) {
               e.preventDefault();
               showLoginNotification();
             }
