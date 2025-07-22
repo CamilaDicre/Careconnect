@@ -227,8 +227,9 @@
         function renderCaregiverProfile() {
             const username = localStorage.getItem('loggedInUser');
             const users = JSON.parse(localStorage.getItem('users') || '[]');
+            // Buscar por username y rol, pero mostrar el campo 'name' si existe
             const user = users.find(u => u.username === username && u.role === 'cuidador');
-            document.getElementById('cuidadorNombre').textContent = user ? user.username : '-';
+            document.getElementById('cuidadorNombre').textContent = user ? (user.name || user.username) : '-';
             document.getElementById('cuidadorEmail').textContent = user ? (user.email || '-') : '-';
         }
         

@@ -23,11 +23,15 @@ class CaregiverSidebar extends HTMLElement {
   
   getUserData() {
     const username = localStorage.getItem('loggedInUser') || 'Cuidador';
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.username === username && u.role === 'cuidador');
     // Generar iniciales
-    const initials = username.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+    let displayName = user ? (user.name || user.username) : username;
+    let photo = user && user.photo ? user.photo : '';
+    const initials = displayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
     return {
-      name: username,
-      photo: '', // No foto personalizada por defecto
+      name: displayName,
+      photo: photo,
       initials: initials
     };
   }

@@ -9,6 +9,15 @@ class CaregiverProfile extends HTMLElement {
   }
   
   render() {
+    // Obtener usuario logueado y datos reales
+    const username = localStorage.getItem('loggedInUser') || '';
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.username === username && u.role === 'cuidador');
+    const displayName = user ? (user.name || user.username) : 'Cuidador';
+    const displayEmail = user ? (user.email || '-') : '-';
+    const displayUsername = user ? user.username : '-';
+    // Iniciales para el avatar
+    const initials = displayName.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
     this.shadowRoot.innerHTML = `
       <style>
         * {
@@ -347,8 +356,8 @@ class CaregiverProfile extends HTMLElement {
           <!-- Profile Card -->
           <div class="profile-card">
             <div class="profile-header">
-              <div class="profile-avatar">SJ</div>
-              <div class="profile-name">Sarah Johnson</div>
+              <div class="profile-avatar">${initials}</div>
+              <div class="profile-name">${displayName}</div>
               <div class="profile-title">Professional Caregiver</div>
               <div class="profile-rating">
                 <i class="bi bi-star-fill star"></i>
@@ -387,11 +396,15 @@ class CaregiverProfile extends HTMLElement {
                 </div>
                 <div class="detail-row">
                   <span class="detail-label">Full Name:</span>
-                  <span class="detail-value">Sarah Johnson</span>
+                  <span class="detail-value">${displayName}</span>
                 </div>
                 <div class="detail-row">
                   <span class="detail-label">Email:</span>
-                  <span class="detail-value">sarah.johnson@careconnect.com</span>
+                  <span class="detail-value">${displayEmail}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Username:</span>
+                  <span class="detail-value">${displayUsername}</span>
                 </div>
                 <div class="detail-row">
                   <span class="detail-label">Phone:</span>

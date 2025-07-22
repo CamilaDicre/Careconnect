@@ -714,8 +714,8 @@ class FooterComponent extends HTMLElement {
                             </div>
                             <div class="legal-links">
                                 <a href="privacy-policy.html">Privacy Policy</a>
-                                <a href="terms-of-service.html">Terms of Service</a>
-                                <a href="cookie-policy.html">Cookie Policy</a>
+                                <a href="#" id="terms-link">Terms and Conditions</a>
+                                <a href="#" id="cookie-link">Cookie Policy</a>
                                 <a href="accessibility.html">Accessibility</a>
                                 <a href="security.html">Security</a>
                             </div>
@@ -723,7 +723,582 @@ class FooterComponent extends HTMLElement {
                     </div>
                 </div>
             </footer>
+            <!-- Modal Terms of Service -->
+            <div id="terms-modal" class="terms-modal">
+              <div class="terms-modal-content">
+                <span class="terms-close" id="terms-close">&times;</span>
+                <h2>Terms of Service</h2>
+                <form id="terms-form">
+                  <div class="terms-checkbox-group">
+                    <label class="terms-checkbox-label" style="margin-bottom: 18px;">
+                      <input type="checkbox" class="terms-checkbox-input" id="accept-all-checkbox">
+                      <span class="terms-custom-checkbox"></span>
+                      Accept all terms and conditions
+                    </label>
+                  </div>
+                  <div class="terms-all-text">
+                    <p>
+                      By using Careconnect, you agree to use the platform for lawful and respectful purposes only. You understand that your personal data will be handled according to the Privacy Policy. You acknowledge that Careconnect does not provide medical advice, diagnosis, or treatment. You agree not to share your account credentials with others and accept that violating these terms may result in account suspension. You will keep your contact information up to date for important notifications. You understand that Careconnect may update these terms and you will review them regularly. You agree not to use Careconnect to harass, abuse, or harm other users. You acknowledge that all content you share is your responsibility and must be accurate.
+                    </p>
+                  </div>
+                  <div class="terms-buttons-row">
+                    <button id="terms-cancel-btn" class="terms-cancel-btn" type="button">Cancel</button>
+                    <button id="terms-accept-btn" class="terms-accept-btn" disabled>Accept</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <style>
+            .terms-modal {
+              display: none;
+              position: fixed;
+              z-index: 99999;
+              left: 0;
+              top: 0;
+              width: 100vw;
+              height: 100vh;
+              overflow: auto;
+              background: rgba(44, 62, 80, 0.7);
+              font-family: 'Arial', sans-serif;
+            }
+            .terms-modal-content {
+              background: #fff;
+              margin: 60px auto;
+              padding: 32px 24px 24px 24px;
+              border-radius: 16px;
+              max-width: 420px;
+              box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+              position: relative;
+              color: #222;
+            }
+            .terms-modal-content h2 {
+              margin-top: 0;
+              color: royalblue;
+              font-size: 2rem;
+              margin-bottom: 18px;
+            }
+            .terms-close {
+              color: #aaa;
+              position: absolute;
+              top: 18px;
+              right: 24px;
+              font-size: 2rem;
+              font-weight: bold;
+              cursor: pointer;
+              transition: color 0.2s;
+            }
+            .terms-close:hover {
+              color: royalblue;
+            }
+            .terms-checkbox-group {
+              margin-bottom: 18px;
+            }
+            .terms-term-box {
+              background: #f4f5f7;
+              border-radius: 10px;
+              box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+              padding: 14px 12px;
+              transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+              margin-bottom: 0;
+              display: flex;
+              align-items: center;
+            }
+            .terms-term-box:hover {
+              background: #e9ecf3;
+              box-shadow: 0 4px 16px rgba(65,105,225,0.10);
+              transform: translateY(-2px) scale(1.01);
+            }
+            .terms-checkbox-label {
+              display: flex;
+              align-items: center;
+              font-size: 1.05rem;
+              cursor: pointer;
+              user-select: none;
+            }
+            .terms-checkbox-input {
+              display: none;
+            }
+            .terms-custom-checkbox {
+              width: 22px;
+              height: 22px;
+              border: 2px solid #bbb;
+              border-radius: 6px;
+              margin-right: 12px;
+              background: #fff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: border-color 0.2s, background 0.2s;
+              position: relative;
+            }
+            .terms-checkbox-input:checked + .terms-custom-checkbox {
+              background: royalblue;
+              border-color: royalblue;
+            }
+            .terms-checkbox-input:checked + .terms-custom-checkbox::after {
+              content: '\u2713';
+              color: #fff;
+              font-size: 1.2rem;
+              position: absolute;
+              left: 3px;
+              top: 0px;
+            }
+            .terms-buttons-row {
+              display: flex;
+              justify-content: space-between;
+              gap: 18px;
+              margin-top: 18px;
+            }
+            .terms-cancel-btn {
+              background: #ff4d4f;
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 0;
+              font-size: 1.1rem;
+              font-weight: 600;
+              cursor: pointer;
+              flex: 1 1 0;
+              transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+              box-shadow: 0 2px 8px rgba(255,77,79,0.08);
+            }
+            .terms-cancel-btn:hover {
+              background: #d9363e;
+              transform: translateY(-2px) scale(1.03);
+            }
+            .terms-accept-btn {
+              background: royalblue;
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 0;
+              font-size: 1.1rem;
+              font-weight: 600;
+              cursor: pointer;
+              flex: 1 1 0;
+              transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+              box-shadow: 0 2px 8px rgba(65,105,225,0.08);
+            }
+            .terms-accept-btn:disabled {
+              background: #b0b0b0;
+              cursor: not-allowed;
+            }
+            .terms-accept-btn:not(:disabled):hover {
+              background: #274b8e;
+              transform: translateY(-2px) scale(1.03);
+            }
+            .terms-all-text {
+              background: #f4f5f7;
+              border-radius: 10px;
+              box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+              padding: 18px 16px;
+              margin-bottom: 18px;
+              font-size: 1.08rem;
+              color: #222;
+              line-height: 1.7;
+              transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+            }
+            .terms-all-text:hover {
+              background: #e9ecf3;
+              box-shadow: 0 4px 16px rgba(65,105,225,0.10);
+              transform: translateY(-2px) scale(1.01);
+            }
+            </style>
+            <!-- Cookie Policy Modal -->
+            <div id="cookie-modal" class="cookie-modal">
+              <div class="cookie-modal-content">
+                <span class="cookie-close" id="cookie-close">&times;</span>
+                <h2>Cookie Policy</h2>
+                <div class="cookie-text-box">
+                  <p>
+                    At Careconnect, we use cookies to enhance your experience, provide essential site functionality, analyze usage, and personalize content. Necessary cookies are always enabled to ensure the platform works securely and reliably. You can choose to accept all cookies, only the necessary ones, or reject all cookies. You can change your preferences at any time.
+                  </p>
+                </div>
+                <form id="cookie-form">
+                  <div class="cookie-radio-group">
+                    <label class="cookie-radio-label">
+                      <input type="radio" name="cookie-choice" class="cookie-radio-input" value="all">
+                      <span class="cookie-custom-radio"></span>
+                      Accept all cookies
+                    </label>
+                  </div>
+                  <div class="cookie-radio-group">
+                    <label class="cookie-radio-label">
+                      <input type="radio" name="cookie-choice" class="cookie-radio-input" value="necessary">
+                      <span class="cookie-custom-radio"></span>
+                      Accept only necessary cookies
+                    </label>
+                  </div>
+                  <div class="cookie-radio-group">
+                    <label class="cookie-radio-label">
+                      <input type="radio" name="cookie-choice" class="cookie-radio-input" value="reject">
+                      <span class="cookie-custom-radio"></span>
+                      Reject all cookies
+                    </label>
+                  </div>
+                  <div class="cookie-buttons-row">
+                    <button id="cookie-cancel-btn" class="cookie-cancel-btn" type="button">Cancel</button>
+                    <button id="cookie-save-btn" class="cookie-save-btn" disabled>Save</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <style>
+            .cookie-modal {
+              display: none;
+              position: fixed;
+              z-index: 99999;
+              left: 0;
+              top: 0;
+              width: 100vw;
+              height: 100vh;
+              overflow: auto;
+              background: rgba(44, 62, 80, 0.7);
+              font-family: 'Arial', sans-serif;
+            }
+            .cookie-modal-content {
+              background: #fff;
+              margin: 60px auto;
+              padding: 32px 24px 24px 24px;
+              border-radius: 16px;
+              max-width: 420px;
+              box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+              position: relative;
+              color: #222;
+              animation: cookie-pop 0.25s cubic-bezier(.4,1.4,.6,1) both;
+            }
+            @keyframes cookie-pop {
+              0% { transform: scale(0.85) translateY(40px); opacity: 0; }
+              100% { transform: scale(1) translateY(0); opacity: 1; }
+            }
+            .cookie-modal-content h2 {
+              margin-top: 0;
+              color: royalblue;
+              font-size: 2rem;
+              margin-bottom: 18px;
+            }
+            .cookie-close {
+              color: #aaa;
+              position: absolute;
+              top: 18px;
+              right: 24px;
+              font-size: 2rem;
+              font-weight: bold;
+              cursor: pointer;
+              transition: color 0.2s;
+            }
+            .cookie-close:hover {
+              color: royalblue;
+            }
+            .cookie-text-box {
+              background: #f4f5f7;
+              border-radius: 10px;
+              box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+              padding: 16px 14px;
+              margin-bottom: 18px;
+              font-size: 1.08rem;
+              color: #222;
+              line-height: 1.7;
+              transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+            }
+            .cookie-text-box:hover {
+              background: #e9ecf3;
+              box-shadow: 0 4px 16px rgba(65,105,225,0.10);
+              transform: translateY(-2px) scale(1.01);
+            }
+            .cookie-radio-group {
+              margin-bottom: 16px;
+            }
+            .cookie-radio-label {
+              display: flex;
+              align-items: center;
+              font-size: 1.05rem;
+              cursor: pointer;
+              user-select: none;
+              background: #f4f5f7;
+              border-radius: 8px;
+              padding: 12px 10px;
+              transition: background 0.2s, box-shadow 0.2s, transform 0.15s;
+              box-shadow: 0 1px 4px rgba(44,62,80,0.06);
+            }
+            .cookie-radio-label:hover {
+              background: #e9ecf3;
+              box-shadow: 0 2px 8px rgba(65,105,225,0.08);
+              transform: translateY(-1px) scale(1.01);
+            }
+            .cookie-radio-input {
+              display: none;
+            }
+            .cookie-custom-radio {
+              width: 22px;
+              height: 22px;
+              border: 2px solid #bbb;
+              border-radius: 50%;
+              margin-right: 12px;
+              background: #fff;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              transition: border-color 0.2s, background 0.2s;
+              position: relative;
+            }
+            .cookie-radio-input:checked + .cookie-custom-radio {
+              background: royalblue;
+              border-color: royalblue;
+            }
+            .cookie-radio-input:checked + .cookie-custom-radio::after {
+              content: '';
+              display: block;
+              width: 12px;
+              height: 12px;
+              background: #fff;
+              border-radius: 50%;
+              position: absolute;
+              left: 3px;
+              top: 3px;
+            }
+            .cookie-buttons-row {
+              display: flex;
+              justify-content: space-between;
+              gap: 18px;
+              margin-top: 18px;
+            }
+            .cookie-cancel-btn {
+              background: #ff4d4f;
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 0;
+              font-size: 1.1rem;
+              font-weight: 600;
+              cursor: pointer;
+              flex: 1 1 0;
+              transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+              box-shadow: 0 2px 8px rgba(255,77,79,0.08);
+            }
+            .cookie-cancel-btn:hover {
+              background: #d9363e;
+              transform: translateY(-2px) scale(1.03);
+            }
+            .cookie-save-btn {
+              background: royalblue;
+              color: #fff;
+              border: none;
+              border-radius: 8px;
+              padding: 10px 0;
+              font-size: 1.1rem;
+              font-weight: 600;
+              cursor: pointer;
+              flex: 1 1 0;
+              transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+              box-shadow: 0 2px 8px rgba(65,105,225,0.08);
+            }
+            .cookie-save-btn:disabled {
+              background: #b0b0b0;
+              cursor: not-allowed;
+            }
+            .cookie-save-btn:not(:disabled):hover {
+              background: #274b8e;
+              transform: translateY(-2px) scale(1.03);
+            }
+            @media (max-width: 480px) {
+              .cookie-modal-content {
+                padding: 18px 6px 18px 6px;
+                max-width: 98vw;
+              }
+              .cookie-buttons-row {
+                flex-direction: column;
+                gap: 10px;
+              }
+              .cookie-cancel-btn, .cookie-save-btn {
+                padding: 10px 0;
+                font-size: 1rem;
+              }
+            }
+            </style>
         `;
+        this.attachModalEvents();
+    }
+
+    attachModalEvents() {
+        const shadow = this.shadowRoot;
+        const termsLink = shadow.getElementById('terms-link');
+        const termsModal = shadow.getElementById('terms-modal');
+        const termsClose = shadow.getElementById('terms-close');
+        const acceptBtn = shadow.getElementById('terms-accept-btn');
+        const cancelBtn = shadow.getElementById('terms-cancel-btn');
+        const checkboxes = shadow.querySelectorAll('.terms-checkbox-input');
+        function updateAcceptBtn() {
+          let anyChecked = false;
+          checkboxes.forEach(cb => { if (cb.checked) anyChecked = true; });
+          acceptBtn.disabled = !anyChecked;
+        }
+        checkboxes.forEach(cb => {
+          cb.addEventListener('change', updateAcceptBtn);
+        });
+        updateAcceptBtn();
+        const acceptAllCheckbox = shadow.getElementById('accept-all-checkbox');
+        acceptAllCheckbox.addEventListener('change', () => {
+          acceptBtn.disabled = !acceptAllCheckbox.checked;
+        });
+        acceptBtn.disabled = !acceptAllCheckbox.checked;
+        if (termsLink && termsModal && termsClose && acceptBtn) {
+            termsLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                termsModal.style.display = 'block';
+            });
+            termsClose.addEventListener('click', () => {
+                termsModal.style.display = 'none';
+            });
+            // Cerrar al hacer click fuera del modal
+            shadow.addEventListener('mousedown', (event) => {
+                if (event.target === termsModal) {
+                    termsModal.style.display = 'none';
+                }
+            });
+            acceptBtn.addEventListener('click', () => {
+                if (!acceptBtn.disabled) {
+                    termsModal.style.display = 'none';
+                }
+            });
+            cancelBtn.addEventListener('click', () => {
+                termsModal.style.display = 'none';
+            });
+        }
+        const cookieLink = shadow.getElementById('cookie-link');
+        const cookieModal = shadow.getElementById('cookie-modal');
+        const cookieClose = shadow.getElementById('cookie-close');
+        const cookieSaveBtn = shadow.getElementById('cookie-save-btn');
+        const cookieCancelBtn = shadow.getElementById('cookie-cancel-btn');
+        const cookieRadios = shadow.querySelectorAll('.cookie-radio-input');
+        function updateCookieSaveBtn() {
+          let anyChecked = false;
+          cookieRadios.forEach(r => { if (r.checked) anyChecked = true; });
+          cookieSaveBtn.disabled = !anyChecked;
+        }
+        cookieRadios.forEach(r => {
+          r.addEventListener('change', updateCookieSaveBtn);
+        });
+        updateCookieSaveBtn();
+        cookieLink.addEventListener('click', (e) => {
+          e.preventDefault();
+          cookieModal.style.display = 'block';
+        });
+        cookieClose.addEventListener('click', () => {
+          cookieModal.style.display = 'none';
+        });
+        cookieCancelBtn.addEventListener('click', () => {
+          cookieModal.style.display = 'none';
+        });
+        shadow.addEventListener('mousedown', (event) => {
+          if (event.target === cookieModal) {
+            cookieModal.style.display = 'none';
+          }
+        });
+        cookieSaveBtn.addEventListener('click', () => {
+          if (!cookieSaveBtn.disabled) {
+            const selected = Array.from(cookieRadios).find(r => r.checked);
+            if (selected) {
+              localStorage.setItem('careconnect_cookie_choice', selected.value);
+              localStorage.setItem('careconnect_cookie_show_toast', '1');
+              cookieModal.style.display = 'none';
+              location.reload();
+            }
+          }
+        });
+        // Toast global para cookies
+        if (!document.getElementById('global-cookie-toast')) {
+          const toast = document.createElement('div');
+          toast.id = 'global-cookie-toast';
+          toast.className = 'cookie-toast';
+          document.body.appendChild(toast);
+          // Agrega el CSS global si no existe
+          if (!document.getElementById('cookie-toast-style')) {
+            const style = document.createElement('style');
+            style.id = 'cookie-toast-style';
+            style.textContent = `
+              .cookie-toast {
+                display: none;
+                position: fixed;
+                left: 50%;
+                bottom: 40px;
+                transform: translateX(-50%);
+                background: linear-gradient(90deg, #1976d2 60%, #63a4ff 100%);
+                color: white;
+                padding: 28px 48px;
+                border-radius: 20px;
+                box-shadow: 0 8px 32px rgba(25,118,210,0.18);
+                font-family: 'Poppins', Arial, sans-serif;
+                font-weight: 600;
+                font-size: 1.35rem;
+                z-index: 100000;
+                opacity: 0;
+                transition: opacity 0.4s;
+                pointer-events: none;
+              }
+              .cookie-toast.show {
+                display: block;
+                opacity: 1;
+              }
+              .cookie-toast.center-toast {
+                top: 50%;
+                bottom: auto;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
+              @media (max-width: 480px) {
+                .cookie-toast {
+                  padding: 16px 8px;
+                  font-size: 1.08rem;
+                  bottom: 18px;
+                }
+                .cookie-toast.center-toast {
+                  top: 50%;
+                  bottom: auto;
+                }
+              }
+            `;
+            document.head.appendChild(style);
+          }
+        }
+        function showCookieToast(type, center = false) {
+          const toast = document.getElementById('global-cookie-toast');
+          let msg = '';
+          if (type === 'all') {
+            msg = 'You will now enjoy the best experience on Careconnect.';
+          } else if (type === 'necessary') {
+            msg = 'Only essential cookies are enabled for your privacy.';
+          } else if (type === 'reject') {
+            msg = 'All cookies have been disabled. Some features may not work optimally.';
+          }
+          toast.textContent = msg;
+          if (center) {
+            toast.classList.add('center-toast');
+          } else {
+            toast.classList.remove('center-toast');
+          }
+          toast.classList.add('show');
+          setTimeout(() => {
+            toast.classList.remove('show');
+            toast.classList.remove('center-toast');
+          }, center ? 4000 : 3500);
+        }
+        cookieRadios.forEach(r => {
+          r.addEventListener('change', function() {
+            updateCookieSaveBtn();
+            // showCookieToast(r.value); // Elimina esta línea
+          });
+        });
+        // Mostrar toast si corresponde tras recargar
+        if (localStorage.getItem('careconnect_cookie_show_toast') === '1') {
+          const val = localStorage.getItem('careconnect_cookie_choice');
+          if (val) {
+            const toastTimeout = setTimeout(() => {
+              showCookieToast(val, true);
+              localStorage.removeItem('careconnect_cookie_show_toast');
+            }, 400);
+          }
+        }
     }
 }
 
