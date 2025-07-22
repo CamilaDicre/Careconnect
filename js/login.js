@@ -52,7 +52,8 @@ const users = [
         const email = document.getElementById('reg-email').value.trim();
         const password = document.getElementById('reg-pass').value.trim();
         const role = document.getElementById('reg-role').value;
-        if (!name || !email || !password || !role) {
+        const gender = document.getElementById('reg-gender').value;
+        if (!name || !email || !password || !role || !gender) {
           alert('Please fill in all fields.');
           return;
         }
@@ -61,7 +62,7 @@ const users = [
           alert('Username already exists.');
           return;
         }
-        users.push({ username: name, email, password, role });
+        users.push({ username: name, email, password, role, gender });
         saveUsers(users);
         alert('Registration successful! You can now log in.');
         document.getElementById('show-login').click();
