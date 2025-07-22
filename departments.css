@@ -1,0 +1,372 @@
+/* Departments Page Styles */
+.departments-hero-section {
+    background: none !important;
+    padding-top: 8rem !important;
+    padding-bottom: 6rem !important;
+    margin-top: 0 !important;
+}
+
+.departments-hero-section h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+    margin-top: 3rem !important;
+}
+
+.departments-hero-section .breadcrumb {
+    margin-bottom: 0;
+}
+
+.departments-hero-section .breadcrumb-item,
+.departments-hero-section .breadcrumb-item a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.departments-hero-section .breadcrumb-item.active {
+    color: #fff;
+}
+
+.departments-hero-section .breadcrumb-item + .breadcrumb-item::before {
+    color: #fff;
+    content: ">";
+}
+
+/* Department Section Title */
+.departments-section .text-primary {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.departments-section .display-5 {
+    color: #2d4b6e;
+    margin-top: 0.5rem;
+}
+
+/* Department Cards */
+.department-card {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.08);
+    margin-bottom: 15px;
+    transition: transform 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+}
+
+.department-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+.department-info {
+    padding: 1.25rem;
+    background: #e4e8eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.department-info h3 {
+    color: black;
+    font-size: 1.3rem;
+    margin-bottom: 0.75rem;
+}
+
+.my-button {
+    background-color: royalblue;
+    padding: 5px;
+    border-radius: 15px;
+    color: white;
+    cursor: pointer;
+    
+}
+
+.contenedor-imagenes {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .contenedor-imagenes img {
+    width: 150px;
+    height: auto;
+  }
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Departments Page Styles */
+
+.fixed-medicines-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 200;
+    background: #e4e8eb;
+    padding: 1.2rem 0 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 12px #e4e8eb;
+}
+
+.fixed-medicines-header h1 {
+    margin: 0;
+}
+
+/* Puedes eliminar este bloque si ya no usas sticky-medicines-header */
+.sticky-medicines-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #e4e8eb;
+    padding: 1.2rem 0 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 12px #e4e8eb;
+}
+
+.sticky-medicines-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: #e4e8eb;
+    padding: 1.2rem 0 1rem 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+    box-shadow: 0 2px 12px #e4e8eb
+}
+   
+.sticky-medicines-header h1 {
+    margin: 0;
+}
+
+.departments-hero-section {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://s2.ppllstatics.com/rc/www/multimedia/2023/04/14/medicamentos45-U190498393018WSC--1920x1080@El%20Correo.jpeg');
+    background-size: cover;
+    background-position: center;
+    padding: 8rem 0 6rem;
+    margin-top: -76px;
+    position: relative;
+    border-radius: 0 0 20% 20% / 30px;
+}
+
+.departments-hero-section h1 {
+    font-size: 3.5rem;
+    color: #fff;
+    margin-bottom: 0.5rem;
+
+}
+
+.departments-hero-section .breadcrumb {
+    margin-bottom: 0;
+}
+
+.departments-hero-section .breadcrumb-item,
+.departments-hero-section .breadcrumb-item a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+.departments-hero-section .breadcrumb-item.active {
+    color: #fff;
+}
+
+.departments-hero-section .breadcrumb-item + .breadcrumb-item::before {
+    color: #fff;
+    content: ">";
+}
+
+/* Department Section Title */
+.departments-section .text-primary {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.departments-section .display-5 {
+    color: #2d4b6e;
+    margin-top: 0.5rem;
+}
+
+/* Department Cards */
+.department-card {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    transition: all 0.3s ease;
+}
+
+.department-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.department-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.department-card:hover img {
+    transform: scale(1.05);
+}
+
+.department-info {
+    padding: 1.5rem;
+    background: #e4e8eb;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.department-info h3 {
+    color: #1a365d;
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+.department-card:hover .department-info h3 {
+    color: #00204a;
+}
+
+.my-button {
+    text-decoration: none !important;
+    background: linear-gradient(135deg, #1a365d, #00204a);
+    padding: 12px 30px;
+    border-radius: 30px;
+    color: white;
+    cursor: pointer;
+    font-weight: 600;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    border: none;
+    text-transform: uppercase;
+    font-size: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 32, 74, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.my-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.9s ease;
+}
+
+.my-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0, 32, 74, 0.3);
+}
+
+.my-button:hover::after {
+    transform: translateX(100%);
+}
+
+.contact-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.phone {
+    color: #6c757d;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.social-links {
+    display: flex;
+    gap: 8px;
+}
+
+.social-link {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    color: #0dcaf0;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.social-link:hover {
+    background: #0dcaf0;
+    color: #fff;
+}
+
+@media (max-width: 991.98px) {
+    .departments-hero-section h1 {
+        font-size: 3rem;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .departments-hero-section h1 {
+        font-size: 2.5rem;
+    }
+   
+    .department-card img {
+        height: 200px;
+    }
+   
+    .contact-info {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+   
+    .social-links {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+
+
+
+/* Fix: Ensure footer is visually separated and not affected by department styles */
+#footer-component, .footer-section {
+    margin-top: 40px !important;
+    clear: both;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url(assets/GreyIconsWhiteBackgroundSpread.png);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+} 
