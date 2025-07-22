@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Articles - Careconnect</title>
+    <!--CSS Links-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="stylesheet" href="../css/about.css">
+    <!--Bootstrap Links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--Google Fonts Links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #64748b;
+            --accent-color: #f59e0b;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --light-bg: #f8fafc;
+            --white: #ffffff;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--light-bg);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Typography for Seniors */
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            line-height: 1.3;
+            color: var(--gray-900);
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+        }
+
+
+
+        /* Search Section - Modern Interface */
+        .search-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .search-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .search-input-group {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 20px 70px 20px 30px;
+            border: 3px solid var(--gray-200);
+            border-radius: 60px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            background: var(--gray-50);
+            font-weight: 500;
+            color: var(--gray-800);
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+            background: var(--white);
+            transform: scale(1.01);
+        }
+
+        .search-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .search-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            color: var(--white);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            cursor: pointer;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-50%) scale(1.05);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Category Buttons - Professional Design */
+        .category-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .category-btn {
+            padding: 15px 30px;
+            border: 2px solid var(--gray-200);
+            background: var(--white);
+            color: var(--gray-700);
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+            user-select: none;
+        }
+
+        .category-btn:hover,
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            border-color: transparent;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Articles Section - Modern Card Design */
+        .articles-section {
+            background-color: #f8f9fa;
+            padding: 80px 0;
+        }
+
+        .articles-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 3rem;
+        }
+
+        .articles-row {
+            margin-bottom: 60px;
+        }
+
+        .article-card {
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.3s ease;
+            height: 100%;
+            margin-bottom: 40px;
+            margin-top: 20px;
+            border: 1px solid var(--gray-100);
+            position: relative;
+        }
+
+        .article-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .article-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .article-card:hover::before {
+            opacity: 1;
+        }
+
+        .article-image {
+            height: 220px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .article-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .article-card:hover .article-image img {
+            transform: scale(1.05);
+        }
+
+        .article-content {
+            padding: 30px;
+        }
+
+        .article-category {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .article-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 15px;
+            line-height: 1.3;
+            min-height: 70px;
+        }
+
+        .article-excerpt {
+            color: var(--gray-600);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 25px;
+            min-height: 90px;
+        }
+
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+            color: var(--gray-500);
+            padding: 15px 0;
+            border-top: 1px solid var(--gray-200);
+            border-bottom: 1px solid var(--gray-200);
+        }
+
+        .article-meta span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+
+        .read-more-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.05rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .read-more-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        /* Navigation Section - Professional Pagination */
+        .navigation-section {
+            background-color: #f8f9fa;
+            padding: 60px 0;
+            border-top: 1px solid var(--gray-200);
+        }
+
+        .navigation-container {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .page-numbers {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .page-number {
+            width: 60px;
+            height: 60px;
+            border: 2px solid var(--gray-200);
+            background: var(--white);
+            color: var(--gray-700);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .page-number:hover,
+        .page-number.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            border-color: transparent;
+            transform: scale(1.05);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            padding: 15px 40px;
+            border: 2px solid var(--primary-color);
+            background: var(--white);
+            color: var(--primary-color);
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            text-decoration: none;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .nav-btn:hover {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+        }
+
+
+
+        /* No Results Message */
+        .no-results {
+            text-align: center;
+            padding: 80px 0;
+            color: var(--gray-600);
+            display: none;
+        }
+
+        .no-results i {
+            font-size: 4rem;
+            color: var(--gray-300);
+            margin-bottom: 20px;
+        }
+
+        .no-results h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--gray-700);
+        }
+
+        .no-results p {
+            font-size: 1.2rem;
+            color: var(--gray-500);
+        }
+
+        /* Responsive Design for Seniors */
+        @media (max-width: 768px) {
+            body {
+                font-size: 18px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+
+            .info-title {
+                font-size: 2.2rem;
+            }
+
+            .info-description {
+                font-size: 1.1rem;
+            }
+
+            .search-input {
+                padding: 18px 60px 18px 25px;
+                font-size: 1.1rem;
+            }
+
+            .category-buttons {
+                gap: 12px;
+            }
+
+            .category-btn {
+                padding: 12px 24px;
+                font-size: 1rem;
+            }
+
+            .article-title {
+                font-size: 1.3rem;
+                min-height: auto;
+            }
+
+            .article-excerpt {
+                font-size: 1rem;
+                min-height: auto;
+            }
+
+            .cta-title {
+                font-size: 2.4rem;
+            }
+
+            .cta-description {
+                font-size: 1.1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .cta-btn {
+                width: 100%;
+                max-width: 350px;
+                padding: 16px 40px;
+                font-size: 1.1rem;
+            }
+
+            .page-number {
+                width: 55px;
+                height: 55px;
+                font-size: 1.1rem;
+            }
+
+            .nav-btn {
+                padding: 14px 35px;
+                font-size: 1rem;
+            }
+
+            .articles-row {
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Accessibility Improvements for Seniors */
+        .article-card:focus-within {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        .category-btn:focus,
+        .search-input:focus,
+        .read-more-btn:focus,
+        .nav-btn:focus,
+        .page-number:focus {
+            outline: 3px solid var(--primary-color);
+            outline-offset: 2px;
+        }
+
+        /* High Contrast Mode Support */
+        @media (prefers-contrast: high) {
+            .article-title {
+                color: var(--gray-900);
+            }
+            
+            .article-excerpt {
+                color: var(--gray-700);
+            }
+            
+            .category-btn {
+                border-width: 3px;
+            }
+        }
+
+        /* Reduced Motion for Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Component -->
+    <header-component></header-component>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="about-hero-section text-center">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <h1 class="fw-bold mb-3">Articles</h1>
+                        <nav aria-label="breadcrumb">
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+        <!-- Search and Categories Section -->
+        <section class="search-section">
+            <div class="container">
+                <div class="search-container">
+                    <div class="search-input-group">
+                        <input type="text" class="search-input" id="searchInput" placeholder="Search for health topics, conditions, or wellness tips...">
+                        <button class="search-btn" id="searchBtn" aria-label="Search articles">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                    <div class="category-buttons">
+                        <button class="category-btn active" data-category="all">All Topics</button>
+                        <button class="category-btn" data-category="diabetes">Diabetes</button>
+                        <button class="category-btn" data-category="hypertension">Blood Pressure</button>
+                        <button class="category-btn" data-category="arthritis">Arthritis</button>
+                        <button class="category-btn" data-category="osteoporosis">Bone Health</button>
+                        <button class="category-btn" data-category="alzheimer">Memory</button>
+                        <button class="category-btn" data-category="nutrition">Nutrition</button>
+                        <button class="category-btn" data-category="exercise">Exercise</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Articles Section -->
+        <section class="articles-section">
+            <div class="container">
+                <h2 class="section-title">Featured Health Articles</h2>
+                
+                <div id="articlesContainer">
+                    <!-- First Row - 3 Articles -->
+                    <div class="row articles-row">
+                        <div class="col-lg-4 col-md-6" data-categories="diabetes,medication">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Diabetes Management for Seniors">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">Diabetes</span>
+                                    <h3 class="article-title">Complete Guide to Managing Diabetes in Seniors</h3>
+                                    <p class="article-excerpt">Learn about the best eating habits, exercises, and medications to effectively control diabetes and maintain a healthy lifestyle.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 15, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 8 min read</span>
+                                    </div>
+                                    <a href="../articles/diabetes-management.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" data-categories="hypertension,medication">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Blood Pressure Control">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">Blood Pressure</span>
+                                    <h3 class="article-title">Blood Pressure Control: Practical Tips for Seniors</h3>
+                                    <p class="article-excerpt">Discover how to maintain healthy blood pressure through lifestyle changes, medication management, and daily monitoring.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 12, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 6 min read</span>
+                                    </div>
+                                    <a href="../articles/blood-pressure-control.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" data-categories="medication,safety">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Medication Safety">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">Medication Safety</span>
+                                    <h3 class="article-title">Medication Safety Guide for Seniors</h3>
+                                    <p class="article-excerpt">Essential tips for safely managing your medications, avoiding interactions, and working with your healthcare team.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 10, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 7 min read</span>
+                                    </div>
+                                    <a href="../articles/medication-safety.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <!-- Second Row - 3 Articles -->
+                    <div class="row articles-row">
+                        <div class="col-lg-4 col-md-6" data-categories="exercise,fitness">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Senior Exercise">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">Exercise</span>
+                                    <h3 class="article-title">Safe Exercise Guide for Seniors</h3>
+                                    <p class="article-excerpt">Discover enjoyable and safe exercises that improve strength, balance, and overall health for adults 65 and older.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 8, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 9 min read</span>
+                                    </div>
+                                    <a href="../articles/senior-exercise-guide.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" data-categories="nutrition,health">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Senior Nutrition">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">Nutrition</span>
+                                    <h3 class="article-title">Complete Nutrition Guide for Seniors</h3>
+                                    <p class="article-excerpt">Learn how to maintain a healthy diet that supports your energy, immune system, and overall well-being as you age.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 5, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 8 min read</span>
+                                    </div>
+                                    <a href="../articles/senior-nutrition-guide.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" data-categories="caregiver,support">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Caregiver Support">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">Caregiver Support</span>
+                                    <h3 class="article-title">How to Choose the Right Caregiver</h3>
+                                    <p class="article-excerpt">Essential tips for finding and working with certified caregivers who can support your health and daily needs.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 3, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 6 min read</span>
+                                    </div>
+                                    <a href="../articles/caregiver-selection.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- No Results Message -->
+                <div class="no-results" id="noResults">
+                    <i class="bi bi-search"></i>
+                    <h3>No articles found</h3>
+                    <p>Try searching with different keywords or browse our categories</p>
+                </div>
+
+                <!-- Navigation Buttons -->
+                <div class="navigation-section">
+                    <div class="navigation-container">
+                        <div class="page-numbers">
+                            <button class="page-number active">1</button>
+                            <button class="page-number">2</button>
+                            <button class="page-number">3</button>
+                        </div>
+                        <div class="nav-buttons">
+                            <a href="#" class="nav-btn">View More Articles</a>
+                            <a href="#" class="nav-btn">Next Page</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Component -->
+        <cta-component 
+            title="Ready to Take Control of Your Health?"
+            description="Join thousands of seniors who are already using Careconnect to manage their health, connect with caregivers, and access valuable resources. Create your free account today and start your journey to better health."
+            primary-btn-text="Create Free Account"
+            secondary-btn-text="Sign In"
+            primary-btn-link="register-caregiver.html"
+            secondary-btn-link="login.html">
+        </cta-component>
+    </main>
+
+    <!-- Footer Component -->
+    <footer-component></footer-component>
+
+    <!--Script code-->
+    <script src="../components/header-component.js"></script>
+    <script src="../components/footer-component.js"></script>
+    <script src="../components/cta-component.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Enhanced Search and Filter Functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const articles = document.querySelectorAll('[data-categories]');
+        const noResults = document.getElementById('noResults');
+        const articlesContainer = document.getElementById('articlesContainer');
+
+        let currentCategory = 'all';
+        let currentSearch = '';
+
+        // Debounce function for better performance
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Search functionality with debouncing
+        function performSearch() {
+            currentSearch = searchInput.value.toLowerCase().trim();
+            filterArticles();
+        }
+
+        const debouncedSearch = debounce(performSearch, 300);
+
+        searchInput.addEventListener('input', debouncedSearch);
+        searchBtn.addEventListener('click', performSearch);
+        searchInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                performSearch();
+            }
+        });
+
+        // Category filter functionality
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                currentCategory = this.getAttribute('data-category');
+                filterArticles();
+            });
+        });
+
+        function filterArticles() {
+            let visibleCount = 0;
+
+            articles.forEach(article => {
+                const categories = article.getAttribute('data-categories').split(',');
+                const title = article.querySelector('.article-title').textContent.toLowerCase();
+                const excerpt = article.querySelector('.article-excerpt').textContent.toLowerCase();
+                const content = title + ' ' + excerpt;
+
+                const matchesCategory = currentCategory === 'all' || categories.includes(currentCategory);
+                const matchesSearch = currentSearch === '' || content.includes(currentSearch);
+
+                if (matchesCategory && matchesSearch) {
+                    article.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    article.style.display = 'none';
+                }
+            });
+
+            // Show/hide no results message
+            if (visibleCount === 0) {
+                noResults.style.display = 'block';
+                articlesContainer.style.display = 'none';
+            } else {
+                noResults.style.display = 'none';
+                articlesContainer.style.display = 'block';
+            }
+        }
+
+        // Initialize with all articles visible
+        filterArticles();
+
+        // Add smooth scrolling for better UX
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Careconnect</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      color: #f4f4f4;
+      font-family: 'Montserrat', sans-serif;
+      min-height: 100vh;
+    }
+    .sidebar {
+      position: fixed;
+      top: 0; left: 0; bottom: 0;
+      width: 90px;
+      background: #181920;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 0;
+      z-index: 1000;
+      box-shadow: 2px 0 16px rgba(0,0,0,0.2);
+    }
+    .sidebar .nav-icon {
+      font-size: 2rem;
+      color: #7f8cfa;
+      margin: 30px 0;
+      transition: color 0.2s;
+      cursor: pointer;
+    }
+    .sidebar .nav-icon.active, .sidebar .nav-icon:hover {
+      color: #00ffb8;
+    }
+    .main-content {
+      margin-left: 110px;
+      padding: 40px 5vw 40px 5vw;
+    }
+    .dashboard-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: #00ffb8;
+      letter-spacing: 1px;
+    }
+    .dashboard-subtitle {
+      font-size: 1.2rem;
+      color: #b2becd;
+      margin-bottom: 30px;
+    }
+    .stats-row {
+      display: flex;
+      gap: 30px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .stat-card {
+      background: linear-gradient(135deg, #232526 60%, #7f8cfa 100%);
+      border-radius: 18px;
+      padding: 30px 40px;
+      min-width: 220px;
+      flex: 1 1 220px;
+      box-shadow: 0 8px 32px rgba(0,255,184,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .stat-title {
+      font-size: 1.1rem;
+      color: #b2becd;
+      margin-bottom: 8px;
+    }
+    .stat-value {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #00ffb8;
+      margin-bottom: 4px;
+    }
+    .stat-icon {
+      font-size: 2.5rem;
+      color: #7f8cfa;
+      margin-bottom: 10px;
+    }
+    .section {
+      background: #232526;
+      border-radius: 16px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 24px rgba(0,255,184,0.04);
+    }
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #7f8cfa;
+      margin-bottom: 18px;
+    }
+    .table {
+      color: #f4f4f4;
+      background: transparent;
+    }
+    .table th, .table td {
+      background: transparent;
+      border-color: #414345;
+    }
+    .btn-custom {
+      background: #00ffb8;
+      color: #232526;
+      font-weight: 600;
+      border: none;
+      border-radius: 8px;
+      padding: 6px 18px;
+      transition: background 0.2s;
+    }
+    .btn-custom:hover {
+      background: #7f8cfa;
+      color: #fff;
+    }
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+      margin: 0 auto 30px auto;
+    }
+    @media (max-width: 900px) {
+      .main-content { padding: 20px 2vw; }
+      .stats-row { flex-direction: column; gap: 18px; }
+      .stat-card { min-width: 0; width: 100%; }
+    }
+    #logoutModal { display: none !important; }
+    #logoutModal.active { display: flex !important; }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <i class="bi bi-bar-chart-line nav-icon active" title="Dashboard" data-section="stats"></i>
+    <i class="bi bi-people nav-icon" title="Usuarios" data-section="users"></i>
+    <i class="bi bi-clipboard-data nav-icon" title="Auditoría" data-section="audit"></i>
+    <i class="bi bi-gear nav-icon" title="Configuración" data-section="config"></i>
+    <i class="bi bi-bell nav-icon" title="Notificaciones" data-section="notify"></i>
+    <div style="flex:1"></div>
+    <button id="logoutBtn" class="btn btn-danger rounded-pill px-3 py-2 mb-2" style="width:80px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:1rem;"><i class="bi bi-box-arrow-right"></i>Salir</button>
+  </div>
+  <div class="main-content">
+    <div id="admin-section-stats" style="display:block;">
+      <div class="dashboard-title">Panel de Administración</div>
+      <div class="dashboard-subtitle">Control total del sistema y visualización avanzada</div>
+      <div class="stats-row" id="admin-stats-row"></div>
+    </div>
+    <div id="admin-section-users" style="display:none;">
+      <div class="section">
+        <div class="section-title">Gestión de Usuarios</div>
+        <div class="mb-3">
+          <input type="text" id="searchUser" class="form-control" placeholder="Buscar usuario por nombre, email o rol">
+        </div>
+        <table class="table table-dark table-hover" id="admin-users-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Contraseña</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Usuarios -->
+          </tbody>
+        </table>
+        <hr>
+        <h5>Agregar Usuario</h5>
+        <form id="addUserForm" class="row g-2 align-items-end">
+          <div class="col-md-3">
+            <input type="text" class="form-control" id="addName" placeholder="Nombre" required>
+          </div>
+          <div class="col-md-3">
+            <input type="email" class="form-control" id="addEmail" placeholder="Email" required>
+          </div>
+          <div class="col-md-3">
+            <input type="password" class="form-control" id="addPassword" placeholder="Contraseña" required>
+          </div>
+          <div class="col-md-2">
+            <select class="form-select" id="addRole" required>
+              <option value="">Rol</option>
+              <option value="admin">Admin</option>
+              <option value="cuidador">Cuidador</option>
+              <option value="paciente">Paciente</option>
+            </select>
+          </div>
+          <div class="col-md-1">
+            <button type="submit" class="btn btn-success">Agregar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div id="admin-section-audit" style="display:none;">
+      <div class="section">
+        <div class="section-title">Panel de Auditoría</div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item bg-transparent text-light">[12:01] Ameth creó un nuevo usuario</li>
+          <li class="list-group-item bg-transparent text-light">[11:45] Josue actualizó datos de paciente</li>
+          <li class="list-group-item bg-transparent text-light">[11:30] Camila inició sesión</li>
+        </ul>
+      </div>
+    </div>
+    <div id="admin-section-config" style="display:none;">
+      <div class="section">
+        <div class="section-title">Configuración Avanzada</div>
+        <button class="btn btn-custom">Gestionar Roles</button>
+        <button class="btn btn-custom ms-2">Parámetros del Sistema</button>
+      </div>
+    </div>
+    <div id="admin-section-notify" style="display:none;">
+      <div class="section">
+        <div class="section-title">Notificaciones y Alertas</div>
+        <div class="alert alert-info">No hay notificaciones nuevas.</div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal de confirmación de logout -->
+  <div id="logoutModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:20000;display:flex;align-items:center;justify-content:center;">
+    <div style="background:white;padding:32px 28px;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.18);max-width:350px;text-align:center;">
+      <h4 style="color:#1976d2;font-weight:700;margin-bottom:18px;">¿Seguro que quieres cerrar sesión?</h4>
+      <p style="color:#555;margin-bottom:24px;">Tu sesión se cerrará y volverás al inicio.</p>
+      <button id="confirmLogoutBtn" class="btn btn-danger px-4 me-2">Cerrar sesión</button>
+      <button id="cancelLogoutBtn" class="btn btn-secondary px-4">Cancelar</button>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Utilidades para usuarios
+    function getUsers() {
+      let users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (!users.length) {
+        users = [
+          { username: "admin", email: "admin@email.com", password: "admin123", role: "admin" },
+          { username: "usuario", email: "usuario@email.com", password: "pass123", role: "paciente" },
+          { username: "Ameth", email: "ameth@email.com", password: "password123", role: "admin" },
+          { username: "Josue", email: "josue@email.com", password: "testpass456", role: "cuidador" }
+        ];
+        saveUsers(users);
+      }
+      return users;
+    }
+    function saveUsers(users) {
+      localStorage.setItem('users', JSON.stringify(users));
+    }
+    function renderStats() {
+      const users = getUsers();
+      const total = users.length;
+      const admins = users.filter(u => u.role === 'admin').length;
+      const cuidadores = users.filter(u => u.role === 'cuidador').length;
+      const pacientes = users.filter(u => u.role === 'paciente').length;
+      const statsRow = document.getElementById('admin-stats-row');
+      if (!statsRow) return;
+      statsRow.innerHTML = `
+        <div class="stat-card"><div class="stat-title">Usuarios Totales</div><div class="stat-value">${total}</div></div>
+        <div class="stat-card"><div class="stat-title">Admins</div><div class="stat-value">${admins}</div></div>
+        <div class="stat-card"><div class="stat-title">Cuidadores</div><div class="stat-value">${cuidadores}</div></div>
+        <div class="stat-card"><div class="stat-title">Pacientes</div><div class="stat-value">${pacientes}</div></div>
+      `;
+    }
+    function renderUsersTable(filter = '') {
+      const users = getUsers();
+      const tbody = document.querySelector('#admin-users-table tbody');
+      tbody.innerHTML = '';
+      const filtered = users.filter(u => {
+        const f = filter.toLowerCase();
+        return (
+          u.username.toLowerCase().includes(f) ||
+          (u.email && u.email.toLowerCase().includes(f)) ||
+          u.role.toLowerCase().includes(f)
+        );
+      });
+      if (!filtered.length) {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td colspan="5" class="text-center">No hay usuarios registrados.</td>`;
+        tbody.appendChild(tr);
+        return;
+      }
+      filtered.forEach((u, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td><input type="text" value="${u.username}" class="form-control form-control-sm edit-name" data-idx="${idx}"></td>
+          <td><input type="email" value="${u.email || ''}" class="form-control form-control-sm edit-email" data-idx="${idx}"></td>
+          <td>
+            <select class="form-select form-select-sm edit-role" data-idx="${idx}">
+              <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
+              <option value="cuidador" ${u.role === 'cuidador' ? 'selected' : ''}>Cuidador</option>
+              <option value="paciente" ${u.role === 'paciente' ? 'selected' : ''}>Paciente</option>
+            </select>
+          </td>
+          <td style="position:relative;min-width:120px;">
+            <input type="password" value="${u.password || ''}" class="form-control form-control-sm edit-password" data-idx="${idx}" style="padding-right:32px;">
+            <button type="button" class="btn btn-link btn-sm toggle-password" tabindex="-1" style="position:absolute;top:4px;right:4px;padding:0 6px;">
+              <i class="bi bi-eye"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-danger btn-sm delete-user" data-idx="${idx}">Eliminar</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    // Guardar cambios en línea
+    function handleEdit(e) {
+      const idx = e.target.dataset.idx;
+      const users = getUsers();
+      if (e.target.classList.contains('edit-name')) {
+        users[idx].username = e.target.value;
+      } else if (e.target.classList.contains('edit-email')) {
+        users[idx].email = e.target.value;
+      } else if (e.target.classList.contains('edit-role')) {
+        users[idx].role = e.target.value;
+      } else if (e.target.classList.contains('edit-password')) {
+        users[idx].password = e.target.value;
+      }
+      saveUsers(users);
+      renderStats();
+    }
+    // Eliminar usuario
+    function handleDelete(e) {
+      if (!e.target.classList.contains('delete-user')) return;
+      const idx = e.target.dataset.idx;
+      let users = getUsers();
+      if (confirm('¿Seguro que quieres eliminar este usuario?')) {
+        users.splice(idx, 1);
+        saveUsers(users);
+        renderUsersTable(document.getElementById('searchUser').value);
+        renderStats();
+      }
+    }
+    // Agregar usuario
+    function handleAddUser(e) {
+      e.preventDefault();
+      const name = document.getElementById('addName').value.trim();
+      const email = document.getElementById('addEmail').value.trim();
+      const password = document.getElementById('addPassword').value.trim();
+      const role = document.getElementById('addRole').value;
+      if (!name || !email || !password || !role) {
+        alert('Completa todos los campos');
+        return;
+      }
+      let users = getUsers();
+      if (users.find(u => u.username === name)) {
+        alert('Ese nombre de usuario ya existe');
+        return;
+      }
+      users.push({ username: name, email, password, role });
+      saveUsers(users);
+      renderUsersTable(document.getElementById('searchUser').value);
+      renderStats();
+      e.target.reset();
+    }
+    // Buscar usuarios
+    function handleSearch(e) {
+      renderUsersTable(e.target.value);
+    }
+    // Cerrar sesión
+    function handleLogout() {
+      document.getElementById('logoutModal').classList.add('active');
+    }
+    // Mostrar/ocultar contraseña
+    function handleTogglePassword(e) {
+      if (!e.target.closest('.toggle-password')) return;
+      const btn = e.target.closest('.toggle-password');
+      const input = btn.parentElement.querySelector('input.edit-password');
+      if (input.type === 'password') {
+        input.type = 'text';
+        btn.querySelector('i').className = 'bi bi-eye-slash';
+      } else {
+        input.type = 'password';
+        btn.querySelector('i').className = 'bi bi-eye';
+      }
+    }
+    // Inicializar
+    function initAdminDashboard() {
+      renderStats();
+      renderUsersTable();
+      document.getElementById('admin-users-table').addEventListener('input', handleEdit);
+      document.getElementById('admin-users-table').addEventListener('click', handleDelete);
+      document.getElementById('admin-users-table').addEventListener('click', handleTogglePassword);
+      document.getElementById('addUserForm').addEventListener('submit', handleAddUser);
+      document.getElementById('searchUser').addEventListener('input', handleSearch);
+      document.getElementById('logoutBtn').addEventListener('click', handleLogout);
+    }
+    document.addEventListener('DOMContentLoaded', function() {
+      initAdminDashboard();
+      // Forzar sección inicial visible
+      document.querySelectorAll('[id^="admin-section-"]').forEach(div => div.style.display = 'none');
+      document.getElementById('admin-section-stats').style.display = '';
+      // Sidebar navigation
+      document.querySelector('.sidebar').addEventListener('click', handleSidebarNav);
+      // Modal logout robusto
+      const logoutBtn = document.getElementById('logoutBtn');
+      const logoutModal = document.getElementById('logoutModal');
+      const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+      const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+      if (logoutBtn && logoutModal && confirmLogoutBtn && cancelLogoutBtn) {
+        logoutBtn.onclick = function() {
+          logoutModal.classList.add('active');
+        };
+        cancelLogoutBtn.onclick = function() {
+          logoutModal.classList.remove('active');
+        };
+        confirmLogoutBtn.onclick = function() {
+          logoutModal.classList.remove('active');
+          localStorage.removeItem('loggedInUser');
+          localStorage.removeItem('userRole');
+          window.location.href = '../pages/login.html';
+        };
+      }
+    });
+
+    // Sidebar navigation
+    function handleSidebarNav(e) {
+      const icon = e.target.closest('.nav-icon');
+      if (!icon) return;
+      document.querySelectorAll('.nav-icon').forEach(i => i.classList.remove('active'));
+      icon.classList.add('active');
+      const section = icon.dataset.section;
+      document.querySelectorAll('[id^="admin-section-"]').forEach(div => div.style.display = 'none');
+      document.getElementById('admin-section-' + section).style.display = '';
+    }
+  </script>
+</body>
+</html> 

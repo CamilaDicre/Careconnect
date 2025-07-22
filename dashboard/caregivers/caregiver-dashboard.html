@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caregiver Dashboard - Careconnect</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .caregiver-dashboard-page {
+            background: #f8f9fa;
+            min-height: 100vh;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        #caregiver-content {
+            margin-left: 350px;
+            transition: margin-left 0.4s ease;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        #caregiver-content.sidebar-collapsed {
+            margin-left: 90px;
+        }
+        
+        @media (max-width: 768px) {
+            #caregiver-content {
+                margin-left: 0;
+                padding: 15px;
+            }
+            
+            #caregiver-content.sidebar-collapsed {
+                margin-left: 0;
+            }
+        }
+        
+        #logoutModal { display: none !important; }
+        #logoutModal.active { display: flex !important; }
+    </style>
+</head>
+<body class="caregiver-dashboard-page">
+    <header-component></header-component>
+    <welcome-overlay></welcome-overlay>
+    <caregiver-sidebar></caregiver-sidebar>
+    <main id="caregiver-content">
+        <!-- Info del cuidador logueado -->
+        <section class="container my-4">
+            <div class="card p-3 mb-4" id="caregiverProfileCard" style="max-width:500px;">
+                <h4 class="mb-2">Perfil del cuidador</h4>
+                <div><b>Nombre:</b> <span id="cuidadorNombre">-</span></div>
+                <div><b>Email:</b> <span id="cuidadorEmail">-</span></div>
+            </div>
+        </section>
+        <!-- Lista de usuarios registrados -->
+        <section class="container my-5">
+            <h2 class="mb-3">Usuarios registrados</h2>
+            <table class="table table-bordered table-striped" id="usersTable">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Rol</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Aquí se insertarán los usuarios -->
+                </tbody>
+            </table>
+        </section>
+    </main>
+    
+    <!-- Custom notification -->
+    <div id="notification" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-100px);background:linear-gradient(135deg,#4facfe,#00f2fe);color:white;padding:20px 30px;border-radius:16px;box-shadow:0 12px 40px rgba(79,172,254,0.3);z-index:10000;opacity:0;transition:all 0.6s ease;max-width:350px;font-family:'Poppins',sans-serif;font-weight:500;text-align:center;backdrop-filter:blur(10px);">
+        <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+            <i class="bi bi-check-circle-fill" style="font-size:24px;"></i>
+            <span id="notification-text" style="font-size:16px;">Action completed successfully</span>
+        </div>
+    </div>
+    
+    <!-- Page transition overlay -->
+    <div id="page-transition" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#4facfe,#00f2fe);z-index:99999;opacity:0;visibility:hidden;transition:all 1.2s ease;display:flex;align-items:center;justify-content:center;">
+        <div style="text-align:center;color:white;font-family:'Poppins',sans-serif;">
+            <i class="bi bi-arrow-right-circle-fill" style="font-size:48px;margin-bottom:20px;display:block;"></i>
+            <h3 style="margin:0;font-weight:600;font-size:24px;">Redirecting...</h3>
+            <p style="margin:10px 0 0 0;font-size:16px;opacity:0.9;">We hope to see you again</p>
+        </div>
+    </div>
+    
+    <!-- Modal de confirmación de logout -->
+    <div id="logoutModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:20000;display:flex;align-items:center;justify-content:center;">
+        <div style="background:white;padding:32px 28px;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.18);max-width:350px;text-align:center;">
+            <h4 style="color:#1976d2;font-weight:700;margin-bottom:18px;">¿Seguro que quieres cerrar sesión?</h4>
+            <p style="color:#555;margin-bottom:24px;">Tu sesión se cerrará y volverás al inicio.</p>
+            <button id="confirmLogoutBtn" class="btn btn-danger px-4 me-2">Cerrar sesión</button>
+            <button id="cancelLogoutBtn" class="btn btn-secondary px-4">Cancelar</button>
+        </div>
+    </div>
+    
+    <script src="../welcome-overlay.js"></script>
+    <script src="caregiver-sidebar.js"></script>
+    <script src="caregiver-overview.js"></script>
+    <script src="caregiver-profile.js"></script>
+    <script src="patient-management.js"></script>
+    <script src="schedule-calendar.js"></script>
+    <script src="../health-monitoring.js"></script>
+    <!-- <script src="../care-reports.js"></script> -->
+    <script src="caregiver-footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Set user type to caregiver (fixed)
+        window.userType = 'caregiver';
+        
+        // Function to show notification
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            
+            // Configure colors based on type
+            if (type === 'success') {
+                notification.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
+                notification.style.boxShadow = '0 12px 40px rgba(79,172,254,0.3)';
+                notification.innerHTML = `
+                    <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                        <i class="bi bi-check-circle-fill" style="font-size:24px;"></i>
+                        <span style="font-size:16px;">${message}</span>
+                    </div>
+                `;
+            } else if (type === 'error') {
+                notification.style.background = 'linear-gradient(135deg, #ff9a9e, #fecfef)';
+                notification.style.boxShadow = '0 12px 40px rgba(255,154,158,0.3)';
+                notification.innerHTML = `
+                    <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
+                        <i class="bi bi-exclamation-triangle-fill" style="font-size:24px;"></i>
+                        <span style="font-size:16px;">${message}</span>
+                    </div>
+                `;
+            }
+            
+            // Show notification with smooth transition
+            notification.style.opacity = '1';
+            notification.style.transform = 'translate(-50%, -50%) translateY(0)';
+            
+            // Hide after 4 seconds with smooth transition
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translate(-50%, -50%) translateY(-50px)';
+            }, 4000);
+        }
+        
+        // Function to show page transition
+        function showPageTransition() {
+            const transition = document.getElementById('page-transition');
+            transition.style.visibility = 'visible';
+            transition.style.opacity = '1';
+        }
+        
+        // Logout function
+        function logout() {
+            if (!confirm('¿Seguro que quieres cerrar sesión?')) return;
+            showNotification('Session closed successfully', 'success');
+            setTimeout(() => {
+                showPageTransition();
+                setTimeout(() => {
+                    window.location.href = '../../index.html';
+                }, 3000);
+            }, 2500);
+        }
+        
+        // Handle sidebar collapse
+        function handleSidebarToggle() {
+            const main = document.getElementById('caregiver-content');
+            const nav = document.querySelector('caregiver-sidebar').shadowRoot.querySelector('nav');
+            
+            if (nav.classList.contains('minimized')) {
+                main.classList.remove('sidebar-collapsed');
+            } else {
+                main.classList.add('sidebar-collapsed');
+            }
+        }
+        
+        // Listen for sidebar toggle events
+        document.addEventListener('sidebarToggle', handleSidebarToggle);
+        
+        // Mostrar lista de usuarios en el dashboard de cuidador
+        function renderUsersTable() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const tbody = document.querySelector('#usersTable tbody');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            users.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td>${u.username}</td><td>${u.role}</td>`;
+                tbody.appendChild(tr);
+            });
+        }
+        
+        // Mostrar info del cuidador logueado
+        function renderCaregiverProfile() {
+            const username = localStorage.getItem('loggedInUser');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.username === username && u.role === 'cuidador');
+            document.getElementById('cuidadorNombre').textContent = user ? user.username : '-';
+            document.getElementById('cuidadorEmail').textContent = user ? (user.email || '-') : '-';
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            renderUsersTable();
+            renderCaregiverProfile();
+            // Modal logout robusto
+            const logoutBtn = document.getElementById('logoutBtn');
+            const logoutModal = document.getElementById('logoutModal');
+            const confirmLogoutBtn = document.getElementById('confirmLogoutBtn');
+            const cancelLogoutBtn = document.getElementById('cancelLogoutBtn');
+            if (logoutBtn && logoutModal && confirmLogoutBtn && cancelLogoutBtn) {
+                logoutBtn.onclick = function() {
+                    logoutModal.classList.add('active');
+                };
+                cancelLogoutBtn.onclick = function() {
+                    logoutModal.classList.remove('active');
+                };
+                confirmLogoutBtn.onclick = function() {
+                    logoutModal.classList.remove('active');
+                    showNotification('Session closed successfully', 'success');
+                    setTimeout(() => {
+                        showPageTransition();
+                        setTimeout(() => {
+                            window.location.href = '../../index.html';
+                        }, 3000);
+                    }, 2500);
+                };
+            }
+        });
+    </script>
+</body>
+</html> 
