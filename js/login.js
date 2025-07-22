@@ -67,6 +67,32 @@ const users = [
         document.getElementById('show-login').click();
       });
     }
+
+    // --- AGREGADO: Alternar entre login y registro ---
+    const showLoginBtn = document.getElementById('show-login');
+    const showRegisterBtn = document.getElementById('show-register');
+    const toRegisterLink = document.getElementById('to-register');
+    const toLoginLink = document.getElementById('to-login');
+    const loginCard = document.getElementById('login-card');
+    const registerCard = document.getElementById('register-card');
+
+    function showLogin() {
+      loginCard.style.display = '';
+      registerCard.style.display = 'none';
+      showLoginBtn.classList.add('active');
+      showRegisterBtn.classList.remove('active');
+    }
+    function showRegister() {
+      loginCard.style.display = 'none';
+      registerCard.style.display = '';
+      showLoginBtn.classList.remove('active');
+      showRegisterBtn.classList.add('active');
+    }
+    if (showLoginBtn) showLoginBtn.addEventListener('click', showLogin);
+    if (showRegisterBtn) showRegisterBtn.addEventListener('click', showRegister);
+    if (toRegisterLink) toRegisterLink.addEventListener('click', function(e) { e.preventDefault(); showRegister(); });
+    if (toLoginLink) toLoginLink.addEventListener('click', function(e) { e.preventDefault(); showLogin(); });
+    // --- FIN AGREGADO ---
   });
   
   // Utilidad para obtener usuarios desde localStorage o usar los hardcodeados
