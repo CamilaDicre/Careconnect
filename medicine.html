@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicines</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="departments.css">
+</head>
+<body>
+    <div class="fixed-medicines-header">
+        <h1 style="margin:0;">Medicines</h1>
+        <a class="my-button" href="departments.html">Return</a>
+  <!-- Menú hamburguesa para filtrar por tipo de malestar -->
+  <div id="filter-menu" style="position:fixed; top:24px; left:24px; z-index:1000;">
+    <button id="menu-toggle" style="background:none; border:none; font-size:2rem; cursor:pointer;">
+      <span>&#9776;</span>
+    </button>
+    <div id="menu-dropdown" style="display:none; background:#fff; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12); margin-top:8px; min-width:180px;">
+      <ul style="list-style:none; margin:0; padding:10px 0;">
+        <li><a href="#" class="filter-option" data-filter="all" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Todos</a></li>
+        <li><a href="#" class="filter-option" data-filter="estomago" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Estómago</a></li>
+        <li><a href="#" class="filter-option" data-filter="dolor" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Dolor</a></li>
+        <li><a href="#" class="filter-option" data-filter="articulaciones" style="display:block; padding:8px 24px; color:#1976d2; text-decoration:none;">Articulaciones</a></li>
+        <!-- Agrega más filtros según necesites -->
+      </ul>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>Medicinas para Tratamientos de Enfermedades</h1>
+
+    <div class="medicine-card">
+      <img src="https://via.placeholder.com/300x200.png?text=GastroFix" alt="GastroFix">
+      <h2>GastroFix</h2>
+      <p>Alivia el dolor de estómago y facilita la digestión. Ideal para malestares estomacales leves.</p>
+      <button class="button" onclick="location.href='medicina-detalle.html?medicina=GastroFix'">Más Info</button>
+>>>>>>> e98f0c0f949745e0a071a876bfb7517c7c80e686
+    </div>
+    <div style="max-width: 900px; margin: 2rem auto; margin-top:110px;">
+        <div id="stomach-ache" class="department-info" style="margin-bottom: 2rem;">
+    <h2>Stomach Ache</h2>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://tse4.mm.bing.net/th/id/OIP.66uPuoZji_DdTbPPguHtOAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Acetaminophen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Acetaminophen</h3>
+            <p><b>Use:</b> Pain relief and fever reduction.<br><b>Description:</b> Commonly used for mild to moderate stomach pain and discomfort. Should be taken as directed by a physician.</p>
+        </div>
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://th.bing.com/th/id/R.a5baf1145594d8229105a7ca9b11d11e?rik=J%2b3i6nOXiNDXvQ&riu=http%3a%2f%2fwww.gianttiger.com%2fcdn%2fshop%2fproducts%2fpreview_images_188343_f_01.jpg%3fv%3d1701543401&ehk=SBNkcLiLOYNhYaC0X6w3SPG2T7kjAU%2fBlU5doo488Ck%3d&risl=&pid=ImgRaw&r=0" alt="Pepto-Bismol" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Pepto-Bismol</h3>
+            <p><b>Use:</b> Upset stomach, nausea, diarrhea.<br><b>Description:</b> Helps relieve symptoms of indigestion, nausea, and diarrhea. Not recommended for children under 12 years.</p>
+        </div>
+    </div>
+</div>
+        <div id="hipertension" class="department-info" style="margin-bottom: 2rem;">
+    <h2>Hipertension</h2>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://tse4.mm.bing.net/th/id/OIP.G5XhKilnydEAI8XC7BdgQQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Lisinopril" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Lisinopril</h3>
+            <p><b>Use:</b> High blood pressure.<br><b>Description:</b> ACE inhibitor used to treat hypertension and heart failure. Should be taken daily as prescribed.</p>
+        </div>
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://maxhubpharm.com/wp-content/uploads/2023/10/1000010576.jpg" alt="Amlodipine" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Amlodipine</h3>
+            <p><b>Use:</b> High blood pressure, chest pain.<br><b>Description:</b> Calcium channel blocker that helps relax blood vessels. Take as directed by a doctor.</p>
+        </div>
+    </div>
+</div>
+        <div id="headache" class="department-info" style="margin-bottom: 2rem;">
+    <h2>Headache</h2>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://tse1.mm.bing.net/th/id/OIP.Jo3m8clMv14sf2wTSekYCgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Ibuprofen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Ibuprofen</h3>
+            <p><b>Use:</b> Pain relief, inflammation.<br><b>Description:</b> Nonsteroidal anti-inflammatory drug (NSAID) used for headache, muscle aches, and fever. Take with food to avoid stomach upset.</p>
+        </div>
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://image.made-in-china.com/2f0j00moDVdSKseMRN/Aspirin-Tablets-300mg-10X10-prime-S-Box-Western-Medicine.jpg" alt="Aspirin" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Aspirin</h3>
+            <p><b>Use:</b> Pain relief, fever, inflammation.<br><b>Description:</b> Commonly used for mild to moderate headaches. Not recommended for children with viral infections.</p>
+        </div>
+    </div>
+</div>
+        <div id="colds" class="department-info" style="margin-bottom: 2rem;">
+    <h2>Colds</h2>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://beta1.cruzverde.com.co/dw/image/v2/BDPM_PRD/on/demandware.static/-/Sites-masterCatalog_Colombia/default/dwe21efdd0/images/large/17422_1_ACETAMINOFEN_500MG_TAB_CAJ_X_100_GENFAR_1%20(2).jpg?sw=1000&sh=1000" alt="Acetaminophen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Acetaminophen</h3>
+            <p><b>Use:</b> Fever and mild pain.<br><b>Description:</b> Helps reduce fever and relieve minor aches and pains associated with colds.</p>
+        </div>
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://cpimg.tistatic.com/07012647/b/4/Dextromethorphan-Hcl-Syrup.jpg" alt="Dextromethorphan" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Dextromethorphan</h3>
+            <p><b>Use:</b> Cough suppressant.<br><b>Description:</b> Used to relieve cough caused by colds or flu. Should not be used in children under 4 years.</p>
+        </div>
+    </div>
+</div>
+        <div id="gastritis" class="department-info" style="margin-bottom: 2rem;">
+    <h2>Gastritis</h2>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://hebmx.vtexassets.com/arquivos/ids/584987-800-800?v=638218480330330000&width=800&height=800&aspect=true" alt="Omeprazole" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Omeprazole</h3>
+            <p><b>Use:</b> Acid reflux, gastritis.<br><b>Description:</b> Proton pump inhibitor that reduces stomach acid. Commonly prescribed for gastritis and ulcers.</p>
+        </div>
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://th.bing.com/th/id/R.8aff9eea0f1d5db450df0bd5605d9e75?rik=qsYoF%2f9ROcyD%2bQ&riu=http%3a%2f%2fwww.lasanteca.com%2fwp-content%2fuploads%2f2018%2f12%2fRANITIDINA-150MG-CAJA-POR-100-TABLETAS-INCLINADO.jpg&ehk=drPl6Ed79yDNE6fwI5%2fkE1lOyqxpeDikejPOSP1laRY%3d&risl=&pid=ImgRaw&r=0" alt="Ranitidine" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Ranitidine</h3>
+            <p><b>Use:</b> Acid reduction.<br><b>Description:</b> H2 blocker that helps decrease stomach acid. Used for short-term relief of gastritis symptoms.</p>
+        </div>
+    </div>
+</div>
+        <div id="joint-pain" class="department-info" style="margin-bottom: 2rem;">
+    <h2>Joint Pain</h2>
+    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://i5.walmartimages.com/asr/30bbd351-420a-4874-9e59-3994b3dbb30a_1.a1b144c2ff5a6464b6bc5a0a91367d55.jpeg" alt="Naproxen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Naproxen</h3>
+            <p><b>Use:</b> Pain relief, inflammation.<br><b>Description:</b> NSAID used for joint pain and inflammation. Take with food to avoid stomach upset.</p>
+        </div>
+        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
+            <img src="https://www.multicampo.com.br/wp-content/uploads/2019/03/Diclofenaco-50ml--1200x1200.png" alt="Diclofenac" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
+            <h3>Diclofenac</h3>
+            <p><b>Use:</b> Pain relief, inflammation.<br><b>Description:</b> NSAID used to treat pain and inflammation in joints, muscles, and bones.</p>
+        </div>
+    </div>
+</div>
+    </div>
+
+  <script>
+    // Mostrar/ocultar menú
+    document.getElementById('menu-toggle').onclick = function() {
+      var menu = document.getElementById('menu-dropdown');
+      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
+    };
+    // Cerrar menú al hacer clic fuera
+    document.addEventListener('click', function(e) {
+      var menu = document.getElementById('menu-dropdown');
+      var toggle = document.getElementById('menu-toggle');
+      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
+        menu.style.display = 'none';
+      }
+    });
+    // Filtro (solo ejemplo, no filtra aún)
+    document.querySelectorAll('.filter-option').forEach(function(opt) {
+      opt.onclick = function(e) {
+        e.preventDefault();
+        alert('Filtrar por: ' + this.dataset.filter);
+        document.getElementById('menu-dropdown').style.display = 'none';
+      };
+    });
+  </script>
+
+</body>
+</html>
+
