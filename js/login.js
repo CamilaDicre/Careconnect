@@ -52,7 +52,8 @@ const users = [
         const email = document.getElementById('reg-email').value.trim();
         const password = document.getElementById('reg-pass').value.trim();
         const role = document.getElementById('reg-role').value;
-        if (!name || !email || !password || !role) {
+        const gender = document.getElementById('reg-gender').value;
+        if (!name || !email || !password || !role || !gender) {
           alert('Please fill in all fields.');
           return;
         }
@@ -61,12 +62,38 @@ const users = [
           alert('Username already exists.');
           return;
         }
-        users.push({ username: name, email, password, role });
+        users.push({ username: name, email, password, role, gender });
         saveUsers(users);
-        alert('Registration successful! You can now log in.');
+        showBanner('¡Se creó su cuenta!', 'success');
         document.getElementById('show-login').click();
       });
     }
+
+    // --- AGREGADO: Alternar entre login y registro ---
+    const showLoginBtn = document.getElementById('show-login');
+    const showRegisterBtn = document.getElementById('show-register');
+    const toRegisterLink = document.getElementById('to-register');
+    const toLoginLink = document.getElementById('to-login');
+    const loginCard = document.getElementById('login-card');
+    const registerCard = document.getElementById('register-card');
+
+    function showLogin() {
+      loginCard.style.display = '';
+      registerCard.style.display = 'none';
+      showLoginBtn.classList.add('active');
+      showRegisterBtn.classList.remove('active');
+    }
+    function showRegister() {
+      loginCard.style.display = 'none';
+      registerCard.style.display = '';
+      showLoginBtn.classList.remove('active');
+      showRegisterBtn.classList.add('active');
+    }
+    if (showLoginBtn) showLoginBtn.addEventListener('click', showLogin);
+    if (showRegisterBtn) showRegisterBtn.addEventListener('click', showRegister);
+    if (toRegisterLink) toRegisterLink.addEventListener('click', function(e) { e.preventDefault(); showRegister(); });
+    if (toLoginLink) toLoginLink.addEventListener('click', function(e) { e.preventDefault(); showLogin(); });
+    // --- FIN AGREGADO ---
   });
   
   // Utilidad para obtener usuarios desde localStorage o usar los hardcodeados
@@ -102,14 +129,17 @@ const users = [
       localStorage.setItem("loggedInUser", username);
       localStorage.setItem("userRole", user.role);
       updateLoginUI();
+      showBanner('¡Se inició sesión!', 'success');
       // Redirigir según el rol
-      if (user.role === "admin") {
-        window.location.href = "../dashboard/admin-dashboard.html";
-      } else if (user.role === "cuidador") {
-        window.location.href = "../dashboard/caregivers/caregiver-dashboard.html";
-      } else {
-        window.location.href = "../dashboard/dashboard.html";
-      }
+      setTimeout(() => {
+        if (user.role === "admin") {
+          window.location.href = "../dashboard/admin-dashboard.html";
+        } else if (user.role === "cuidador") {
+          window.location.href = "../dashboard/caregivers/caregiver-dashboard.html";
+        } else {
+          window.location.href = "../dashboard/dashboard.html";
+        }
+      }, 1200);
     } else {
       console.log('Login fallido, mostrando mensaje de error');
       showAlert('Usuario o contraseña incorrecto, revise y vuelva a intentar', 'danger', 'loginError');
@@ -117,8 +147,13 @@ const users = [
   }
   
   function logout() {
-    localStorage.removeItem("loggedInUser");
-    updateLoginUI();
+    showBanner('Logging out...', 'success');
+    setTimeout(() => {
+      localStorage.removeItem("loggedInUser");
+      updateLoginUI();
+      // Si quieres redirigir a la página principal después de logout, descomenta la siguiente línea:
+      // window.location.href = '../index.html';
+    }, 1200);
   }
   
   function updateLoginUI() {
@@ -170,5 +205,13 @@ const users = [
     } else {
       console.log('No se encontró el elemento para mostrar el error:', target);
     }
+  }
+
+  function showBanner(message, type = 'success') {
+    const banner = document.getElementById('messageBanner');
+    if (!banner) return;
+    banner.innerHTML = `<div style="display:inline-block;margin:16px auto;padding:16px 32px;background:${type==='success'?'#d1fae5':'#fee2e2'};color:${type==='success'?'#065f46':'#991b1b'};border-radius:8px;font-size:1.2rem;font-weight:bold;box-shadow:0 2px 8px rgba(0,0,0,0.08);border:1px solid ${type==='success'?'#10b981':'#ef4444'};">${message}</div>`;
+    banner.style.display = 'block';
+    setTimeout(()=>{ banner.style.display = 'none'; banner.innerHTML = ''; }, 3000);
   }
   

@@ -14,8 +14,12 @@ class WelcomeOverlay extends HTMLElement {
   getUserData() {
     const loggedInUser = localStorage.getItem("loggedInUser");
     if (loggedInUser) {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      // Buscar el usuario por username
+      const user = users.find(u => u.username === loggedInUser);
+      const displayName = user ? (user.name || user.username) : loggedInUser;
       return {
-        name: loggedInUser,
+        name: displayName,
         greeting: '¡Qué bueno verte de nuevo!',
         message: 'Esperamos que tengas un día maravilloso'
       };

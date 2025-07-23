@@ -49,7 +49,7 @@ p {
 }
 
 .hero-section h1 {
-    font-size: 4.1rem;
+    font-size: 5rem;
     line-height: 1.2;
     font-family: 'Poppins';
 }
@@ -1022,6 +1022,7 @@ body.dashboard-page h1.display-3.hero-text {
     background: none !important;
     text-shadow: none !important;
     -webkit-text-stroke: 0;
+    text-stroke: 0;
     font-weight: 900;
 }
 
@@ -1094,6 +1095,7 @@ body.dashboard-page h1.display-3.hero-text {
     background: transparent !important;
     color: transparent !important;
     -webkit-text-stroke: 2px var(--pal-primary);
+    text-stroke: 2px var(--pal-primary);
 }
 
 .event-dot {

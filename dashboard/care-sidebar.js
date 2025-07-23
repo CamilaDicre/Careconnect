@@ -19,9 +19,16 @@ class CareSidebar extends HTMLElement {
     return window.userType || 'patient';
   }
   getUserData() {
+    const username = localStorage.getItem('loggedInUser') || 'Paciente';
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.username === username && u.role === 'paciente');
+    let displayName = user ? (user.name || user.username) : username;
+    let photo = user && user.photo ? user.photo : '../assets/people/woman-whiteshirt.png';
     return {
-      name: 'Maria Gonzalez',
-      photo: '../assets/people/woman-whiteshirt.png'
+      name: displayName,
+      photo: photo,
+      email: user ? (user.email || '-') : '-',
+      username: user ? user.username : '-'
     };
   }
   getSections() {
@@ -41,6 +48,8 @@ class CareSidebar extends HTMLElement {
   render() {
     const sections = this.getSections();
     const userData = this.getUserData();
+    // Calcular iniciales para el avatar si no hay foto personalizada
+    const initials = userData.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
     this.sections = sections;
     this.shadowRoot.innerHTML = `
       <style>
@@ -321,7 +330,9 @@ class CareSidebar extends HTMLElement {
           <div class="header-left">
             <div class="user-info">
               <div class="user-photo">
-                <img src="${userData.photo}" alt="Profile photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<i class=\\"bi bi-person\\"></i>';">
+                ${(userData.photo && userData.photo !== '../assets/people/woman-whiteshirt.png')
+                  ? `<img src="${userData.photo}" alt="Profile photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:32px;font-weight:700;color:#667eea;\'>${initials}</span>';">`
+                  : `<span style="font-size:32px;font-weight:700;color:#667eea;">${initials}</span>`}
               </div>
               <div class="user-details">
                 <h4>${userData.name}</h4>
