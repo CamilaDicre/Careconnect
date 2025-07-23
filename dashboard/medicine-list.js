@@ -140,6 +140,20 @@ class MedicineList extends HTMLElement {
           text-align: center;
         }
         
+        .stat-icon {
+          margin-bottom: 10px;
+        }
+
+        .stat-icon svg {
+          width: 32px;
+          height: 32px;
+          fill: none;
+          stroke: #1976d2; /* Default color for icons */
+          stroke-width: 2;
+          stroke-linecap: round;
+          stroke-linejoin: round;
+        }
+
         .stat-number {
           font-size: 32px;
           font-weight: 700;
@@ -351,18 +365,34 @@ class MedicineList extends HTMLElement {
         
         <div class="stats-row">
           <div class="stat-card">
+            <div class="stat-icon">
+              <!-- SVG frasco de medicina -->
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="5" rx="2"/><rect x="4" y="8" width="16" height="13" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
+            </div>
             <div class="stat-number">5</div>
             <div class="stat-label">Total Medications</div>
           </div>
           <div class="stat-card">
+            <div class="stat-icon">
+              <!-- SVG check/tomado -->
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </div>
             <div class="stat-number">1</div>
             <div class="stat-label">Taken Today</div>
           </div>
           <div class="stat-card">
+            <div class="stat-icon">
+              <!-- SVG reloj/pendiente -->
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
             <div class="stat-number">4</div>
             <div class="stat-label">Pending</div>
           </div>
           <div class="stat-card">
+            <div class="stat-icon">
+              <!-- Cambiado: SVG alerta/cruz por exclamation-triangle -->
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M21 18a2 2 0 0 1-1.73 1H4.73A2 2 0 0 1 3 18l8.29-14a2 2 0 0 1 3.42 0L21 18z"/></svg>
+            </div>
             <div class="stat-number">0</div>
             <div class="stat-label">Overdue</div>
           </div>
