@@ -155,12 +155,48 @@ class CaregiverSidebar extends HTMLElement {
           <span class="logo-text">areConnect</span>
         </div>
         <div class="sidebar-nav">
-          <button class="nav-item active" data-section="overview"><i class="bi bi-house-door"></i> <span>Inicio</span></button>
-          <button class="nav-item" data-section="virtual-care"><i class="bi bi-camera-video"></i> <span>Virtual Care</span></button>
-          <button class="nav-item" data-section="medication"><i class="bi bi-capsule"></i> <span>Medicamentos</span></button>
-          <button class="nav-item" data-section="documents"><i class="bi bi-file-earmark-text"></i> <span>Documentos</span></button>
-          <button class="nav-item" data-section="earnings"><i class="bi bi-graph-up"></i> <span>Estadísticas</span></button>
-          <button class="nav-item" data-section="profile"><i class="bi bi-person-circle"></i> <span>Perfil</span></button>
+          <button class="nav-item active" data-section="overview">
+            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <!-- Home SVG amigable -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="#fff" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="20" width="32" height="20" rx="5"/><path d="M24 8L8 20h32L24 8z" fill="#fff" stroke="#1976d2" stroke-width="2"/></svg>
+            </span>
+            <span>Inicio</span>
+          </button>
+          <button class="nav-item" data-section="virtual-care">
+            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <!-- Cruz médica SVG -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="8" width="8" height="32" rx="4" fill="#1976d2"/><rect x="8" y="20" width="32" height="8" rx="4" fill="#1976d2"/></svg>
+            </span>
+            <span>Virtual Care</span>
+          </button>
+          <button class="nav-item" data-section="medication">
+            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <!-- Frasco de medicina SVG -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="24" rx="4" fill="#1976d2"/><rect x="18" y="8" width="12" height="8" rx="2" fill="#1976d2"/><rect x="20" y="26" width="8" height="4" rx="2" fill="#fff"/></svg>
+            </span>
+            <span>Medicamentos</span>
+          </button>
+          <button class="nav-item" data-section="documents">
+            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <!-- Portapapeles médico SVG -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="10" width="24" height="32" rx="4" fill="#1976d2"/><rect x="18" y="6" width="12" height="8" rx="2" fill="#fff"/><rect x="20" y="22" width="8" height="2" rx="1" fill="#fff"/><rect x="20" y="28" width="8" height="2" rx="1" fill="#fff"/></svg>
+            </span>
+            <span>Documentos</span>
+          </button>
+          <button class="nav-item" data-section="earnings">
+            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <!-- Corazón con pulso SVG -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40s-12-8.35-12-16A8 8 0 0 1 24 16a8 8 0 0 1 12 8c0 7.65-12 16-12 16z" fill="#1976d2"/><polyline points="16 28 20 24 24 32 28 20 32 28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>Estadísticas</span>
+          </button>
+          <button class="nav-item" data-section="profile">
+            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
+              <!-- Doctor/enfermero SVG -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="16" r="8" fill="#1976d2"/><rect x="12" y="28" width="24" height="12" rx="6" fill="#1976d2"/><rect x="20" y="36" width="8" height="4" rx="2" fill="#fff"/></svg>
+            </span>
+            <span>Perfil</span>
+          </button>
         </div>
         <div class="sidebar-footer">
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">

@@ -349,6 +349,40 @@
       
       // Simular proceso de envío (1 segundo)
       setTimeout(() => {
+        // Guardar datos en localStorage
+        const user = {
+          username: document.getElementById('fullName').value.trim(),
+          email: document.getElementById('email').value.trim(),
+          phone: document.getElementById('phone').value.trim(),
+          birthdate: document.getElementById('birthdate').value.trim(),
+          gender: document.getElementById('gender').value,
+          address: document.getElementById('address').value.trim(),
+          experience: document.getElementById('experience').value.trim(),
+          education: document.getElementById('education').value.trim(),
+          certifications: document.getElementById('certifications').value.trim(),
+          skills: document.getElementById('skills').value.trim(),
+          languages: document.getElementById('languages').value.trim(),
+          bio: document.getElementById('bio').value.trim(),
+          availability: document.getElementById('availability').value,
+          role: 'cuidador',
+        };
+        let users = [];
+        try {
+          users = JSON.parse(localStorage.getItem('users')) || [];
+        } catch (e) {
+          users = [];
+        }
+        // Evitar duplicados por email
+        if (users.some(u => u.email === user.email)) {
+          alert('Ya existe un usuario registrado con este email.');
+          submitBtn.textContent = originalText;
+          submitBtn.classList.remove('loading');
+          return;
+        }
+        users.push(user);
+        localStorage.setItem('users', JSON.stringify(users));
+        localStorage.setItem('loggedInUser', user.username);
+        localStorage.setItem('userRole', user.role);
         // Redirigir al dashboard
         window.location.href = '../dashboard/dashboard.html';
       }, 1000);

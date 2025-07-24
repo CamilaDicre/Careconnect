@@ -164,12 +164,30 @@
               <th>Rol</th>
               <th>Contraseña</th>
               <th>Acciones</th>
+              <th>Detalles</th>
             </tr>
           </thead>
           <tbody>
             <!-- Usuarios -->
           </tbody>
         </table>
+        <!-- Modal para detalles de usuario -->
+        <div class="modal fade" id="userDetailModal" tabindex="-1" aria-labelledby="userDetailModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="userDetailModalLabel">Detalles del Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" id="userDetailModalBody">
+                <!-- Aquí se mostrarán los detalles -->
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+          </div>
+        </div>
         <hr>
         <h5>Agregar Usuario</h5>
         <form id="addUserForm" class="row g-2 align-items-end">
@@ -277,30 +295,33 @@
       });
       if (!filtered.length) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="5" class="text-center">No hay usuarios registrados.</td>`;
+        tr.innerHTML = `<td colspan="6" class="text-center">No hay usuarios registrados.</td>`;
         tbody.appendChild(tr);
         return;
       }
       filtered.forEach((u, idx) => {
         const tr = document.createElement('tr');
         tr.innerHTML = `
-          <td><input type="text" value="${u.username}" class="form-control form-control-sm edit-name" data-idx="${idx}"></td>
-          <td><input type="email" value="${u.email || ''}" class="form-control form-control-sm edit-email" data-idx="${idx}"></td>
+          <td><input type="text" value="${u.username}" class="form-control form-control-sm edit-name" data-idx="${users.indexOf(u)}"></td>
+          <td><input type="email" value="${u.email || ''}" class="form-control form-control-sm edit-email" data-idx="${users.indexOf(u)}"></td>
           <td>
-            <select class="form-select form-select-sm edit-role" data-idx="${idx}">
+            <select class="form-select form-select-sm edit-role" data-idx="${users.indexOf(u)}">
               <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
               <option value="cuidador" ${u.role === 'cuidador' ? 'selected' : ''}>Cuidador</option>
               <option value="paciente" ${u.role === 'paciente' ? 'selected' : ''}>Paciente</option>
             </select>
           </td>
           <td style="position:relative;min-width:120px;">
-            <input type="password" value="${u.password || ''}" class="form-control form-control-sm edit-password" data-idx="${idx}" style="padding-right:32px;">
+            <input type="password" value="${u.password || ''}" class="form-control form-control-sm edit-password" data-idx="${users.indexOf(u)}" style="padding-right:32px;">
             <button type="button" class="btn btn-link btn-sm toggle-password" tabindex="-1" style="position:absolute;top:4px;right:4px;padding:0 6px;">
               <i class="bi bi-eye"></i>
             </button>
           </td>
           <td>
-            <button class="btn btn-danger btn-sm delete-user" data-idx="${idx}">Eliminar</button>
+            <button class="btn btn-danger btn-sm delete-user" data-idx="${users.indexOf(u)}">Eliminar</button>
+          </td>
+          <td>
+            <button class="btn btn-info btn-sm view-details" data-idx="${users.indexOf(u)}" data-bs-toggle="modal" data-bs-target="#userDetailModal">Ver detalles</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -377,6 +398,23 @@
         btn.querySelector('i').className = 'bi bi-eye';
       }
     }
+    // Mostrar detalles en modal
+    function handleViewDetails(e) {
+      if (!e.target.classList.contains('view-details')) return;
+      const idx = e.target.dataset.idx;
+      const users = getUsers();
+      const user = users[idx];
+      if (!user) {
+        document.getElementById('userDetailModalBody').innerHTML = '<div class="text-danger">No se encontraron datos del usuario.</div>';
+        return;
+      }
+      let html = '<ul class="list-group">';
+      for (const key in user) {
+        html += `<li class="list-group-item"><strong>${key}:</strong> ${user[key]}</li>`;
+      }
+      html += '</ul>';
+      document.getElementById('userDetailModalBody').innerHTML = html;
+    }
     // Inicializar
     function initAdminDashboard() {
       renderStats();
@@ -384,6 +422,7 @@
       document.getElementById('admin-users-table').addEventListener('input', handleEdit);
       document.getElementById('admin-users-table').addEventListener('click', handleDelete);
       document.getElementById('admin-users-table').addEventListener('click', handleTogglePassword);
+      document.getElementById('admin-users-table').addEventListener('click', handleViewDetails);
       document.getElementById('addUserForm').addEventListener('submit', handleAddUser);
       document.getElementById('searchUser').addEventListener('input', handleSearch);
       document.getElementById('logoutBtn').addEventListener('click', handleLogout);

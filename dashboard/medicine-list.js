@@ -10,63 +10,12 @@ class MedicineList extends HTMLElement {
   }
   
   getMedicines() {
-    return [
-      {
-        id: 1,
-        name: 'Vitamin D',
-        dosage: '1 capsule',
-        time: '08:00',
-        status: 'completed',
-        icon: 'bi-capsule',
-        color: '#28a745',
-        frequency: 'Daily',
-        instructions: 'Take with breakfast'
-      },
-      {
-        id: 2,
-        name: 'Omeprazole',
-        dosage: '1 tablet',
-        time: '08:00',
-        status: 'pending',
-        icon: 'bi-capsule',
-        color: '#ffc107',
-        frequency: 'Daily',
-        instructions: 'Take 30 minutes before breakfast'
-      },
-      {
-        id: 3,
-        name: 'Metformin',
-        dosage: '1 tablet',
-        time: '12:00',
-        status: 'pending',
-        icon: 'bi-capsule',
-        color: '#ffc107',
-        frequency: 'Twice daily',
-        instructions: 'Take with lunch'
-      },
-      {
-        id: 4,
-        name: 'Amlodipine',
-        dosage: '1 tablet',
-        time: '20:00',
-        status: 'pending',
-        icon: 'bi-capsule',
-        color: '#ffc107',
-        frequency: 'Daily',
-        instructions: 'Take in the evening'
-      },
-      {
-        id: 5,
-        name: 'Vitamin C',
-        dosage: '1 tablet',
-        time: '20:00',
-        status: 'pending',
-        icon: 'bi-capsule',
-        color: '#ffc107',
-        frequency: 'Daily',
-        instructions: 'Take with dinner'
-      }
-    ];
+    // Obtener usuario logueado
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) return [];
+    // Leer medicamentos específicos del usuario
+    const meds = JSON.parse(localStorage.getItem('medicines_' + loggedInUser) || '[]');
+    return meds;
   }
   
   render() {
@@ -350,61 +299,19 @@ class MedicineList extends HTMLElement {
           }
         }
       </style>
-      
       <div class="medicine-container">
+        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Mis Medicamentos</h1>
         <div class="header">
-          <h2>
-            <i class="bi bi-capsule"></i>
-            My Medications
-          </h2>
-          <button class="add-btn" id="add-medicine-btn">
-            <i class="bi bi-plus"></i>
-            Add Medication
-          </button>
+          <h2 style="font-size:1.3rem;font-weight:600;">Lista de medicamentos registrados</h2>
+          <button class="add-reading-btn" id="add-medicine-btn"><i class="bi bi-plus"></i> Agregar Medicamento</button>
         </div>
-        
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-icon">
-              <!-- SVG frasco de medicina -->
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="5" rx="2"/><rect x="4" y="8" width="16" height="13" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
-            </div>
-            <div class="stat-number">5</div>
-            <div class="stat-label">Total Medications</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">
-              <!-- SVG check/tomado -->
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-            </div>
-            <div class="stat-number">1</div>
-            <div class="stat-label">Taken Today</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">
-              <!-- SVG reloj/pendiente -->
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ffc107" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            </div>
-            <div class="stat-number">4</div>
-            <div class="stat-label">Pending</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-icon">
-              <!-- Cambiado: SVG alerta/cruz por exclamation-triangle -->
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#dc3545" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M21 18a2 2 0 0 1-1.73 1H4.73A2 2 0 0 1 3 18l8.29-14a2 2 0 0 1 3.42 0L21 18z"/></svg>
-            </div>
-            <div class="stat-number">0</div>
-            <div class="stat-label">Overdue</div>
-          </div>
-        </div>
-        
-        <div class="medicine-grid">
+        <div class="medicine-list">
+          ${medicines.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>No tienes medicamentos registrados. Usa el botón "Agregar Medicamento" para añadir uno nuevo.</div>` : ''}
           ${medicines.map(medicine => `
             <div class="medicine-card" style="border-left-color: ${medicine.color}">
               <div class="status-badge status-${medicine.status}">
-                ${medicine.status === 'completed' ? 'Taken' : medicine.status === 'pending' ? 'Pending' : 'Overdue'}
+                ${medicine.status === 'completed' ? 'Tomado' : medicine.status === 'pending' ? 'Pendiente' : 'Atrasado'}
               </div>
-              
               <div class="medicine-header">
                 <div class="medicine-icon" style="background: ${medicine.color}">
                   <i class="bi ${medicine.icon}"></i>
@@ -414,64 +321,35 @@ class MedicineList extends HTMLElement {
                   <div class="medicine-dosage">${medicine.dosage}</div>
                 </div>
               </div>
-              
               <div class="medicine-details">
                 <div class="detail-row">
-                  <span class="detail-label">Frequency:</span>
+                  <span class="detail-label">Frecuencia:</span>
                   <span class="detail-value">${medicine.frequency}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Instructions:</span>
+                  <span class="detail-label">Instrucciones:</span>
                   <span class="detail-value">${medicine.instructions}</span>
                 </div>
               </div>
-              
               <div class="medicine-time">
                 <i class="bi bi-clock"></i>
                 <span>${medicine.time}</span>
               </div>
-              
-              ${medicine.status === 'pending' ? `
-                <div class="action-buttons">
-                  <button class="action-btn btn-taken" data-medicine-id="${medicine.id}">
-                    Mark as Taken
-                  </button>
-                  <button class="action-btn btn-skip" data-medicine-id="${medicine.id}">
-                    Skip
-                  </button>
-                </div>
-              ` : ''}
             </div>
           `).join('')}
         </div>
       </div>
     `;
+    this.attachEvents();
   }
   
   attachEvents() {
-    // Add medicine button
-    const addBtn = this.shadowRoot.querySelector('#add-medicine-btn');
+    const addBtn = this.shadowRoot.getElementById('add-medicine-btn');
     if (addBtn) {
-      addBtn.addEventListener('click', () => {
+      addBtn.onclick = () => {
         this.showAddMedicineModal();
-      });
+      };
     }
-    
-    // Mark as taken buttons
-    this.shadowRoot.querySelectorAll('.btn-taken').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const medicineId = e.target.dataset.medicineId;
-        this.markAsTaken(medicineId);
-      });
-    });
-    
-    // Skip buttons
-    this.shadowRoot.querySelectorAll('.btn-skip').forEach(btn => {
-      btn.addEventListener('click', (e) => {
-        const medicineId = e.target.dataset.medicineId;
-        this.skipMedicine(medicineId);
-      });
-    });
   }
   
   markAsTaken(medicineId) {
@@ -509,8 +387,32 @@ class MedicineList extends HTMLElement {
   }
   
   showAddMedicineModal() {
-    // Simple alert for now - could be expanded to a proper modal
-    alert('Add Medication feature coming soon!');
+    // Simple prompt para agregar medicamento (puedes mejorar esto con un modal real)
+    const name = prompt('Nombre del medicamento:');
+    if (!name) return;
+    const dosage = prompt('Dosis:');
+    const time = prompt('Hora (ej: 08:00):');
+    const frequency = prompt('Frecuencia:');
+    const instructions = prompt('Instrucciones:');
+    const color = '#ffc107';
+    const icon = 'bi-capsule';
+    const status = 'pending';
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    if (!loggedInUser) return;
+    const medicines = JSON.parse(localStorage.getItem('medicines_' + loggedInUser) || '[]');
+    medicines.push({
+      id: Date.now(),
+      name,
+      dosage,
+      time,
+      frequency,
+      instructions,
+      color,
+      icon,
+      status
+    });
+    localStorage.setItem('medicines_' + loggedInUser, JSON.stringify(medicines));
+    this.render();
   }
   
   showNotification(message, type = 'success') {

@@ -7,51 +7,30 @@ class CaregiverSearch extends HTMLElement {
     this.render();
   }
   getCaregivers() {
-    return [
-      {
-        name: 'Dr. Ana Martínez',
-        specialty: 'Medicina General',
-        rating: 4.8,
-        experience: '15 años',
-        location: 'Panamá Centro',
-        photo: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?ixlib=rb-4.0.3',
-        available: true,
-        price: '$25/hora'
-      },
-      {
-        name: 'Lic. Carlos López',
-        specialty: 'Enfermería Geriátrica',
-        rating: 4.9,
-        experience: '12 años',
-        location: 'San Francisco',
-        photo: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?ixlib=rb-4.0.3',
-        available: true,
-        price: '$20/hora'
-      },
-      {
-        name: 'Dra. María Rodríguez',
-        specialty: 'Geriatría',
-        rating: 4.7,
-        experience: '20 años',
-        location: 'Bella Vista',
-        photo: 'https://images.unsplash.com/photo-1628177142898-93e36e4e3a50?ixlib=rb-4.0.3',
-        available: false,
-        price: '$30/hora'
-      },
-      {
-        name: 'Lic. Pedro Sánchez',
-        specialty: 'Cuidado Domiciliario',
-        rating: 4.6,
-        experience: '8 años',
-        location: 'El Cangrejo',
-        photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3',
-        available: true,
-        price: '$18/hora'
-      }
-    ];
+    // Obtener cuidadores reales del sistema
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    // Solo usuarios con rol cuidador
+    return users.filter(u => u.role === 'cuidador').map(u => ({
+      name: u.username || '-',
+      specialty: u.skills || '-',
+      rating: u.rating || 4.5,
+      experience: u.experience || '-',
+      location: u.address || '-',
+      photo: u.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.username || '-') + '&background=1976d2&color=fff&size=128&rounded=true',
+      available: true,
+      price: u.price || '$20/hora'
+    }));
   }
   render() {
-    const caregivers = this.getCaregivers();
+    let caregivers = this.getCaregivers();
+    // Filtro por nombre o especialidad
+    const filterInput = this.filterValue || '';
+    if (filterInput) {
+      caregivers = caregivers.filter(c =>
+        c.name.toLowerCase().includes(filterInput.toLowerCase()) ||
+        c.specialty.toLowerCase().includes(filterInput.toLowerCase())
+      );
+    }
     this.shadowRoot.innerHTML = `
       <style>
         * {
@@ -248,33 +227,14 @@ class CaregiverSearch extends HTMLElement {
         }
       </style>
       <section>
+        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Buscar Cuidadores</h1>
         <div class="search-header">
-          <h2>Buscar Cuidadores</h2>
-          <p>Encuentra cuidadores profesionales cerca de ti</p>
+          <h2 style="font-size:1.3rem;font-weight:600;">Encuentra cuidadores profesionales registrados</h2>
+          <input type="text" class="filter-input" id="filterInput" placeholder="Buscar por nombre o especialidad" value="${filterInput}">
         </div>
         
-        <div class="search-filters">
-          <input type="text" placeholder="Buscar por nombre..." class="filter-input">
-          <select class="filter-select">
-            <option value="">Todas las especialidades</option>
-            <option value="general">Medicina General</option>
-            <option value="geriatric">Geriatría</option>
-            <option value="nursing">Enfermería</option>
-            <option value="homecare">Cuidado Domiciliario</option>
-          </select>
-          <select class="filter-select">
-            <option value="">Todas las ubicaciones</option>
-            <option value="centro">Panamá Centro</option>
-            <option value="sanfrancisco">San Francisco</option>
-            <option value="bellavista">Bella Vista</option>
-            <option value="cangrejo">El Cangrejo</option>
-          </select>
-          <button class="search-btn">
-            <i class="bi bi-search"></i> Buscar
-          </button>
-        </div>
-        
-        <div class="caregivers-grid">
+        <div class="caregiver-list">
+          ${caregivers.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>No hay cuidadores registrados. Usa el buscador para intentar con otro término.</div>` : ''}
           ${caregivers.map(caregiver => `
             <div class="caregiver-card">
               <div class="caregiver-header">
@@ -318,6 +278,16 @@ class CaregiverSearch extends HTMLElement {
         </div>
       </section>
     `;
+    this.attachEvents();
+  }
+  attachEvents() {
+    const filterInput = this.shadowRoot.getElementById('filterInput');
+    if (filterInput) {
+      filterInput.oninput = (e) => {
+        this.filterValue = e.target.value;
+        this.render();
+      };
+    }
   }
 }
 customElements.define('caregiver-search', CaregiverSearch); 

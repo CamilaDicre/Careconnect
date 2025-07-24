@@ -10,27 +10,47 @@ class UserProfile extends HTMLElement {
     return window.userType || 'patient';
   }
   getProfileData() {
-    // Leer nombre y rol desde localStorage si existen
-    const storedName = localStorage.getItem('careconnectUserName');
-    const storedRole = localStorage.getItem('careconnectUserRole');
-    const userType = this.getUserType();
-    if (storedName && storedRole) {
+    // Leer usuario logueado desde localStorage
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.username === loggedInUser);
+    if (user) {
       return {
-        name: storedName,
-        age: userType === 'patient' ? 68 : 45,
-        gender: userType === 'patient' ? 'Femenino' : 'Masculino',
-        photo: userType === 'patient' ? 'assets/people/woman-whiteshirt.png' : 'assets/people/man-yellowshirt.png',
-        type: storedRole === 'paciente' ? 'Paciente' : 'Cuidador',
-        areas: userType === 'patient' ? null : ['Medicina General', 'Geriatría', 'Cuidado Domiciliario']
+        name: user.username || '-',
+        age: user.age || '-',
+        gender: user.gender || user.sexo || '-',
+        photo: user.photo || 'assets/people/woman-whiteshirt.png',
+        type: user.role === 'paciente' ? 'Paciente' : (user.role === 'cuidador' ? 'Cuidador' : user.role),
+        areas: user.areas || null,
+        email: user.email || '-',
+        phone: user.phone || '-',
+        address: user.address || '-',
+        experience: user.experience || '-',
+        education: user.education || '-',
+        certifications: user.certifications || '-',
+        skills: user.skills || '-',
+        languages: user.languages || '-',
+        bio: user.bio || '-',
+        availability: user.availability || '-',
       };
     } else {
       return {
-        name: 'Dr. Carlos Rodríguez',
-        age: 45,
-        gender: 'Masculino',
-        photo: 'assets/people/man-yellowshirt.png',
-        type: 'Cuidador',
-        areas: ['Medicina General', 'Geriatría', 'Cuidado Domiciliario']
+        name: 'Usuario',
+        age: '-',
+        gender: '-',
+        photo: 'assets/people/woman-whiteshirt.png',
+        type: '-',
+        areas: null,
+        email: '-',
+        phone: '-',
+        address: '-',
+        experience: '-',
+        education: '-',
+        certifications: '-',
+        skills: '-',
+        languages: '-',
+        bio: '-',
+        availability: '-',
       };
     }
   }
@@ -157,11 +177,13 @@ class UserProfile extends HTMLElement {
       </style>
       <section>
         <div class="profile-card">
+          <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Mi Perfil</h1>
           <div class="profile-header">
             <img src="${data.photo}" alt="Foto de perfil" class="profile-photo">
             <div class="profile-info">
               <h2>${data.name}</h2>
               <span class="profile-badge">${data.type}</span>
+              <div style="margin-top:8px;color:#555;font-size:1rem;">${data.email}</div>
             </div>
           </div>
           
@@ -175,8 +197,40 @@ class UserProfile extends HTMLElement {
               <div class="detail-value">${data.gender}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Tipo de Usuario</div>
-              <div class="detail-value">${data.type}</div>
+              <div class="detail-label">Teléfono</div>
+              <div class="detail-value">${data.phone}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Dirección</div>
+              <div class="detail-value">${data.address}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Experiencia</div>
+              <div class="detail-value">${data.experience}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Educación</div>
+              <div class="detail-value">${data.education}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Certificaciones</div>
+              <div class="detail-value">${data.certifications}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Habilidades</div>
+              <div class="detail-value">${data.skills}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Idiomas</div>
+              <div class="detail-value">${data.languages}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Bio</div>
+              <div class="detail-value">${data.bio}</div>
+            </div>
+            <div class="detail-item">
+              <div class="detail-label">Disponibilidad</div>
+              <div class="detail-value">${data.availability}</div>
             </div>
           </div>
           

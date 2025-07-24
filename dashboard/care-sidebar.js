@@ -9,11 +9,11 @@ class CareSidebar extends HTMLElement {
     this.render();
     this.attachEvents();
     this.adjustMainContent();
-    
-    // Agregar listener para resize de ventana
-    window.addEventListener('resize', () => {
-      this.adjustMainContent();
-    });
+    // Botón flotante para colapsar/restaurar sidebar
+    const btn = document.getElementById('sidebar-toggle-btn');
+    if (btn) {
+      btn.remove();
+    }
   }
   getUserType() {
     return window.userType || 'patient';
@@ -445,21 +445,20 @@ class CareSidebar extends HTMLElement {
   toggleSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
     const main = document.getElementById('dashboard-content');
-    
     this.isCollapsed = !this.isCollapsed;
-    
     if (this.isCollapsed) {
       nav.classList.add('minimized');
       if (main) {
         main.classList.add('sidebar-collapsed');
+        main.style.marginLeft = '0';
       }
     } else {
       nav.classList.remove('minimized');
       if (main) {
         main.classList.remove('sidebar-collapsed');
+        main.style.marginLeft = '350px';
       }
     }
-    
     // Dispatch custom event
     document.dispatchEvent(new CustomEvent('sidebarToggle', {
       detail: { collapsed: this.isCollapsed }
@@ -488,16 +487,15 @@ class CareSidebar extends HTMLElement {
   adjustMainContent() {
     const main = document.getElementById('dashboard-content');
     const nav = this.shadowRoot.querySelector('nav');
-    
     if (main) {
       main.style.transition = 'margin-left 0.4s ease';
     }
-    
     // Inicializar sidebar expandido por defecto en todos los dispositivos
     if (nav) {
       nav.classList.remove('minimized');
       if (main) {
         main.classList.remove('sidebar-collapsed');
+        main.style.marginLeft = '350px';
       }
     }
   }

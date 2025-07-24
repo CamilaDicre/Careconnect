@@ -58,14 +58,25 @@ const users = [
           return;
         }
         let users = getUsers();
-        if (users.find(u => u.username === name)) {
-          alert('Username already exists.');
+        if (users.find(u => u.email === email)) {
+          alert('Ya existe un usuario registrado con este email.');
           return;
         }
-        users.push({ username: name, email, password, role, gender });
+        const newUser = { username: name, email, password, role, gender };
+        users.push(newUser);
         saveUsers(users);
-        showBanner('¡Se creó su cuenta!', 'success');
-        document.getElementById('show-login').click();
+        // Si es paciente, loguear automáticamente y redirigir
+        if (role === 'paciente') {
+          localStorage.setItem('loggedInUser', name);
+          localStorage.setItem('userRole', role);
+          showBanner('¡Cuenta de paciente creada y sesión iniciada!', 'success');
+          setTimeout(() => {
+            window.location.href = '../dashboard/dashboard.html';
+          }, 1200);
+        } else {
+          showBanner('¡Se creó su cuenta!', 'success');
+          document.getElementById('show-login').click();
+        }
       });
     }
 
