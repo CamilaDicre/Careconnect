@@ -344,32 +344,69 @@ class CareSidebar extends HTMLElement {
         
         <div class="sidebar-menu">
           <button class="sidebar-btn" data-section="overview">
-            <i class="bi bi-house"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M3 10.5L12 4L21 10.5V19A1.5 1.5 0 0 1 19.5 20.5H4.5A1.5 1.5 0 0 1 3 19V10.5Z" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 20.5V14.5H15V20.5" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
             <span>Overview</span>
           </button>
           <button class="sidebar-btn" data-section="profile">
-            <i class="bi bi-person-circle"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="8" r="4" stroke="#5271ff" stroke-width="2"/><path d="M4 20C4 16 8 14 12 14C16 14 20 16 20 20" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
             <span>My Profile</span>
           </button>
           <button class="sidebar-btn" data-section="medicines">
-            <i class="bi bi-capsule"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="14" width="7" height="7" rx="3.5" stroke="#5271ff" stroke-width="2"/><rect x="14" y="3" width="7" height="7" rx="3.5" stroke="#5271ff" stroke-width="2"/><path d="M7.5 16.5L16.5 7.5" stroke="#5271ff" stroke-width="2"/></svg>
+            </span>
             <span>Medications</span>
           </button>
           <button class="sidebar-btn" data-section="charts">
-            <i class="bi bi-graph-up"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="12" width="4" height="8" rx="2" stroke="#5271ff" stroke-width="2"/><rect x="10" y="8" width="4" height="12" rx="2" stroke="#5271ff" stroke-width="2"/><rect x="17" y="4" width="4" height="16" rx="2" stroke="#5271ff" stroke-width="2"/></svg>
+            </span>
             <span>Health Charts</span>
           </button>
           <button class="sidebar-btn" data-section="calendar">
-            <i class="bi bi-calendar-event"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#5271ff" stroke-width="2"/><path d="M16 3V7" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/><path d="M8 3V7" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/><path d="M3 11H21" stroke="#5271ff" stroke-width="2"/></svg>
+            </span>
             <span>Calendar</span>
           </button>
           <button class="sidebar-btn" data-section="caregivers">
-            <i class="bi bi-search"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><circle cx="11" cy="11" r="7" stroke="#5271ff" stroke-width="2"/><path d="M21 21L16.65 16.65" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
             <span>Find Caregivers</span>
           </button>
-          
+          <button class="sidebar-btn" data-section="virtual-care">
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="15" height="14" rx="2" stroke="#5271ff" stroke-width="2"/><path d="M21 7V17L17 14V10L21 7Z" stroke="#5271ff" stroke-width="2"/></svg>
+            </span>
+            <span>Virtual Care</span>
+          </button>
+          <button class="sidebar-btn" data-section="appointment-booking">
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="18" height="16" rx="2" stroke="#5271ff" stroke-width="2"/><path d="M16 3V7" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/><path d="M8 3V7" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/><path d="M12 13V17" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/><path d="M10 15H14" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span>Book Appointment</span>
+          </button>
+          <button class="sidebar-btn" data-section="health-monitoring">
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M4 12C4 7.58172 7.58172 4 12 4C16.4183 4 20 7.58172 20 12C20 16.4183 16.4183 20 12 20C7.58172 20 4 16.4183 4 12Z" stroke="#5271ff" stroke-width="2"/><path d="M8 13L11 16L16 9" stroke="#5271ff" stroke-width="2" stroke-linecap="round"/></svg>
+            </span>
+            <span>Health Monitoring</span>
+          </button>
+          <button class="sidebar-btn" data-section="emergency-contacts">
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92V19A2 2 0 0 1 20 21C10.61 21 3 13.39 3 4A2 2 0 0 1 5 2H7.09A2 2 0 0 1 9.06 3.06L11.29 6.29A2 2 0 0 1 11.29 8.71L9.17 10.83A16.06 16.06 0 0 0 13.17 14.83L15.29 12.71A2 2 0 0 1 17.71 12.71L20.94 14.94A2 2 0 0 1 22 16.92Z" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>Emergency Contacts</span>
+          </button>
           <button class="sidebar-btn logout-btn" onclick="logout()">
-            <i class="bi bi-box-arrow-right"></i>
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M9 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3H9" stroke="#ff4757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 17L21 12L16 7" stroke="#ff4757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12H9" stroke="#ff4757" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
             <span>Logout</span>
           </button>
         </div>

@@ -135,7 +135,7 @@ const users = [
         if (user.role === "admin") {
           window.location.href = "../dashboard/admin-dashboard.html";
         } else if (user.role === "cuidador") {
-          window.location.href = "../dashboard/caregivers/caregiver-dashboard.html";
+          window.location.href = "../dashboard/caregivers pro/Caregiver-pro.html";
         } else {
           window.location.href = "../dashboard/dashboard.html";
         }
