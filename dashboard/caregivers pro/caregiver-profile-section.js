@@ -8,7 +8,7 @@ class CaregiverProfileSection extends HTMLElement {
     let users = JSON.parse(localStorage.getItem('users') || '[]');
     let user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
     let profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=1976d2&color=fff&size=128&rounded=true';
-    let displayName = user ? (user.name || user.username) : 'Cuidador';
+    let displayName = user ? (user.name || user.username) : 'Caregiver';
     let displayEmail = user ? (user.email || '-') : '-';
     let displayPhone = user ? (user.phone || '-') : '-';
     let displayTitles = user ? (user.titles || 'No especificado') : 'No especificado';
@@ -132,26 +132,26 @@ class CaregiverProfileSection extends HTMLElement {
       </style>
       <div class="profile-section-container">
         <div class="profile-header">
-          <img class="profile-photo" src="${profilePic}" alt="Foto de perfil" />
+          <img class="profile-photo" src="${profilePic}" alt="Profile photo" />
           <div class="profile-header-info">
             <span class="profile-svg" aria-hidden="true">
               <!-- SVG usuario/doctor -->
               <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
             </span>
-            <h2>Perfil del cuidador</h2>
+            <h2>Caregiver Profile</h2>
             <div class="profile-actions">
-              <button id="editProfileBtn" title="Editar perfil"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg> Editar perfil</button>
-              <button id="logoutBtn" title="Cerrar sesión"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Cerrar sesión</button>
+              <button id="editProfileBtn" title="Edit profile"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 1 1 3 3L7 19.5 3 21l1.5-4L16.5 3.5z"/></svg> Edit Profile</button>
+              <button id="logoutBtn" title="Log out"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Log Out</button>
             </div>
           </div>
         </div>
         <form id="profileForm">
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/></svg> Nombre:</span><span class="profile-value" id="nameValue">${displayName}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/></svg> Name:</span><span class="profile-value" id="nameValue">${displayName}</span></div>
           <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 2v4h8V2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg> Email:</span><span class="profile-value" id="emailValue">${displayEmail}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2.08"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M2 10h20"/></svg> Teléfono:</span><span class="profile-value" id="phoneValue">${displayPhone}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="8" height="8" rx="4"/><rect x="13" y="3" width="8" height="8" rx="4"/><line x1="8" y1="16" x2="16" y2="8"/></svg> Títulos:</span><span class="profile-value" id="titlesValue">${displayTitles}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="#1976d2">U</text></svg> Usuario:</span><span class="profile-value">${loggedInUser}</span></div>
-          <button type="submit" class="save-btn" id="saveProfileBtn" style="display:none;">Guardar</button>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2.08"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M2 10h20"/></svg> Phone:</span><span class="profile-value" id="phoneValue">${displayPhone}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="8" height="8" rx="4"/><rect x="13" y="3" width="8" height="8" rx="4"/><line x1="8" y1="16" x2="16" y2="8"/></svg> Titles:</span><span class="profile-value" id="titlesValue">${displayTitles}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="#1976d2">U</text></svg> Username:</span><span class="profile-value">${loggedInUser}</span></div>
+          <button type="submit" class="save-btn" id="saveProfileBtn" style="display:none;">Save</button>
         </form>
       </div>
     `;

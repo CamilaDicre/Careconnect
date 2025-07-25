@@ -20,15 +20,15 @@ class WelcomeOverlay extends HTMLElement {
       const displayName = user ? (user.name || user.username) : loggedInUser;
       return {
         name: displayName,
-        greeting: '¡Qué bueno verte de nuevo!',
-        message: 'Esperamos que tengas un día maravilloso'
+        greeting: 'Great to see you again!',
+        message: 'We hope you have a wonderful day'
       };
     }
     // Fallback genérico si no hay usuario
     return {
       name: '',
-      greeting: '¡Bienvenido/a!',
-      message: 'Por favor inicia sesión para una experiencia personalizada'
+      greeting: 'Welcome!',
+      message: 'Please sign in for a personalized experience'
     };
   }
   render() {

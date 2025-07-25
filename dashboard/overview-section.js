@@ -242,11 +242,11 @@ class OverviewSection extends HTMLElement {
         }
       </style>
       <div class="overview-container">
-        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Resumen de Salud</h1>
+        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Health Summary</h1>
         <!-- Welcome Section -->
         <div class="welcome-section">
-          <h2 class="welcome-title">¡Bienvenido, ${displayName}!</h2>
-          <p class="welcome-subtitle">Aquí tienes tu resumen de salud para hoy</p>
+          <h2 class="welcome-title">Welcome, ${displayName}!</h2>
+          <p class="welcome-subtitle">Here is your health summary for today</p>
         </div>
         <!-- Stats Grid -->
         <div class="stats-grid">
@@ -255,28 +255,28 @@ class OverviewSection extends HTMLElement {
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="5" rx="2"/><rect x="4" y="8" width="16" height="13" rx="2"/><line x1="9" y1="12" x2="15" y2="12"/></svg>
             </div>
             <div class="stat-number">5</div>
-            <div class="stat-label">Medicamentos activos</div>
+            <div class="stat-label">Active Medications</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon appointments">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
             </div>
             <div class="stat-number">2</div>
-            <div class="stat-label">Próximas citas</div>
+            <div class="stat-label">Upcoming Appointments</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon caregivers">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
             </div>
             <div class="stat-number">3</div>
-            <div class="stat-label">Cuidadores disponibles</div>
+            <div class="stat-label">Available Caregivers</div>
           </div>
           <div class="stat-card">
             <div class="stat-icon health">
               <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="20" x2="12" y2="10"/><line x1="18" y1="20" x2="18" y2="4"/><line x1="6" y1="20" x2="6" y2="16"/></svg>
             </div>
             <div class="stat-number">Good</div>
-            <div class="stat-label">Estado de salud</div>
+            <div class="stat-label">Health Status</div>
           </div>
         </div>
         <!-- Content Grid -->

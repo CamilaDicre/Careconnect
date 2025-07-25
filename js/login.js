@@ -59,7 +59,7 @@ const users = [
         }
         let users = getUsers();
         if (users.find(u => u.email === email)) {
-          alert('Ya existe un usuario registrado con este email.');
+          alert('A user with this email is already registered.');
           return;
         }
         const newUser = { username: name, email, password, role, gender };
@@ -69,12 +69,12 @@ const users = [
         if (role === 'paciente') {
           localStorage.setItem('loggedInUser', name);
           localStorage.setItem('userRole', role);
-          showBanner('¡Cuenta de paciente creada y sesión iniciada!', 'success');
+          showBanner('Patient account created and logged in!', 'success');
           setTimeout(() => {
             window.location.href = '../dashboard/dashboard.html';
           }, 1200);
         } else {
-          showBanner('¡Se creó su cuenta!', 'success');
+          showBanner('Your account has been created!', 'success');
           document.getElementById('show-login').click();
         }
       });
@@ -140,7 +140,7 @@ const users = [
       localStorage.setItem("loggedInUser", username);
       localStorage.setItem("userRole", user.role);
       updateLoginUI();
-      showBanner('¡Se inició sesión!', 'success');
+      showBanner('Signed in!', 'success');
       // Redirigir según el rol
       setTimeout(() => {
         if (user.role === "admin") {
@@ -153,7 +153,7 @@ const users = [
       }, 1200);
     } else {
       console.log('Login fallido, mostrando mensaje de error');
-      showAlert('Usuario o contraseña incorrecto, revise y vuelva a intentar', 'danger', 'loginError');
+      showAlert('Incorrect username or password, please check and try again', 'danger', 'loginError');
     }
   }
   
@@ -177,7 +177,7 @@ const users = [
       loginSection?.classList.add("d-none");
       userSection?.classList.remove("d-none");
       if (userGreeting) {
-        userGreeting.textContent = `Hola, ${user}`;
+        userGreeting.textContent = `Hello, ${user}`;
       }
     } else {
       loginSection?.classList.remove("d-none");
@@ -214,7 +214,7 @@ const users = [
           }
         }, 5000);
     } else {
-      console.log('No se encontró el elemento para mostrar el error:', target);
+      console.log('Could not find the element to display the error:', target);
     }
   }
 
