@@ -27,7 +27,7 @@ class CaregiverOverview extends HTMLElement {
           display: flex;
           align-items: center;
           gap: 28px;
-          background: linear-gradient(135deg, #1976d2, #42a5f5 80%);
+          background: rgba(25, 118, 210, 0.9);
           color: white;
           padding: 36px 32px 32px 32px;
           border-radius: 18px;
@@ -36,6 +36,8 @@ class CaregiverOverview extends HTMLElement {
           position: relative;
           overflow: hidden;
           animation: fadeInDown 1.1s cubic-bezier(.4,2,.6,1) 0s 1;
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
         }
         .profile-pic {
           width: 96px; height: 96px; border-radius: 50%; border: 4px solid #fff; box-shadow: 0 2px 12px rgba(25,118,210,0.18); object-fit: cover; background: #fff; }
@@ -57,12 +59,14 @@ class CaregiverOverview extends HTMLElement {
         }
         
         .welcome-section {
-          background: linear-gradient(135deg, #1976d2, #1565c0);
+          background: rgba(25, 118, 210, 0.85);
           color: white;
           padding: 30px;
           border-radius: 15px;
           margin-bottom: 30px;
           box-shadow: 0 5px 15px rgba(25, 118, 210, 0.3);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .welcome-title {
@@ -109,12 +113,14 @@ class CaregiverOverview extends HTMLElement {
         }
         
         .stat-card {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 25px;
           border-radius: 15px;
           box-shadow: 0 4px 15px rgba(0,0,0,0.1);
           text-align: center;
           transition: all 0.3s;
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .stat-card:hover {
@@ -155,10 +161,12 @@ class CaregiverOverview extends HTMLElement {
         }
         
         .recent-activities {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 30px;
           border-radius: 15px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .section-title {
@@ -221,10 +229,12 @@ class CaregiverOverview extends HTMLElement {
         }
         
         .quick-actions {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 30px;
           border-radius: 15px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .action-item {
@@ -256,11 +266,13 @@ class CaregiverOverview extends HTMLElement {
         }
         
         .patient-list {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 30px;
           border-radius: 15px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
           margin-top: 30px;
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .patient-item {
@@ -400,7 +412,7 @@ class CaregiverOverview extends HTMLElement {
           <div class="profile-info">
             <div class="profile-name">${displayName}</div>
             <div class="profile-email"><i class="bi bi-envelope"></i> ${displayEmail}</div>
-            <div class="profile-role"><i class="bi bi-person-badge"></i> Cuidador profesional</div>
+                            <div class="profile-role"><i class="bi bi-person-badge"></i> Professional Caregiver</div>
             <div class="profile-actions">
               <button title="Editar perfil" id="editProfileBtn"><i class="bi bi-pencil"></i> Editar perfil</button>
               <button title="Cerrar sesión" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
@@ -409,7 +421,7 @@ class CaregiverOverview extends HTMLElement {
         </div>
         <!-- Welcome Section -->
         <div class="welcome-section">
-          <div class="welcome-title">¡Bienvenido de nuevo, ${displayName}!</div>
+                          <div class="welcome-title">Welcome back, ${displayName}!</div>
           <div class="welcome-subtitle">Here's your professional overview for today</div>
           <div class="welcome-stats">
             <div class="welcome-stat">

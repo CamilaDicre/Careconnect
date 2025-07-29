@@ -127,11 +127,13 @@ class CaregiverDocuments extends HTMLElement {
         }
         
         .stat-card {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 20px;
           border-radius: 12px;
           box-shadow: 0 4px 15px rgba(0,0,0,0.1);
           text-align: center;
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .stat-number {
@@ -154,10 +156,12 @@ class CaregiverDocuments extends HTMLElement {
         }
         
         .documents-section {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 30px;
           border-radius: 15px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .section-title {
@@ -320,10 +324,12 @@ class CaregiverDocuments extends HTMLElement {
         }
         
         .tools-section {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 30px;
           border-radius: 15px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .tool-item {
@@ -387,11 +393,13 @@ class CaregiverDocuments extends HTMLElement {
         }
         
         .quick-actions {
-          background: white;
+          background: rgba(255, 255, 255, 0.9);
           padding: 30px;
           border-radius: 15px;
           box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
           margin-top: 30px;
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         
         .action-grid {
