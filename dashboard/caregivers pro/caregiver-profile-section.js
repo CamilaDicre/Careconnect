@@ -18,12 +18,14 @@ class CaregiverProfileSection extends HTMLElement {
         .profile-section-container {
           max-width: 800px;
           margin: 0 auto;
-          background: #fff;
+          background: rgba(255, 255, 255, 0.9);
           border-radius: 18px;
           box-shadow: 0 8px 40px rgba(25,118,210,0.10);
           padding: 48px 48px 36px 48px;
           margin-top: 32px;
           animation: fadeInUp 0.7s cubic-bezier(.4,2,.6,1);
+          backdrop-filter: blur(15px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
         }
         .profile-header {
           display: flex;

@@ -157,52 +157,105 @@ class CaregiverSidebar extends HTMLElement {
         <div class="sidebar-nav">
           <button class="nav-item active" data-section="overview">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Home SVG amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="#fff" xmlns="http://www.w3.org/2000/svg"><rect x="8" y="20" width="32" height="20" rx="5"/><path d="M24 8L8 20h32L24 8z" fill="#fff" stroke="#1976d2" stroke-width="2"/></svg>
+              <!-- Casa amigable con corazón -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M24 8L8 20h4v16h24V20h4L24 8z" fill="#fff" stroke="#fff" stroke-width="1"/>
+                <path d="M20 28h8v8h-8z" fill="#1976d2"/>
+                <path d="M18 16h12v4H18z" fill="#1976d2"/>
+                <circle cx="24" cy="32" r="2" fill="#fff"/>
+              </svg>
             </span>
-            <span>Inicio</span>
+            <span>Home</span>
           </button>
           <button class="nav-item" data-section="virtual-care">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Cruz médica SVG -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="20" y="8" width="8" height="32" rx="4" fill="#1976d2"/><rect x="8" y="20" width="32" height="8" rx="4" fill="#1976d2"/></svg>
+              <!-- Video llamada amigable -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="12" width="20" height="16" rx="3" fill="#fff"/>
+                <path d="M28 20l8-4v12l-8-4z" fill="#1976d2"/>
+                <circle cx="18" cy="20" r="2" fill="#1976d2"/>
+                <path d="M16 24c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z" fill="#1976d2"/>
+              </svg>
             </span>
             <span>Virtual Care</span>
           </button>
           <button class="nav-item" data-section="medication">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Frasco de medicina SVG -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="14" y="16" width="20" height="24" rx="4" fill="#1976d2"/><rect x="18" y="8" width="12" height="8" rx="2" fill="#1976d2"/><rect x="20" y="26" width="8" height="4" rx="2" fill="#fff"/></svg>
+              <!-- Frasco de medicina amigable -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="16" y="8" width="16" height="32" rx="3" fill="#fff"/>
+                <rect x="12" y="12" width="8" height="8" rx="2" fill="#1976d2"/>
+                <rect x="20" y="16" width="8" height="2" rx="1" fill="#1976d2"/>
+                <rect x="20" y="22" width="8" height="2" rx="1" fill="#1976d2"/>
+                <rect x="20" y="28" width="8" height="2" rx="1" fill="#1976d2"/>
+                <circle cx="24" cy="34" r="2" fill="#1976d2"/>
+              </svg>
             </span>
-            <span>Medicamentos</span>
+            <span>Medications</span>
           </button>
           <button class="nav-item" data-section="documents">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Portapapeles médico SVG -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="12" y="10" width="24" height="32" rx="4" fill="#1976d2"/><rect x="18" y="6" width="12" height="8" rx="2" fill="#fff"/><rect x="20" y="22" width="8" height="2" rx="1" fill="#fff"/><rect x="20" y="28" width="8" height="2" rx="1" fill="#fff"/></svg>
+              <!-- Carpeta de documentos amigable -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M8 12h12l4 4h16v20H8V12z" fill="#fff"/>
+                <path d="M20 12l4 4h16" fill="none" stroke="#1976d2" stroke-width="2"/>
+                <rect x="12" y="20" width="16" height="2" rx="1" fill="#1976d2"/>
+                <rect x="12" y="26" width="12" height="2" rx="1" fill="#1976d2"/>
+                <rect x="12" y="32" width="14" height="2" rx="1" fill="#1976d2"/>
+                <circle cx="16" cy="38" r="1" fill="#1976d2"/>
+              </svg>
             </span>
-            <span>Documentos</span>
+            <span>Documents</span>
           </button>
           <button class="nav-item" data-section="earnings">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Corazón con pulso SVG -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 40s-12-8.35-12-16A8 8 0 0 1 24 16a8 8 0 0 1 12 8c0 7.65-12 16-12 16z" fill="#1976d2"/><polyline points="16 28 20 24 24 32 28 20 32 28" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <!-- Gráfico de estadísticas amigable -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="8" y="32" width="6" height="8" rx="1" fill="#fff"/>
+                <rect x="18" y="24" width="6" height="16" rx="1" fill="#fff"/>
+                <rect x="28" y="16" width="6" height="24" rx="1" fill="#fff"/>
+                <rect x="38" y="8" width="6" height="32" rx="1" fill="#fff"/>
+                <circle cx="11" cy="36" r="1" fill="#1976d2"/>
+                <circle cx="21" cy="28" r="1" fill="#1976d2"/>
+                <circle cx="31" cy="20" r="1" fill="#1976d2"/>
+                <circle cx="41" cy="12" r="1" fill="#1976d2"/>
+              </svg>
             </span>
-            <span>Estadísticas</span>
+            <span>Statistics</span>
           </button>
           <button class="nav-item" data-section="profile">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Doctor/enfermero SVG -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="16" r="8" fill="#1976d2"/><rect x="12" y="28" width="24" height="12" rx="6" fill="#1976d2"/><rect x="20" y="36" width="8" height="4" rx="2" fill="#fff"/></svg>
+              <!-- Perfil de cuidador profesional -->
+              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="24" cy="16" r="8" fill="#fff"/>
+                <path d="M8 40c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#fff"/>
+                <!-- Ojos más definidos -->
+                <ellipse cx="20" cy="14" rx="1.5" ry="2" fill="#1976d2"/>
+                <ellipse cx="28" cy="14" rx="1.5" ry="2" fill="#1976d2"/>
+                <!-- Pupilas -->
+                <circle cx="20" cy="14" r="0.8" fill="#fff"/>
+                <circle cx="28" cy="14" r="0.8" fill="#fff"/>
+                <!-- Nariz -->
+                <path d="M24 18l-1 2h2z" fill="#1976d2"/>
+                <!-- Boca más expresiva -->
+                <path d="M20 22c0 1.5 1.8 2.5 4 2.5s4-1 4-2.5" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- Cabello -->
+                <path d="M16 10c0-2 1.5-4 4-4s4 2 4 4" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
+                <path d="M24 10c0-2 1.5-4 4-4s4 2 4 4" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
+                <!-- Cuello -->
+                <rect x="22" y="24" width="4" height="3" fill="#fff"/>
+                <!-- Hombros -->
+                <path d="M16 36c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="none" stroke="#1976d2" stroke-width="2"/>
+              </svg>
             </span>
-            <span>Perfil</span>
+            <span>Profile</span>
           </button>
         </div>
         <div class="sidebar-footer">
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-            <span><i class="bi bi-person-badge"></i> Cuidador Pro</span>
+            <span><i class="bi bi-person-badge"></i> Professional Caregiver</span>
             <span style="font-size:1rem;opacity:0.8;">CareConnect &copy; ${new Date().getFullYear()}</span>
-            <span style="font-size:0.95rem;opacity:0.7;">Soporte: soporte@careconnect.com</span>
+            <span style="font-size:0.95rem;opacity:0.7;">Support: support@careconnect.com</span>
           </div>
         </div>
       </nav>

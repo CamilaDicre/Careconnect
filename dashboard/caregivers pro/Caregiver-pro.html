@@ -13,7 +13,11 @@
         }
         
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                        url(../../assets/BlueIconsBlueBackgroundSpread.png);
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             min-height: 100vh;
         }
         
@@ -27,7 +31,8 @@
             margin-left: 280px;
             transition: margin-left 0.3s ease;
             padding: 20px;
-            background: #f8f9fa;
+            background: rgba(248, 249, 250, 0.95);
+            backdrop-filter: blur(10px);
         }
         
         .main-content.sidebar-collapsed {
@@ -35,11 +40,13 @@
         }
         
         .content-area {
-            background: white;
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             min-height: calc(100vh - 40px);
             overflow: hidden;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
         
         .section-content {
@@ -105,16 +112,21 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="caregiver-sidebar.js"></script>
-    <script src="caregiver-overview.js"></script>
-    <script src="caregiver-profile-section.js"></script>
-    <script src="virtual-care.js"></script>
-    <script src="medication-management.js"></script>
-    <script src="caregiver-documents.js"></script>
-    <script src="earnings-statistics.js"></script>
+    <script src="caregiver-sidebar.js?v=1.3"></script>
+    <script src="caregiver-overview.js?v=1.2"></script>
+    <script src="caregiver-profile-section.js?v=1.1"></script>
+    <script src="virtual-care.js?v=1.1"></script>
+    <script src="medication-management.js?v=1.1"></script>
+    <script src="caregiver-documents.js?v=1.1"></script>
+    <script src="earnings-statistics.js?v=1.1"></script>
     <script src="caregiver-footer.js"></script>
     
     <script>
+        // Limpiar cache y forzar recarga de componentes
+        if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
+            window.location.reload();
+        }
+        
         // Dashboard functionality
         document.addEventListener('DOMContentLoaded', function() {
             // --- Protección de acceso ---
@@ -135,7 +147,14 @@
             }
             // --- Fin protección de acceso ---
 
-            const sidebar = document.querySelector('caregiver-sidebar');
+            // Forzar recarga del sidebar para asegurar que se vean los cambios
+            let sidebar = document.querySelector('caregiver-sidebar');
+            if (sidebar) {
+                sidebar.remove();
+                const newSidebar = document.createElement('caregiver-sidebar');
+                document.querySelector('.dashboard-container').prepend(newSidebar);
+                sidebar = newSidebar;
+            }
             const mainContent = document.getElementById('mainContent');
             
             // Handle sidebar toggle
