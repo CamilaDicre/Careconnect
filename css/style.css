@@ -1157,4 +1157,62 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 
 /* Header Interactive Effects - REMOVED: Now handled by Web Components */
 
+/* Scrollbar personalizado solo para el dashboard */
+body.dashboard-page::-webkit-scrollbar {
+  width: 12px;
+  background: #e3f0ff;
+  border-radius: 8px;
+}
+body.dashboard-page::-webkit-scrollbar-thumb {
+  background: #1976d2;
+  border-radius: 8px;
+  border: 2px solid #e3f0ff;
+}
+body.dashboard-page::-webkit-scrollbar-thumb:hover {
+  background: #1565c0;
+}
+body.dashboard-page {
+  scrollbar-width: thin;
+  scrollbar-color: #1976d2 #e3f0ff;
+}
+
+/* Scrollbar azul para todos los elementos con scroll dentro del dashboard */
+body.dashboard-page, 
+body.dashboard-page * {
+  scrollbar-width: thin;
+  scrollbar-color: #1976d2 #e3f0ff;
+}
+body.dashboard-page ::-webkit-scrollbar {
+  width: 12px;
+  background: #e3f0ff;
+  border-radius: 8px;
+}
+body.dashboard-page ::-webkit-scrollbar-thumb {
+  background: #1976d2;
+  border-radius: 8px;
+  border: 2px solid #e3f0ff;
+}
+body.dashboard-page ::-webkit-scrollbar-thumb:hover {
+  background: #1565c0;
+}
+
+/* Scrollbar especial para la parte derecha del dashboard */
+#dashboard-content, #dashboard-content * {
+  scrollbar-width: thin;
+  scrollbar-color: #1976d2 #e3f0ff;
+}
+#dashboard-content ::-webkit-scrollbar {
+  width: 12px;
+  background: #e3f0ff;
+  border-radius: 8px;
+}
+#dashboard-content ::-webkit-scrollbar-thumb {
+  background: #1976d2;
+  border-radius: 8px;
+  border: 2px solid #e3f0ff;
+}
+#dashboard-content ::-webkit-scrollbar-thumb:hover {
+  background: #1565c0;
+}
+
 
