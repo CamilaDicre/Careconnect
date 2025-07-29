@@ -106,7 +106,7 @@ class CaregiverFooter extends HTMLElement {
               CareConnect
             </div>
             <div class="footer-copyright">
-              © 2024 CareConnect. All rights reserved.
+              © ${new Date().getFullYear()} CareConnect. All rights reserved.
             </div>
           </div>
           

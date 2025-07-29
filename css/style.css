@@ -4,6 +4,10 @@
 }
 
 /* Font Setting */
+html {
+    overflow-x: hidden;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -19,6 +23,7 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     padding-top: 80px;
+    overflow-x: hidden;
 }
 
 /* Typography for Seniors */
@@ -91,13 +96,15 @@ p {
 
 .hero-section .electronics img:last-child {
     position: absolute;
-    margin-right: 200px;
+    margin-right: 100px;
     margin-top: 80px;
 }
 
 .hero-section .electronics img:hover {
     transform: translateY(-20px);
 }
+
+
 
 .btn-outline-light {
     border-width: 2px;

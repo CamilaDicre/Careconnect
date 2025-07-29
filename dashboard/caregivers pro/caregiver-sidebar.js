@@ -201,7 +201,7 @@ class CaregiverSidebar extends HTMLElement {
         <div class="sidebar-footer">
           <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
             <span><i class="bi bi-person-badge"></i> Cuidador Pro</span>
-            <span style="font-size:1rem;opacity:0.8;">CareConnect &copy; 2024</span>
+            <span style="font-size:1rem;opacity:0.8;">CareConnect &copy; ${new Date().getFullYear()}</span>
             <span style="font-size:0.95rem;opacity:0.7;">Soporte: soporte@careconnect.com</span>
           </div>
         </div>

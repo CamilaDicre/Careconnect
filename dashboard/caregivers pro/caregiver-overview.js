@@ -521,7 +521,7 @@ class CaregiverOverview extends HTMLElement {
               </div>
               <div class="activity-content">
                 <div class="activity-title">Monthly performance report generated</div>
-                <div class="activity-subtitle">December 2024 statistics updated</div>
+                <div class="activity-subtitle">December ${new Date().getFullYear()} statistics updated</div>
               </div>
               <div class="activity-time">1 day ago</div>
             </div>

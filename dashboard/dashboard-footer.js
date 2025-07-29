@@ -91,7 +91,7 @@ class DashboardFooter extends HTMLElement {
         <div class="footer-content">
           <div class="footer-row">
             <div class="copyright">
-              © 2024 Careconnect. All rights reserved.
+              © ${new Date().getFullYear()} Careconnect. All rights reserved.
             </div>
             <div class="footer-links">
               <a href="#" class="footer-link">Privacy Policy</a>

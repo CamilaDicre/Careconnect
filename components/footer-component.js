@@ -710,7 +710,7 @@ class FooterComponent extends HTMLElement {
                     <div class="container">
                         <div class="copyright-content">
                             <div class="copyright-text">
-                                <p>&copy; 2024 <a href="index.html">Careconnect</a>. All rights reserved.</p>
+                                <p>&copy; ${new Date().getFullYear()} <a href="index.html">Careconnect</a>. All rights reserved.</p>
                             </div>
                             <div class="legal-links">
                                 <a href="privacy-policy.html">Privacy Policy</a>
