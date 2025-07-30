@@ -254,21 +254,21 @@ class PatientRequests extends HTMLElement {
         
         <div class="requests-filters">
           <select class="filter-select">
-            <option value="">Todos los estados</option>
-            <option value="pending">Pendientes</option>
-            <option value="accepted">Aceptadas</option>
-            <option value="rejected">Rechazadas</option>
+            <option value="">All statuses</option>
+            <option value="pending">Pending</option>
+            <option value="accepted">Accepted</option>
+            <option value="rejected">Rejected</option>
           </select>
           <select class="filter-select">
-            <option value="">Todas las urgencias</option>
-            <option value="high">Alta</option>
-            <option value="medium">Media</option>
-            <option value="low">Baja</option>
+            <option value="">All urgencies</option>
+            <option value="high">High</option>
+            <option value="medium">Medium</option>
+            <option value="low">Low</option>
           </select>
           <select class="filter-select">
-            <option value="">Todos los servicios</option>
-            <option value="homecare">Cuidado Domiciliario</option>
-            <option value="medical">Acompañamiento Médico</option>
+            <option value="">All services</option>
+            <option value="homecare">Home Care</option>
+            <option value="medical">Medical Accompaniment</option>
             <option value="medication">Medication Management</option>
           </select>
         </div>
@@ -280,46 +280,46 @@ class PatientRequests extends HTMLElement {
                 <img src="${request.photo}" alt="${request.name}" class="request-photo">
                 <div class="request-info">
                   <h3>${request.name}</h3>
-                  <div class="request-age">${request.age} años</div>
+                  <div class="request-age">${request.age} years</div>
                 </div>
               </div>
               
               <div class="request-details">
                 <div class="detail-row">
-                  <span class="detail-label">Servicio:</span>
+                  <span class="detail-label">Service:</span>
                   <span class="detail-value">${request.service}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Ubicación:</span>
+                  <span class="detail-label">Location:</span>
                   <span class="detail-value">${request.location}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Fecha:</span>
+                  <span class="detail-label">Date:</span>
                   <span class="detail-value">${request.date}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Urgencia:</span>
+                  <span class="detail-label">Urgency:</span>
                   <span class="urgency-badge urgency-${request.urgency.toLowerCase()}">${request.urgency}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Estado:</span>
+                  <span class="detail-label">Status:</span>
                   <span class="status-badge status-${request.status}">
-                    ${request.status === 'pending' ? 'Pendiente' : 
-                      request.status === 'accepted' ? 'Aceptada' : 'Rechazada'}
+                    ${request.status === 'pending' ? 'Pending' : 
+                      request.status === 'accepted' ? 'Accepted' : 'Rejected'}
                   </span>
                 </div>
               </div>
               
               <div class="action-buttons">
                 <button class="btn btn-view">
-                  <i class="bi bi-eye"></i> Ver Detalles
+                  <i class="bi bi-eye"></i> View Details
                 </button>
                 ${request.status === 'pending' ? `
                   <button class="btn btn-accept">
-                    <i class="bi bi-check"></i> Aceptar
+                    <i class="bi bi-check"></i> Accept
                   </button>
                   <button class="btn btn-reject">
-                    <i class="bi bi-x"></i> Rechazar
+                    <i class="bi bi-x"></i> Reject
                   </button>
                 ` : ''}
               </div>

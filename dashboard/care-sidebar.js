@@ -9,7 +9,7 @@ class CareSidebar extends HTMLElement {
     this.render();
     this.attachEvents();
     this.adjustMainContent();
-    // Botón flotante para colapsar/restaurar sidebar
+    // Floating button to collapse/restore sidebar
     const btn = document.getElementById('sidebar-toggle-btn');
     if (btn) {
       btn.remove();
@@ -48,7 +48,7 @@ class CareSidebar extends HTMLElement {
   render() {
     const sections = this.getSections();
     const userData = this.getUserData();
-    // Calcular iniciales para el avatar si no hay foto personalizada
+    // Calculate initials for avatar if no custom photo
     const initials = userData.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
     this.sections = sections;
     this.shadowRoot.innerHTML = `
@@ -427,7 +427,7 @@ class CareSidebar extends HTMLElement {
       });
     });
     
-    // Agregar evento para el logo como botón toggle
+    // Add event for logo as toggle button
     const logoToggle = this.shadowRoot.querySelector('#logo-toggle');
     if (logoToggle) {
       logoToggle.addEventListener('click', () => {
@@ -435,7 +435,7 @@ class CareSidebar extends HTMLElement {
       });
     }
     
-    // Por defecto, activa la primera sección
+    // By default, activate the first section
     const firstBtn = menu.querySelector('.sidebar-btn');
     if (firstBtn) {
       firstBtn.classList.add('active');
@@ -490,7 +490,7 @@ class CareSidebar extends HTMLElement {
     if (main) {
       main.style.transition = 'margin-left 0.4s ease';
     }
-    // Inicializar sidebar expandido por defecto en todos los dispositivos
+    // Initialize sidebar expanded by default on all devices
     if (nav) {
       nav.classList.remove('minimized');
       if (main) {

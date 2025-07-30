@@ -130,51 +130,51 @@ class HealthCharts extends HTMLElement {
       </style>
       <section>
         <div class="charts-header">
-          <h2>Gráficas de Salud</h2>
-          <p>Monitoreo de tus indicadores de salud</p>
+          <h2>Health Charts</h2>
+          <p>Monitoring your health indicators</p>
         </div>
         
         <div class="charts-grid">
-          <!-- Presión Arterial -->
+          <!-- Blood Pressure -->
           <div class="chart-card">
             <div class="chart-title">
               <i class="bi bi-heart-pulse chart-icon"></i>
-              Presión Arterial
+              Blood Pressure
             </div>
             <div class="chart-container">
               <div class="chart-placeholder">
                 <i class="bi bi-bar-chart"></i>
-                <p>Gráfico de Presión Arterial</p>
-                <small>Últimos 7 días</small>
+                <p>Blood Pressure Chart</p>
+                <small>Last 7 days</small>
               </div>
             </div>
             <div class="chart-stats">
               <div class="stat-item">
                 <div class="stat-value">120/80</div>
-                <div class="stat-label">Actual</div>
+                <div class="stat-label">Current</div>
               </div>
               <div class="stat-item">
                 <div class="stat-value trend-stable">Normal</div>
-                <div class="stat-label">Estado</div>
+                <div class="stat-label">Status</div>
               </div>
               <div class="stat-item">
                 <div class="stat-value trend-down">↓2%</div>
-                <div class="stat-label">Tendencia</div>
+                <div class="stat-label">Trend</div>
               </div>
             </div>
           </div>
           
-          <!-- Glucosa -->
+          <!-- Glucose -->
           <div class="chart-card">
             <div class="chart-title">
               <i class="bi bi-droplet chart-icon"></i>
-              Nivel de Glucosa
+              Glucose Level
             </div>
             <div class="chart-container">
               <div class="chart-placeholder">
                 <i class="bi bi-graph-up"></i>
-                <p>Gráfico de Glucosa</p>
-                <small>Últimos 7 días</small>
+                <p>Glucose Chart</p>
+                <small>Last 7 days</small>
               </div>
             </div>
             <div class="chart-stats">
@@ -184,26 +184,26 @@ class HealthCharts extends HTMLElement {
               </div>
               <div class="stat-item">
                 <div class="stat-value trend-stable">Normal</div>
-                <div class="stat-label">Estado</div>
+                <div class="stat-label">Status</div>
               </div>
               <div class="stat-item">
                 <div class="stat-value trend-up">↑1%</div>
-                <div class="stat-label">Tendencia</div>
+                <div class="stat-label">Trend</div>
               </div>
             </div>
           </div>
           
-          <!-- Peso -->
+          <!-- Weight -->
           <div class="chart-card">
             <div class="chart-title">
               <i class="bi bi-speedometer2 chart-icon"></i>
-              Peso Corporal
+              Body Weight
             </div>
             <div class="chart-container">
               <div class="chart-placeholder">
                 <i class="bi bi-graph-down"></i>
-                <p>Gráfico de Peso</p>
-                <small>Últimos 30 días</small>
+                <p>Weight Chart</p>
+                <small>Last 30 days</small>
               </div>
             </div>
             <div class="chart-stats">
@@ -212,27 +212,27 @@ class HealthCharts extends HTMLElement {
                 <div class="stat-label">kg</div>
               </div>
               <div class="stat-item">
-                <div class="stat-value trend-down">Saludable</div>
-                <div class="stat-label">Estado</div>
+                <div class="stat-value trend-down">Healthy</div>
+                <div class="stat-label">Status</div>
               </div>
               <div class="stat-item">
                 <div class="stat-value trend-down">↓0.5kg</div>
-                <div class="stat-label">Tendencia</div>
+                <div class="stat-label">Trend</div>
               </div>
             </div>
           </div>
           
-          <!-- Actividad Física -->
+          <!-- Physical Activity -->
           <div class="chart-card">
             <div class="chart-title">
               <i class="bi bi-activity chart-icon"></i>
-              Actividad Física
+              Physical Activity
             </div>
             <div class="chart-container">
               <div class="chart-placeholder">
                 <i class="bi bi-pie-chart"></i>
-                <p>Gráfico de Actividad</p>
-                <small>Esta semana</small>
+                <p>Activity Chart</p>
+                <small>This week</small>
               </div>
             </div>
             <div class="chart-stats">

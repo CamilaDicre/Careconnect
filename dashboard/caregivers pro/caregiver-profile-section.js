@@ -158,16 +158,16 @@ class CaregiverProfileSection extends HTMLElement {
       </div>
     `;
 
-    // Botón editar perfil
+    // Edit profile button
     this.querySelector('#editProfileBtn').addEventListener('click', () => {
       this.enableEdit();
     });
-    // Botón cerrar sesión
+    // Logout button
     this.querySelector('#logoutBtn').addEventListener('click', () => {
       localStorage.removeItem('loggedInUser');
       window.location.href = '../../pages/login.html';
     });
-    // Guardar cambios
+    // Save changes
     this.querySelector('#profileForm').addEventListener('submit', (e) => {
       e.preventDefault();
       this.saveProfile();

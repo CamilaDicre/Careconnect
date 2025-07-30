@@ -371,14 +371,14 @@
                         <div class="auth-modal-icon">
                             <i class="bi bi-shield-exclamation"></i>
                         </div>
-                        <h2 class="auth-modal-title">Acceso Restringido</h2>
+                        <h2 class="auth-modal-title">Access Restricted</h2>
                         <p class="auth-modal-message">${message}</p>
                         <a href="${redirectUrl}" class="auth-modal-button">
                             <i class="bi bi-box-arrow-in-right me-2"></i>
-                            Ir al Login
+                            Go to Login
                         </a>
                         <div class="auth-modal-countdown">
-                            Redirigiendo automáticamente en <span id="countdown">${countdownSeconds}</span> segundos...
+                            Redirecting automatically in <span id="countdown">${countdownSeconds}</span> seconds...
                         </div>
                     </div>
                 </div>
@@ -420,7 +420,7 @@
             if (!loggedInUser || !user) {
                 // Mostrar notificación modal moderna
                 showAuthModal(
-                    'Debes estar logueado como cuidador para acceder al dashboard. Por favor, inicia sesión con tu cuenta de cuidador.',
+                    'You must be logged in as a caregiver to access the dashboard. Please sign in with your caregiver account.',
                     '../../pages/login.html',
                     7
                 );

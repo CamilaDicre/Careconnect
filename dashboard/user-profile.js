@@ -10,7 +10,7 @@ class UserProfile extends HTMLElement {
     return window.userType || 'patient';
   }
   getProfileData() {
-    // Leer usuario logueado desde localStorage
+    // Read logged in user from localStorage
     const loggedInUser = localStorage.getItem('loggedInUser');
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find(u => u.username === loggedInUser);
@@ -35,7 +35,7 @@ class UserProfile extends HTMLElement {
       };
     } else {
       return {
-        name: 'Usuario',
+        name: 'User',
         age: '-',
         gender: '-',
         photo: 'assets/people/woman-whiteshirt.png',
@@ -177,9 +177,9 @@ class UserProfile extends HTMLElement {
       </style>
       <section>
         <div class="profile-card">
-          <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Mi Perfil</h1>
+          <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">My Profile</h1>
           <div class="profile-header">
-            <img src="${data.photo}" alt="Foto de perfil" class="profile-photo">
+            <img src="${data.photo}" alt="Profile photo" class="profile-photo">
             <div class="profile-info">
               <h2>${data.name}</h2>
               <span class="profile-badge">${data.type}</span>
@@ -189,39 +189,39 @@ class UserProfile extends HTMLElement {
           
           <div class="profile-details">
             <div class="detail-item">
-              <div class="detail-label">Edad</div>
-              <div class="detail-value">${data.age} años</div>
+              <div class="detail-label">Age</div>
+              <div class="detail-value">${data.age} years</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Género</div>
+              <div class="detail-label">Gender</div>
               <div class="detail-value">${data.gender}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Teléfono</div>
+              <div class="detail-label">Phone</div>
               <div class="detail-value">${data.phone}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Dirección</div>
+              <div class="detail-label">Address</div>
               <div class="detail-value">${data.address}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Experiencia</div>
+              <div class="detail-label">Experience</div>
               <div class="detail-value">${data.experience}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Educación</div>
+              <div class="detail-label">Education</div>
               <div class="detail-value">${data.education}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Certificaciones</div>
+              <div class="detail-label">Certifications</div>
               <div class="detail-value">${data.certifications}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Habilidades</div>
+              <div class="detail-label">Skills</div>
               <div class="detail-value">${data.skills}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Idiomas</div>
+              <div class="detail-label">Languages</div>
               <div class="detail-value">${data.languages}</div>
             </div>
             <div class="detail-item">
@@ -229,14 +229,14 @@ class UserProfile extends HTMLElement {
               <div class="detail-value">${data.bio}</div>
             </div>
             <div class="detail-item">
-              <div class="detail-label">Disponibilidad</div>
+              <div class="detail-label">Availability</div>
               <div class="detail-value">${data.availability}</div>
             </div>
           </div>
           
           ${data.areas ? `
             <div class="areas-section">
-              <h3>Áreas de Estudio</h3>
+              <h3>Study Areas</h3>
               <div class="areas-list">
                 ${data.areas.map(area => `<span class="area-tag">${area}</span>`).join('')}
               </div>
@@ -244,7 +244,7 @@ class UserProfile extends HTMLElement {
           ` : ''}
           
           <button class="logout-btn" onclick="logout()">
-            <i class="bi bi-box-arrow-right"></i> Cerrar Sesión
+            <i class="bi bi-box-arrow-right"></i> Logout
           </button>
         </div>
       </section>

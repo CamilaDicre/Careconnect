@@ -15,7 +15,7 @@ class WelcomeOverlay extends HTMLElement {
     const loggedInUser = localStorage.getItem("loggedInUser");
     if (loggedInUser) {
       const users = JSON.parse(localStorage.getItem('users') || '[]');
-      // Buscar el usuario por username
+      // Find user by username
       const user = users.find(u => u.username === loggedInUser);
       const displayName = user ? (user.name || user.username) : loggedInUser;
       return {
@@ -24,7 +24,7 @@ class WelcomeOverlay extends HTMLElement {
         message: 'We hope you have a wonderful day'
       };
     }
-    // Fallback genérico si no hay usuario
+    // Generic fallback if no user
     return {
       name: '',
       greeting: 'Welcome!',

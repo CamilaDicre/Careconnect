@@ -209,7 +209,7 @@ class CaregiverSidebar extends HTMLElement {
           </button>
           <button class="nav-item" data-section="earnings">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Gráfico de estadísticas amigable -->
+              <!-- Friendly statistics chart -->
               <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="8" y="32" width="6" height="8" rx="1" fill="#fff"/>
                 <rect x="18" y="24" width="6" height="16" rx="1" fill="#fff"/>
@@ -265,7 +265,7 @@ class CaregiverSidebar extends HTMLElement {
   addListeners() {
     const nav = this.shadowRoot.querySelector('.sidebar');
     const navItems = this.shadowRoot.querySelectorAll('.nav-item');
-    // Navegación por secciones
+    // Section navigation
     navItems.forEach(btn => {
       btn.addEventListener('click', e => {
         navItems.forEach(b => b.classList.remove('active'));
@@ -274,7 +274,7 @@ class CaregiverSidebar extends HTMLElement {
         this.dispatchEvent(new CustomEvent('sectionChange', { detail: { section }, bubbles: true, composed: true }));
       });
     });
-    // Colapsar/expandir sidebar usando el logo como botón
+    // Collapse/expand sidebar using logo as button
     const logoToggle = this.shadowRoot.getElementById('logo-toggle');
     if (logoToggle) {
       logoToggle.addEventListener('click', () => {

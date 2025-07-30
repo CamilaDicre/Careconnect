@@ -10,7 +10,7 @@ class MedicineList extends HTMLElement {
   }
   
   getMedicines() {
-    // Obtener usuario logueado
+    // Get logged in user
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser) return [];
     // Read user-specific medications

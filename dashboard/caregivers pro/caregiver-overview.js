@@ -398,24 +398,24 @@ class CaregiverOverview extends HTMLElement {
           <div class="profile-modal" style="position:relative;">
             <button class="close-modal-btn" id="closeProfileModal" title="Cerrar">&times;</button>
             <h2>Caregiver Profile</h2>
-            <div class="modal-row"><img class="modal-photo" src="${profilePic}" alt="Foto de perfil" /></div>
-            <div class="modal-row"><span class="modal-label">Nombre:</span><span class="modal-value">${displayName}</span></div>
+            <div class="modal-row"><img class="modal-photo" src="${profilePic}" alt="Profile photo" /></div>
+            <div class="modal-row"><span class="modal-label">Name:</span><span class="modal-value">${displayName}</span></div>
             <div class="modal-row"><span class="modal-label">Email:</span><span class="modal-value">${displayEmail}</span></div>
-            <div class="modal-row"><span class="modal-label">Teléfono:</span><span class="modal-value">${displayPhone}</span></div>
-            <div class="modal-row"><span class="modal-label">Títulos:</span><span class="modal-value">${displayTitles}</span></div>
-            <div class="modal-row"><span class="modal-label">Usuario:</span><span class="modal-value">${loggedInUser}</span></div>
+            <div class="modal-row"><span class="modal-label">Phone:</span><span class="modal-value">${displayPhone}</span></div>
+            <div class="modal-row"><span class="modal-label">Titles:</span><span class="modal-value">${displayTitles}</span></div>
+            <div class="modal-row"><span class="modal-label">User:</span><span class="modal-value">${loggedInUser}</span></div>
           </div>
         </div>
-        <!-- Cabecera de perfil innovadora -->
+        <!-- Innovative profile header -->
         <div class="profile-header">
-          <img class="profile-pic" src="${profilePic}" alt="Foto de perfil" />
+          <img class="profile-pic" src="${profilePic}" alt="Profile photo" />
           <div class="profile-info">
             <div class="profile-name">${displayName}</div>
             <div class="profile-email"><i class="bi bi-envelope"></i> ${displayEmail}</div>
                             <div class="profile-role"><i class="bi bi-person-badge"></i> Professional Caregiver</div>
             <div class="profile-actions">
-              <button title="Editar perfil" id="editProfileBtn"><i class="bi bi-pencil"></i> Editar perfil</button>
-              <button title="Cerrar sesión" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Cerrar sesión</button>
+              <button title="Edit profile" id="editProfileBtn"><i class="bi bi-pencil"></i> Edit profile</button>
+              <button title="Logout" id="logoutBtn"><i class="bi bi-box-arrow-right"></i> Logout</button>
             </div>
           </div>
         </div>

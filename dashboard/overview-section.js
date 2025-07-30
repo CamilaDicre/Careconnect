@@ -9,11 +9,11 @@ class OverviewSection extends HTMLElement {
   }
   
   render() {
-    // Obtener usuario real
+    // Get real user
     const loggedInUser = localStorage.getItem('loggedInUser');
     const users = JSON.parse(localStorage.getItem('users') || '[]');
     const user = users.find(u => u.username === loggedInUser);
-    const displayName = user ? (user.username || 'Usuario') : 'Usuario';
+    const displayName = user ? (user.username || 'User') : 'User';
     this.shadowRoot.innerHTML = `
       <style>
         * {
