@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let currentMonth = currentDate.getMonth();
     let currentYear = currentDate.getFullYear();
 
-    // Días con cita: formato { day: número, name: string }
+    // Days with appointment: format { day: number, name: string }
     const eventDays = [
         { day: 10, name: 'Dra. Martínez' },
         { day: 18, name: 'Enfermero Juan' },
@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const dayElement = document.createElement('div');
             dayElement.textContent = day;
 
-            // Buscar si el día tiene cita
+            // Check if the day has an appointment
             const event = eventDays.find(e => e.day === day);
             if (event) {
                 dayElement.classList.add('event-day');
@@ -49,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 dayElement.appendChild(document.createElement('br'));
                 dayElement.appendChild(circle);
                 // Tooltip
-                dayElement.title = `Cita con ${event.name}`;
+                dayElement.title = `Appointment with ${event.name}`;
             }
 
             // Highlight current day

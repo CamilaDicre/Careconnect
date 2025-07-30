@@ -19,9 +19,9 @@ class CareSidebar extends HTMLElement {
     return window.userType || 'patient';
   }
   getUserData() {
-    const username = localStorage.getItem('loggedInUser') || 'Paciente';
+    const username = localStorage.getItem('loggedInUser') || 'Patient';
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.username === username && u.role === 'paciente');
+    const user = users.find(u => u.username === username && u.role === 'patient');
     let displayName = user ? (user.name || user.username) : username;
     let photo = user && user.photo ? user.photo : '../assets/people/woman-whiteshirt.png';
     return {

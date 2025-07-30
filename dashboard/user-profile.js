@@ -20,7 +20,7 @@ class UserProfile extends HTMLElement {
         age: user.age || '-',
         gender: user.gender || user.sexo || '-',
         photo: user.photo || 'assets/people/woman-whiteshirt.png',
-        type: user.role === 'paciente' ? 'Paciente' : (user.role === 'cuidador' ? 'Cuidador' : user.role),
+        type: user.role === 'patient' ? 'Patient' : (user.role === 'caregiver' ? 'Caregiver' : user.role),
         areas: user.areas || null,
         email: user.email || '-',
         phone: user.phone || '-',

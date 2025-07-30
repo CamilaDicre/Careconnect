@@ -225,7 +225,7 @@ class CaregiverSidebar extends HTMLElement {
           </button>
           <button class="nav-item" data-section="profile">
             <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Perfil de cuidador profesional -->
+              <!-- Professional caregiver profile -->
               <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="24" cy="16" r="8" fill="#fff"/>
                 <path d="M8 40c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#fff"/>

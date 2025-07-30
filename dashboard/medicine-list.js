@@ -13,7 +13,7 @@ class MedicineList extends HTMLElement {
     // Obtener usuario logueado
     const loggedInUser = localStorage.getItem('loggedInUser');
     if (!loggedInUser) return [];
-    // Leer medicamentos específicos del usuario
+    // Read user-specific medications
     const meds = JSON.parse(localStorage.getItem('medicines_' + loggedInUser) || '[]');
     return meds;
   }
@@ -300,17 +300,17 @@ class MedicineList extends HTMLElement {
         }
       </style>
       <div class="medicine-container">
-        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Mis Medicamentos</h1>
+        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">My Medications</h1>
         <div class="header">
-          <h2 style="font-size:1.3rem;font-weight:600;">Lista de medicamentos registrados</h2>
-          <button class="add-reading-btn" id="add-medicine-btn"><i class="bi bi-plus"></i> Agregar Medicamento</button>
+          <h2 style="font-size:1.3rem;font-weight:600;">List of registered medications</h2>
+          <button class="add-reading-btn" id="add-medicine-btn"><i class="bi bi-plus"></i> Add Medication</button>
         </div>
         <div class="medicine-list">
-          ${medicines.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>No tienes medicamentos registrados. Usa el botón "Agregar Medicamento" para añadir uno nuevo.</div>` : ''}
+          ${medicines.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>You don't have registered medications. Use the "Add Medication" button to add a new one.</div>` : ''}
           ${medicines.map(medicine => `
             <div class="medicine-card" style="border-left-color: ${medicine.color}">
               <div class="status-badge status-${medicine.status}">
-                ${medicine.status === 'completed' ? 'Tomado' : medicine.status === 'pending' ? 'Pendiente' : 'Atrasado'}
+                ${medicine.status === 'completed' ? 'Taken' : medicine.status === 'pending' ? 'Pending' : 'Overdue'}
               </div>
               <div class="medicine-header">
                 <div class="medicine-icon" style="background: ${medicine.color}">
@@ -323,11 +323,11 @@ class MedicineList extends HTMLElement {
               </div>
               <div class="medicine-details">
                 <div class="detail-row">
-                  <span class="detail-label">Frecuencia:</span>
+                  <span class="detail-label">Frequency:</span>
                   <span class="detail-value">${medicine.frequency}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Instrucciones:</span>
+                  <span class="detail-label">Instructions:</span>
                   <span class="detail-value">${medicine.instructions}</span>
                 </div>
               </div>
@@ -387,13 +387,13 @@ class MedicineList extends HTMLElement {
   }
   
   showAddMedicineModal() {
-    // Simple prompt para agregar medicamento (puedes mejorar esto con un modal real)
-    const name = prompt('Nombre del medicamento:');
+    // Simple prompt to add medication (you can improve this with a real modal)
+    const name = prompt('Medication name:');
     if (!name) return;
-    const dosage = prompt('Dosis:');
-    const time = prompt('Hora (ej: 08:00):');
-    const frequency = prompt('Frecuencia:');
-    const instructions = prompt('Instrucciones:');
+    const dosage = prompt('Dosage:');
+    const time = prompt('Time (e.g.: 08:00):');
+    const frequency = prompt('Frequency:');
+    const instructions = prompt('Instructions:');
     const color = '#ffc107';
     const icon = 'bi-capsule';
     const status = 'pending';

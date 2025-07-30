@@ -7,10 +7,10 @@ class CaregiverSearch extends HTMLElement {
     this.render();
   }
   getCaregivers() {
-    // Obtener cuidadores reales del sistema
+    // Get real caregivers from the system
     const users = JSON.parse(localStorage.getItem('users') || '[]');
-    // Solo usuarios con rol cuidador
-    return users.filter(u => u.role === 'cuidador').map(u => ({
+    // Only users with caregiver role
+    return users.filter(u => u.role === 'caregiver').map(u => ({
       name: u.username || '-',
       specialty: u.skills || '-',
       rating: u.rating || 4.5,
@@ -227,14 +227,14 @@ class CaregiverSearch extends HTMLElement {
         }
       </style>
       <section>
-        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Buscar Cuidadores</h1>
+        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Search Caregivers</h1>
         <div class="search-header">
-          <h2 style="font-size:1.3rem;font-weight:600;">Encuentra cuidadores profesionales registrados</h2>
-          <input type="text" class="filter-input" id="filterInput" placeholder="Buscar por nombre o especialidad" value="${filterInput}">
+          <h2 style="font-size:1.3rem;font-weight:600;">Find registered professional caregivers</h2>
+          <input type="text" class="filter-input" id="filterInput" placeholder="Search by name or specialty" value="${filterInput}">
         </div>
         
         <div class="caregiver-list">
-          ${caregivers.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>No hay cuidadores registrados. Usa el buscador para intentar con otro término.</div>` : ''}
+          ${caregivers.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>No registered caregivers. Use the search to try with another term.</div>` : ''}
           ${caregivers.map(caregiver => `
             <div class="caregiver-card">
               <div class="caregiver-header">
@@ -251,27 +251,27 @@ class CaregiverSearch extends HTMLElement {
               
               <div class="caregiver-details">
                 <div class="detail-row">
-                  <span class="detail-label">Experiencia:</span>
+                  <span class="detail-label">Experience:</span>
                   <span class="detail-value">${caregiver.experience}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Ubicación:</span>
+                  <span class="detail-label">Location:</span>
                   <span class="detail-value">${caregiver.location}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Precio:</span>
+                  <span class="detail-label">Price:</span>
                   <span class="detail-value">${caregiver.price}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Estado:</span>
+                  <span class="detail-label">Status:</span>
                   <span class="availability-badge ${caregiver.available ? 'available' : 'unavailable'}">
-                    ${caregiver.available ? 'Disponible' : 'No disponible'}
+                    ${caregiver.available ? 'Available' : 'Not available'}
                   </span>
                 </div>
               </div>
               
               <button class="contact-btn" ${!caregiver.available ? 'disabled' : ''}>
-                ${caregiver.available ? 'Contactar' : 'No disponible'}
+                ${caregiver.available ? 'Contact' : 'Not available'}
               </button>
             </div>
           `).join('')}

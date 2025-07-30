@@ -6,7 +6,7 @@
     <title>Caregiver Dashboard - CareConnect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         * {
             font-family: 'Poppins', sans-serif;
@@ -58,6 +58,118 @@
             display: block;
         }
         
+        /* Estilos para la notificación modal */
+        .auth-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .auth-modal {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.4s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .auth-modal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+            pointer-events: none;
+        }
+        
+        .auth-modal-icon {
+            font-size: 4rem;
+            color: #fff;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        .auth-modal-title {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .auth-modal-message {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+        
+        .auth-modal-button {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: #fff;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+            backdrop-filter: blur(10px);
+        }
+        
+        .auth-modal-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+            color: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .auth-modal-countdown {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            margin-top: 20px;
+        }
+        
+        /* Animaciones */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
         @media (max-width: 768px) {
             .main-content {
                 margin-left: 0;
@@ -67,10 +179,26 @@
             .main-content.sidebar-collapsed {
                 margin-left: 0;
             }
+            
+            .auth-modal {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .auth-modal-title {
+                font-size: 1.5rem;
+            }
+            
+            .auth-modal-message {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+    <!-- Welcome Overlay para Caregivers -->
+    <caregiver-welcome-overlay></caregiver-welcome-overlay>
+    
     <div class="dashboard-container">
         <!-- Sidebar Component -->
         <caregiver-sidebar></caregiver-sidebar>
@@ -122,6 +250,162 @@
     <script src="caregiver-footer.js"></script>
     
     <script>
+        // Componente de transición de bienvenida para caregivers
+        class CaregiverWelcomeOverlay extends HTMLElement {
+            constructor() {
+                super();
+                this.attachShadow({ mode: 'open' });
+            }
+            
+            connectedCallback() {
+                this.render();
+                setTimeout(() => this.hide(), 3500);
+            }
+            
+            hide() {
+                this.shadowRoot.querySelector('.overlay').style.opacity = '0';
+                setTimeout(() => this.remove(), 800);
+            }
+            
+            getUserData() {
+                const loggedInUser = localStorage.getItem("loggedInUser");
+                if (loggedInUser) {
+                    const users = JSON.parse(localStorage.getItem('users') || '[]');
+                    const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+                    const displayName = user ? (user.name || user.username) : loggedInUser;
+                    return {
+                        name: displayName,
+                        greeting: '¡Bienvenido de vuelta!',
+                        message: 'Listo para brindar el mejor cuidado'
+                    };
+                }
+                return {
+                    name: '',
+                    greeting: '¡Bienvenido!',
+                    message: 'Tu dashboard de cuidador está listo'
+                };
+            }
+            
+            render() {
+                const userData = this.getUserData();
+                this.shadowRoot.innerHTML = `
+                    <style>
+                        .overlay {
+                            position: fixed;
+                            top: 0; left: 0; right: 0; bottom: 0;
+                            background: linear-gradient(135deg, #667eea, #764ba2);
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            z-index: 9999;
+                            transition: opacity 0.8s ease;
+                            font-family: 'Poppins', sans-serif;
+                        }
+                        .welcome-card {
+                            background: rgba(255,255,255,0.95);
+                            padding: 45px;
+                            border-radius: 25px;
+                            text-align: center;
+                            box-shadow: 0 25px 70px rgba(102, 126, 234, 0.3);
+                            max-width: 450px;
+                            backdrop-filter: blur(15px);
+                            border: 1px solid rgba(255, 255, 255, 0.2);
+                        }
+                        .welcome-icon {
+                            font-size: 52px;
+                            color: #667eea;
+                            margin-bottom: 25px;
+                            display: block;
+                            animation: gentlePulse 2s infinite;
+                        }
+                        .welcome-greeting {
+                            font-size: 30px;
+                            font-weight: 700;
+                            color: #2c3e50;
+                            margin-bottom: 12px;
+                            line-height: 1.2;
+                        }
+                        .welcome-name {
+                            font-size: 36px;
+                            font-weight: 800;
+                            color: #667eea;
+                            margin-bottom: 18px;
+                            text-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
+                        }
+                        .welcome-message {
+                            font-size: 17px;
+                            color: #7f8c8d;
+                            line-height: 1.6;
+                            font-family: 'Josefin Sans', sans-serif;
+                            font-weight: 400;
+                        }
+                        .welcome-emoji {
+                            font-size: 26px;
+                            margin: 0 6px;
+                        }
+                        @keyframes gentlePulse {
+                            0%, 100% { transform: scale(1); }
+                            50% { transform: scale(1.08); }
+                        }
+                    </style>
+                    <div class="overlay">
+                        <div class="welcome-card">
+                            <i class="bi bi-shield-heart-fill welcome-icon"></i>
+                            <div class="welcome-greeting">${userData.greeting}</div>
+                            <div class="welcome-name">${userData.name}</div>
+                            <div class="welcome-message">
+                                ${userData.message} <span class="welcome-emoji">💜</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+        customElements.define('caregiver-welcome-overlay', CaregiverWelcomeOverlay);
+        
+        // Función para mostrar la notificación modal de autenticación
+        function showAuthModal(message, redirectUrl, countdownSeconds = 3) {
+            const modalHTML = `
+                <div class="auth-modal-overlay">
+                    <div class="auth-modal">
+                        <div class="auth-modal-icon">
+                            <i class="bi bi-shield-exclamation"></i>
+                        </div>
+                        <h2 class="auth-modal-title">Acceso Restringido</h2>
+                        <p class="auth-modal-message">${message}</p>
+                        <a href="${redirectUrl}" class="auth-modal-button">
+                            <i class="bi bi-box-arrow-in-right me-2"></i>
+                            Ir al Login
+                        </a>
+                        <div class="auth-modal-countdown">
+                            Redirigiendo automáticamente en <span id="countdown">${countdownSeconds}</span> segundos...
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.insertAdjacentHTML('beforeend', modalHTML);
+            
+            // Contador regresivo
+            let countdown = countdownSeconds;
+            const countdownElement = document.getElementById('countdown');
+            const countdownInterval = setInterval(() => {
+                countdown--;
+                if (countdownElement) {
+                    countdownElement.textContent = countdown;
+                }
+                if (countdown <= 0) {
+                    clearInterval(countdownInterval);
+                    window.location.href = redirectUrl;
+                }
+            }, 1000);
+            
+            // Redirección automática después del tiempo especificado
+            setTimeout(() => {
+                window.location.href = redirectUrl;
+            }, countdownSeconds * 1000);
+        }
+        
         // Limpiar cache y forzar recarga de componentes
         if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
             window.location.reload();
@@ -134,15 +418,12 @@
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
             if (!loggedInUser || !user) {
-                // Notificación visual (reutiliza la lógica de notificación si existe, si no, usa alert)
-                if (typeof showNotification === 'function') {
-                    showNotification('Debes iniciar sesión como cuidador para acceder.', 'error');
-                } else {
-                    alert('Debes iniciar sesión como cuidador para acceder.');
-                }
-                setTimeout(() => {
-                    window.location.href = '../../pages/login.html';
-                }, 2500);
+                // Mostrar notificación modal moderna
+                showAuthModal(
+                    'Debes estar logueado como cuidador para acceder al dashboard. Por favor, inicia sesión con tu cuenta de cuidador.',
+                    '../../pages/login.html',
+                    7
+                );
                 return;
             }
             // --- Fin protección de acceso ---

@@ -13,7 +13,7 @@ class CalendarView extends HTMLElement {
     return [
       {
         id: 1,
-        title: 'Cita con Dr. Martínez',
+        title: 'Appointment with Dr. Martinez',
         date: '2024-01-15',
         time: '10:00',
         type: 'appointment',
@@ -21,7 +21,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 2,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-01-15',
         time: '08:00',
         type: 'medicine',
@@ -29,7 +29,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 3,
-        title: 'Control de presión',
+        title: 'Blood Pressure Check',
         date: '2024-01-16',
         time: '07:00',
         type: 'checkup',
@@ -37,7 +37,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 4,
-        title: 'Sesión de fisioterapia',
+        title: 'Physical Therapy Session',
         date: '2024-01-18',
         time: '15:30',
         type: 'therapy',
@@ -45,7 +45,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 5,
-        title: 'Tomar Metformina',
+        title: 'Take Metformin',
         date: '2024-01-15',
         time: '12:00',
         type: 'medicine',
@@ -53,7 +53,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 6,
-        title: 'Consulta cardiología',
+        title: 'Cardiology Consultation',
         date: '2024-01-20',
         time: '14:00',
         type: 'appointment',
@@ -61,7 +61,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 7,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-20',
         time: '08:00',
         type: 'medicine',
@@ -69,7 +69,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 8,
-        title: 'Control de glucosa',
+        title: 'Glucose Check',
         date: '2024-01-22',
         time: '07:30',
         type: 'checkup',
@@ -77,7 +77,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 9,
-        title: 'Sesión de rehabilitación',
+        title: 'Rehabilitation Session',
         date: '2024-01-25',
         time: '16:00',
         type: 'therapy',
@@ -85,7 +85,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 10,
-        title: 'Tomar Amlodipino',
+        title: 'Take Amlodipine',
         date: '2024-01-25',
         time: '20:00',
         type: 'medicine',
@@ -93,7 +93,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 11,
-        title: 'Consulta oftalmología',
+        title: 'Ophthalmology Consultation',
         date: '2024-01-28',
         time: '11:00',
         type: 'appointment',
@@ -101,7 +101,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 12,
-        title: 'Control de peso',
+        title: 'Weight Check',
         date: '2024-01-30',
         time: '09:00',
         type: 'checkup',
@@ -109,7 +109,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 13,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-01-30',
         time: '20:00',
         type: 'medicine',
@@ -117,7 +117,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 14,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-16',
         time: '10:00',
         type: 'medicine',
@@ -125,7 +125,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 15,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-16',
         time: '14:00',
         type: 'medicine',
@@ -133,7 +133,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 16,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-17',
         time: '08:00',
         type: 'medicine',
@@ -141,7 +141,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 17,
-        title: 'Tomar Paracetamol',
+        title: 'Take Paracetamol',
         date: '2024-01-17',
         time: '20:00',
         type: 'medicine',
@@ -149,7 +149,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 18,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-18',
         time: '08:00',
         type: 'medicine',
@@ -157,7 +157,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 19,
-        title: 'Tomar Vitamina B12',
+        title: 'Take Vitamin B12',
         date: '2024-01-19',
         time: '09:00',
         type: 'medicine',
@@ -165,7 +165,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 20,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-01-19',
         time: '21:00',
         type: 'medicine',
@@ -173,7 +173,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 21,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-21',
         time: '10:00',
         type: 'medicine',
@@ -181,7 +181,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 22,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-21',
         time: '16:00',
         type: 'medicine',
@@ -189,7 +189,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 23,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-23',
         time: '08:00',
         type: 'medicine',
@@ -197,7 +197,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 24,
-        title: 'Tomar Paracetamol',
+        title: 'Take Paracetamol',
         date: '2024-01-23',
         time: '20:00',
         type: 'medicine',
@@ -205,7 +205,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 25,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-24',
         time: '08:00',
         type: 'medicine',
@@ -213,7 +213,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 26,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-01-24',
         time: '21:00',
         type: 'medicine',
@@ -221,7 +221,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 27,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-26',
         time: '10:00',
         type: 'medicine',
@@ -229,7 +229,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 28,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-26',
         time: '16:00',
         type: 'medicine',
@@ -237,7 +237,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 29,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-27',
         time: '08:00',
         type: 'medicine',
@@ -245,7 +245,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 30,
-        title: 'Tomar Paracetamol',
+        title: 'Take Paracetamol',
         date: '2024-01-27',
         time: '20:00',
         type: 'medicine',
@@ -253,7 +253,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 31,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-29',
         time: '08:00',
         type: 'medicine',
@@ -261,7 +261,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 32,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-01-29',
         time: '21:00',
         type: 'medicine',
@@ -269,7 +269,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 33,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-31',
         time: '10:00',
         type: 'medicine',
@@ -277,7 +277,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 34,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-31',
         time: '16:00',
         type: 'medicine',
@@ -285,7 +285,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 35,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-31',
         time: '20:00',
         type: 'medicine',
@@ -293,7 +293,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 36,
-        title: 'Tomar Paracetamol',
+        title: 'Take Paracetamol',
         date: '2024-01-15',
         time: '14:00',
         type: 'medicine',
@@ -301,7 +301,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 37,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-16',
         time: '20:00',
         type: 'medicine',
@@ -309,7 +309,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 38,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-01-17',
         time: '21:00',
         type: 'medicine',
@@ -317,7 +317,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 39,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-01-18',
         time: '20:00',
         type: 'medicine',
@@ -325,7 +325,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 40,
-        title: 'Tomar Vitamina B12',
+        title: 'Take Vitamin B12',
         date: '2024-01-19',
         time: '08:00',
         type: 'medicine',
@@ -333,7 +333,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 41,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-20',
         time: '16:00',
         type: 'medicine',
@@ -341,7 +341,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 42,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-21',
         time: '10:00',
         type: 'medicine',
@@ -349,7 +349,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 43,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-22',
         time: '20:00',
         type: 'medicine',
@@ -357,7 +357,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 44,
-        title: 'Tomar Paracetamol',
+        title: 'Take Paracetamol',
         date: '2024-01-23',
         time: '14:00',
         type: 'medicine',
@@ -365,7 +365,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 45,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-24',
         time: '08:00',
         type: 'medicine',
@@ -373,7 +373,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 46,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-01-25',
         time: '21:00',
         type: 'medicine',
@@ -381,7 +381,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 47,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-01-26',
         time: '20:00',
         type: 'medicine',
@@ -389,7 +389,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 48,
-        title: 'Tomar Vitamina B12',
+        title: 'Take Vitamin B12',
         date: '2024-01-27',
         time: '08:00',
         type: 'medicine',
@@ -397,7 +397,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 49,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-28',
         time: '16:00',
         type: 'medicine',
@@ -405,7 +405,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 50,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-29',
         time: '10:00',
         type: 'medicine',
@@ -413,7 +413,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 51,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-30',
         time: '20:00',
         type: 'medicine',
@@ -421,7 +421,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 52,
-        title: 'Tomar Paracetamol',
+        title: 'Take Paracetamol',
         date: '2024-01-31',
         time: '14:00',
         type: 'medicine',
@@ -437,7 +437,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 54,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-01-01',
         time: '08:00',
         type: 'medicine',
@@ -453,7 +453,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 56,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-02',
         time: '20:00',
         type: 'medicine',
@@ -469,7 +469,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 58,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-03',
         time: '10:00',
         type: 'medicine',
@@ -485,7 +485,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 60,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-04',
         time: '08:00',
         type: 'medicine',
@@ -501,7 +501,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 62,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-05',
         time: '16:00',
         type: 'medicine',
@@ -517,7 +517,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 64,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-01-06',
         time: '21:00',
         type: 'medicine',
@@ -533,7 +533,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 66,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-01-07',
         time: '20:00',
         type: 'medicine',
@@ -549,7 +549,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 68,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-01-08',
         time: '08:00',
         type: 'medicine',
@@ -565,7 +565,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 70,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-01-10',
         time: '20:00',
         type: 'medicine',
@@ -581,7 +581,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 72,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-01-12',
         time: '10:00',
         type: 'medicine',
@@ -597,7 +597,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 74,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-01-15',
         time: '08:00',
         type: 'medicine',
@@ -613,7 +613,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 76,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-01-18',
         time: '16:00',
         type: 'medicine',
@@ -629,7 +629,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 78,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-01-20',
         time: '21:00',
         type: 'medicine',
@@ -645,7 +645,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 80,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-01-22',
         time: '20:00',
         type: 'medicine',
@@ -662,7 +662,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 82,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-02-01',
         time: '08:00',
         type: 'medicine',
@@ -678,7 +678,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 84,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-02-05',
         time: '20:00',
         type: 'medicine',
@@ -694,7 +694,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 86,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-02-08',
         time: '10:00',
         type: 'medicine',
@@ -710,7 +710,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 88,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-02-12',
         time: '08:00',
         type: 'medicine',
@@ -726,7 +726,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 90,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-02-15',
         time: '16:00',
         type: 'medicine',
@@ -742,7 +742,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 92,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-02-19',
         time: '21:00',
         type: 'medicine',
@@ -758,7 +758,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 94,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-02-22',
         time: '20:00',
         type: 'medicine',
@@ -774,7 +774,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 96,
-        title: 'Tomar Vitamina B12',
+        title: 'Take Vitamin B12',
         date: '2024-02-26',
         time: '08:00',
         type: 'medicine',
@@ -791,7 +791,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 98,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-03-01',
         time: '08:00',
         type: 'medicine',
@@ -807,7 +807,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 100,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-03-05',
         time: '20:00',
         type: 'medicine',
@@ -823,7 +823,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 102,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-03-08',
         time: '10:00',
         type: 'medicine',
@@ -839,7 +839,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 104,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-03-12',
         time: '08:00',
         type: 'medicine',
@@ -855,7 +855,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 106,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-03-15',
         time: '16:00',
         type: 'medicine',
@@ -871,7 +871,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 108,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-03-19',
         time: '21:00',
         type: 'medicine',
@@ -887,7 +887,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 110,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-03-22',
         time: '20:00',
         type: 'medicine',
@@ -903,7 +903,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 112,
-        title: 'Tomar Vitamina B12',
+        title: 'Take Vitamin B12',
         date: '2024-03-26',
         time: '08:00',
         type: 'medicine',
@@ -920,7 +920,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 114,
-        title: 'Tomar Vitamina D',
+        title: 'Take Vitamin D',
         date: '2024-04-01',
         time: '08:00',
         type: 'medicine',
@@ -936,7 +936,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 116,
-        title: 'Tomar Aspirina',
+        title: 'Take Aspirin',
         date: '2024-04-05',
         time: '20:00',
         type: 'medicine',
@@ -952,7 +952,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 118,
-        title: 'Tomar Ibuprofeno',
+        title: 'Take Ibuprofen',
         date: '2024-04-08',
         time: '10:00',
         type: 'medicine',
@@ -968,7 +968,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 120,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-04-12',
         time: '08:00',
         type: 'medicine',
@@ -984,7 +984,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 122,
-        title: 'Tomar Acetaminofén',
+        title: 'Take Acetaminophen',
         date: '2024-04-15',
         time: '16:00',
         type: 'medicine',
@@ -1000,7 +1000,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 124,
-        title: 'Tomar Vitamina C',
+        title: 'Take Vitamin C',
         date: '2024-04-19',
         time: '21:00',
         type: 'medicine',
@@ -1016,7 +1016,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 126,
-        title: 'Tomar Calcio',
+        title: 'Take Calcium',
         date: '2024-04-22',
         time: '20:00',
         type: 'medicine',
@@ -1032,7 +1032,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 128,
-        title: 'Tomar Vitamina B12',
+        title: 'Take Vitamin B12',
         date: '2024-04-26',
         time: '08:00',
         type: 'medicine',
@@ -1048,7 +1048,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 130,
-        title: 'Tomar Omeprazol',
+        title: 'Take Omeprazole',
         date: '2024-04-29',
         time: '08:00',
         type: 'medicine',
@@ -1359,8 +1359,8 @@ class CalendarView extends HTMLElement {
       
       <section>
         <div class="calendar-header">
-          <h2>Calendario Médico</h2>
-          <p>Gestiona tus citas, medicamentos y eventos médicos</p>
+                      <h2>Medical Calendar</h2>
+          <p>Manage your appointments, medications and medical events</p>
         </div>
         
         <div class="calendar-controls">

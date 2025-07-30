@@ -9,12 +9,12 @@ class CaregiverOverview extends HTMLElement {
   }
   
   render() {
-    // Obtener datos del cuidador logueado
+    // Get logged in caregiver data
     let loggedInUser = localStorage.getItem('loggedInUser');
     let users = JSON.parse(localStorage.getItem('users') || '[]');
-    let user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+    let user = users.find(u => u.username === loggedInUser && u.role === 'caregiver');
     let profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=1976d2&color=fff&size=128&rounded=true';
-    let displayName = user ? (user.name || user.username) : 'Cuidador';
+    let displayName = user ? (user.name || user.username) : 'Caregiver';
     let displayEmail = user ? (user.email || '-') : '-';
     let displayPhone = user ? (user.phone || '-') : '-';
     let displayTitles = user ? (user.titles || 'No especificado') : 'No especificado';
@@ -397,7 +397,7 @@ class CaregiverOverview extends HTMLElement {
         <div class="modal-bg" id="profileModalBg">
           <div class="profile-modal" style="position:relative;">
             <button class="close-modal-btn" id="closeProfileModal" title="Cerrar">&times;</button>
-            <h2>Perfil del cuidador</h2>
+            <h2>Caregiver Profile</h2>
             <div class="modal-row"><img class="modal-photo" src="${profilePic}" alt="Foto de perfil" /></div>
             <div class="modal-row"><span class="modal-label">Nombre:</span><span class="modal-value">${displayName}</span></div>
             <div class="modal-row"><span class="modal-label">Email:</span><span class="modal-value">${displayEmail}</span></div>

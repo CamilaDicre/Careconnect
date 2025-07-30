@@ -2,9 +2,9 @@ console.log("login.js loaded!");
 
 const users = [
     { username: "admin", password: "admin123", role: "admin" },
-    { username: "usuario", password: "pass123", role: "paciente" },
+    { username: "user", password: "pass123", role: "patient" },
     { username: "Ameth", password: "password123", role: "admin" },
-    { username: "Josue", password: "testpass456", role: "cuidador" },
+    { username: "Josue", password: "testpass456", role: "caregiver" },
   ];
   
   document.addEventListener("DOMContentLoaded", () => {
@@ -65,8 +65,8 @@ const users = [
         const newUser = { username: name, email, password, role, gender };
         users.push(newUser);
         saveUsers(users);
-        // Si es paciente, loguear automáticamente y redirigir
-        if (role === 'paciente') {
+        // If it's a patient, automatically log in and redirect
+        if (role === 'patient') {
           localStorage.setItem('loggedInUser', name);
           localStorage.setItem('userRole', role);
           showBanner('Patient account created and logged in!', 'success');
@@ -145,7 +145,7 @@ const users = [
       setTimeout(() => {
         if (user.role === "admin") {
           window.location.href = "../dashboard/admin-dashboard.html";
-        } else if (user.role === "cuidador") {
+        } else if (user.role === "caregiver") {
           window.location.href = "../dashboard/caregivers pro/Caregiver-pro.html";
         } else {
           window.location.href = "../dashboard/dashboard.html";

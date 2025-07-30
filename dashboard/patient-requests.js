@@ -32,7 +32,7 @@ class PatientRequests extends HTMLElement {
         name: 'Sra. Carmen Ruiz',
         age: 75,
         location: 'Bella Vista',
-        service: 'Control de Medicamentos',
+        service: 'Medication Management',
         urgency: 'Baja',
         date: '2024-01-13',
         photo: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3',
@@ -248,8 +248,8 @@ class PatientRequests extends HTMLElement {
       </style>
       <section>
         <div class="requests-header">
-          <h2>Solicitudes de Pacientes</h2>
-          <p>Gestiona las solicitudes de cuidado de pacientes</p>
+                  <h2>Patient Requests</h2>
+        <p>Manage patient care requests</p>
         </div>
         
         <div class="requests-filters">
@@ -269,7 +269,7 @@ class PatientRequests extends HTMLElement {
             <option value="">Todos los servicios</option>
             <option value="homecare">Cuidado Domiciliario</option>
             <option value="medical">Acompañamiento Médico</option>
-            <option value="medication">Control de Medicamentos</option>
+            <option value="medication">Medication Management</option>
           </select>
         </div>
         
