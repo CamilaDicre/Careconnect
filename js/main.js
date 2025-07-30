@@ -34,10 +34,10 @@ function initializeCounters() {
             current += increment;
             
             if (current < target) {
-                counter.textContent = Math.ceil(current) + counter.getAttribute('data-prefix');
+                counter.textContent = counter.getAttribute('data-prefix') == "$" ? counter.getAttribute('data-prefix') + Math.ceil(current) : Math.ceil(current) + counter.getAttribute('data-prefix');
                 requestAnimationFrame(updateCount);
             } else {
-                counter.textContent = target + counter.getAttribute('data-prefix');
+                counter.textContent = counter.getAttribute('data-prefix') == "$" ? counter.getAttribute('data-prefix') + target : target + counter.getAttribute('data-prefix')
             }
         }
         
