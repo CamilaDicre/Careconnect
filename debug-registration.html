@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Registration - Careconnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .debug-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .debug-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .debug-button:hover {
+            background: #0056b3;
+        }
+        .debug-button.danger {
+            background: #dc3545;
+        }
+        .debug-button.danger:hover {
+            background: #c82333;
+        }
+        .debug-button.success {
+            background: #28a745;
+        }
+        .debug-button.success:hover {
+            background: #218838;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .log.success { 
+            background: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724;
+        }
+        .log.error { 
+            background: #f8d7da; 
+            border-color: #f5c6cb; 
+            color: #721c24;
+        }
+        .log.warning { 
+            background: #fff3cd; 
+            border-color: #ffeaa7; 
+            color: #856404;
+        }
+        .log.info { 
+            background: #d1ecf1; 
+            border-color: #bee5eb; 
+            color: #0c5460;
+        }
+        .step {
+            border-left: 4px solid #007bff;
+            padding-left: 15px;
+            margin: 10px 0;
+        }
+        .step.success {
+            border-left-color: #28a745;
+        }
+        .step.error {
+            border-left-color: #dc3545;
+        }
+        .step.warning {
+            border-left-color: #ffc107;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Debug Registration Process</h1>
+    
+    <div class="debug-section">
+        <h2>1. Verificar localStorage básico</h2>
+        <button class="debug-button" onclick="debugLocalStorage()">Test localStorage</button>
+        <div id="localStorage-debug" class="log"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>2. Verificar LocalStorageUtils</h2>
+        <button class="debug-button" onclick="debugLocalStorageUtils()">Test LocalStorageUtils</button>
+        <div id="utils-debug" class="log"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>3. Simular registro completo paso a paso</h2>
+        <button class="debug-button success" onclick="debugFullRegistration()">Simular Registro Completo</button>
+        <div id="registration-debug" class="log"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>4. Verificar datos guardados</h2>
+        <button class="debug-button" onclick="debugCheckData()">Verificar Datos</button>
+        <div id="data-debug" class="log"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>5. Simular login y verificación</h2>
+        <button class="debug-button" onclick="debugLoginSimulation()">Simular Login</button>
+        <div id="login-debug" class="log"></div>
+    </div>
+    
+    <div class="debug-section">
+        <h2>6. Limpiar datos</h2>
+        <button class="debug-button danger" onclick="debugClearData()">Limpiar localStorage</button>
+        <div id="clear-debug" class="log"></div>
+    </div>
+
+    <script src="js/localStorage-utils.js"></script>
+    <script>
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}\n`;
+            element.textContent += logEntry;
+            element.className = `log ${type}`;
+            element.scrollTop = element.scrollHeight;
+        }
+
+        function debugLocalStorage() {
+            const debugElement = document.getElementById('localStorage-debug');
+            debugElement.textContent = '';
+            
+            log('localStorage-debug', '=== INICIANDO PRUEBA DE LOCALSTORAGE ===', 'info');
+            
+            try {
+                // Verificar disponibilidad
+                const isAvailable = typeof(Storage) !== "undefined";
+                log('localStorage-debug', `localStorage disponible: ${isAvailable}`, isAvailable ? 'success' : 'error');
+                
+                if (!isAvailable) {
+                    log('localStorage-debug', '❌ localStorage no está disponible en este navegador', 'error');
+                    return;
+                }
+                
+                // Prueba de escritura
+                const testKey = "debug_test_key";
+                const testValue = "debug_test_value";
+                localStorage.setItem(testKey, testValue);
+                log('localStorage-debug', `✅ Escritura exitosa: ${testKey} = ${testValue}`, 'success');
+                
+                // Prueba de lectura
+                const retrieved = localStorage.getItem(testKey);
+                log('localStorage-debug', `✅ Lectura exitosa: ${testKey} = ${retrieved}`, 'success');
+                
+                // Verificar que coincida
+                if (retrieved === testValue) {
+                    log('localStorage-debug', '✅ Datos coinciden correctamente', 'success');
+                } else {
+                    log('localStorage-debug', `❌ Datos no coinciden: esperado "${testValue}", obtenido "${retrieved}"`, 'error');
+                }
+                
+                // Limpiar prueba
+                localStorage.removeItem(testKey);
+                log('localStorage-debug', '✅ Limpieza exitosa', 'success');
+                
+                log('localStorage-debug', '=== PRUEBA DE LOCALSTORAGE COMPLETADA ===', 'success');
+                
+            } catch (error) {
+                log('localStorage-debug', `❌ Error en prueba de localStorage: ${error.message}`, 'error');
+            }
+        }
+
+        function debugLocalStorageUtils() {
+            const debugElement = document.getElementById('utils-debug');
+            debugElement.textContent = '';
+            
+            log('utils-debug', '=== INICIANDO PRUEBA DE LOCALSTORAGEUTILS ===', 'info');
+            
+            try {
+                // Verificar si LocalStorageUtils está disponible
+                if (typeof LocalStorageUtils === 'undefined') {
+                    log('utils-debug', '❌ LocalStorageUtils no está definido', 'error');
+                    return;
+                }
+                
+                log('utils-debug', '✅ LocalStorageUtils está definido', 'success');
+                
+                // Verificar disponibilidad
+                const isAvailable = LocalStorageUtils.isAvailable();
+                log('utils-debug', `LocalStorageUtils.isAvailable(): ${isAvailable}`, isAvailable ? 'success' : 'error');
+                
+                if (!isAvailable) {
+                    log('utils-debug', '❌ LocalStorageUtils no está disponible', 'error');
+                    return;
+                }
+                
+                // Prueba de setItem
+                const testData = { 
+                    test: "data", 
+                    number: 123, 
+                    array: [1, 2, 3],
+                    date: new Date().toISOString()
+                };
+                
+                const setSuccess = LocalStorageUtils.setItem('debug_utils_test', testData);
+                log('utils-debug', `LocalStorageUtils.setItem(): ${setSuccess}`, setSuccess ? 'success' : 'error');
+                
+                if (!setSuccess) {
+                    log('utils-debug', '❌ Falló al guardar datos', 'error');
+                    return;
+                }
+                
+                // Prueba de getItem
+                const retrieved = LocalStorageUtils.getItem('debug_utils_test');
+                log('utils-debug', `LocalStorageUtils.getItem(): ${retrieved ? 'Datos recuperados' : 'Sin datos'}`, retrieved ? 'success' : 'error');
+                
+                if (retrieved) {
+                    log('utils-debug', `Datos recuperados: ${JSON.stringify(retrieved, null, 2)}`, 'info');
+                    
+                    // Verificar que coincidan
+                    const dataMatch = JSON.stringify(retrieved) === JSON.stringify(testData);
+                    log('utils-debug', `Datos coinciden: ${dataMatch}`, dataMatch ? 'success' : 'error');
+                }
+                
+                // Prueba de removeItem
+                const removeSuccess = LocalStorageUtils.removeItem('debug_utils_test');
+                log('utils-debug', `LocalStorageUtils.removeItem(): ${removeSuccess}`, removeSuccess ? 'success' : 'error');
+                
+                // Verificar que se eliminó
+                const afterRemove = LocalStorageUtils.getItem('debug_utils_test');
+                log('utils-debug', `Después de eliminar: ${afterRemove ? 'Aún existe' : 'Eliminado correctamente'}`, !afterRemove ? 'success' : 'error');
+                
+                log('utils-debug', '=== PRUEBA DE LOCALSTORAGEUTILS COMPLETADA ===', 'success');
+                
+            } catch (error) {
+                log('utils-debug', `❌ Error en prueba de LocalStorageUtils: ${error.message}`, 'error');
+            }
+        }
+
+        function debugFullRegistration() {
+            const debugElement = document.getElementById('registration-debug');
+            debugElement.textContent = '';
+            
+            log('registration-debug', '=== INICIANDO SIMULACIÓN DE REGISTRO COMPLETO ===', 'info');
+            
+            try {
+                // Paso 1: Verificar LocalStorageUtils
+                if (!LocalStorageUtils.isAvailable()) {
+                    log('registration-debug', '❌ LocalStorageUtils no está disponible', 'error');
+                    return;
+                }
+                log('registration-debug', '✅ Paso 1: LocalStorageUtils disponible', 'success');
+                
+                // Paso 2: Crear datos de usuario de prueba
+                const testUser = {
+                    username: "Debug Caregiver",
+                    email: "debug@caregiver.com",
+                    phone: "123-456-7890",
+                    birthdate: "15-03-1990",
+                    gender: "Female",
+                    address: "Debug Address",
+                    experience: "5 years",
+                    education: "Nursing Degree",
+                    certifications: "CPR, First Aid",
+                    skills: "Patient care, medication management",
+                    languages: "English, Spanish",
+                    bio: "Experienced caregiver for debugging",
+                    availability: "fulltime",
+                    role: "cuidador",
+                    registrationDate: new Date().toISOString(),
+                    id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+                };
+                
+                log('registration-debug', '✅ Paso 2: Datos de usuario creados', 'success');
+                log('registration-debug', `Usuario: ${testUser.username} (${testUser.email})`, 'info');
+                
+                // Paso 3: Obtener usuarios existentes
+                let users = LocalStorageUtils.getItem('users', []);
+                log('registration-debug', `Paso 3: Usuarios existentes: ${users.length}`, 'info');
+                
+                if (!Array.isArray(users)) {
+                    log('registration-debug', '⚠️ Usuarios no es un array, creando nuevo array', 'warning');
+                    users = [];
+                }
+                
+                // Paso 4: Verificar duplicados
+                const duplicateCheck = users.some(u => u.email === testUser.email);
+                log('registration-debug', `Paso 4: Verificación de duplicados: ${duplicateCheck ? 'DUPLICADO ENCONTRADO' : 'Sin duplicados'}`, duplicateCheck ? 'warning' : 'success');
+                
+                if (duplicateCheck) {
+                    log('registration-debug', '⚠️ Usuario ya existe, saltando creación', 'warning');
+                    return;
+                }
+                
+                // Paso 5: Agregar usuario
+                users.push(testUser);
+                log('registration-debug', '✅ Paso 5: Usuario agregado al array', 'success');
+                
+                // Paso 6: Guardar usuarios
+                const saveSuccess = LocalStorageUtils.setItem('users', users, 5000000);
+                log('registration-debug', `Paso 6: Guardar usuarios: ${saveSuccess}`, saveSuccess ? 'success' : 'error');
+                
+                if (!saveSuccess) {
+                    log('registration-debug', '❌ Falló al guardar usuarios', 'error');
+                    return;
+                }
+                
+                // Paso 7: Guardar datos de sesión
+                const sessionData = [
+                    { key: 'loggedInUser', value: testUser.username },
+                    { key: 'userRole', value: testUser.role },
+                    { key: 'currentUserId', value: testUser.id }
+                ];
+                
+                let sessionSuccess = true;
+                sessionData.forEach(item => {
+                    const success = LocalStorageUtils.setItem(item.key, item.value);
+                    log('registration-debug', `Guardando ${item.key}: ${success}`, success ? 'success' : 'error');
+                    if (!success) sessionSuccess = false;
+                });
+                
+                log('registration-debug', `Paso 7: Datos de sesión: ${sessionSuccess ? 'Completado' : 'Falló'}`, sessionSuccess ? 'success' : 'error');
+                
+                log('registration-debug', '=== SIMULACIÓN DE REGISTRO COMPLETADA ===', 'success');
+                
+            } catch (error) {
+                log('registration-debug', `❌ Error en simulación de registro: ${error.message}`, 'error');
+            }
+        }
+
+        function debugCheckData() {
+            const debugElement = document.getElementById('data-debug');
+            debugElement.textContent = '';
+            
+            log('data-debug', '=== VERIFICANDO DATOS GUARDADOS ===', 'info');
+            
+            try {
+                // Verificar usuarios
+                const users = LocalStorageUtils.getItem('users', []);
+                log('data-debug', `Total de usuarios: ${users.length}`, 'info');
+                
+                if (users.length > 0) {
+                    users.forEach((user, index) => {
+                        log('data-debug', `Usuario ${index + 1}: ${user.username} (${user.email}) - ${user.role}`, 'info');
+                    });
+                }
+                
+                // Verificar datos de sesión
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                const userRole = LocalStorageUtils.getItem('userRole');
+                const currentUserId = LocalStorageUtils.getItem('currentUserId');
+                
+                log('data-debug', `Usuario logueado: ${loggedInUser || 'Ninguno'}`, loggedInUser ? 'success' : 'warning');
+                log('data-debug', `Rol del usuario: ${userRole || 'Ninguno'}`, userRole ? 'success' : 'warning');
+                log('data-debug', `ID del usuario: ${currentUserId || 'Ninguno'}`, currentUserId ? 'success' : 'warning');
+                
+                // Verificar espacio usado
+                const usedSpace = LocalStorageUtils.getUsedSpace();
+                log('data-debug', `Espacio usado: ${usedSpace} bytes`, 'info');
+                
+                log('data-debug', '=== VERIFICACIÓN COMPLETADA ===', 'success');
+                
+            } catch (error) {
+                log('data-debug', `❌ Error verificando datos: ${error.message}`, 'error');
+            }
+        }
+
+        function debugLoginSimulation() {
+            const debugElement = document.getElementById('login-debug');
+            debugElement.textContent = '';
+            
+            log('login-debug', '=== SIMULANDO VERIFICACIÓN DE LOGIN ===', 'info');
+            
+            try {
+                // Verificar si hay usuario logueado
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                log('login-debug', `Usuario logueado: ${loggedInUser || 'Ninguno'}`, loggedInUser ? 'success' : 'warning');
+                
+                if (!loggedInUser) {
+                    log('login-debug', '❌ No hay usuario logueado', 'error');
+                    return;
+                }
+                
+                // Obtener usuarios
+                const users = LocalStorageUtils.getItem('users', []);
+                log('login-debug', `Total de usuarios: ${users.length}`, 'info');
+                
+                // Buscar usuario
+                const user = users.find(u => u.username === loggedInUser);
+                log('login-debug', `Usuario encontrado: ${user ? 'Sí' : 'No'}`, user ? 'success' : 'error');
+                
+                if (!user) {
+                    log('login-debug', '❌ Usuario logueado no encontrado en la lista de usuarios', 'error');
+                    return;
+                }
+                
+                // Verificar rol
+                log('login-debug', `Rol del usuario: ${user.role}`, 'info');
+                
+                if (user.role === 'cuidador') {
+                    log('login-debug', '✅ Usuario es cuidador - acceso permitido', 'success');
+                } else if (user.role === 'paciente') {
+                    log('login-debug', '⚠️ Usuario es paciente - acceso denegado para dashboard de cuidadores', 'warning');
+                } else {
+                    log('login-debug', `⚠️ Rol desconocido: ${user.role}`, 'warning');
+                }
+                
+                // Mostrar información del usuario
+                log('login-debug', `Información del usuario:`, 'info');
+                log('login-debug', `  - Nombre: ${user.username}`, 'info');
+                log('login-debug', `  - Email: ${user.email}`, 'info');
+                log('login-debug', `  - ID: ${user.id}`, 'info');
+                log('login-debug', `  - Fecha de registro: ${user.registrationDate}`, 'info');
+                
+                log('login-debug', '=== SIMULACIÓN DE LOGIN COMPLETADA ===', 'success');
+                
+            } catch (error) {
+                log('login-debug', `❌ Error en simulación de login: ${error.message}`, 'error');
+            }
+        }
+
+        function debugClearData() {
+            const debugElement = document.getElementById('clear-debug');
+            debugElement.textContent = '';
+            
+            log('clear-debug', '=== LIMPIANDO LOCALSTORAGE ===', 'info');
+            
+            try {
+                LocalStorageUtils.clear();
+                log('clear-debug', '✅ localStorage limpiado correctamente', 'success');
+                
+                // Verificar que esté limpio
+                const users = LocalStorageUtils.getItem('users', []);
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                
+                log('clear-debug', `Usuarios después de limpiar: ${users.length}`, users.length === 0 ? 'success' : 'warning');
+                log('clear-debug', `Usuario logueado después de limpiar: ${loggedInUser || 'Ninguno'}`, !loggedInUser ? 'success' : 'warning');
+                
+                log('clear-debug', '=== LIMPIEZA COMPLETADA ===', 'success');
+                
+            } catch (error) {
+                log('clear-debug', `❌ Error limpiando localStorage: ${error.message}`, 'error');
+            }
+        }
+    </script>
+</body>
+</html> 

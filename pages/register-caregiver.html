@@ -311,6 +311,7 @@
       <button type="submit" class="caregiver-main-btn">Submit Profile</button>
     </form>
   </div>
+  <script src="../js/localStorage-utils.js"></script>
   <script>
     document.querySelector('.caregiver-form').onsubmit = function(e) {
       e.preventDefault();
@@ -341,6 +342,66 @@
         return;
       }
       
+      // Validaciones adicionales
+      const fullName = document.getElementById('fullName').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const phone = document.getElementById('phone').value.trim();
+      const birthdate = document.getElementById('birthdate').value.trim();
+      const bio = document.getElementById('bio').value.trim();
+      const skills = document.getElementById('skills').value.trim();
+      const address = document.getElementById('address').value.trim();
+      
+      // Validar longitud de campos
+      if (fullName.length > 100) {
+        alert('Full name is too long. Maximum 100 characters.');
+        return;
+      }
+      
+      if (email.length > 100) {
+        alert('Email is too long. Maximum 100 characters.');
+        return;
+      }
+      
+      if (phone.length > 20) {
+        alert('Phone number is too long. Maximum 20 characters.');
+        return;
+      }
+      
+      if (address.length > 200) {
+        alert('Address is too long. Maximum 200 characters.');
+        return;
+      }
+      
+      if (bio.length > 500) {
+        alert('Bio is too long. Maximum 500 characters.');
+        return;
+      }
+      
+      if (skills.length > 300) {
+        alert('Skills list is too long. Maximum 300 characters.');
+        return;
+      }
+      
+      // Validar formato de email
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        alert('Please enter a valid email address.');
+        return;
+      }
+      
+      // Validar formato de fecha (más flexible)
+      const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-\.](0?[1-9]|1[0-2])[\/\-\.](19|20)\d\d$/;
+      if (!dateRegex.test(birthdate)) {
+        alert('Please enter a valid date in format DD/MM/YYYY, DD-MM-YYYY, or DD.MM.YYYY');
+        return;
+      }
+      
+      // Verificar si localStorage está disponible
+      if (!LocalStorageUtils.isAvailable()) {
+        alert('localStorage is not available in your browser. Please enable it or try a different browser.');
+        return;
+      }
+      
       // Mostrar estado de carga en el botón
       const submitBtn = this.querySelector('.caregiver-main-btn');
       const originalText = submitBtn.textContent;
@@ -349,42 +410,69 @@
       
       // Simular proceso de envío (1 segundo)
       setTimeout(() => {
-        // Guardar datos en localStorage
-        const user = {
-          username: document.getElementById('fullName').value.trim(),
-          email: document.getElementById('email').value.trim(),
-          phone: document.getElementById('phone').value.trim(),
-          birthdate: document.getElementById('birthdate').value.trim(),
-          gender: document.getElementById('gender').value,
-          address: document.getElementById('address').value.trim(),
-          experience: document.getElementById('experience').value.trim(),
-          education: document.getElementById('education').value.trim(),
-          certifications: document.getElementById('certifications').value.trim(),
-          skills: document.getElementById('skills').value.trim(),
-          languages: document.getElementById('languages').value.trim(),
-          bio: document.getElementById('bio').value.trim(),
-          availability: document.getElementById('availability').value,
-          role: 'cuidador',
-        };
-        let users = [];
         try {
-          users = JSON.parse(localStorage.getItem('users')) || [];
-        } catch (e) {
-          users = [];
-        }
-        // Evitar duplicados por email
-        if (users.some(u => u.email === user.email)) {
-          alert('Ya existe un usuario registrado con este email.');
+          // Guardar datos en localStorage con sanitización
+          const user = {
+            username: LocalStorageUtils.sanitizeText(fullName),
+            email: email.toLowerCase().trim(),
+            phone: LocalStorageUtils.sanitizeText(phone),
+            birthdate: LocalStorageUtils.normalizeDate(birthdate) || birthdate,
+            gender: document.getElementById('gender').value,
+            address: LocalStorageUtils.sanitizeText(address),
+            experience: LocalStorageUtils.sanitizeText(document.getElementById('experience').value.trim()),
+            education: LocalStorageUtils.sanitizeText(document.getElementById('education').value.trim()),
+            certifications: LocalStorageUtils.sanitizeText(document.getElementById('certifications').value.trim()),
+            skills: LocalStorageUtils.sanitizeText(skills),
+            languages: LocalStorageUtils.sanitizeText(document.getElementById('languages').value.trim()),
+            bio: LocalStorageUtils.sanitizeText(bio),
+            availability: document.getElementById('availability').value,
+            role: 'cuidador',
+            registrationDate: new Date().toISOString(),
+            id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+          };
+          
+          // Obtener usuarios existentes
+          let users = LocalStorageUtils.getItem('users', []);
+          if (!Array.isArray(users)) {
+            users = [];
+          }
+          
+          // Evitar duplicados por email
+          if (users.some(u => u.email === user.email)) {
+            alert('Ya existe un usuario registrado con este email.');
+            submitBtn.textContent = originalText;
+            submitBtn.classList.remove('loading');
+            return;
+          }
+          
+          // Agregar nuevo usuario
+          users.push(user);
+          
+          // Guardar usuarios actualizados
+          if (!LocalStorageUtils.setItem('users', users, 5000000)) { // 5MB límite
+            alert('Error al guardar los datos. Por favor, verifica que tienes suficiente espacio de almacenamiento.');
+            submitBtn.textContent = originalText;
+            submitBtn.classList.remove('loading');
+            return;
+          }
+          
+          // Guardar datos de sesión
+          LocalStorageUtils.setItem('loggedInUser', user.username);
+          LocalStorageUtils.setItem('userRole', user.role);
+          LocalStorageUtils.setItem('currentUserId', user.id);
+          
+          // Mostrar mensaje de éxito
+          alert('¡Registro exitoso! Redirigiendo al dashboard...');
+          
+          // Redirigir al dashboard de cuidadores
+          window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
+          
+        } catch (error) {
+          console.error('Error during registration:', error);
+          alert('Error durante el registro. Por favor, intenta de nuevo.');
           submitBtn.textContent = originalText;
           submitBtn.classList.remove('loading');
-          return;
         }
-        users.push(user);
-        localStorage.setItem('users', JSON.stringify(users));
-        localStorage.setItem('loggedInUser', user.username);
-        localStorage.setItem('userRole', user.role);
-        // Redirigir al dashboard
-        window.location.href = '../dashboard/dashboard.html';
       }, 1000);
     };
   </script>

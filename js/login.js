@@ -48,34 +48,100 @@ const users = [
     if (registerFormHTML) {
       registerFormHTML.addEventListener('submit', function(e) {
         e.preventDefault();
+        
+        // Obtener y validar campos
         const name = document.getElementById('reg-name').value.trim();
         const email = document.getElementById('reg-email').value.trim();
         const password = document.getElementById('reg-pass').value.trim();
         const role = document.getElementById('reg-role').value;
         const gender = document.getElementById('reg-gender').value;
+        
+        // Validar campos requeridos
         if (!name || !email || !password || !role || !gender) {
           alert('Please fill in all fields.');
           return;
         }
-        let users = getUsers();
-        if (users.find(u => u.email === email)) {
-          alert('A user with this email is already registered.');
+        
+        // Validar longitud de campos
+        if (name.length > 100) {
+          alert('Name is too long. Maximum 100 characters.');
           return;
         }
-        const newUser = { username: name, email, password, role, gender };
-        users.push(newUser);
-        saveUsers(users);
-        // If it's a patient, automatically log in and redirect
-        if (role === 'patient') {
-          localStorage.setItem('loggedInUser', name);
-          localStorage.setItem('userRole', role);
-          showBanner('Patient account created and logged in!', 'success');
-          setTimeout(() => {
-            window.location.href = '../dashboard/dashboard.html';
-          }, 1200);
-        } else {
-          showBanner('Your account has been created!', 'success');
-          document.getElementById('show-login').click();
+        
+        if (email.length > 100) {
+          alert('Email is too long. Maximum 100 characters.');
+          return;
+        }
+        
+        if (password.length < 6) {
+          alert('Password must be at least 6 characters long.');
+          return;
+        }
+        
+        if (password.length > 50) {
+          alert('Password is too long. Maximum 50 characters.');
+          return;
+        }
+        
+        // Validar formato de email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+          alert('Please enter a valid email address.');
+          return;
+        }
+        
+        // Verificar si localStorage está disponible
+        if (!LocalStorageUtils.isAvailable()) {
+          alert('localStorage is not available in your browser. Please enable it or try a different browser.');
+          return;
+        }
+        
+        try {
+          let users = getUsers();
+          
+          // Verificar duplicados por email
+          if (users.find(u => u.email === email.toLowerCase())) {
+            alert('A user with this email is already registered.');
+            return;
+          }
+          
+          // Crear usuario con sanitización
+          const newUser = { 
+            username: LocalStorageUtils.sanitizeText(name), 
+            email: email.toLowerCase().trim(), 
+            password: password, // No sanitizar password
+            role: role, 
+            gender: gender,
+            registrationDate: new Date().toISOString(),
+            id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+          };
+          
+          // Agregar nuevo usuario
+          users.push(newUser);
+          
+          // Guardar usuarios actualizados
+          if (!saveUsers(users)) {
+            alert('Error al guardar los datos. Por favor, verifica que tienes suficiente espacio de almacenamiento.');
+            return;
+          }
+          
+          // If it's a patient, automatically log in and redirect
+          if (role === 'paciente') {
+            LocalStorageUtils.setItem('loggedInUser', newUser.username);
+            LocalStorageUtils.setItem('userRole', newUser.role);
+            LocalStorageUtils.setItem('currentUserId', newUser.id);
+            showBanner('Patient account created and logged in!', 'success');
+            setTimeout(() => {
+              window.location.href = '../dashboard/dashboard.html';
+            }, 1200);
+          } else {
+            showBanner('Your account has been created!', 'success');
+            document.getElementById('show-login').click();
+          }
+          
+        } catch (error) {
+          console.error('Error during registration:', error);
+          alert('Error durante el registro. Por favor, intenta de nuevo.');
         }
       });
     }
@@ -109,62 +175,165 @@ const users = [
   
   // Utilidad para obtener usuarios desde localStorage o usar los hardcodeados
   function getUsers() {
-    const stored = localStorage.getItem('users');
-    if (stored) {
-      return JSON.parse(stored);
+    try {
+      // Verificar si localStorage está disponible
+      if (!LocalStorageUtils.isAvailable()) {
+        console.warn('localStorage is not available');
+        return getDefaultUsers();
+      }
+      
+      const users = LocalStorageUtils.getItem('users', []);
+      
+      // Validar que sea un array
+      if (!Array.isArray(users)) {
+        console.warn('Users data is not an array, resetting to default');
+        return getDefaultUsers();
+      }
+      
+      // Validar que cada usuario tenga los campos requeridos
+      const validUsers = users.filter(user => {
+        return user && 
+               typeof user === 'object' && 
+               user.username && 
+               user.email && 
+               user.role;
+      });
+      
+      if (validUsers.length !== users.length) {
+        console.warn('Some users were invalid, filtering out');
+        saveUsers(validUsers);
+      }
+      
+      return validUsers;
+    } catch (error) {
+      console.error('Error getting users from localStorage:', error);
+      return getDefaultUsers();
     }
-    // Si no hay usuarios guardados, usar los de ejemplo y guardarlos
+  }
+  
+  function getDefaultUsers() {
     const defaultUsers = [
-      { username: "admin", password: "admin123", role: "admin" },
-      { username: "usuario", password: "pass123", role: "paciente" },
-      { username: "Ameth", password: "password123", role: "admin" },
-      { username: "Josue", password: "testpass456", role: "cuidador" },
+      { username: "admin", password: "admin123", role: "admin", email: "admin@careconnect.com", id: "admin1" },
+      { username: "usuario", password: "pass123", role: "paciente", email: "usuario@careconnect.com", id: "user1" },
+      { username: "Ameth", password: "password123", role: "admin", email: "ameth@careconnect.com", id: "ameth1" },
+      { username: "Josue", password: "testpass456", role: "cuidador", email: "josue@careconnect.com", id: "josue1" },
     ];
-    localStorage.setItem('users', JSON.stringify(defaultUsers));
+    
+    if (LocalStorageUtils.isAvailable()) {
+      LocalStorageUtils.setItem('users', defaultUsers);
+    }
     return defaultUsers;
   }
   
   function saveUsers(users) {
-    localStorage.setItem('users', JSON.stringify(users));
+    try {
+      // Validar que users sea un array
+      if (!Array.isArray(users)) {
+        throw new Error('Users must be an array');
+      }
+      
+      // Validar que cada usuario tenga los campos requeridos
+      const validUsers = users.filter(user => {
+        return user && 
+               typeof user === 'object' && 
+               user.username && 
+               user.email && 
+               user.role;
+      });
+      
+      if (validUsers.length !== users.length) {
+        console.warn('Some users were invalid and were filtered out');
+      }
+      
+      // Guardar usando las utilidades
+      return LocalStorageUtils.setItem('users', validUsers, 5000000); // 5MB límite
+    } catch (error) {
+      console.error('Error saving users to localStorage:', error);
+      alert('Error al guardar usuarios. Por favor, verifica el espacio de almacenamiento.');
+      return false;
+    }
   }
   
   function login() {
-    const username = document.getElementById("login-user").value.trim();
-    const password = document.getElementById("login-pass").value;
-    console.log('Intentando login con:', username, password);
-  
-    const users = getUsers();
-    const user = users.find(u => u.username === username && u.password === password);
-  
-    if (user) {
-      localStorage.setItem("loggedInUser", username);
-      localStorage.setItem("userRole", user.role);
-      updateLoginUI();
-      showBanner('Signed in!', 'success');
-      // Redirigir según el rol
-      setTimeout(() => {
-        if (user.role === "admin") {
-          window.location.href = "../dashboard/admin-dashboard.html";
-        } else if (user.role === "caregiver") {
-          window.location.href = "../dashboard/caregivers pro/Caregiver-pro.html";
-        } else {
-          window.location.href = "../dashboard/dashboard.html";
+    try {
+      const username = document.getElementById("login-user").value.trim();
+      const password = document.getElementById("login-pass").value;
+      
+      // Validar campos de entrada
+      if (!username || !password) {
+        showAlert('Please enter both username and password', 'danger', 'loginError');
+        return;
+      }
+      
+      if (username.length > 100) {
+        showAlert('Username is too long', 'danger', 'loginError');
+        return;
+      }
+      
+      console.log('Intentando login con:', username, password);
+    
+      const users = getUsers();
+      const user = users.find(u => u.username === username && u.password === password);
+    
+      if (user) {
+        try {
+          // Guardar datos de sesión usando utilidades
+          LocalStorageUtils.setItem("loggedInUser", username);
+          LocalStorageUtils.setItem("userRole", user.role);
+          if (user.id) {
+            LocalStorageUtils.setItem("currentUserId", user.id);
+          }
+          
+          updateLoginUI();
+          showBanner('Signed in!', 'success');
+          // Redirigir según el rol
+          setTimeout(() => {
+            if (user.role === "admin") {
+              window.location.href = "../dashboard/admin-dashboard.html";
+            } else if (user.role === "cuidador") {
+              window.location.href = "../dashboard/caregivers pro/Caregiver-pro.html";
+            } else {
+              window.location.href = "../dashboard/dashboard.html";
+            }
+          }, 1200);
+        } catch (storageError) {
+          console.error('Error saving login data:', storageError);
+          showAlert('Error saving login data', 'danger', 'loginError');
         }
-      }, 1200);
-    } else {
-      console.log('Login fallido, mostrando mensaje de error');
-      showAlert('Incorrect username or password, please check and try again', 'danger', 'loginError');
+      } else {
+        console.log('Login fallido, mostrando mensaje de error');
+        showAlert('Incorrect username or password, please check and try again', 'danger', 'loginError');
+      }
+    } catch (error) {
+      console.error('Error during login:', error);
+      showAlert('Error during login. Please try again.', 'danger', 'loginError');
     }
   }
   
   function logout() {
-    showBanner('Logging out...', 'success');
-    setTimeout(() => {
-      localStorage.removeItem("loggedInUser");
-      updateLoginUI();
-      // Si quieres redirigir a la página principal después de logout, descomenta la siguiente línea:
-      // window.location.href = '../index.html';
-    }, 1200);
+    try {
+      showBanner('Logging out...', 'success');
+      setTimeout(() => {
+        // Limpiar todos los datos de sesión usando utilidades
+        LocalStorageUtils.removeItem("loggedInUser");
+        LocalStorageUtils.removeItem("userRole");
+        LocalStorageUtils.removeItem("currentUserId");
+        updateLoginUI();
+        // Si quieres redirigir a la página principal después de logout, descomenta la siguiente línea:
+        // window.location.href = '../index.html';
+      }, 1200);
+    } catch (error) {
+      console.error('Error during logout:', error);
+      // Forzar limpieza en caso de error
+      try {
+        LocalStorageUtils.removeItem("loggedInUser");
+        LocalStorageUtils.removeItem("userRole");
+        LocalStorageUtils.removeItem("currentUserId");
+        updateLoginUI();
+      } catch (cleanupError) {
+        console.error('Error during cleanup:', cleanupError);
+      }
+    }
   }
   
   function updateLoginUI() {
