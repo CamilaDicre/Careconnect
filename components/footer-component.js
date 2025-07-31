@@ -657,7 +657,7 @@ class FooterComponent extends HTMLElement {
 
                         <!-- Quick Links -->
                         <div class="footer-col">
-                            <h3>Quick Links</h3>
+                            <h3>Quick links</h3>
                             <ul class="footer-links">
                                 <li><a href="index.html">Home</a></li>
                                 <li><a href="pages/about.html">About</a></li>
@@ -668,7 +668,7 @@ class FooterComponent extends HTMLElement {
 
                         <!-- Services -->
                         <div class="footer-col">
-                            <h3>Our Services</h3>
+                            <h3>Our services</h3>
                             <ul class="footer-links">
                                 <li><a href="#">Medicine Tracker</a></li>
                                 <li><a href="#">Secure Family Chat</a></li>
