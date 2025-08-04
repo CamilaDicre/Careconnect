@@ -423,19 +423,27 @@ class VirtualCare extends HTMLElement {
         
         <div class="stats-row">
           <div class="stat-card">
-            <div class="stat-number">3</div>
+            <div class="stat-number">
+              <i class="bi bi-calendar-check me-2"></i>3
+            </div>
             <div class="stat-label">Today's Sessions</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">1</div>
+            <div class="stat-number">
+              <i class="bi bi-play-circle me-2"></i>1
+            </div>
             <div class="stat-label">Active Now</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">45</div>
+            <div class="stat-number">
+              <i class="bi bi-clock-history me-2"></i>45
+            </div>
             <div class="stat-label">Total Hours This Month</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">98%</div>
+            <div class="stat-number">
+              <i class="bi bi-wifi me-2"></i>98%
+            </div>
             <div class="stat-label">Connection Quality</div>
           </div>
         </div>
@@ -444,36 +452,56 @@ class VirtualCare extends HTMLElement {
           <!-- Sessions List -->
           <div class="sessions-section">
             <h3 class="section-title">
-              <i class="bi bi-clock"></i>
+              <i class="bi bi-camera-video-fill"></i>
               Virtual Sessions
             </h3>
             
             ${sessions.map(session => `
               <div class="session-item ${session.status}">
-                <div class="session-avatar">${session.patient.split(' ').map(n => n[0]).join('')}</div>
+                <div class="session-avatar">
+                  <i class="bi bi-person-heart"></i>
+                </div>
                 
                 <div class="session-content">
-                  <div class="session-title">${session.patient}</div>
-                  <div class="session-subtitle">${session.type}</div>
-                  <div class="session-notes">${session.notes}</div>
+                  <div class="session-title">
+                    <i class="bi bi-person me-1"></i>${session.patient}
+                  </div>
+                  <div class="session-subtitle">
+                    <i class="bi bi-stars me-1"></i>${session.type}
+                  </div>
+                  <div class="session-notes">
+                    <i class="bi bi-journal-text me-1"></i>${session.notes}
+                  </div>
                 </div>
                 
                 <div class="session-time">
-                  <div class="time-main">${session.time}</div>
-                  <div class="time-duration">${session.duration}</div>
+                  <div class="time-main">
+                    <i class="bi bi-clock me-1"></i>${session.time}
+                  </div>
+                  <div class="time-duration">
+                    <i class="bi bi-stopwatch me-1"></i>${session.duration}
+                  </div>
                 </div>
                 
                 <div class="session-status status-${session.status}">
+                  <i class="bi ${session.status === 'active' ? 'bi-play-circle' : 
+                    session.status === 'scheduled' ? 'bi-clock' : 'bi-check-circle'} me-1"></i>
                   ${session.status === 'active' ? 'Active' : 
                     session.status === 'scheduled' ? 'Scheduled' : 'Completed'}
                 </div>
                 
                 <div class="session-actions">
                   ${session.status === 'active' ? 
-                    `<button class="action-btn btn-join">Join</button>` :
+                    `<button class="action-btn btn-join">
+                      <i class="bi bi-play-fill me-1"></i>Join
+                    </button>` :
                     session.status === 'scheduled' ? 
-                    `<button class="action-btn btn-view">View</button>` :
-                    `<button class="action-btn btn-view">Details</button>`
+                    `<button class="action-btn btn-view">
+                      <i class="bi bi-eye me-1"></i>View
+                    </button>` :
+                    `<button class="action-btn btn-view">
+                      <i class="bi bi-info-circle me-1"></i>Details
+                    </button>`
                   }
                 </div>
               </div>
@@ -488,32 +516,32 @@ class VirtualCare extends HTMLElement {
             </h3>
             
             <button class="tool-item">
-              <i class="bi bi-camera-video"></i>
+              <i class="bi bi-camera-video-fill"></i>
               Video Call
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-mic"></i>
+              <i class="bi bi-mic-fill"></i>
               Voice Call
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-chat-dots"></i>
+              <i class="bi bi-chat-dots-fill"></i>
               Text Chat
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-share"></i>
+              <i class="bi bi-display"></i>
               Screen Share
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-record-circle"></i>
+              <i class="bi bi-record-circle-fill"></i>
               Session Recording
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-file-earmark-text"></i>
+              <i class="bi bi-journal-medical"></i>
               Health Notes
             </button>
           </div>
@@ -522,7 +550,7 @@ class VirtualCare extends HTMLElement {
         <!-- Quick Actions -->
         <div class="quick-actions">
           <h3 class="section-title">
-            <i class="bi bi-lightning"></i>
+            <i class="bi bi-lightning-charge"></i>
             Quick Actions
           </h3>
           
@@ -537,7 +565,7 @@ class VirtualCare extends HTMLElement {
             
             <div class="action-card">
               <div class="action-icon">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-people-fill"></i>
               </div>
               <div class="action-title">Patient Directory</div>
               <div class="action-desc">View all patients</div>
@@ -545,7 +573,7 @@ class VirtualCare extends HTMLElement {
             
             <div class="action-card">
               <div class="action-icon">
-                <i class="bi bi-graph-up"></i>
+                <i class="bi bi-graph-up-arrow"></i>
               </div>
               <div class="action-title">Session Reports</div>
               <div class="action-desc">View past sessions</div>
@@ -553,7 +581,7 @@ class VirtualCare extends HTMLElement {
             
             <div class="action-card">
               <div class="action-icon">
-                <i class="bi bi-gear"></i>
+                <i class="bi bi-gear-fill"></i>
               </div>
               <div class="action-title">Settings</div>
               <div class="action-desc">Configure virtual care</div>

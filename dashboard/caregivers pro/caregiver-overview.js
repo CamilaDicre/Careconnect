@@ -576,7 +576,7 @@ class CaregiverOverview extends HTMLElement {
           <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon primary">
-                <i class="bi bi-people-fill"></i>
+                <i class="bi bi-heart-pulse-fill"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.totalPatients}</div>
@@ -590,7 +590,7 @@ class CaregiverOverview extends HTMLElement {
           <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon success">
-                <i class="bi bi-camera-video-fill"></i>
+                <i class="bi bi-play-circle-fill"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.activeSessions}</div>
@@ -604,7 +604,7 @@ class CaregiverOverview extends HTMLElement {
           <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon warning">
-                <i class="bi bi-check-circle-fill"></i>
+                <i class="bi bi-check2-all"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.completedToday}</div>
@@ -618,7 +618,7 @@ class CaregiverOverview extends HTMLElement {
           <div class="stat-card">
             <div class="stat-header">
               <div class="stat-icon purple">
-                <i class="bi bi-currency-dollar"></i>
+                <i class="bi bi-cash-stack"></i>
               </div>
             </div>
             <div class="stat-value">$${this.data.stats.earningsThisMonth.toLocaleString()}</div>
@@ -635,10 +635,16 @@ class CaregiverOverview extends HTMLElement {
           <!-- Gráfico semanal -->
           <div class="chart-section">
             <div class="chart-header">
-              <div class="chart-title">Actividad Semanal</div>
+              <div class="chart-title">
+                <i class="bi bi-graph-up me-2"></i>Actividad Semanal
+              </div>
               <div style="display: flex; gap: 8px;">
-                <button style="padding: 6px 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; font-size: 0.875rem; cursor: pointer;">Sesiones</button>
-                <button style="padding: 6px 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; font-size: 0.875rem; cursor: pointer;">Ganancias</button>
+                <button style="padding: 6px 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; font-size: 0.875rem; cursor: pointer;">
+                  <i class="bi bi-calendar-check me-1"></i>Sesiones
+                </button>
+                <button style="padding: 6px 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; font-size: 0.875rem; cursor: pointer;">
+                  <i class="bi bi-currency-dollar me-1"></i>Ganancias
+                </button>
               </div>
             </div>
             <div class="chart-container">
@@ -649,8 +655,12 @@ class CaregiverOverview extends HTMLElement {
           <!-- Actividad reciente -->
           <div class="activity-section">
             <div class="activity-header">
-              <div class="activity-title">Actividad Reciente</div>
-              <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">Ver todo</button>
+              <div class="activity-title">
+                <i class="bi bi-clock-history me-2"></i>Actividad Reciente
+              </div>
+              <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
+                <i class="bi bi-arrow-right me-1"></i>Ver todo
+              </button>
             </div>
             <div class="activity-list">
               ${this.data.recentActivity.map(activity => `
@@ -661,9 +671,13 @@ class CaregiverOverview extends HTMLElement {
                   <div class="activity-content">
                     <div class="activity-description">${activity.description}</div>
                     <div class="activity-meta">
-                      <span class="activity-patient">${activity.patient}</span>
+                      <span class="activity-patient">
+                        <i class="bi bi-person me-1"></i>${activity.patient}
+                      </span>
                       <span>•</span>
-                      <span>${activity.time}</span>
+                      <span>
+                        <i class="bi bi-clock me-1"></i>${activity.time}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -675,21 +689,35 @@ class CaregiverOverview extends HTMLElement {
         <!-- Sesiones próximas -->
         <div class="sessions-section">
           <div class="sessions-header">
-            <div class="sessions-title">Próximas Sesiones</div>
-            <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">Ver calendario</button>
+            <div class="sessions-title">
+              <i class="bi bi-calendar-event me-2"></i>Próximas Sesiones
+            </div>
+            <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
+              <i class="bi bi-calendar-week me-1"></i>Ver calendario
+            </button>
           </div>
           <div class="sessions-list">
             ${this.data.upcomingSessions.map(session => `
               <div class="session-item">
                 <div class="session-time">
-                  <div class="session-time-main">${session.time}</div>
-                  <div class="session-time-duration">${session.duration}</div>
+                  <div class="session-time-main">
+                    <i class="bi bi-clock me-1"></i>${session.time}
+                  </div>
+                  <div class="session-time-duration">
+                    <i class="bi bi-stopwatch me-1"></i>${session.duration}
+                  </div>
                 </div>
                 <div class="session-info">
-                  <div class="session-patient">${session.patient}</div>
-                  <div class="session-type">${session.type}</div>
+                  <div class="session-patient">
+                    <i class="bi bi-person-heart me-1"></i>${session.patient}
+                  </div>
+                  <div class="session-type">
+                    <i class="bi bi-stars me-1"></i>${session.type}
+                  </div>
                 </div>
-                <div class="session-status ${session.status}">${session.status}</div>
+                <div class="session-status ${session.status}">
+                  <i class="bi ${session.status === 'confirmado' ? 'bi-check-circle' : 'bi-clock'} me-1"></i>${session.status}
+                </div>
               </div>
             `).join('')}
           </div>

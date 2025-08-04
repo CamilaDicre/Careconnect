@@ -471,19 +471,27 @@ class MedicationManagement extends HTMLElement {
         
         <div class="stats-row">
           <div class="stat-card">
-            <div class="stat-number">4</div>
+            <div class="stat-number">
+              <i class="bi bi-pills me-2"></i>4
+            </div>
             <div class="stat-label">Total Medications</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">2</div>
+            <div class="stat-number">
+              <i class="bi bi-check-circle me-2"></i>2
+            </div>
             <div class="stat-label">Administered Today</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">1</div>
+            <div class="stat-number">
+              <i class="bi bi-clock me-2"></i>1
+            </div>
             <div class="stat-label">Pending</div>
           </div>
           <div class="stat-card">
-            <div class="stat-number">1</div>
+            <div class="stat-number">
+              <i class="bi bi-exclamation-triangle me-2"></i>1
+            </div>
             <div class="stat-label">Overdue</div>
           </div>
         </div>
@@ -492,46 +500,74 @@ class MedicationManagement extends HTMLElement {
           <!-- Medications List -->
           <div class="medications-section">
             <h3 class="section-title">
-              <i class="bi bi-clock"></i>
+              <i class="bi bi-calendar-check"></i>
               Today's Medications
             </h3>
             
             ${medications.map(med => `
               <div class="medication-item ${med.status}">
-                <div class="medication-avatar">${med.patient.split(' ').map(n => n[0]).join('')}</div>
+                <div class="medication-avatar">
+                  <i class="bi bi-person-heart"></i>
+                </div>
                 
                 <div class="medication-content">
-                  <div class="medication-title">${med.medication}</div>
-                  <div class="medication-subtitle">${med.patient}</div>
+                  <div class="medication-title">
+                    <i class="bi bi-capsule me-1"></i>${med.medication}
+                  </div>
+                  <div class="medication-subtitle">
+                    <i class="bi bi-person me-1"></i>${med.patient}
+                  </div>
                   <div class="medication-details">
                     <div class="detail-item">
-                      <span class="detail-label">Dosage:</span> ${med.dosage}
+                      <span class="detail-label">
+                        <i class="bi bi-droplet me-1"></i>Dosage:
+                      </span> ${med.dosage}
                     </div>
                     <div class="detail-item">
-                      <span class="detail-label">Prescribed by:</span> ${med.prescribedBy}
+                      <span class="detail-label">
+                        <i class="bi bi-person-badge me-1"></i>Prescribed by:
+                      </span> ${med.prescribedBy}
                     </div>
                   </div>
-                  <div class="medication-notes">${med.notes}</div>
+                  <div class="medication-notes">
+                    <i class="bi bi-journal-text me-1"></i>${med.notes}
+                  </div>
                 </div>
                 
                 <div class="medication-time">
-                  <div class="time-main">${med.time}</div>
-                  <div class="time-frequency">${med.frequency}</div>
+                  <div class="time-main">
+                    <i class="bi bi-clock me-1"></i>${med.time}
+                  </div>
+                  <div class="time-frequency">
+                    <i class="bi bi-repeat me-1"></i>${med.frequency}
+                  </div>
                 </div>
                 
                 <div class="medication-status status-${med.status}">
+                  <i class="bi ${med.status === 'administered' ? 'bi-check-circle' : 
+                    med.status === 'pending' ? 'bi-clock' : 'bi-exclamation-triangle'} me-1"></i>
                   ${med.status === 'administered' ? 'Administered' : 
                     med.status === 'pending' ? 'Pending' : 'Overdue'}
                 </div>
                 
                 <div class="medication-actions">
                   ${med.status === 'administered' ? 
-                    `<button class="action-btn btn-edit">Edit</button>` :
+                    `<button class="action-btn btn-edit">
+                      <i class="bi bi-pencil me-1"></i>Edit
+                    </button>` :
                     med.status === 'pending' ? 
-                    `<button class="action-btn btn-administer">Administer</button>
-                     <button class="action-btn btn-skip">Skip</button>` :
-                    `<button class="action-btn btn-administer">Administer Now</button>
-                     <button class="action-btn btn-edit">Edit</button>`
+                    `<button class="action-btn btn-administer">
+                      <i class="bi bi-check-circle me-1"></i>Administer
+                    </button>
+                     <button class="action-btn btn-skip">
+                       <i class="bi bi-skip-forward me-1"></i>Skip
+                     </button>` :
+                    `<button class="action-btn btn-administer">
+                      <i class="bi bi-check-circle me-1"></i>Administer Now
+                    </button>
+                     <button class="action-btn btn-edit">
+                       <i class="bi bi-pencil me-1"></i>Edit
+                     </button>`
                   }
                 </div>
               </div>
@@ -556,7 +592,7 @@ class MedicationManagement extends HTMLElement {
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-graph-up"></i>
+              <i class="bi bi-graph-up-arrow"></i>
               Compliance Reports
             </button>
             
@@ -566,7 +602,7 @@ class MedicationManagement extends HTMLElement {
             </button>
             
             <button class="tool-item">
-              <i class="bi bi-file-earmark-text"></i>
+              <i class="bi bi-journal-medical"></i>
               Prescription History
             </button>
             
@@ -580,7 +616,7 @@ class MedicationManagement extends HTMLElement {
         <!-- Quick Actions -->
         <div class="quick-actions">
           <h3 class="section-title">
-            <i class="bi bi-lightning"></i>
+            <i class="bi bi-lightning-charge"></i>
             Quick Actions
           </h3>
           
@@ -595,7 +631,7 @@ class MedicationManagement extends HTMLElement {
             
             <div class="action-card">
               <div class="action-icon">
-                <i class="bi bi-people"></i>
+                <i class="bi bi-people-fill"></i>
               </div>
               <div class="action-title">Patient Medications</div>
               <div class="action-desc">View all patient medications</div>
@@ -603,7 +639,7 @@ class MedicationManagement extends HTMLElement {
             
             <div class="action-card">
               <div class="action-icon">
-                <i class="bi bi-graph-up"></i>
+                <i class="bi bi-graph-up-arrow"></i>
               </div>
               <div class="action-title">Compliance Report</div>
               <div class="action-desc">View medication compliance</div>
@@ -611,7 +647,7 @@ class MedicationManagement extends HTMLElement {
             
             <div class="action-card">
               <div class="action-icon">
-                <i class="bi bi-gear"></i>
+                <i class="bi bi-gear-fill"></i>
               </div>
               <div class="action-title">Settings</div>
               <div class="action-desc">Configure medication alerts</div>

@@ -132,6 +132,79 @@
     }
     #logoutModal { display: none !important; }
     #logoutModal.active { display: flex !important; }
+    
+    /* Transición de logout elegante */
+    .logout-transition {
+      transition: all 0.8s ease-in-out !important;
+    }
+    
+    .logout-transition.fade-out {
+      transform: scale(0.95) !important;
+      opacity: 0 !important;
+      filter: blur(10px) !important;
+    }
+    
+    .logout-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, rgba(0, 255, 184, 0.9) 0%, rgba(127, 140, 250, 0.9) 100%);
+      backdrop-filter: blur(20px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.8s ease-in-out;
+    }
+    
+    .logout-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .logout-content {
+      text-align: center;
+      color: white;
+      animation: logoutPulse 2s infinite;
+    }
+    
+    .logout-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      animation: logoutSpin 1.5s ease-in-out infinite;
+    }
+    
+    .logout-text {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    
+    .logout-subtext {
+      font-size: 1rem;
+      opacity: 0.8;
+      margin-bottom: 15px;
+    }
+    
+    .logout-message {
+      font-size: 0.9rem;
+      opacity: 0.7;
+      line-height: 1.4;
+    }
+    
+    @keyframes logoutPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+    
+    @keyframes logoutSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
   </style>
 </head>
 <body>
@@ -247,6 +320,19 @@
       <button id="cancelLogoutBtn" class="btn btn-secondary px-4">Cancelar</button>
     </div>
   </div>
+  
+  <!-- Logout Overlay -->
+  <div id="logoutOverlay" class="logout-overlay">
+    <div class="logout-content">
+      <div class="logout-icon">
+        <i class="bi bi-box-arrow-right"></i>
+      </div>
+      <div class="logout-text">¡Hasta pronto, Administrador!</div>
+      <div class="logout-subtext">Gracias por mantener el sistema funcionando</div>
+      <div class="logout-message">Tu gestión hace posible que otros cuiden mejor. ¡Esperamos verte pronto!</div>
+    </div>
+  </div>
+  
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
     // Utilidades para usuarios
@@ -448,9 +534,41 @@
         };
         confirmLogoutBtn.onclick = function() {
           logoutModal.classList.remove('active');
-          localStorage.removeItem('loggedInUser');
-          localStorage.removeItem('userRole');
-          window.location.href = '../pages/login.html';
+          
+          // Iniciar transición de salida
+          setTimeout(() => {
+            // Agregar clase de transición al body
+            document.body.style.transition = 'all 0.8s ease-in-out';
+            document.body.style.transform = 'scale(0.95)';
+            document.body.style.opacity = '0';
+            
+            // Agregar efecto de blur al contenido
+            const mainContent = document.querySelector('.main-content');
+            if (mainContent) {
+              mainContent.style.transition = 'all 0.8s ease-in-out';
+              mainContent.style.filter = 'blur(10px)';
+              mainContent.style.transform = 'scale(0.9)';
+            }
+            
+            // Mostrar overlay de logout
+            const logoutOverlay = document.getElementById('logoutOverlay');
+            if (logoutOverlay) {
+              logoutOverlay.classList.add('show');
+            }
+            
+            // Limpiar datos de sesión
+            setTimeout(() => {
+              localStorage.removeItem('loggedInUser');
+              localStorage.removeItem('userRole');
+              localStorage.removeItem('currentUserId');
+              
+              // Redirigir al login
+              setTimeout(() => {
+                window.location.href = '../pages/login.html';
+              }, 1000);
+            }, 2000);
+            
+          }, 500);
         };
       }
     });
