@@ -56,10 +56,18 @@ class GlobalLoading extends HTMLElement {
           border-radius: 20px;
           text-align: center;
           box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
-          max-width: 300px;
+          max-width: 350px;
           backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.2);
           animation: loadingSlideIn 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .loading-logo {
+          width: 80px;
+          height: auto;
+          margin: 0 auto 20px;
+          filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+          animation: logoPulse 2s ease-in-out infinite;
         }
         
         .loading-spinner {
@@ -85,14 +93,14 @@ class GlobalLoading extends HTMLElement {
         }
         
         .loading-message {
-          font-size: 16px;
+          font-size: 25px;
           font-weight: 500;
           color: #2c3e50;
           margin-bottom: 10px;
         }
         
         .loading-subtitle {
-          font-size: 14px;
+          font-size: 23px;
           color: #7f8c8d;
           opacity: 0.8;
         }
@@ -128,6 +136,17 @@ class GlobalLoading extends HTMLElement {
           100% { transform: rotate(360deg); }
         }
         
+        @keyframes logoPulse {
+          0%, 100% { 
+            transform: scale(1);
+            opacity: 1;
+          }
+          50% { 
+            transform: scale(1.05);
+            opacity: 0.9;
+          }
+        }
+        
         @keyframes particleFloat {
           0%, 100% { 
             transform: translateY(0px) translateX(0px);
@@ -151,8 +170,12 @@ class GlobalLoading extends HTMLElement {
         @media (max-width: 768px) {
           .loading-container {
             padding: 30px 25px;
-            max-width: 280px;
+            max-width: 320px;
             margin: 0 20px;
+          }
+          
+          .loading-logo {
+            width: 70px;
           }
           
           .loading-spinner {
@@ -161,14 +184,15 @@ class GlobalLoading extends HTMLElement {
           }
           
           .loading-message {
-            font-size: 15px;
+            font-size: 24px;
           }
         }
       </style>
       
-      <div class="loading-overlay">
-        <div class="loading-container">
-          <div class="loading-spinner"></div>
+             <div class="loading-overlay">
+         <div class="loading-container">
+           <img src="assets/Frame - 1.svg" alt="Careconnect" class="loading-logo">
+           <div class="loading-spinner"></div>
           <div class="loading-message">Loading...</div>
           <div class="loading-subtitle">Please wait while we process your request</div>
           
