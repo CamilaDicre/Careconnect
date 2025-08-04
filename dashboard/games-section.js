@@ -1203,10 +1203,16 @@ class GamesSection extends HTMLElement {
           const hasWon = this.currentWord.split('').every(letter => guessedLetters.has(letter));
           const hasLost = wrongGuesses >= maxWrongGuesses;
           
-          if (hasWon || hasLost) {
+                    if (hasWon || hasLost) {
             // Set game ended immediately to prevent further interaction
             gameEnded = true;
             
+            // Stop the timer when game ends
+            if (this.gameTimer) {
+              clearInterval(this.gameTimer);
+              this.gameTimer = null;
+            }
+
             setTimeout(() => {
               if (hasWon) {
                 this.score += 20;
@@ -1723,7 +1729,7 @@ class GamesSection extends HTMLElement {
     });
   }
 
-  restartWordGame() {
+    restartWordGame() {
     // Hide the Restart button immediately when clicked
     const wordRestartBtn = this.shadowRoot.querySelector('#wordRestartBtn');
     if (wordRestartBtn) {
@@ -1734,7 +1740,14 @@ class GamesSection extends HTMLElement {
     this.score = 0;
     this.level = 1;
     this.updateScore();
-    
+
+    // Reset and restart the timer for Word Search
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    this.startTimer();
+
     // Restart the Word Search game
     const gameBoard = this.shadowRoot.querySelector('#gameBoard');
     this.startWordGame(gameBoard);
