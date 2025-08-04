@@ -3,285 +3,702 @@ class CaregiverSidebar extends HTMLElement {
     super();
     this.attachShadow({ mode: 'open' });
     this.collapsed = false;
+    this.currentSection = 'overview';
   }
 
   connectedCallback() {
     this.render();
     this.addListeners();
+    this.loadUserData();
+  }
+
+  loadUserData() {
+    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+    const users = LocalStorageUtils.getItem('users', []);
+    const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+    
+    if (user) {
+      this.userData = {
+        name: user.name || user.username,
+        email: user.email || '',
+        photo: user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.username)}&background=2563eb&color=fff&size=128&rounded=true`,
+        role: 'Cuidador Profesional',
+        status: 'En línea'
+      };
+    } else {
+      this.userData = {
+        name: 'Cuidador',
+        email: '',
+        photo: 'https://ui-avatars.com/api/?name=C&background=2563eb&color=fff&size=128&rounded=true',
+        role: 'Cuidador Profesional',
+        status: 'En línea'
+      };
+    }
   }
 
   render() {
     this.shadowRoot.innerHTML = `
       <style>
         :host {
-          --sidebar-width: 260px;
-          --sidebar-collapsed: 70px;
+          --sidebar-width: 280px;
+          --sidebar-collapsed: 80px;
+          --primary-color: #2563eb;
+          --primary-dark: #1d4ed8;
+          --secondary-color: #7c3aed;
+          --text-light: #ffffff;
+          --text-muted: rgba(255, 255, 255, 0.7);
+          --bg-hover: rgba(255, 255, 255, 0.1);
+          --bg-active: rgba(255, 255, 255, 0.15);
+          --border-color: rgba(255, 255, 255, 0.1);
         }
+
+        * {
+          font-family: 'Inter', 'Poppins', sans-serif;
+          box-sizing: border-box;
+        }
+
         .sidebar {
           position: fixed;
           top: 0; left: 0; bottom: 0;
           width: var(--sidebar-width);
-          background: linear-gradient(135deg, #1976d2, #42a5f5 80%);
-          color: #fff;
-          box-shadow: 2px 0 18px rgba(25,118,210,0.08);
+          background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+          color: var(--text-light);
+          box-shadow: 4px 0 24px rgba(37, 99, 235, 0.15);
           z-index: 1000;
           display: flex;
           flex-direction: column;
           align-items: stretch;
-          transition: width 0.3s cubic-bezier(.4,2,.6,1);
-          font-size: 1.18rem;
+          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+          font-size: 1rem;
+          overflow: hidden;
         }
+
         .sidebar.collapsed {
           width: var(--sidebar-collapsed);
         }
-        .logo-section {
-          padding: 20px 18px 12px 18px;
-          background: #f8f9fa;
-          border-bottom: 1px solid #e9ecef;
+
+        /* Header con logo */
+        .sidebar-header {
+          padding: 24px 20px 20px 20px;
+          background: rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid var(--border-color);
           display: flex;
           align-items: center;
-          gap: 8px;
+          gap: 12px;
           transition: all 0.3s;
           position: relative;
           cursor: pointer;
           user-select: none;
         }
-        .logo-section:active {
-          background: #e3eafc;
+
+        .sidebar-header:active {
+          background: rgba(255, 255, 255, 0.1);
         }
+
         .logo-icon {
-          width: 40px;
-          height: 40px;
-          border-radius: 50%;
-          background: #fff;
+          width: 44px;
+          height: 44px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.15);
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 2px 8px rgba(25,118,210,0.08);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
           overflow: hidden;
+          transition: all 0.3s;
         }
+
+        .logo-icon:hover {
+          transform: scale(1.05);
+          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        }
+
         .logo-icon img {
-          width: 32px;
-          height: 32px;
+          width: 28px;
+          height: 28px;
           display: block;
         }
+
         .logo-text {
-          color: #1976d2;
-          font-family: 'Poppins', sans-serif;
+          color: var(--text-light);
           font-weight: 700;
           font-size: 1.5rem;
           margin: 0;
-          letter-spacing: 1px;
+          letter-spacing: 0.5px;
+          transition: all 0.3s;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar.collapsed .logo-text {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        /* Perfil del usuario */
+        .user-profile {
+          padding: 20px;
+          background: rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid var(--border-color);
+          display: flex;
+          align-items: center;
+          gap: 12px;
           transition: all 0.3s;
         }
-        .sidebar.collapsed .logo-text { display: none; }
-        .toggle-btn { display: none; }
-        .sidebar-header { display: none; }
+
+        .sidebar.collapsed .user-profile {
+          padding: 16px 12px;
+          justify-content: center;
+        }
+
+        .user-avatar {
+          width: 48px;
+          height: 48px;
+          border-radius: 50%;
+          border: 3px solid rgba(255, 255, 255, 0.2);
+          object-fit: cover;
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .user-avatar {
+          width: 40px;
+          height: 40px;
+        }
+
+        .user-info {
+          flex: 1;
+          min-width: 0;
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .user-info {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        .user-name {
+          font-weight: 600;
+          font-size: 1rem;
+          margin: 0 0 4px 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .user-role {
+          font-size: 0.875rem;
+          color: var(--text-muted);
+          margin: 0;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        .user-status {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.75rem;
+          color: #10b981;
+          margin-top: 4px;
+        }
+
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #10b981;
+          animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+
+        /* Búsqueda rápida */
+        .search-container {
+          padding: 16px 20px;
+          border-bottom: 1px solid var(--border-color);
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .search-container {
+          padding: 12px 8px;
+        }
+
+        .search-box {
+          position: relative;
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .search-box {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        .search-input {
+          width: 100%;
+          padding: 10px 16px 10px 40px;
+          border: none;
+          border-radius: 10px;
+          background: rgba(255, 255, 255, 0.1);
+          color: var(--text-light);
+          font-size: 0.875rem;
+          transition: all 0.3s;
+          backdrop-filter: blur(10px);
+        }
+
+        .search-input::placeholder {
+          color: var(--text-muted);
+        }
+
+        .search-input:focus {
+          outline: none;
+          background: rgba(255, 255, 255, 0.15);
+          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
+        }
+
+        .search-icon {
+          position: absolute;
+          left: 12px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted);
+          font-size: 1rem;
+        }
+
+        /* Navegación */
         .sidebar-nav {
           flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 6px;
-          margin-top: 18px;
+          gap: 4px;
+          padding: 16px 12px;
+          overflow-y: auto;
         }
+
+        .nav-section {
+          margin-bottom: 16px;
+        }
+
+        .nav-section-title {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--text-muted);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin: 0 0 8px 16px;
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .nav-section-title {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
         .nav-item {
           display: flex;
           align-items: center;
-          gap: 16px;
-          padding: 14px 28px;
-          font-size: 1.08rem;
+          gap: 12px;
+          padding: 12px 16px;
+          font-size: 0.875rem;
           font-weight: 500;
-          color: #fff;
+          color: var(--text-light);
           border: none;
           background: none;
           cursor: pointer;
-          border-radius: 10px 0 0 10px;
-          transition: background 0.18s, color 0.18s, padding 0.18s;
+          border-radius: 12px;
+          transition: all 0.3s;
           outline: none;
+          position: relative;
+          text-decoration: none;
         }
-        .nav-item.active, .nav-item:hover {
-          background: rgba(255,255,255,0.13);
-          color: #fff;
+
+        .nav-item:hover {
+          background: var(--bg-hover);
+          transform: translateX(4px);
         }
-        .nav-item i {
-          font-size: 1.3rem;
+
+        .nav-item.active {
+          background: var(--bg-active);
+          color: var(--text-light);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .sidebar.collapsed .nav-item span {
-          display: none;
-        }
-        .sidebar-footer {
-          padding: 22px 24px 18px 24px;
-          border-top: 1px solid rgba(255,255,255,0.08);
-          font-size: 1.08rem;
-          opacity: 0.95;
-          background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
-          color: #fff;
-          text-align: center;
-          letter-spacing: 0.5px;
-          font-weight: 500;
-          border-radius: 0 0 12px 12px;
-          box-shadow: 0 -2px 12px rgba(25,118,210,0.08);
-        }
-        .toggle-btn {
+
+        .nav-item.active::before {
+          content: '';
           position: absolute;
-          right: 8px;
+          left: 0;
           top: 50%;
           transform: translateY(-50%);
-          width: 36px; height: 36px;
-          background: #fff;
-          color: #1976d2;
-          border-radius: 50%;
-          border: none;
-          box-shadow: 0 2px 8px rgba(25,118,210,0.10);
-          display: flex; align-items: center; justify-content: center;
-          cursor: pointer;
-          font-size: 1.3rem;
-          transition: background 0.2s, color 0.2s;
+          width: 4px;
+          height: 20px;
+          background: var(--text-light);
+          border-radius: 0 2px 2px 0;
         }
-        .toggle-btn:hover { background: #1976d2; color: #fff; }
-        @media (max-width: 900px) {
-          .sidebar { position: fixed; left: 0; top: 0; width: 100vw; height: 70px; flex-direction: row; align-items: center; }
-          .sidebar-header, .sidebar-footer { display: none; }
-          .sidebar-nav { flex-direction: row; gap: 0; margin: 0; }
-          .nav-item { flex: 1; justify-content: center; border-radius: 0; padding: 10px 0; }
-          .sidebar.collapsed { width: 100vw; }
+
+        .nav-icon {
+          font-size: 1.125rem;
+          width: 20px;
+          text-align: center;
+          transition: all 0.3s;
+        }
+
+        .nav-text {
+          flex: 1;
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .nav-text {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        .nav-badge {
+          background: #ef4444;
+          color: white;
+          font-size: 0.75rem;
+          font-weight: 600;
+          padding: 2px 6px;
+          border-radius: 10px;
+          min-width: 18px;
+          text-align: center;
+          transition: all 0.3s;
+        }
+
+        .sidebar.collapsed .nav-badge {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        /* Botón de colapso */
+        .toggle-btn {
+          position: absolute;
+          top: 20px;
+          right: -12px;
+          width: 24px;
+          height: 24px;
+          background: var(--text-light);
+          border: none;
+          border-radius: 50%;
+          color: var(--primary-color);
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+          transition: all 0.3s;
+          z-index: 10;
+        }
+
+        .toggle-btn:hover {
+          transform: scale(1.1);
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .toggle-icon {
+          transition: transform 0.3s;
+        }
+
+        .sidebar.collapsed .toggle-icon {
+          transform: rotate(180deg);
+        }
+
+        /* Footer */
+        .sidebar-footer {
+          padding: 16px 20px;
+          border-top: 1px solid var(--border-color);
+          background: rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar.collapsed .sidebar-footer {
+          padding: 12px 8px;
+        }
+
+        .footer-actions {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+
+        .footer-action {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 8px 12px;
+          color: var(--text-light);
+          text-decoration: none;
+          border-radius: 8px;
+          transition: all 0.3s;
+          font-size: 0.875rem;
+        }
+
+        .footer-action:hover {
+          background: var(--bg-hover);
+          text-decoration: none;
+          color: var(--text-light);
+        }
+
+        .sidebar.collapsed .footer-action span {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+
+        /* Scrollbar personalizada */
+        .sidebar-nav::-webkit-scrollbar {
+          width: 4px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-track {
+          background: transparent;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 2px;
+        }
+
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+          .sidebar {
+            transform: translateX(-100%);
+          }
+
+          .sidebar.mobile-open {
+            transform: translateX(0);
+          }
+
+          .toggle-btn {
+            display: none;
+          }
+        }
+
+        /* Tooltip para sidebar colapsado */
+        .tooltip {
+          position: absolute;
+          left: 100%;
+          top: 50%;
+          transform: translateY(-50%);
+          background: #1f2937;
+          color: white;
+          padding: 8px 12px;
+          border-radius: 8px;
+          font-size: 0.875rem;
+          white-space: nowrap;
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.3s;
+          z-index: 1001;
+          margin-left: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .tooltip::before {
+          content: '';
+          position: absolute;
+          left: -4px;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 0;
+          height: 0;
+          border-top: 4px solid transparent;
+          border-bottom: 4px solid transparent;
+          border-right: 4px solid #1f2937;
+        }
+
+        .sidebar.collapsed .nav-item:hover .tooltip {
+          opacity: 1;
         }
       </style>
-      <nav class="sidebar">
-        <div class="logo-section" id="logo-toggle">
+
+      <div class="sidebar ${this.collapsed ? 'collapsed' : ''}">
+        <!-- Botón de colapso -->
+        <button class="toggle-btn" id="toggleBtn">
+          <i class="bi bi-chevron-left toggle-icon"></i>
+        </button>
+
+        <!-- Header con logo -->
+        <div class="sidebar-header" id="logoSection">
           <div class="logo-icon">
-            <img src="../../assets/Frame - 1.svg" alt="Logo" />
+            <i class="bi bi-shield-heart-fill" style="color: white; font-size: 24px;"></i>
           </div>
-          <span class="logo-text">areConnect</span>
+          <h1 class="logo-text">CareConnect</h1>
         </div>
-        <div class="sidebar-nav">
-          <button class="nav-item active" data-section="overview">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Casa amigable con corazón -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 8L8 20h4v16h24V20h4L24 8z" fill="#fff" stroke="#fff" stroke-width="1"/>
-                <path d="M20 28h8v8h-8z" fill="#1976d2"/>
-                <path d="M18 16h12v4H18z" fill="#1976d2"/>
-                <circle cx="24" cy="32" r="2" fill="#fff"/>
-              </svg>
-            </span>
-            <span>Home</span>
-          </button>
-          <button class="nav-item" data-section="virtual-care">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Video llamada amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="12" width="20" height="16" rx="3" fill="#fff"/>
-                <path d="M28 20l8-4v12l-8-4z" fill="#1976d2"/>
-                <circle cx="18" cy="20" r="2" fill="#1976d2"/>
-                <path d="M16 24c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Virtual Care</span>
-          </button>
-          <button class="nav-item" data-section="medication">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Frasco de medicina amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="16" y="8" width="16" height="32" rx="3" fill="#fff"/>
-                <rect x="12" y="12" width="8" height="8" rx="2" fill="#1976d2"/>
-                <rect x="20" y="16" width="8" height="2" rx="1" fill="#1976d2"/>
-                <rect x="20" y="22" width="8" height="2" rx="1" fill="#1976d2"/>
-                <rect x="20" y="28" width="8" height="2" rx="1" fill="#1976d2"/>
-                <circle cx="24" cy="34" r="2" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Medications</span>
-          </button>
-          <button class="nav-item" data-section="documents">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Carpeta de documentos amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 12h12l4 4h16v20H8V12z" fill="#fff"/>
-                <path d="M20 12l4 4h16" fill="none" stroke="#1976d2" stroke-width="2"/>
-                <rect x="12" y="20" width="16" height="2" rx="1" fill="#1976d2"/>
-                <rect x="12" y="26" width="12" height="2" rx="1" fill="#1976d2"/>
-                <rect x="12" y="32" width="14" height="2" rx="1" fill="#1976d2"/>
-                <circle cx="16" cy="38" r="1" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Documents</span>
-          </button>
-          <button class="nav-item" data-section="earnings">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Friendly statistics chart -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="32" width="6" height="8" rx="1" fill="#fff"/>
-                <rect x="18" y="24" width="6" height="16" rx="1" fill="#fff"/>
-                <rect x="28" y="16" width="6" height="24" rx="1" fill="#fff"/>
-                <rect x="38" y="8" width="6" height="32" rx="1" fill="#fff"/>
-                <circle cx="11" cy="36" r="1" fill="#1976d2"/>
-                <circle cx="21" cy="28" r="1" fill="#1976d2"/>
-                <circle cx="31" cy="20" r="1" fill="#1976d2"/>
-                <circle cx="41" cy="12" r="1" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Statistics</span>
-          </button>
-          <button class="nav-item" data-section="profile">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Professional caregiver profile -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="16" r="8" fill="#fff"/>
-                <path d="M8 40c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#fff"/>
-                <!-- Ojos más definidos -->
-                <ellipse cx="20" cy="14" rx="1.5" ry="2" fill="#1976d2"/>
-                <ellipse cx="28" cy="14" rx="1.5" ry="2" fill="#1976d2"/>
-                <!-- Pupilas -->
-                <circle cx="20" cy="14" r="0.8" fill="#fff"/>
-                <circle cx="28" cy="14" r="0.8" fill="#fff"/>
-                <!-- Nariz -->
-                <path d="M24 18l-1 2h2z" fill="#1976d2"/>
-                <!-- Boca más expresiva -->
-                <path d="M20 22c0 1.5 1.8 2.5 4 2.5s4-1 4-2.5" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
-                <!-- Cabello -->
-                <path d="M16 10c0-2 1.5-4 4-4s4 2 4 4" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M24 10c0-2 1.5-4 4-4s4 2 4 4" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
-                <!-- Cuello -->
-                <rect x="22" y="24" width="4" height="3" fill="#fff"/>
-                <!-- Hombros -->
-                <path d="M16 36c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="none" stroke="#1976d2" stroke-width="2"/>
-              </svg>
-            </span>
-            <span>Profile</span>
-          </button>
+
+        <!-- Perfil del usuario -->
+        <div class="user-profile">
+          <img src="${this.userData?.photo || ''}" alt="Avatar" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?name=C&background=2563eb&color=fff&size=128&rounded=true'">
+          <div class="user-info">
+            <div class="user-name">${this.userData?.name || 'Cuidador'}</div>
+            <div class="user-role">${this.userData?.role || 'Cuidador Profesional'}</div>
+            <div class="user-status">
+              <div class="status-dot"></div>
+              <span>${this.userData?.status || 'En línea'}</span>
+            </div>
+          </div>
         </div>
+
+        <!-- Búsqueda rápida -->
+        <div class="search-container">
+          <div class="search-box">
+            <i class="bi bi-search search-icon"></i>
+            <input type="text" class="search-input" placeholder="Buscar..." id="searchInput">
+          </div>
+        </div>
+
+        <!-- Navegación -->
+        <nav class="sidebar-nav">
+          <div class="nav-section">
+            <div class="nav-section-title">Principal</div>
+            <button class="nav-item ${this.currentSection === 'overview' ? 'active' : ''}" data-section="overview">
+              <i class="bi bi-house-door-fill nav-icon"></i>
+              <span class="nav-text">Dashboard</span>
+              <div class="tooltip">Dashboard</div>
+            </button>
+            <button class="nav-item ${this.currentSection === 'virtual-care' ? 'active' : ''}" data-section="virtual-care">
+              <i class="bi bi-camera-video-fill nav-icon"></i>
+              <span class="nav-text">Cuidado Virtual</span>
+              <div class="tooltip">Cuidado Virtual</div>
+            </button>
+            <button class="nav-item ${this.currentSection === 'medication' ? 'active' : ''}" data-section="medication">
+              <i class="bi bi-capsule nav-icon"></i>
+              <span class="nav-text">Medicamentos</span>
+              <div class="tooltip">Medicamentos</div>
+            </button>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Gestión</div>
+            <button class="nav-item ${this.currentSection === 'documents' ? 'active' : ''}" data-section="documents">
+              <i class="bi bi-file-earmark-text nav-icon"></i>
+              <span class="nav-text">Documentos</span>
+              <div class="tooltip">Documentos</div>
+            </button>
+            <button class="nav-item ${this.currentSection === 'earnings' ? 'active' : ''}" data-section="earnings">
+              <i class="bi bi-graph-up nav-icon"></i>
+              <span class="nav-text">Ganancias</span>
+              <div class="tooltip">Ganancias</div>
+            </button>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Cuenta</div>
+            <button class="nav-item ${this.currentSection === 'profile' ? 'active' : ''}" data-section="profile">
+              <i class="bi bi-person-circle nav-icon"></i>
+              <span class="nav-text">Mi Perfil</span>
+              <div class="tooltip">Mi Perfil</div>
+            </button>
+          </div>
+        </nav>
+
+        <!-- Footer -->
         <div class="sidebar-footer">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-            <span><i class="bi bi-person-badge"></i> Professional Caregiver</span>
-            <span style="font-size:1rem;opacity:0.8;">CareConnect &copy; ${new Date().getFullYear()}</span>
-            <span style="font-size:0.95rem;opacity:0.7;">Support: support@careconnect.com</span>
+          <div class="footer-actions">
+            <a href="../../pages/login.html" class="footer-action">
+              <i class="bi bi-box-arrow-right"></i>
+              <span>Cerrar Sesión</span>
+            </a>
+            <a href="../../index.html" class="footer-action">
+              <i class="bi bi-house"></i>
+              <span>Ir al Inicio</span>
+            </a>
           </div>
         </div>
-      </nav>
+      </div>
     `;
   }
 
   addListeners() {
-    const nav = this.shadowRoot.querySelector('.sidebar');
+    // Toggle sidebar
+    const toggleBtn = this.shadowRoot.getElementById('toggleBtn');
+    toggleBtn.addEventListener('click', () => {
+      this.collapsed = !this.collapsed;
+      this.render();
+      this.dispatchEvent(new CustomEvent('sidebarToggle', {
+        detail: { collapsed: this.collapsed }
+      }));
+    });
+
+    // Navigation
     const navItems = this.shadowRoot.querySelectorAll('.nav-item');
-    // Section navigation
-    navItems.forEach(btn => {
-      btn.addEventListener('click', e => {
-        navItems.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const section = btn.getAttribute('data-section');
-        this.dispatchEvent(new CustomEvent('sectionChange', { detail: { section }, bubbles: true, composed: true }));
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const section = item.dataset.section;
+        this.currentSection = section;
+        
+        // Update active state
+        navItems.forEach(nav => nav.classList.remove('active'));
+        item.classList.add('active');
+        
+        // Dispatch event
+        this.dispatchEvent(new CustomEvent('sectionChange', {
+          detail: { section: section }
+        }));
       });
     });
-    // Collapse/expand sidebar using logo as button
-    const logoToggle = this.shadowRoot.getElementById('logo-toggle');
-    if (logoToggle) {
-      logoToggle.addEventListener('click', () => {
-        this.collapsed = !this.collapsed;
-        nav.classList.toggle('collapsed', this.collapsed);
-        this.dispatchEvent(new CustomEvent('sidebarToggle', { detail: { collapsed: this.collapsed }, bubbles: true, composed: true }));
-      });
+
+    // Search functionality
+    const searchInput = this.shadowRoot.getElementById('searchInput');
+    searchInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      this.handleSearch(query);
+    });
+
+    // Logo click
+    const logoSection = this.shadowRoot.getElementById('logoSection');
+    logoSection.addEventListener('click', () => {
+      // Reset to overview
+      this.currentSection = 'overview';
+      this.render();
+      this.addListeners();
+      this.dispatchEvent(new CustomEvent('sectionChange', {
+        detail: { section: 'overview' }
+      }));
+    });
+
+    // Mobile responsive
+    if (window.innerWidth <= 1024) {
+      this.collapsed = true;
+      this.render();
+      this.addListeners();
+    }
+  }
+
+  handleSearch(query) {
+    if (query.length < 2) return;
+
+    // Simular búsqueda
+    const searchResults = [
+      { section: 'overview', title: 'Dashboard', description: 'Vista general del dashboard' },
+      { section: 'virtual-care', title: 'Cuidado Virtual', description: 'Sesiones de cuidado virtual' },
+      { section: 'medication', title: 'Medicamentos', description: 'Gestión de medicamentos' },
+      { section: 'documents', title: 'Documentos', description: 'Documentos y archivos' },
+      { section: 'earnings', title: 'Ganancias', description: 'Estadísticas de ganancias' },
+      { section: 'profile', title: 'Mi Perfil', description: 'Configuración del perfil' }
+    ];
+
+    const results = searchResults.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.description.toLowerCase().includes(query)
+    );
+
+    if (results.length > 0) {
+      // Mostrar resultados (aquí se puede implementar un dropdown)
+      console.log('Resultados de búsqueda:', results);
+      
+      // Por ahora, navegar al primer resultado
+      if (results[0]) {
+        this.currentSection = results[0].section;
+        this.render();
+        this.addListeners();
+        this.dispatchEvent(new CustomEvent('sectionChange', {
+          detail: { section: results[0].section }
+        }));
+      }
     }
   }
 }

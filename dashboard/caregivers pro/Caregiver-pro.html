@@ -1,38 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Caregiver Dashboard - CareConnect</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <title>Dashboard Cuidador - CareConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary-color: #7c3aed;
+            --accent-color: #06b6d4;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-primary: #1f2937;
+            --text-secondary: #6b7280;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --border-color: #e5e7eb;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+
         * {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', 'Poppins', sans-serif;
+            box-sizing: border-box;
         }
         
         body {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                        url(../../assets/BlueIconsBlueBackgroundSpread.png);
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             background-attachment: fixed;
             min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
         }
         
         .dashboard-container {
             display: flex;
             min-height: 100vh;
+            position: relative;
         }
         
         .main-content {
             flex: 1;
             margin-left: 280px;
-            transition: margin-left 0.3s ease;
-            padding: 20px;
-            background: rgba(248, 249, 250, 0.95);
-            backdrop-filter: blur(10px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 24px;
+            background: rgba(248, 250, 252, 0.95);
+            backdrop-filter: blur(20px);
+            min-height: 100vh;
         }
         
         .main-content.sidebar-collapsed {
@@ -40,25 +62,135 @@
         }
         
         .content-area {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            min-height: calc(100vh - 40px);
+            background: var(--bg-primary);
+            border-radius: 20px;
+            box-shadow: var(--shadow-xl);
+            min-height: calc(100vh - 48px);
             overflow: hidden;
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
         }
         
         .section-content {
             display: none;
-            padding: 30px;
+            padding: 32px;
+            animation: fadeInUp 0.6s ease-out;
         }
         
         .section-content.active {
             display: block;
         }
         
-        /* Estilos para la notificación modal */
+        /* Notificaciones flotantes */
+        .notification-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .notification {
+            background: var(--bg-primary);
+            border-radius: 12px;
+            padding: 16px 20px;
+            box-shadow: var(--shadow-lg);
+            border-left: 4px solid var(--primary-color);
+            transform: translateX(400px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            max-width: 350px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.success {
+            border-left-color: var(--success-color);
+        }
+        
+        .notification.warning {
+            border-left-color: var(--warning-color);
+        }
+        
+        .notification.error {
+            border-left-color: var(--danger-color);
+        }
+        
+        .notification-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .notification-message {
+            color: var(--text-secondary);
+            font-size: 13px;
+            line-height: 1.4;
+        }
+        
+        .notification-close {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 4px;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .notification-close:hover {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10000;
+            background: var(--bg-primary);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: var(--shadow-xl);
+            display: none;
+            align-items: center;
+            gap: 16px;
+            backdrop-filter: blur(20px);
+        }
+        
+        .loading-spinner.show {
+            display: flex;
+        }
+        
+        .spinner {
+            width: 32px;
+            height: 32px;
+            border: 3px solid var(--border-color);
+            border-top: 3px solid var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Modal de autenticación mejorado */
         .auth-modal-overlay {
             position: fixed;
             top: 0;
@@ -66,7 +198,7 @@
             width: 100%;
             height: 100%;
             background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -75,13 +207,13 @@
         }
         
         .auth-modal {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 20px;
-            padding: 40px;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            border-radius: 24px;
+            padding: 48px;
             text-align: center;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-xl);
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: slideIn 0.4s ease-out;
             position: relative;
@@ -102,15 +234,15 @@
         .auth-modal-icon {
             font-size: 4rem;
             color: #fff;
-            margin-bottom: 20px;
+            margin-bottom: 24px;
             animation: pulse 2s infinite;
         }
         
         .auth-modal-title {
             color: #fff;
             font-size: 1.8rem;
-            font-weight: 600;
-            margin-bottom: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
             text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
@@ -118,20 +250,21 @@
             color: rgba(255, 255, 255, 0.9);
             font-size: 1.1rem;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
         }
         
         .auth-modal-button {
             background: rgba(255, 255, 255, 0.2);
             border: 2px solid rgba(255, 255, 255, 0.3);
             color: #fff;
-            padding: 12px 30px;
+            padding: 14px 32px;
             border-radius: 50px;
-            font-weight: 500;
+            font-weight: 600;
             text-decoration: none;
             transition: all 0.3s ease;
             display: inline-block;
             backdrop-filter: blur(10px);
+            font-size: 1rem;
         }
         
         .auth-modal-button:hover {
@@ -139,13 +272,13 @@
             border-color: rgba(255, 255, 255, 0.5);
             color: #fff;
             transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
         }
         
         .auth-modal-countdown {
             color: rgba(255, 255, 255, 0.7);
             font-size: 0.9rem;
-            margin-top: 20px;
+            margin-top: 24px;
         }
         
         /* Animaciones */
@@ -154,10 +287,21 @@
             to { opacity: 1; }
         }
         
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(-50px) scale(0.9);
+                transform: translateY(-60px) scale(0.9);
             }
             to {
                 opacity: 1;
@@ -170,18 +314,33 @@
             50% { transform: scale(1.05); }
         }
         
-        @media (max-width: 768px) {
+        /* Responsive design mejorado */
+        @media (max-width: 1024px) {
             .main-content {
                 margin-left: 0;
-                padding: 10px;
+                padding: 16px;
             }
             
             .main-content.sidebar-collapsed {
                 margin-left: 0;
             }
             
+            .section-content {
+                padding: 24px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-content {
+                padding: 12px;
+            }
+            
+            .section-content {
+                padding: 20px;
+            }
+            
             .auth-modal {
-                padding: 30px 20px;
+                padding: 32px 24px;
                 margin: 20px;
             }
             
@@ -192,10 +351,53 @@
             .auth-modal-message {
                 font-size: 1rem;
             }
+            
+            .notification {
+                max-width: calc(100vw - 40px);
+                right: 20px;
+                left: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-content {
+                padding: 16px;
+            }
+            
+            .auth-modal {
+                padding: 24px 20px;
+            }
+        }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
         }
     </style>
 </head>
 <body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <span>Cargando dashboard...</span>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
     <!-- Welcome Overlay para Caregivers -->
     <caregiver-welcome-overlay></caregiver-welcome-overlay>
     
@@ -230,6 +432,7 @@
                 <div class="section-content" id="earnings-section">
                     <earnings-statistics></earnings-statistics>
                 </div>
+                
                 <!-- Profile Section -->
                 <div class="section-content" id="profile-section">
                     <caregiver-profile-section></caregiver-profile-section>
@@ -239,19 +442,91 @@
     </div>
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
     <script src="../../js/localStorage-utils.js"></script>
-    <script src="caregiver-sidebar.js?v=1.3"></script>
-    <script src="caregiver-overview.js?v=1.2"></script>
-    <script src="caregiver-profile-section.js?v=1.1"></script>
-    <script src="virtual-care.js?v=1.1"></script>
-    <script src="medication-management.js?v=1.1"></script>
-    <script src="caregiver-documents.js?v=1.1"></script>
-    <script src="earnings-statistics.js?v=1.1"></script>
-    <script src="caregiver-footer.js"></script>
+    <script src="caregiver-sidebar.js?v=2.0"></script>
+    <script src="caregiver-overview.js?v=2.0"></script>
+    <script src="caregiver-profile-section.js?v=2.0"></script>
+    <script src="virtual-care.js?v=2.0"></script>
+    <script src="medication-management.js?v=2.0"></script>
+    <script src="caregiver-documents.js?v=2.0"></script>
+    <script src="earnings-statistics.js?v=2.0"></script>
+    <script src="caregiver-footer.js?v=2.0"></script>
     
     <script>
-        // Componente de transición de bienvenida para caregivers
+        // Sistema de notificaciones mejorado
+        class NotificationSystem {
+            constructor() {
+                this.container = document.getElementById('notificationContainer');
+            }
+            
+            show(message, type = 'info', duration = 5000) {
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                
+                const iconMap = {
+                    success: 'bi-check-circle-fill',
+                    warning: 'bi-exclamation-triangle-fill',
+                    error: 'bi-x-circle-fill',
+                    info: 'bi-info-circle-fill'
+                };
+                
+                notification.innerHTML = `
+                    <div class="notification-header">
+                        <div class="notification-title">
+                            <i class="bi ${iconMap[type]} me-2"></i>
+                            ${this.getTitle(type)}
+                        </div>
+                        <button class="notification-close" onclick="this.parentElement.parentElement.remove()">
+                            <i class="bi bi-x"></i>
+                        </button>
+                    </div>
+                    <div class="notification-message">${message}</div>
+                `;
+                
+                this.container.appendChild(notification);
+                
+                // Animar entrada
+                setTimeout(() => notification.classList.add('show'), 100);
+                
+                // Auto-remover
+                if (duration > 0) {
+                    setTimeout(() => {
+                        notification.classList.remove('show');
+                        setTimeout(() => notification.remove(), 400);
+                    }, duration);
+                }
+            }
+            
+            getTitle(type) {
+                const titles = {
+                    success: 'Éxito',
+                    warning: 'Advertencia',
+                    error: 'Error',
+                    info: 'Información'
+                };
+                return titles[type] || 'Notificación';
+            }
+        }
+        
+        // Sistema de loading
+        class LoadingSystem {
+            constructor() {
+                this.spinner = document.getElementById('loadingSpinner');
+            }
+            
+            show(message = 'Cargando...') {
+                this.spinner.querySelector('span').textContent = message;
+                this.spinner.classList.add('show');
+            }
+            
+            hide() {
+                this.spinner.classList.remove('show');
+            }
+        }
+        
+        // Componente de transición de bienvenida mejorado
         class CaregiverWelcomeOverlay extends HTMLElement {
             constructor() {
                 super();
@@ -260,7 +535,7 @@
             
             connectedCallback() {
                 this.render();
-                setTimeout(() => this.hide(), 3500);
+                setTimeout(() => this.hide(), 4000);
             }
             
             hide() {
@@ -300,53 +575,63 @@
                             justify-content: center;
                             z-index: 9999;
                             transition: opacity 0.8s ease;
-                            font-family: 'Poppins', sans-serif;
+                            font-family: 'Inter', 'Poppins', sans-serif;
                         }
                         .welcome-card {
                             background: rgba(255,255,255,0.95);
-                            padding: 45px;
-                            border-radius: 25px;
+                            padding: 48px;
+                            border-radius: 28px;
                             text-align: center;
-                            box-shadow: 0 25px 70px rgba(102, 126, 234, 0.3);
-                            max-width: 450px;
-                            backdrop-filter: blur(15px);
+                            box-shadow: 0 32px 80px rgba(102, 126, 234, 0.3);
+                            max-width: 480px;
+                            backdrop-filter: blur(20px);
                             border: 1px solid rgba(255, 255, 255, 0.2);
+                            animation: slideInUp 0.8s ease-out;
                         }
                         .welcome-icon {
-                            font-size: 52px;
+                            font-size: 56px;
                             color: #667eea;
-                            margin-bottom: 25px;
+                            margin-bottom: 28px;
                             display: block;
                             animation: gentlePulse 2s infinite;
                         }
                         .welcome-greeting {
-                            font-size: 30px;
+                            font-size: 32px;
                             font-weight: 700;
-                            color: #2c3e50;
+                            color: #1f2937;
                             margin-bottom: 12px;
                             line-height: 1.2;
                         }
                         .welcome-name {
-                            font-size: 36px;
+                            font-size: 40px;
                             font-weight: 800;
                             color: #667eea;
-                            margin-bottom: 18px;
+                            margin-bottom: 20px;
                             text-shadow: 0 2px 4px rgba(102, 126, 234, 0.2);
                         }
                         .welcome-message {
-                            font-size: 17px;
-                            color: #7f8c8d;
+                            font-size: 18px;
+                            color: #6b7280;
                             line-height: 1.6;
-                            font-family: 'Josefin Sans', sans-serif;
                             font-weight: 400;
                         }
                         .welcome-emoji {
-                            font-size: 26px;
-                            margin: 0 6px;
+                            font-size: 28px;
+                            margin: 0 8px;
                         }
                         @keyframes gentlePulse {
                             0%, 100% { transform: scale(1); }
                             50% { transform: scale(1.08); }
+                        }
+                        @keyframes slideInUp {
+                            from {
+                                opacity: 0;
+                                transform: translateY(60px) scale(0.9);
+                            }
+                            to {
+                                opacity: 1;
+                                transform: translateY(0) scale(1);
+                            }
                         }
                     </style>
                     <div class="overlay">
@@ -372,14 +657,14 @@
                         <div class="auth-modal-icon">
                             <i class="bi bi-shield-exclamation"></i>
                         </div>
-                        <h2 class="auth-modal-title">Access Restricted</h2>
+                        <h2 class="auth-modal-title">Acceso Restringido</h2>
                         <p class="auth-modal-message">${message}</p>
                         <a href="${redirectUrl}" class="auth-modal-button">
                             <i class="bi bi-box-arrow-in-right me-2"></i>
-                            Go to Login
+                            Ir al Login
                         </a>
                         <div class="auth-modal-countdown">
-                            Redirecting automatically in <span id="countdown">${countdownSeconds}</span> seconds...
+                            Redirigiendo automáticamente en <span id="countdown">${countdownSeconds}</span> segundos...
                         </div>
                     </div>
                 </div>
@@ -412,12 +697,19 @@
             window.location.reload();
         }
         
-        // Dashboard functionality
+        // Dashboard functionality mejorado
         document.addEventListener('DOMContentLoaded', function() {
+            // Inicializar sistemas
+            window.notifications = new NotificationSystem();
+            window.loading = new LoadingSystem();
+            
+            // Mostrar loading inicial
+            window.loading.show('Inicializando dashboard...');
+            
             // --- Protección de acceso ---
             if (!LocalStorageUtils.isAvailable()) {
                 showAuthModal(
-                    'localStorage is not available in your browser. Please enable it or try a different browser.',
+                    'localStorage no está disponible en tu navegador. Por favor, habilítalo o prueba con un navegador diferente.',
                     '../../pages/login.html',
                     7
                 );
@@ -428,9 +720,8 @@
             const users = LocalStorageUtils.getItem('users', []);
             const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
             if (!loggedInUser || !user) {
-                // Mostrar notificación modal moderna
                 showAuthModal(
-                    'You must be logged in as a caregiver to access the dashboard. Please sign in with your caregiver account.',
+                    'Debes estar conectado como cuidador para acceder al dashboard. Por favor, inicia sesión con tu cuenta de cuidador.',
                     '../../pages/login.html',
                     7
                 );
@@ -457,6 +748,9 @@
             sidebar.addEventListener('sectionChange', function(e) {
                 const targetSection = e.detail.section;
                 
+                // Mostrar loading durante la transición
+                window.loading.show('Cargando sección...');
+                
                 // Hide all sections
                 document.querySelectorAll('.section-content').forEach(section => {
                     section.classList.remove('active');
@@ -466,6 +760,28 @@
                 const targetElement = document.getElementById(targetSection + '-section');
                 if (targetElement) {
                     targetElement.classList.add('active');
+                    
+                    // Ocultar loading después de un breve delay
+                    setTimeout(() => {
+                        window.loading.hide();
+                        window.notifications.show(`Sección ${targetSection} cargada`, 'success', 2000);
+                    }, 500);
+                }
+            });
+            
+            // Simular carga inicial
+            setTimeout(() => {
+                window.loading.hide();
+                window.notifications.show('¡Dashboard cargado exitosamente!', 'success', 3000);
+            }, 1500);
+            
+            // Event listeners para mejor UX
+            document.addEventListener('keydown', function(e) {
+                // Ctrl/Cmd + K para búsqueda rápida
+                if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                    e.preventDefault();
+                    // Aquí se puede implementar búsqueda rápida
+                    window.notifications.show('Búsqueda rápida (próximamente)', 'info', 2000);
                 }
             });
         });
