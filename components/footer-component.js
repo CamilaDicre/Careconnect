@@ -727,7 +727,7 @@ class FooterComponent extends HTMLElement {
             <div id="terms-modal" class="terms-modal">
               <div class="terms-modal-content">
                 <span class="terms-close" id="terms-close">&times;</span>
-                <h2>Terms of Service</h2>
+                <h2>Terms and Conditions</h2>
                 <form id="terms-form">
                   <div class="terms-checkbox-group">
                     <label class="terms-checkbox-label" style="margin-bottom: 18px;">
