@@ -292,7 +292,7 @@
         <label for="birthdate">Fecha de Nacimiento</label>
         <div class="input-group">
           <i class="bi bi-calendar"></i>
-          <input type="text" id="birthdate" name="birthdate" required placeholder="DD-MM-YYYY (ej. 25-12-1970)" pattern="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d\d$" maxlength="10" autocomplete="off" inputmode="numeric">
+          <input type="text" id="birthdate" name="birthdate" required placeholder="DD-MM-YYYY (ej. 25-12-1970)" maxlength="10" autocomplete="off" inputmode="numeric">
         </div>
         <label for="gender">Género</label>
         <div class="input-group">
@@ -378,60 +378,6 @@
       }, 3000);
     }
 
-    // Función para validar campos
-    function validateField(field, validationRules) {
-      const value = field.value.trim();
-      const fieldName = field.name || field.id;
-      
-      // Limpiar clases de error/éxito
-      field.classList.remove('error-field', 'success-field');
-      
-      // Validar campo requerido
-      if (validationRules.required && !value) {
-        field.classList.add('error-field');
-        return `El campo ${fieldName} es requerido.`;
-      }
-      
-      if (!value) return null; // Campo vacío pero no requerido
-      
-      // Validar longitud mínima
-      if (validationRules.minLength && value.length < validationRules.minLength) {
-        field.classList.add('error-field');
-        return `${fieldName} debe tener al menos ${validationRules.minLength} caracteres.`;
-      }
-      
-      // Validar longitud máxima
-      if (validationRules.maxLength && value.length > validationRules.maxLength) {
-        field.classList.add('error-field');
-        return `${fieldName} no puede tener más de ${validationRules.maxLength} caracteres.`;
-      }
-      
-      // Validar formato de email
-      if (validationRules.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
-        field.classList.add('error-field');
-        return 'Por favor ingresa un correo electrónico válido.';
-      }
-      
-      // Validar formato de fecha
-      if (validationRules.date && !/^(0?[1-9]|[12][0-9]|3[01])[\/\-\.](0?[1-9]|1[0-2])[\/\-\.](19|20)\d\d$/.test(value)) {
-        field.classList.add('error-field');
-        return 'Por favor ingresa una fecha válida en formato DD/MM/YYYY, DD-MM-YYYY, o DD.MM.YYYY';
-      }
-      
-      // Validar número
-      if (validationRules.number) {
-        const num = parseInt(value);
-        if (isNaN(num) || num < validationRules.min || num > validationRules.max) {
-          field.classList.add('error-field');
-          return `${fieldName} debe ser un número entre ${validationRules.min} y ${validationRules.max}.`;
-        }
-      }
-      
-      // Si pasa todas las validaciones
-      field.classList.add('success-field');
-      return null;
-    }
-
     // Función para obtener usuarios
     function getUsers() {
       try {
@@ -462,8 +408,44 @@
       }
     }
 
+    // Función para validar campos básicos
+    function validateBasicFields(formData) {
+      const errors = [];
+      
+      // Validar campos requeridos
+      const requiredFields = ['fullName', 'email', 'password', 'phone', 'birthdate', 'gender', 'address', 'experience', 'education', 'skills', 'languages', 'bio', 'availability'];
+      
+      requiredFields.forEach(field => {
+        if (!formData[field] || formData[field].trim() === '') {
+          errors.push(`El campo ${field} es requerido.`);
+        }
+      });
+      
+      // Validar email
+      if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+        errors.push('Por favor ingresa un correo electrónico válido.');
+      }
+      
+      // Validar contraseña
+      if (formData.password && formData.password.length < 6) {
+        errors.push('La contraseña debe tener al menos 6 caracteres.');
+      }
+      
+      // Validar experiencia
+      if (formData.experience) {
+        const exp = parseInt(formData.experience);
+        if (isNaN(exp) || exp < 0 || exp > 60) {
+          errors.push('La experiencia debe ser un número entre 0 y 60 años.');
+        }
+      }
+      
+      return errors;
+    }
+
     // Función para registrar cuidador
     function registerCaregiver(formData) {
+      console.log('Iniciando registro de cuidador...', formData);
+      
       try {
         // Verificar si localStorage está disponible
         if (!LocalStorageUtils.isAvailable()) {
@@ -472,6 +454,7 @@
         
         // Obtener usuarios existentes
         let users = getUsers();
+        console.log('Usuarios existentes:', users.length);
         
         // Verificar duplicados por email
         if (users.some(u => u.email === formData.email.toLowerCase())) {
@@ -480,24 +463,26 @@
         
         // Crear nuevo usuario cuidador
         const newCaregiver = {
-          username: LocalStorageUtils.sanitizeText(formData.fullName),
+          username: formData.fullName.trim(),
           email: formData.email.toLowerCase().trim(),
           password: formData.password,
-          phone: LocalStorageUtils.sanitizeText(formData.phone),
-          birthdate: LocalStorageUtils.normalizeDate(formData.birthdate) || formData.birthdate,
+          phone: formData.phone.trim(),
+          birthdate: formData.birthdate.trim(),
           gender: formData.gender,
-          address: LocalStorageUtils.sanitizeText(formData.address),
-          experience: LocalStorageUtils.sanitizeText(formData.experience),
-          education: LocalStorageUtils.sanitizeText(formData.education),
-          certifications: LocalStorageUtils.sanitizeText(formData.certifications),
-          skills: LocalStorageUtils.sanitizeText(formData.skills),
-          languages: LocalStorageUtils.sanitizeText(formData.languages),
-          bio: LocalStorageUtils.sanitizeText(formData.bio),
+          address: formData.address.trim(),
+          experience: formData.experience.trim(),
+          education: formData.education.trim(),
+          certifications: formData.certifications ? formData.certifications.trim() : '',
+          skills: formData.skills.trim(),
+          languages: formData.languages.trim(),
+          bio: formData.bio.trim(),
           availability: formData.availability,
           role: 'cuidador',
           registrationDate: new Date().toISOString(),
           id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
         };
+        
+        console.log('Nuevo cuidador creado:', newCaregiver);
         
         // Agregar nuevo usuario
         users.push(newCaregiver);
@@ -507,13 +492,22 @@
           throw new Error('Error al guardar los datos. Por favor, verifica que tienes suficiente espacio de almacenamiento.');
         }
         
+        console.log('Usuario guardado exitosamente');
+        
         // Guardar datos de sesión
         LocalStorageUtils.setItem('loggedInUser', newCaregiver.username);
         LocalStorageUtils.setItem('userRole', newCaregiver.role);
         LocalStorageUtils.setItem('currentUserId', newCaregiver.id);
         
+        console.log('Sesión iniciada:', {
+          loggedInUser: newCaregiver.username,
+          userRole: newCaregiver.role,
+          currentUserId: newCaregiver.id
+        });
+        
         return newCaregiver;
       } catch (error) {
+        console.error('Error en registerCaregiver:', error);
         throw error;
       }
     }
@@ -521,6 +515,7 @@
     // Manejar envío del formulario
     document.getElementById('caregiverForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      console.log('Formulario enviado');
       
       const submitBtn = document.getElementById('submitBtn');
       const originalText = submitBtn.textContent;
@@ -530,100 +525,70 @@
       submitBtn.textContent = 'Creando perfil...';
       
       try {
-        // Definir reglas de validación
-        const validationRules = {
-          fullName: { required: true, maxLength: 100 },
-          email: { required: true, maxLength: 100, email: true },
-          password: { required: true, minLength: 6, maxLength: 50 },
-          phone: { required: true, maxLength: 20 },
-          birthdate: { required: true, date: true },
-          gender: { required: true },
-          address: { required: true, maxLength: 200 },
-          experience: { required: true, number: true, min: 0, max: 60 },
-          education: { required: true, maxLength: 100 },
-          skills: { required: true, maxLength: 300 },
-          languages: { required: true, maxLength: 100 },
-          bio: { required: true, maxLength: 500 },
-          availability: { required: true }
+        // Recopilar datos del formulario
+        const formData = {
+          fullName: document.getElementById('fullName').value,
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value,
+          phone: document.getElementById('phone').value,
+          birthdate: document.getElementById('birthdate').value,
+          gender: document.getElementById('gender').value,
+          address: document.getElementById('address').value,
+          experience: document.getElementById('experience').value,
+          education: document.getElementById('education').value,
+          certifications: document.getElementById('certifications').value,
+          skills: document.getElementById('skills').value,
+          languages: document.getElementById('languages').value,
+          bio: document.getElementById('bio').value,
+          availability: document.getElementById('availability').value
         };
         
-        // Validar todos los campos
-        const errors = [];
-        const formData = {};
+        console.log('Datos del formulario:', formData);
         
-        Object.keys(validationRules).forEach(fieldName => {
-          const field = document.getElementById(fieldName);
-          if (field) {
-            const error = validateField(field, validationRules[fieldName]);
-            if (error) {
-              errors.push(error);
-            } else {
-              formData[fieldName] = field.value.trim();
-            }
-          }
-        });
+        // Validar campos básicos
+        const validationErrors = validateBasicFields(formData);
         
-        // Si hay errores, mostrarlos y detener
-        if (errors.length > 0) {
-          showBanner(errors.join('\n'), 'error');
+        if (validationErrors.length > 0) {
+          showBanner(validationErrors.join('\n'), 'error');
           submitBtn.disabled = false;
           submitBtn.textContent = originalText;
           return;
         }
         
-        // Simular proceso de registro (1 segundo)
+        // Registrar cuidador
+        const newCaregiver = registerCaregiver(formData);
+        
+        // Mostrar mensaje de éxito
+        showBanner('¡Registro exitoso! Redirigiendo al dashboard...', 'success');
+        
+        // Redirigir al dashboard de cuidadores después de 1.5 segundos
         setTimeout(() => {
-          try {
-            // Registrar cuidador
-            const newCaregiver = registerCaregiver(formData);
-            
-            // Mostrar mensaje de éxito
-            showBanner('¡Registro exitoso! Redirigiendo al dashboard...', 'success');
-            
-            // Redirigir al dashboard de cuidadores después de 1.5 segundos
-            setTimeout(() => {
-              window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
-            }, 1500);
-            
-          } catch (error) {
-            console.error('Error durante el registro:', error);
-            showBanner(error.message, 'error');
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalText;
-          }
-        }, 1000);
+          console.log('Redirigiendo al dashboard...');
+          window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
+        }, 1500);
         
       } catch (error) {
-        console.error('Error en el formulario:', error);
-        showBanner('Error inesperado. Por favor, intenta de nuevo.', 'error');
+        console.error('Error durante el registro:', error);
+        showBanner(error.message, 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
       }
     });
 
-    // Validación en tiempo real
+    // Validación en tiempo real para campos básicos
     const fields = document.querySelectorAll('.caregiver-form input, .caregiver-form select, .caregiver-form textarea');
     fields.forEach(field => {
       field.addEventListener('blur', function() {
-        const fieldName = this.name || this.id;
-        const validationRules = {
-          fullName: { required: true, maxLength: 100 },
-          email: { required: true, maxLength: 100, email: true },
-          password: { required: true, minLength: 6, maxLength: 50 },
-          phone: { required: true, maxLength: 20 },
-          birthdate: { required: true, date: true },
-          gender: { required: true },
-          address: { required: true, maxLength: 200 },
-          experience: { required: true, number: true, min: 0, max: 60 },
-          education: { required: true, maxLength: 100 },
-          skills: { required: true, maxLength: 300 },
-          languages: { required: true, maxLength: 100 },
-          bio: { required: true, maxLength: 500 },
-          availability: { required: true }
-        };
+        const value = this.value.trim();
         
-        if (validationRules[fieldName]) {
-          validateField(this, validationRules[fieldName]);
+        // Limpiar clases de error/éxito
+        this.classList.remove('error-field', 'success-field');
+        
+        // Validar campo requerido
+        if (this.hasAttribute('required') && !value) {
+          this.classList.add('error-field');
+        } else if (value) {
+          this.classList.add('success-field');
         }
       });
     });
