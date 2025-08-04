@@ -2,14 +2,15 @@ class CaregiverSidebar extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.collapsed = false;
+    this.isCollapsed = false;
     this.currentSection = 'overview';
   }
 
   connectedCallback() {
     this.render();
-    this.addListeners();
+    this.attachEvents();
     this.loadUserData();
+    this.adjustMainContent();
   }
 
   loadUserData() {
@@ -22,16 +23,16 @@ class CaregiverSidebar extends HTMLElement {
         name: user.name || user.username,
         email: user.email || '',
         photo: user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.username)}&background=2563eb&color=fff&size=128&rounded=true`,
-        role: 'Cuidador Profesional',
-        status: 'En línea'
+        role: 'Professional Caregiver',
+        status: 'Online'
       };
     } else {
       this.userData = {
-        name: 'Cuidador',
+        name: 'Caregiver',
         email: '',
         photo: 'https://ui-avatars.com/api/?name=C&background=2563eb&color=fff&size=128&rounded=true',
-        role: 'Cuidador Profesional',
-        status: 'En línea'
+        role: 'Professional Caregiver',
+        status: 'Online'
       };
     }
   }
@@ -39,65 +40,102 @@ class CaregiverSidebar extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = `
       <style>
-        :host {
-          --sidebar-width: 280px;
-          --sidebar-collapsed: 80px;
-          --primary-color: #2563eb;
-          --primary-dark: #1d4ed8;
-          --secondary-color: #7c3aed;
-          --text-light: #ffffff;
-          --text-muted: rgba(255, 255, 255, 0.7);
-          --bg-hover: rgba(255, 255, 255, 0.1);
-          --bg-active: rgba(255, 255, 255, 0.15);
-          --border-color: rgba(255, 255, 255, 0.1);
-        }
-
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+        
         * {
           font-family: 'Inter', 'Poppins', sans-serif;
           box-sizing: border-box;
         }
-
-        .sidebar {
+        
+        nav {
           position: fixed;
-          top: 0; left: 0; bottom: 0;
-          width: var(--sidebar-width);
-          background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
-          color: var(--text-light);
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 350px;
+          background: linear-gradient(180deg, #1e40af 0%, #3b82f6 100%);
+          color: white;
           box-shadow: 4px 0 24px rgba(37, 99, 235, 0.15);
-          z-index: 1000;
           display: flex;
           flex-direction: column;
-          align-items: stretch;
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-          font-size: 1rem;
+          z-index: 1000;
+          transition: all 0.4s ease;
           overflow: hidden;
         }
-
-        .sidebar.collapsed {
-          width: var(--sidebar-collapsed);
+        
+        nav.minimized {
+          width: 90px;
         }
-
-        /* Header con logo */
-        .sidebar-header {
-          padding: 24px 20px 20px 20px;
+        
+        nav.minimized .sidebar-header {
+          padding: 10px 8px;
+          min-height: 60px;
+          justify-content: center;
+        }
+        
+        nav.minimized .user-info {
+          display: none;
+        }
+        
+        nav.minimized .sidebar-menu {
+          padding: 15px 0;
+        }
+        
+        nav.minimized .sidebar-btn {
+          padding: 15px 12px;
+          justify-content: center;
+        }
+        
+        nav.minimized .sidebar-btn span {
+          display: none;
+        }
+        
+        nav.minimized .sidebar-btn i {
+          font-size: 24px;
+          width: auto;
+        }
+        
+        nav.minimized .logo-text {
+          display: none;
+        }
+        
+        nav.minimized .logo-icon {
+          transform: scale(1.2);
+        }
+        
+        nav.minimized .logo-section {
+          padding: 15px 8px;
+          justify-content: center;
+        }
+        
+        .logo-section {
+          padding: 20px 25px;
           background: rgba(255, 255, 255, 0.05);
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           display: flex;
           align-items: center;
-          gap: 12px;
-          transition: all 0.3s;
+          justify-content: space-between;
           position: relative;
+        }
+        
+        .logo-content {
+          display: flex;
+          align-items: center;
+          gap: 10px;
           cursor: pointer;
-          user-select: none;
+          transition: all 0.3s;
+          padding: 8px;
+          border-radius: 12px;
         }
-
-        .sidebar-header:active {
+        
+        .logo-content:hover {
           background: rgba(255, 255, 255, 0.1);
+          transform: scale(1.05);
         }
-
+        
         .logo-icon {
-          width: 44px;
-          height: 44px;
+          width: 50px;
+          height: 50px;
           border-radius: 12px;
           background: rgba(255, 255, 255, 0.15);
           display: flex;
@@ -107,92 +145,87 @@ class CaregiverSidebar extends HTMLElement {
           overflow: hidden;
           transition: all 0.3s;
         }
-
-        .logo-icon:hover {
-          transform: scale(1.05);
-          box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-        }
-
-        .logo-icon img {
-          width: 28px;
-          height: 28px;
-          display: block;
-        }
-
+        
         .logo-text {
-          color: var(--text-light);
+          color: white;
           font-weight: 700;
-          font-size: 1.5rem;
+          font-size: 22px;
           margin: 0;
-          letter-spacing: 0.5px;
           transition: all 0.3s;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-
-        .sidebar.collapsed .logo-text {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-
-        /* Perfil del usuario */
-        .user-profile {
-          padding: 20px;
+        
+        .sidebar-header {
+          padding: 25px 30px;
           background: rgba(255, 255, 255, 0.05);
-          border-bottom: 1px solid var(--border-color);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           display: flex;
           align-items: center;
-          gap: 12px;
-          transition: all 0.3s;
+          justify-content: flex-start;
+          min-height: 120px;
+          position: relative;
         }
-
-        .sidebar.collapsed .user-profile {
-          padding: 16px 12px;
-          justify-content: center;
+        
+        .header-left {
+          display: flex;
+          align-items: center;
+          gap: 20px;
         }
-
-        .user-avatar {
-          width: 48px;
-          height: 48px;
-          border-radius: 50%;
-          border: 3px solid rgba(255, 255, 255, 0.2);
-          object-fit: cover;
-          transition: all 0.3s;
-        }
-
-        .sidebar.collapsed .user-avatar {
-          width: 40px;
-          height: 40px;
-        }
-
+        
         .user-info {
-          flex: 1;
-          min-width: 0;
-          transition: all 0.3s;
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          color: white;
         }
-
-        .sidebar.collapsed .user-info {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-
-        .user-name {
-          font-weight: 600;
-          font-size: 1rem;
-          margin: 0 0 4px 0;
-          white-space: nowrap;
+        
+        .user-photo {
+          width: 70px;
+          height: 70px;
+          border-radius: 50%;
+          background: #fff;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 28px;
+          color: #2563eb;
+          border: 3px solid rgba(255, 255, 255, 0.2);
           overflow: hidden;
-          text-overflow: ellipsis;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-
-        .user-role {
-          font-size: 0.875rem;
-          color: var(--text-muted);
+        
+        .user-photo img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        
+        .user-photo span {
+          font-size: 28px;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .user-details h4 {
           margin: 0;
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
+          font-size: 20px;
+          font-weight: 600;
+          color: white;
+          font-family: 'Poppins', sans-serif;
         }
-
+        
+        .user-details p {
+          margin: 0;
+          font-size: 16px;
+          opacity: 0.7;
+          color: rgba(255, 255, 255, 0.8);
+          font-family: 'Poppins', sans-serif;
+        }
+        
         .user-status {
           display: flex;
           align-items: center;
@@ -201,7 +234,7 @@ class CaregiverSidebar extends HTMLElement {
           color: #10b981;
           margin-top: 4px;
         }
-
+        
         .status-dot {
           width: 8px;
           height: 8px;
@@ -209,66 +242,13 @@ class CaregiverSidebar extends HTMLElement {
           background: #10b981;
           animation: pulse 2s infinite;
         }
-
+        
         @keyframes pulse {
           0%, 100% { opacity: 1; }
           50% { opacity: 0.5; }
         }
-
-        /* Búsqueda rápida */
-        .search-container {
-          padding: 16px 20px;
-          border-bottom: 1px solid var(--border-color);
-          transition: all 0.3s;
-        }
-
-        .sidebar.collapsed .search-container {
-          padding: 12px 8px;
-        }
-
-        .search-box {
-          position: relative;
-          transition: all 0.3s;
-        }
-
-        .sidebar.collapsed .search-box {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-
-        .search-input {
-          width: 100%;
-          padding: 10px 16px 10px 40px;
-          border: none;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.1);
-          color: var(--text-light);
-          font-size: 0.875rem;
-          transition: all 0.3s;
-          backdrop-filter: blur(10px);
-        }
-
-        .search-input::placeholder {
-          color: var(--text-muted);
-        }
-
-        .search-input:focus {
-          outline: none;
-          background: rgba(255, 255, 255, 0.15);
-          box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.2);
-        }
-
-        .search-icon {
-          position: absolute;
-          left: 12px;
-          top: 50%;
-          transform: translateY(-50%);
-          color: var(--text-muted);
-          font-size: 1rem;
-        }
-
-        /* Navegación */
-        .sidebar-nav {
+        
+        .sidebar-menu {
           flex: 1;
           display: flex;
           flex-direction: column;
@@ -276,34 +256,33 @@ class CaregiverSidebar extends HTMLElement {
           padding: 16px 12px;
           overflow-y: auto;
         }
-
+        
         .nav-section {
           margin-bottom: 16px;
         }
-
+        
         .nav-section-title {
           font-size: 0.75rem;
           font-weight: 600;
-          color: var(--text-muted);
+          color: rgba(255, 255, 255, 0.7);
           text-transform: uppercase;
           letter-spacing: 0.5px;
           margin: 0 0 8px 16px;
           transition: all 0.3s;
         }
-
-        .sidebar.collapsed .nav-section-title {
-          opacity: 0;
-          transform: translateX(-20px);
+        
+        nav.minimized .nav-section-title {
+          display: none;
         }
-
-        .nav-item {
+        
+        .sidebar-btn {
           display: flex;
           align-items: center;
           gap: 12px;
           padding: 12px 16px;
           font-size: 0.875rem;
           font-weight: 500;
-          color: var(--text-light);
+          color: white;
           border: none;
           background: none;
           cursor: pointer;
@@ -312,20 +291,22 @@ class CaregiverSidebar extends HTMLElement {
           outline: none;
           position: relative;
           text-decoration: none;
+          width: 100%;
+          text-align: left;
         }
-
-        .nav-item:hover {
-          background: var(--bg-hover);
+        
+        .sidebar-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
           transform: translateX(4px);
         }
-
-        .nav-item.active {
-          background: var(--bg-active);
-          color: var(--text-light);
+        
+        .sidebar-btn.active {
+          background: rgba(255, 255, 255, 0.15);
+          color: white;
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-
-        .nav-item.active::before {
+        
+        .sidebar-btn.active::before {
           content: '';
           position: absolute;
           left: 0;
@@ -333,373 +314,288 @@ class CaregiverSidebar extends HTMLElement {
           transform: translateY(-50%);
           width: 4px;
           height: 20px;
-          background: var(--text-light);
+          background: white;
           border-radius: 0 2px 2px 0;
         }
-
-        .nav-icon {
+        
+        .sidebar-btn i {
           font-size: 1.125rem;
           width: 20px;
           text-align: center;
           transition: all 0.3s;
+          display: inline-block;
+          font-style: normal;
+          font-variant: normal;
+          text-rendering: auto;
+          line-height: 1;
         }
-
-        .nav-text {
+        
+        .sidebar-btn i::before {
+          font-family: "bootstrap-icons" !important;
+          font-weight: normal !important;
+          font-style: normal !important;
+          font-variant: normal !important;
+          text-transform: none !important;
+          line-height: 1;
+          vertical-align: middle;
+        }
+        
+        .sidebar-btn span {
           flex: 1;
           transition: all 0.3s;
         }
-
-        .sidebar.collapsed .nav-text {
-          opacity: 0;
-          transform: translateX(-20px);
+        
+        nav.minimized .sidebar-btn span {
+          display: none;
         }
-
-        .nav-badge {
-          background: #ef4444;
-          color: white;
-          font-size: 0.75rem;
-          font-weight: 600;
-          padding: 2px 6px;
-          border-radius: 10px;
-          min-width: 18px;
-          text-align: center;
-          transition: all 0.3s;
+        
+        .sidebar-btn.logout-btn {
+          color: #ff4757;
         }
-
-        .sidebar.collapsed .nav-badge {
-          opacity: 0;
-          transform: translateX(-20px);
+        
+        .sidebar-btn.logout-btn:hover {
+          background: rgba(255, 71, 87, 0.1);
         }
-
-        /* Botón de colapso */
-        .toggle-btn {
-          position: absolute;
-          top: 20px;
-          right: -12px;
-          width: 24px;
-          height: 24px;
-          background: var(--text-light);
-          border: none;
-          border-radius: 50%;
-          color: var(--primary-color);
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
-          transition: all 0.3s;
-          z-index: 10;
-        }
-
-        .toggle-btn:hover {
-          transform: scale(1.1);
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-        }
-
-        .toggle-icon {
-          transition: transform 0.3s;
-        }
-
-        .sidebar.collapsed .toggle-icon {
-          transform: rotate(180deg);
-        }
-
-        /* Footer */
-        .sidebar-footer {
-          padding: 16px 20px;
-          border-top: 1px solid var(--border-color);
-          background: rgba(255, 255, 255, 0.05);
-        }
-
-        .sidebar.collapsed .sidebar-footer {
-          padding: 12px 8px;
-        }
-
-        .footer-actions {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
-        }
-
-        .footer-action {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          padding: 8px 12px;
-          color: var(--text-light);
-          text-decoration: none;
-          border-radius: 8px;
-          transition: all 0.3s;
-          font-size: 0.875rem;
-        }
-
-        .footer-action:hover {
-          background: var(--bg-hover);
-          text-decoration: none;
-          color: var(--text-light);
-        }
-
-        .sidebar.collapsed .footer-action span {
-          opacity: 0;
-          transform: translateX(-20px);
-        }
-
+        
         /* Scrollbar personalizada */
-        .sidebar-nav::-webkit-scrollbar {
+        .sidebar-menu::-webkit-scrollbar {
           width: 4px;
         }
-
-        .sidebar-nav::-webkit-scrollbar-track {
+        
+        .sidebar-menu::-webkit-scrollbar-track {
           background: transparent;
         }
-
-        .sidebar-nav::-webkit-scrollbar-thumb {
+        
+        .sidebar-menu::-webkit-scrollbar-thumb {
           background: rgba(255, 255, 255, 0.2);
           border-radius: 2px;
         }
-
-        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+        
+        .sidebar-menu::-webkit-scrollbar-thumb:hover {
           background: rgba(255, 255, 255, 0.3);
         }
-
+        
         /* Responsive */
         @media (max-width: 1024px) {
-          .sidebar {
+          nav {
             transform: translateX(-100%);
           }
-
-          .sidebar.mobile-open {
+          
+          nav.mobile-open {
             transform: translateX(0);
           }
-
-          .toggle-btn {
-            display: none;
-          }
-        }
-
-        /* Tooltip para sidebar colapsado */
-        .tooltip {
-          position: absolute;
-          left: 100%;
-          top: 50%;
-          transform: translateY(-50%);
-          background: #1f2937;
-          color: white;
-          padding: 8px 12px;
-          border-radius: 8px;
-          font-size: 0.875rem;
-          white-space: nowrap;
-          opacity: 0;
-          pointer-events: none;
-          transition: all 0.3s;
-          z-index: 1001;
-          margin-left: 12px;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-
-        .tooltip::before {
-          content: '';
-          position: absolute;
-          left: -4px;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 0;
-          height: 0;
-          border-top: 4px solid transparent;
-          border-bottom: 4px solid transparent;
-          border-right: 4px solid #1f2937;
-        }
-
-        .sidebar.collapsed .nav-item:hover .tooltip {
-          opacity: 1;
         }
       </style>
-
-      <div class="sidebar ${this.collapsed ? 'collapsed' : ''}">
-        <!-- Botón de colapso -->
-        <button class="toggle-btn" id="toggleBtn">
-          <i class="bi bi-chevron-left toggle-icon"></i>
-        </button>
-
-        <!-- Header con logo -->
-        <div class="sidebar-header" id="logoSection">
-          <div class="logo-icon">
-            <i class="bi bi-shield-heart-fill" style="color: white; font-size: 24px;"></i>
+      
+      <nav>
+        <!-- Logo section -->
+        <div class="logo-section">
+          <div class="logo-content" id="logo-toggle">
+            <img src="../../assets/Frame - 1.svg" alt="Logo" class="logo-icon">
+            <h1 class="logo-text">CareConnect</h1>
           </div>
-          <h1 class="logo-text">CareConnect</h1>
         </div>
-
-        <!-- Perfil del usuario -->
-        <div class="user-profile">
-          <img src="${this.userData?.photo || ''}" alt="Avatar" class="user-avatar" onerror="this.src='https://ui-avatars.com/api/?name=C&background=2563eb&color=fff&size=128&rounded=true'">
-          <div class="user-info">
-            <div class="user-name">${this.userData?.name || 'Cuidador'}</div>
-            <div class="user-role">${this.userData?.role || 'Cuidador Profesional'}</div>
-            <div class="user-status">
-              <div class="status-dot"></div>
-              <span>${this.userData?.status || 'En línea'}</span>
+        
+        <div class="sidebar-header">
+          <div class="header-left">
+            <div class="user-info">
+              <div class="user-photo">
+                <img src="${this.userData?.photo || ''}" alt="Avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span style="display: none;">${this.userData?.name?.charAt(0) || 'C'}</span>
+              </div>
+              <div class="user-details">
+                <h4>${this.userData?.name || 'Caregiver'}</h4>
+                <p>${this.userData?.role || 'Professional Caregiver'}</p>
+                <div class="user-status">
+                  <div class="status-dot"></div>
+                  <span>${this.userData?.status || 'Online'}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+        
+        <div class="sidebar-menu">
+          <div class="nav-section">
+            <div class="nav-section-title">Main</div>
+            <button class="sidebar-btn ${this.currentSection === 'overview' ? 'active' : ''}" data-section="overview">
+              <i class="bi bi-speedometer2"></i>
+              <span>Dashboard</span>
+            </button>
+            <button class="sidebar-btn ${this.currentSection === 'virtual-care' ? 'active' : ''}" data-section="virtual-care">
+              <i class="bi bi-camera-video-fill"></i>
+              <span>Virtual Care</span>
+            </button>
+            <button class="sidebar-btn ${this.currentSection === 'medication' ? 'active' : ''}" data-section="medication">
+              <i class="bi bi-pills"></i>
+              <span>Medications</span>
+            </button>
+          </div>
 
-        <!-- Búsqueda rápida -->
-        <div class="search-container">
-          <div class="search-box">
-            <i class="bi bi-search search-icon"></i>
-            <input type="text" class="search-input" placeholder="Buscar..." id="searchInput">
+          <div class="nav-section">
+            <div class="nav-section-title">Management</div>
+            <button class="sidebar-btn ${this.currentSection === 'documents' ? 'active' : ''}" data-section="documents">
+              <i class="bi bi-folder2-open"></i>
+              <span>Documents</span>
+            </button>
+            <button class="sidebar-btn ${this.currentSection === 'earnings' ? 'active' : ''}" data-section="earnings">
+              <i class="bi bi-cash-stack"></i>
+              <span>Earnings</span>
+            </button>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Account</div>
+            <button class="sidebar-btn ${this.currentSection === 'profile' ? 'active' : ''}" data-section="profile">
+              <i class="bi bi-person-badge"></i>
+              <span>My Profile</span>
+            </button>
+            <button class="sidebar-btn logout-btn" onclick="logout()">
+              <i class="bi bi-power"></i>
+              <span>Logout</span>
+            </button>
           </div>
         </div>
-
-        <!-- Navegación -->
-        <nav class="sidebar-nav">
-          <div class="nav-section">
-            <div class="nav-section-title">Principal</div>
-            <button class="nav-item ${this.currentSection === 'overview' ? 'active' : ''}" data-section="overview">
-              <i class="bi bi-house-door-fill nav-icon"></i>
-              <span class="nav-text">Dashboard</span>
-              <div class="tooltip">Dashboard</div>
-            </button>
-            <button class="nav-item ${this.currentSection === 'virtual-care' ? 'active' : ''}" data-section="virtual-care">
-              <i class="bi bi-camera-video-fill nav-icon"></i>
-              <span class="nav-text">Cuidado Virtual</span>
-              <div class="tooltip">Cuidado Virtual</div>
-            </button>
-            <button class="nav-item ${this.currentSection === 'medication' ? 'active' : ''}" data-section="medication">
-              <i class="bi bi-capsule nav-icon"></i>
-              <span class="nav-text">Medicamentos</span>
-              <div class="tooltip">Medicamentos</div>
-            </button>
-          </div>
-
-          <div class="nav-section">
-            <div class="nav-section-title">Gestión</div>
-            <button class="nav-item ${this.currentSection === 'documents' ? 'active' : ''}" data-section="documents">
-              <i class="bi bi-file-earmark-text nav-icon"></i>
-              <span class="nav-text">Documentos</span>
-              <div class="tooltip">Documentos</div>
-            </button>
-            <button class="nav-item ${this.currentSection === 'earnings' ? 'active' : ''}" data-section="earnings">
-              <i class="bi bi-graph-up nav-icon"></i>
-              <span class="nav-text">Ganancias</span>
-              <div class="tooltip">Ganancias</div>
-            </button>
-          </div>
-
-          <div class="nav-section">
-            <div class="nav-section-title">Cuenta</div>
-            <button class="nav-item ${this.currentSection === 'profile' ? 'active' : ''}" data-section="profile">
-              <i class="bi bi-person-circle nav-icon"></i>
-              <span class="nav-text">Mi Perfil</span>
-              <div class="tooltip">Mi Perfil</div>
-            </button>
-          </div>
-        </nav>
-
-        <!-- Footer -->
-        <div class="sidebar-footer">
-          <div class="footer-actions">
-            <a href="../../pages/login.html" class="footer-action">
-              <i class="bi bi-box-arrow-right"></i>
-              <span>Cerrar Sesión</span>
-            </a>
-            <a href="../../index.html" class="footer-action">
-              <i class="bi bi-house"></i>
-              <span>Ir al Inicio</span>
-            </a>
-          </div>
-        </div>
-      </div>
+      </nav>
     `;
   }
 
-  addListeners() {
-    // Toggle sidebar
-    const toggleBtn = this.shadowRoot.getElementById('toggleBtn');
-    toggleBtn.addEventListener('click', () => {
-      this.collapsed = !this.collapsed;
-      this.render();
-      this.dispatchEvent(new CustomEvent('sidebarToggle', {
-        detail: { collapsed: this.collapsed }
-      }));
-    });
-
-    // Navigation
-    const navItems = this.shadowRoot.querySelectorAll('.nav-item');
-    navItems.forEach(item => {
-      item.addEventListener('click', () => {
-        const section = item.dataset.section;
-        this.currentSection = section;
-        
-        // Update active state
-        navItems.forEach(nav => nav.classList.remove('active'));
-        item.classList.add('active');
-        
-        // Dispatch event
-        this.dispatchEvent(new CustomEvent('sectionChange', {
-          detail: { section: section }
-        }));
+  attachEvents() {
+    const menu = this.shadowRoot.querySelector('.sidebar-menu');
+    if (!menu) return;
+    
+    menu.querySelectorAll('.sidebar-btn').forEach(btn => {
+      if (btn.classList.contains('logout-btn')) return;
+      
+      btn.addEventListener('click', e => {
+        menu.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        this.showSection(btn.dataset.section);
       });
     });
-
-    // Search functionality
-    const searchInput = this.shadowRoot.getElementById('searchInput');
-    searchInput.addEventListener('input', (e) => {
-      const query = e.target.value.toLowerCase();
-      this.handleSearch(query);
-    });
-
-    // Logo click
-    const logoSection = this.shadowRoot.getElementById('logoSection');
-    logoSection.addEventListener('click', () => {
-      // Reset to overview
-      this.currentSection = 'overview';
-      this.render();
-      this.addListeners();
-      this.dispatchEvent(new CustomEvent('sectionChange', {
-        detail: { section: 'overview' }
-      }));
-    });
-
-    // Mobile responsive
-    if (window.innerWidth <= 1024) {
-      this.collapsed = true;
-      this.render();
-      this.addListeners();
+    
+    // Add event for logo as toggle button
+    const logoToggle = this.shadowRoot.querySelector('#logo-toggle');
+    if (logoToggle) {
+      logoToggle.addEventListener('click', () => {
+        this.toggleSidebar();
+      });
+    }
+    
+    // By default, activate the first section
+    const firstBtn = menu.querySelector('.sidebar-btn');
+    if (firstBtn) {
+      firstBtn.classList.add('active');
+      this.showSection(firstBtn.dataset.section);
     }
   }
 
-  handleSearch(query) {
-    if (query.length < 2) return;
-
-    // Simular búsqueda
-    const searchResults = [
-      { section: 'overview', title: 'Dashboard', description: 'Vista general del dashboard' },
-      { section: 'virtual-care', title: 'Cuidado Virtual', description: 'Sesiones de cuidado virtual' },
-      { section: 'medication', title: 'Medicamentos', description: 'Gestión de medicamentos' },
-      { section: 'documents', title: 'Documentos', description: 'Documentos y archivos' },
-      { section: 'earnings', title: 'Ganancias', description: 'Estadísticas de ganancias' },
-      { section: 'profile', title: 'Mi Perfil', description: 'Configuración del perfil' }
-    ];
-
-    const results = searchResults.filter(item => 
-      item.title.toLowerCase().includes(query) || 
-      item.description.toLowerCase().includes(query)
-    );
-
-    if (results.length > 0) {
-      // Mostrar resultados (aquí se puede implementar un dropdown)
-      console.log('Resultados de búsqueda:', results);
-      
-      // Por ahora, navegar al primer resultado
-      if (results[0]) {
-        this.currentSection = results[0].section;
-        this.render();
-        this.addListeners();
-        this.dispatchEvent(new CustomEvent('sectionChange', {
-          detail: { section: results[0].section }
-        }));
+  toggleSidebar() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const main = document.getElementById('mainContent');
+    this.isCollapsed = !this.isCollapsed;
+    if (this.isCollapsed) {
+      nav.classList.add('minimized');
+      if (main) {
+        main.classList.add('sidebar-collapsed');
+        main.style.marginLeft = '90px';
+      }
+    } else {
+      nav.classList.remove('minimized');
+      if (main) {
+        main.classList.remove('sidebar-collapsed');
+        main.style.marginLeft = '350px';
       }
     }
+    // Dispatch custom event
+    document.dispatchEvent(new CustomEvent('sidebarToggle', {
+      detail: { collapsed: this.isCollapsed }
+    }));
+  }
+
+  showSidebar() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const main = document.getElementById('mainContent');
+    
+    nav.classList.remove('minimized');
+    if (main) {
+      main.classList.remove('sidebar-collapsed');
+      main.style.marginLeft = '350px';
+    }
+    this.isCollapsed = false;
+  }
+
+  hideSidebar() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const main = document.getElementById('mainContent');
+    
+    nav.classList.add('minimized');
+    if (main) {
+      main.classList.add('sidebar-collapsed');
+      main.style.marginLeft = '90px';
+    }
+    this.isCollapsed = true;
+  }
+
+  adjustMainContent() {
+    const main = document.getElementById('mainContent');
+    const nav = this.shadowRoot.querySelector('nav');
+    if (main) {
+      main.style.transition = 'margin-left 0.4s ease';
+    }
+    // Initialize sidebar expanded by default on all devices
+    if (nav) {
+      nav.classList.remove('minimized');
+      if (main) {
+        main.classList.remove('sidebar-collapsed');
+        main.style.marginLeft = '350px';
+      }
+    }
+  }
+
+  showSection(section) {
+    const main = document.getElementById('dashboard-content');
+    if (!main) return;
+    
+    // Add smooth but short transition
+    main.style.transition = 'opacity 0.2s ease';
+    main.style.opacity = '0';
+    
+    setTimeout(() => {
+      main.innerHTML = '';
+      let sectionContent = '';
+      
+      switch(section) {
+        case 'overview':
+          sectionContent = '<caregiver-overview></caregiver-overview>';
+          break;
+        case 'virtual-care':
+          sectionContent = '<virtual-care></virtual-care>';
+          break;
+        case 'medication':
+          sectionContent = '<medication-management></medication-management>';
+          break;
+        case 'documents':
+          sectionContent = '<caregiver-documents></caregiver-documents>';
+          break;
+        case 'earnings':
+          sectionContent = '<earnings-statistics></earnings-statistics>';
+          break;
+        case 'profile':
+          sectionContent = '<caregiver-profile-section></caregiver-profile-section>';
+          break;
+        default:
+          sectionContent = '<caregiver-overview></caregiver-overview>';
+      }
+      
+      main.innerHTML = sectionContent;
+      main.style.opacity = '1';
+      
+      // Dispatch custom event
+      document.dispatchEvent(new CustomEvent('sectionChange', {
+        detail: { section: section }
+      }));
+    }, 200);
   }
 }
 
