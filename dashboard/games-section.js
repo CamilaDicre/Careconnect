@@ -560,12 +560,20 @@ class GamesSection extends HTMLElement {
           box-shadow: 0 6px 15px rgba(255, 152, 0, 0.3);
         }
 
+        .word-restart-btn {
+          background: linear-gradient(135deg, #4caf50, #45a049);
+        }
+
+        .word-restart-btn:hover {
+          box-shadow: 0 6px 15px rgba(76, 175, 80, 0.3);
+        }
+
         .game-over-modal {
           position: fixed;
           top: 0;
           left: 0;
-          width: 100%;
-          height: 100%;
+          width: 100vw;
+          height: 100vh;
           background: rgba(0, 0, 0, 0.8);
           display: flex;
           align-items: center;
@@ -1144,13 +1152,14 @@ class GamesSection extends HTMLElement {
 
   startWordGame(container) {
     const words = ['HEALTH', 'CARE', 'DOCTOR', 'MEDICINE', 'PATIENT', 'HOSPITAL'];
-    const currentWord = words[Math.floor(Math.random() * words.length)];
+    this.currentWord = words[Math.floor(Math.random() * words.length)];
     let guessedLetters = new Set();
     let wrongGuesses = 0;
     const maxWrongGuesses = 6;
+    let gameEnded = false;
 
     const renderWordGame = () => {
-      const displayWord = currentWord.split('').map(letter => 
+      const displayWord = this.currentWord.split('').map(letter => 
         guessedLetters.has(letter) ? letter : '_'
       ).join(' ');
 
@@ -1175,10 +1184,13 @@ class GamesSection extends HTMLElement {
       const letterButtons = container.querySelectorAll('.letter-btn');
       letterButtons.forEach(button => {
         button.addEventListener('click', () => {
+          if (gameEnded) {
+            return;
+          }
           const letter = button.dataset.letter;
           guessedLetters.add(letter);
           
-          if (currentWord.includes(letter)) {
+          if (this.currentWord.includes(letter)) {
             this.score += 5;
             this.updateScore();
             button.classList.add('correct');
@@ -1187,22 +1199,57 @@ class GamesSection extends HTMLElement {
             button.classList.add('incorrect');
           }
           
-          setTimeout(() => {
-            if (currentWord.split('').every(letter => guessedLetters.has(letter))) {
-              this.score += 20;
-              this.updateScore();
-              this.endGame();
-            } else if (wrongGuesses >= maxWrongGuesses) {
-              this.endGame();
-            } else {
+          // Check win/loss conditions immediately
+          const hasWon = this.currentWord.split('').every(letter => guessedLetters.has(letter));
+          const hasLost = wrongGuesses >= maxWrongGuesses;
+          
+          if (hasWon || hasLost) {
+            // Set game ended immediately to prevent further interaction
+            gameEnded = true;
+            
+            setTimeout(() => {
+              if (hasWon) {
+                this.score += 20;
+                this.updateScore();
+                this.showWordGameResult(true);
+              } else {
+                this.showWordGameResult(false);
+              }
+            }, 1000);
+          } else {
+            setTimeout(() => {
               renderWordGame();
-            }
-          }, 1000);
+            }, 1000);
+          }
         });
       });
     };
 
     renderWordGame();
+  }
+
+  showWordGameResult(won) {
+    const container = this.shadowRoot.querySelector('#gameBoard');
+    
+    const resultTitle = won ? '🎉 Congratulations! You Won!' : '😔 Try Again!';
+    const resultMessage = won ? `You found the word: ${this.currentWord}` : `The word was: ${this.currentWord}`;
+    
+    container.innerHTML = `
+      <div style="text-align: center; margin: 30px 0;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: ${won ? '#4caf50' : '#f44336'}; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          ${resultTitle}
+        </h2>
+        <div style="font-size: 1.5rem; color: #333; margin-bottom: 30px; font-weight: 600;">
+          ${resultMessage}
+        </div>
+        <div style="font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Final Score: ${this.score} points
+        </div>
+      </div>
+    `;
+    
+    // Show custom buttons for Word Search game
+    this.showWordGameButtons();
   }
 
   startColorGame(container) {
@@ -1478,21 +1525,21 @@ class GamesSection extends HTMLElement {
           </div>
           <div class="modal-buttons">
             ${nextLevel <= this.maxLevel ? `
-              <button class="modal-btn continue-btn" onclick="this.parentElement.parentElement.parentElement.remove(); this.parentElement.parentElement.parentElement.parentElement.shadowRoot.querySelector('#continueBtn').click();">
+              <button class="modal-btn continue-btn" id="modalContinueBtn">
                 <i class="bi bi-arrow-right-circle"></i>
                 Continue to Level ${nextLevel}
               </button>
             ` : `
-              <button class="modal-btn continue-btn" onclick="this.parentElement.parentElement.parentElement.remove(); this.parentElement.parentElement.parentElement.parentElement.shadowRoot.querySelector('#restartBtn').click();">
+              <button class="modal-btn continue-btn" id="modalPlayAgainBtn">
                 <i class="bi bi-trophy"></i>
                 Play Again
               </button>
             `}
-            <button class="modal-btn play-again-btn" onclick="this.parentElement.parentElement.parentElement.remove(); this.parentElement.parentElement.parentElement.parentElement.shadowRoot.querySelector('#restartBtn').click();">
+            <button class="modal-btn play-again-btn" id="modalRestartBtn">
               <i class="bi bi-play-circle"></i>
               Restart Game
             </button>
-            <button class="modal-btn close-btn" onclick="this.parentElement.parentElement.parentElement.remove(); this.parentElement.parentElement.parentElement.parentElement.shadowRoot.querySelector('#backBtn').click();">
+            <button class="modal-btn close-btn" id="modalBackBtn">
               <i class="bi bi-x-circle"></i>
               Back to Games
             </button>
@@ -1501,7 +1548,42 @@ class GamesSection extends HTMLElement {
       </div>
     `;
     
-    document.body.insertAdjacentHTML('beforeend', modalHTML);
+    // Insert modal within the shadow DOM instead of document.body
+    this.shadowRoot.insertAdjacentHTML('beforeend', modalHTML);
+    
+    // Add event listeners for modal buttons
+    const modalContinueBtn = this.shadowRoot.querySelector('#modalContinueBtn');
+    const modalPlayAgainBtn = this.shadowRoot.querySelector('#modalPlayAgainBtn');
+    const modalRestartBtn = this.shadowRoot.querySelector('#modalRestartBtn');
+    const modalBackBtn = this.shadowRoot.querySelector('#modalBackBtn');
+    
+    if (modalContinueBtn) {
+      modalContinueBtn.addEventListener('click', () => {
+        this.shadowRoot.querySelector('.game-over-modal').remove();
+        this.shadowRoot.querySelector('#continueBtn').click();
+      });
+    }
+    
+    if (modalPlayAgainBtn) {
+      modalPlayAgainBtn.addEventListener('click', () => {
+        this.shadowRoot.querySelector('.game-over-modal').remove();
+        this.shadowRoot.querySelector('#restartBtn').click();
+      });
+    }
+    
+    if (modalRestartBtn) {
+      modalRestartBtn.addEventListener('click', () => {
+        this.shadowRoot.querySelector('.game-over-modal').remove();
+        this.shadowRoot.querySelector('#restartBtn').click();
+      });
+    }
+    
+    if (modalBackBtn) {
+      modalBackBtn.addEventListener('click', () => {
+        this.shadowRoot.querySelector('.game-over-modal').remove();
+        this.shadowRoot.querySelector('#backBtn').click();
+      });
+    }
   }
 
   continueGame() {
@@ -1602,6 +1684,60 @@ class GamesSection extends HTMLElement {
 
   getCurrentLevelConfig() {
     return this.levelConfig[this.level] || this.levelConfig[1];
+  }
+
+  showWordGameButtons() {
+    const gameControls = this.shadowRoot.querySelector('.game-controls');
+    
+    // Hide default buttons
+    const continueBtn = this.shadowRoot.querySelector('#continueBtn');
+    const restartBtn = this.shadowRoot.querySelector('#restartBtn');
+    const backBtn = this.shadowRoot.querySelector('#backBtn');
+    
+    if (continueBtn) continueBtn.style.display = 'none';
+    if (restartBtn) restartBtn.style.display = 'none';
+    if (backBtn) backBtn.style.display = 'none';
+    
+    // Create custom buttons for Word Search
+    gameControls.innerHTML = `
+      <button class="game-btn word-restart-btn" id="wordRestartBtn">
+        <i class="bi bi-play-circle"></i>
+        Restart
+      </button>
+      <button class="back-btn" id="wordBackBtn">
+        <i class="bi bi-arrow-left"></i>
+        Back to Games
+      </button>
+    `;
+    
+    // Add event listeners for Word Search buttons
+    const wordRestartBtn = this.shadowRoot.querySelector('#wordRestartBtn');
+    const wordBackBtn = this.shadowRoot.querySelector('#wordBackBtn');
+    
+    wordRestartBtn.addEventListener('click', () => {
+      this.restartWordGame();
+    });
+    
+    wordBackBtn.addEventListener('click', () => {
+      this.showGamesList();
+    });
+  }
+
+  restartWordGame() {
+    // Hide the Restart button immediately when clicked
+    const wordRestartBtn = this.shadowRoot.querySelector('#wordRestartBtn');
+    if (wordRestartBtn) {
+      wordRestartBtn.style.display = 'none';
+    }
+    
+    // Reset score and level for Word Search
+    this.score = 0;
+    this.level = 1;
+    this.updateScore();
+    
+    // Restart the Word Search game
+    const gameBoard = this.shadowRoot.querySelector('#gameBoard');
+    this.startWordGame(gameBoard);
   }
 
   showGamesList() {
