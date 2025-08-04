@@ -661,7 +661,7 @@ class FooterComponent extends HTMLElement {
                             <ul class="footer-links">
                                 <li><a href="index.html">Home</a></li>
                                 <li><a href="pages/about.html">About</a></li>
-                                <li><a href="departments.html">Services</a></li>
+                                <li><a href="pages/articles.html">Articles</a></li>
                                 <li><a href="contact.html">Contact</a></li>
                             </ul>
                         </div>
