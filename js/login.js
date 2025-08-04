@@ -8,6 +8,9 @@ const users = [
   ];
   
   document.addEventListener("DOMContentLoaded", () => {
+    // Verificar y restaurar admin Ameth al cargar la página
+    verifyAndRestoreAmethAdmin();
+    
     const loginToggle = document.getElementById("loginToggle");
     const loginForm = document.getElementById("loginForm");
     const signupButton = document.getElementById("signupButton");
@@ -179,7 +182,7 @@ const users = [
       // Verificar si localStorage está disponible
       if (!LocalStorageUtils.isAvailable()) {
         console.warn('localStorage is not available');
-        return getDefaultUsers();
+        return ensureAmethAdmin(getDefaultUsers());
       }
       
       const users = LocalStorageUtils.getItem('users', []);
@@ -187,7 +190,7 @@ const users = [
       // Validar que sea un array
       if (!Array.isArray(users)) {
         console.warn('Users data is not an array, resetting to default');
-        return getDefaultUsers();
+        return ensureAmethAdmin(getDefaultUsers());
       }
       
       // Validar que cada usuario tenga los campos requeridos
@@ -204,10 +207,18 @@ const users = [
         saveUsers(validUsers);
       }
       
-      return validUsers;
+      // Siempre asegurar que Ameth esté presente
+      const usersWithAmeth = ensureAmethAdmin(validUsers);
+      
+      // Si se agregó Ameth, guardar los cambios
+      if (usersWithAmeth.length > validUsers.length) {
+        saveUsers(usersWithAmeth);
+      }
+      
+      return usersWithAmeth;
     } catch (error) {
       console.error('Error getting users from localStorage:', error);
-      return getDefaultUsers();
+      return ensureAmethAdmin(getDefaultUsers());
     }
   }
   
@@ -215,7 +226,6 @@ const users = [
     const defaultUsers = [
       { username: "admin", password: "admin123", role: "admin", email: "admin@careconnect.com", id: "admin1" },
       { username: "usuario", password: "pass123", role: "paciente", email: "usuario@careconnect.com", id: "user1" },
-      { username: "Ameth", password: "password123", role: "admin", email: "ameth@careconnect.com", id: "ameth1" },
       { username: "Josue", password: "testpass456", role: "cuidador", email: "josue@careconnect.com", id: "josue1" },
     ];
     
@@ -224,6 +234,105 @@ const users = [
     }
     return defaultUsers;
   }
+  
+  // Función para crear el admin permanente Ameth
+  function createPermanentAdminAmeth() {
+    const amethAdmin = {
+      username: "Ameth",
+      password: "Ameth2024!", // Contraseña más segura
+      role: "admin",
+      email: "ameth@careconnect.com",
+      id: "ameth-permanent-admin",
+      isPermanent: true, // Marca para identificar admin permanente
+      createdAt: new Date().toISOString(),
+      permissions: ["all"], // Permisos completos
+      canDelete: false, // No se puede eliminar
+      canModify: false // No se puede modificar
+    };
+    
+    return amethAdmin;
+  }
+  
+  // Función para asegurar que Ameth siempre esté presente
+  function ensureAmethAdmin(users) {
+    const amethExists = users.find(u => u.username === "Ameth" && u.isPermanent);
+    
+    if (!amethExists) {
+      const amethAdmin = createPermanentAdminAmeth();
+      users.push(amethAdmin);
+      console.log('✅ Admin permanente Ameth creado/restaurado');
+    }
+    
+    return users;
+  }
+  
+  // Función para verificar y restaurar el admin Ameth
+  function verifyAndRestoreAmethAdmin() {
+    try {
+      const users = getUsers();
+      const amethExists = users.find(u => u.username === "Ameth" && u.isPermanent);
+      
+      if (!amethExists) {
+        console.log('🔄 Restaurando admin permanente Ameth...');
+        const usersWithAmeth = ensureAmethAdmin(users);
+        saveUsers(usersWithAmeth);
+        console.log('✅ Admin Ameth restaurado exitosamente');
+        return true;
+      }
+      
+      console.log('✅ Admin Ameth ya existe y está protegido');
+      return true;
+    } catch (error) {
+      console.error('❌ Error al verificar/restaurar admin Ameth:', error);
+      return false;
+    }
+  }
+  
+  // Función para verificar el estado del admin Ameth (disponible globalmente)
+  window.checkAmethAdminStatus = function() {
+    try {
+      const users = getUsers();
+      const ameth = users.find(u => u.username === "Ameth");
+      
+      if (!ameth) {
+        console.log('❌ Admin Ameth NO existe');
+        return false;
+      }
+      
+      console.log('🔍 Estado del Admin Ameth:');
+      console.log('  - Usuario:', ameth.username);
+      console.log('  - Email:', ameth.email);
+      console.log('  - Rol:', ameth.role);
+      console.log('  - Es permanente:', ameth.isPermanent);
+      console.log('  - Puede eliminar:', ameth.canDelete);
+      console.log('  - Puede modificar:', ameth.canModify);
+      console.log('  - Permisos:', ameth.permissions);
+      console.log('  - ID:', ameth.id);
+      
+      if (ameth.isPermanent) {
+        console.log('✅ Admin Ameth está protegido y es permanente');
+        return true;
+      } else {
+        console.log('⚠️ Admin Ameth existe pero NO está protegido');
+        return false;
+      }
+    } catch (error) {
+      console.error('❌ Error al verificar estado de Ameth:', error);
+      return false;
+    }
+  };
+  
+  // Función para restaurar manualmente el admin Ameth (disponible globalmente)
+  window.restoreAmethAdmin = function() {
+    console.log('🔄 Restaurando admin Ameth manualmente...');
+    const result = verifyAndRestoreAmethAdmin();
+    if (result) {
+      console.log('✅ Admin Ameth restaurado exitosamente');
+    } else {
+      console.log('❌ Error al restaurar admin Ameth');
+    }
+    return result;
+  };
   
   function saveUsers(users) {
     try {
@@ -245,8 +354,11 @@ const users = [
         console.warn('Some users were invalid and were filtered out');
       }
       
+      // Proteger al admin permanente Ameth
+      const usersToSave = ensureAmethAdmin(validUsers);
+      
       // Guardar usando las utilidades
-      return LocalStorageUtils.setItem('users', validUsers, 5000000); // 5MB límite
+      return LocalStorageUtils.setItem('users', usersToSave, 5000000); // 5MB límite
     } catch (error) {
       console.error('Error saving users to localStorage:', error);
       alert('Error al guardar usuarios. Por favor, verifica el espacio de almacenamiento.');
