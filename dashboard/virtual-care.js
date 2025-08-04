@@ -53,504 +53,539 @@ class VirtualCare extends HTMLElement {
         }
         
         .virtual-care-container {
-          padding: 20px;
-          max-width: 1200px;
+          padding: 30px;
+          max-width: 1400px;
           margin: 0 auto;
+          min-height: calc(100vh - 200px);
         }
-        
-        .header {
+
+        .virtual-care-hero {
+          background: linear-gradient(135deg, #6f42c1 0%, #8e44ad 100%);
+          border-radius: 25px;
+          padding: 40px;
+          margin-bottom: 30px;
+          color: white;
+          text-align: center;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 15px 35px rgba(111, 66, 193, 0.3);
+        }
+
+        .virtual-care-hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
+          pointer-events: none;
+        }
+
+        .hero-content {
+          position: relative;
+          z-index: 2;
+        }
+
+        .virtual-care-title {
+          font-size: 3rem;
+          font-weight: 700;
+          margin-bottom: 10px;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .virtual-care-subtitle {
+          font-size: 1.2rem;
+          opacity: 0.9;
+          margin-bottom: 20px;
+        }
+
+        .stats-bar {
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+          margin-top: 20px;
+        }
+
+        .stat-item {
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
+          padding: 15px 25px;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+          font-size: 1.5rem;
+          font-weight: 700;
+          display: block;
+        }
+
+        .stat-label {
+          font-size: 0.9rem;
+          opacity: 0.8;
+        }
+
+        .controls-section {
+          background: white;
+          border-radius: 20px;
+          padding: 25px;
+          margin-bottom: 30px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 30px;
           flex-wrap: wrap;
           gap: 20px;
         }
-        
-        .header h2 {
-          color: #1976d2;
-          margin: 0;
-          font-family: 'Poppins', sans-serif;
-          font-size: 28px;
-          font-weight: 600;
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        
+
         .start-session-btn {
           background: linear-gradient(135deg, #28a745, #20c997);
           color: white;
           border: none;
-          padding: 12px 24px;
-          border-radius: 12px;
-          cursor: pointer;
-          font-family: 'Poppins', sans-serif;
-          font-size: 16px;
-          font-weight: 600;
-          transition: all 0.3s;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        
-        .start-session-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(40, 167, 69, 0.3);
-        }
-        
-        .stats-row {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 20px;
-          margin-bottom: 30px;
-        }
-        
-        .stat-card {
-          background: white;
-          padding: 20px;
-          border-radius: 12px;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-          text-align: center;
-        }
-        
-        .stat-number {
-          font-size: 32px;
-          font-weight: 700;
-          color: #1976d2;
-          margin-bottom: 5px;
-        }
-        
-        .stat-label {
-          font-size: 14px;
-          color: #666;
-          font-weight: 500;
-        }
-        
-        .content-grid {
-          display: grid;
-          grid-template-columns: 2fr 1fr;
-          gap: 30px;
-        }
-        
-        .sessions-section {
-          background: white;
-          padding: 30px;
+          padding: 15px 25px;
           border-radius: 15px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .section-title {
-          font-size: 24px;
+          cursor: pointer;
+          font-size: 1rem;
           font-weight: 600;
-          color: #333;
-          margin-bottom: 20px;
+          transition: all 0.3s ease;
           display: flex;
           align-items: center;
           gap: 10px;
+          box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
         }
-        
-        .session-item {
+
+        .start-session-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
+        }
+
+        .filter-controls {
           display: flex;
+          gap: 15px;
           align-items: center;
-          gap: 20px;
-          padding: 20px;
+        }
+
+        .filter-btn {
+          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          color: #495057;
+          border: none;
+          padding: 10px 20px;
           border-radius: 12px;
-          background: #f8f9fa;
-          margin-bottom: 15px;
-          transition: all 0.3s;
-          border-left: 4px solid transparent;
-        }
-        
-        .session-item:hover {
-          background: #e3f2fd;
-          transform: translateX(5px);
-        }
-        
-        .session-item.scheduled {
-          border-left-color: #1976d2;
-          background: #e3f2fd;
-        }
-        
-        .session-item.completed {
-          border-left-color: #28a745;
-          background: #d4edda;
-        }
-        
-        .session-item.upcoming {
-          border-left-color: #ffc107;
-          background: #fff3cd;
-        }
-        
-        .session-avatar {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          background: #1976d2;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: white;
-          font-size: 24px;
+          cursor: pointer;
+          font-size: 0.9rem;
           font-weight: 600;
+          transition: all 0.3s ease;
         }
-        
-        .session-content {
+
+        .filter-btn.active {
+          background: linear-gradient(135deg, #6f42c1, #8e44ad);
+          color: white;
+        }
+
+        .filter-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sessions-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+          gap: 25px;
+          margin-bottom: 30px;
+        }
+
+        .session-card {
+          background: white;
+          border-radius: 20px;
+          padding: 25px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+          transition: all 0.3s ease;
+          border: 2px solid transparent;
+          position: relative;
+          overflow: hidden;
+        }
+
+        .session-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(135deg, #6f42c1, #8e44ad);
+          transform: scaleX(0);
+          transition: transform 0.3s ease;
+        }
+
+        .session-card:hover {
+          transform: translateY(-8px);
+          box-shadow: 0 15px 40px rgba(111, 66, 193, 0.15);
+          border-color: #6f42c1;
+        }
+
+        .session-card:hover::before {
+          transform: scaleX(1);
+        }
+
+        .session-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: flex-start;
+          margin-bottom: 20px;
+        }
+
+        .session-info {
           flex: 1;
         }
-        
-        .session-title {
-          font-size: 18px;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 5px;
-        }
-        
-        .session-subtitle {
-          font-size: 14px;
-          color: #666;
-          margin-bottom: 8px;
-        }
-        
-        .session-notes {
-          font-size: 12px;
-          color: #888;
-          font-style: italic;
-        }
-        
-        .session-time {
-          text-align: center;
-          min-width: 80px;
-        }
-        
-        .time-main {
-          font-size: 16px;
+
+        .session-type {
+          font-size: 1.2rem;
           font-weight: 700;
           color: #333;
-          margin-bottom: 2px;
+          margin-bottom: 8px;
         }
-        
-        .time-duration {
-          font-size: 12px;
+
+        .session-caregiver {
+          font-size: 1rem;
           color: #666;
+          margin-bottom: 5px;
         }
-        
-        .session-status {
-          padding: 6px 12px;
-          border-radius: 20px;
-          font-size: 12px;
+
+        .session-time {
+          font-size: 0.9rem;
+          color: #6f42c1;
           font-weight: 600;
-          font-family: 'Poppins', sans-serif;
         }
-        
+
+        .session-status {
+          padding: 8px 15px;
+          border-radius: 20px;
+          font-size: 0.8rem;
+          font-weight: 600;
+          text-transform: uppercase;
+        }
+
         .status-scheduled {
-          background: #e3f2fd;
-          color: #1976d2;
-        }
-        
-        .status-completed {
-          background: #d4edda;
-          color: #155724;
-        }
-        
-        .status-upcoming {
-          background: #fff3cd;
+          background: linear-gradient(135deg, #fff3cd, #ffeaa7);
           color: #856404;
         }
-        
+
+        .status-completed {
+          background: linear-gradient(135deg, #d4edda, #c3e6cb);
+          color: #155724;
+        }
+
+        .status-upcoming {
+          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+          color: #1976d2;
+        }
+
+        .session-details {
+          margin-bottom: 20px;
+        }
+
+        .detail-row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 8px;
+          padding: 8px 0;
+          border-bottom: 1px solid #f0f0f0;
+        }
+
+        .detail-label {
+          font-weight: 600;
+          color: #666;
+          font-size: 0.9rem;
+        }
+
+        .detail-value {
+          color: #333;
+          font-weight: 500;
+        }
+
         .session-actions {
           display: flex;
           gap: 10px;
         }
-        
+
         .action-btn {
-          padding: 8px 12px;
-          border: none;
-          border-radius: 6px;
-          font-size: 12px;
-          font-weight: 500;
-          cursor: pointer;
-          transition: all 0.3s;
-          font-family: 'Poppins', sans-serif;
-        }
-        
-        .btn-join {
-          background: #28a745;
-          color: white;
-        }
-        
-        .btn-join:hover {
-          background: #218838;
-        }
-        
-        .btn-view {
-          background: #1976d2;
-          color: white;
-        }
-        
-        .btn-view:hover {
-          background: #1565c0;
-        }
-        
-        .tools-section {
-          background: white;
-          padding: 30px;
-          border-radius: 15px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-        }
-        
-        .tool-item {
-          display: flex;
-          align-items: center;
-          gap: 15px;
-          padding: 15px;
-          background: #f8f9fa;
+          flex: 1;
+          padding: 12px;
           border: none;
           border-radius: 12px;
+          font-weight: 600;
           cursor: pointer;
           transition: all 0.3s ease;
-          width: 100%;
-          margin-bottom: 15px;
-          font-family: 'Poppins', sans-serif;
-          font-size: 16px;
-          font-weight: 500;
-          color: #333;
+          font-size: 0.9rem;
         }
-        
-        .tool-item:hover {
-          background: #e3f2fd;
-          transform: translateX(5px);
+
+        .join-btn {
+          background: linear-gradient(135deg, #28a745, #20c997);
+          color: white;
         }
-        
-        .tool-item i {
-          font-size: 20px;
-          color: #1976d2;
-        }
-        
-        .quick-actions {
-          background: white;
-          padding: 30px;
-          border-radius: 15px;
-          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-          margin-top: 30px;
-        }
-        
-        .action-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 15px;
-          margin-top: 20px;
-        }
-        
-        .action-card {
-          background: #f8f9fa;
-          padding: 20px;
-          border-radius: 12px;
-          text-align: center;
-          cursor: pointer;
-          transition: all 0.3s;
-        }
-        
-        .action-card:hover {
-          background: #e3f2fd;
+
+        .join-btn:hover {
           transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
         }
-        
-        .action-icon {
-          font-size: 32px;
-          color: #1976d2;
-          margin-bottom: 10px;
+
+        .reschedule-btn {
+          background: linear-gradient(135deg, #ffc107, #ff9800);
+          color: white;
         }
-        
-        .action-title {
-          font-size: 16px;
-          font-weight: 600;
-          color: #333;
-          margin-bottom: 5px;
+
+        .reschedule-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(255, 193, 7, 0.3);
         }
-        
-        .action-desc {
-          font-size: 12px;
+
+        .cancel-btn {
+          background: linear-gradient(135deg, #dc3545, #c82333);
+          color: white;
+        }
+
+        .cancel-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(220, 53, 69, 0.3);
+        }
+
+        .view-btn {
+          background: linear-gradient(135deg, #17a2b8, #138496);
+          color: white;
+        }
+
+        .view-btn:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+        }
+
+        .empty-state {
+          text-align: center;
+          padding: 60px 20px;
           color: #666;
         }
-        
+
+        .empty-icon {
+          font-size: 4rem;
+          margin-bottom: 20px;
+          opacity: 0.5;
+        }
+
+        .empty-title {
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 10px;
+          color: #333;
+        }
+
+        .empty-description {
+          font-size: 1rem;
+          margin-bottom: 30px;
+        }
+
+        .quick-actions {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+          gap: 20px;
+          margin-bottom: 30px;
+        }
+
+        .quick-action-card {
+          background: white;
+          border-radius: 15px;
+          padding: 25px;
+          box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+          text-align: center;
+          transition: all 0.3s ease;
+          cursor: pointer;
+        }
+
+        .quick-action-card:hover {
+          transform: translateY(-5px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .quick-action-icon {
+          font-size: 2.5rem;
+          margin-bottom: 15px;
+          display: block;
+        }
+
+        .quick-action-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 10px;
+        }
+
+        .quick-action-description {
+          font-size: 0.9rem;
+          color: #666;
+        }
+
         @media (max-width: 768px) {
-          .content-grid {
-            grid-template-columns: 1fr;
-            gap: 20px;
+          .virtual-care-container {
+            padding: 20px;
           }
           
-          .stats-row {
-            grid-template-columns: repeat(2, 1fr);
+          .virtual-care-title {
+            font-size: 2rem;
           }
           
-          .header {
+          .stats-bar {
+            flex-direction: column;
+            gap: 15px;
+          }
+          
+          .controls-section {
             flex-direction: column;
             align-items: stretch;
           }
           
-          .session-item {
-            flex-direction: column;
-            text-align: center;
+          .filter-controls {
+            justify-content: center;
           }
           
-          .session-actions {
-            justify-content: center;
-            margin-top: 10px;
+          .sessions-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .quick-actions {
+            grid-template-columns: 1fr;
           }
         }
       </style>
       
       <div class="virtual-care-container">
-        <div class="header">
-          <h2>
+        <div class="virtual-care-hero">
+          <div class="hero-content">
+            <h1 class="virtual-care-title">📹 Virtual Care</h1>
+            <p class="virtual-care-subtitle">Connect with your caregivers remotely for consultations and check-ins</p>
+            <div class="stats-bar">
+              <div class="stat-item">
+                <span class="stat-number">${sessions.length}</span>
+                <span class="stat-label">Total Sessions</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">${sessions.filter(s => s.status === 'completed').length}</span>
+                <span class="stat-label">Completed</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">${sessions.filter(s => s.status === 'scheduled').length}</span>
+                <span class="stat-label">Scheduled</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="quick-actions">
+          <div class="quick-action-card">
+            <span class="quick-action-icon">📞</span>
+            <div class="quick-action-title">Emergency Call</div>
+            <div class="quick-action-description">Connect immediately with your caregiver</div>
+          </div>
+          <div class="quick-action-card">
+            <span class="quick-action-icon">📋</span>
+            <div class="quick-action-title">Schedule Session</div>
+            <div class="quick-action-description">Book a new virtual consultation</div>
+          </div>
+          <div class="quick-action-card">
+            <span class="quick-action-icon">📱</span>
+            <div class="quick-action-title">Quick Check-in</div>
+            <div class="quick-action-description">Send a quick message to your caregiver</div>
+          </div>
+          <div class="quick-action-card">
+            <span class="quick-action-icon">📊</span>
+            <div class="quick-action-title">Health Report</div>
+            <div class="quick-action-description">Share your health metrics</div>
+          </div>
+        </div>
+        
+        <div class="controls-section">
+          <button class="start-session-btn" id="startSessionBtn">
             <i class="bi bi-camera-video"></i>
-            Virtual Care
-          </h2>
-          <button class="start-session-btn" id="start-session-btn">
-            <i class="bi bi-play-circle"></i>
             Start New Session
           </button>
-        </div>
-        
-        <div class="stats-row">
-          <div class="stat-card">
-            <div class="stat-number">3</div>
-            <div class="stat-label">Today's Sessions</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">1</div>
-            <div class="stat-label">Completed</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">2</div>
-            <div class="stat-label">Upcoming</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-number">98%</div>
-            <div class="stat-label">Connection Quality</div>
+          <div class="filter-controls">
+            <button class="filter-btn active" data-filter="all">All</button>
+            <button class="filter-btn" data-filter="scheduled">Scheduled</button>
+            <button class="filter-btn" data-filter="completed">Completed</button>
+            <button class="filter-btn" data-filter="upcoming">Upcoming</button>
           </div>
         </div>
         
-        <div class="content-grid">
-          <!-- Sessions List -->
-          <div class="sessions-section">
-            <h3 class="section-title">
-              <i class="bi bi-clock"></i>
-              Virtual Sessions
-            </h3>
-            
-            ${sessions.map(session => `
-              <div class="session-item ${session.status}">
-                <div class="session-avatar">${session.caregiver.split(' ').map(n => n[0]).join('')}</div>
-                
-                <div class="session-content">
-                  <div class="session-title">${session.caregiver}</div>
-                  <div class="session-subtitle">${session.type}</div>
-                  <div class="session-notes">${session.notes}</div>
+        <div class="sessions-grid">
+          ${sessions.length === 0 ? `
+            <div class="empty-state">
+              <div class="empty-icon">📹</div>
+              <div class="empty-title">No Virtual Sessions</div>
+              <div class="empty-description">Start by scheduling your first virtual care session</div>
+              <button class="start-session-btn" onclick="this.parentElement.parentElement.parentElement.shadowRoot.querySelector('#startSessionBtn').click()">
+                <i class="bi bi-camera-video"></i>
+                Schedule Your First Session
+              </button>
+            </div>
+          ` : sessions.map(session => `
+            <div class="session-card" data-id="${session.id}">
+              <div class="session-header">
+                <div class="session-info">
+                  <div class="session-type">${session.type}</div>
+                  <div class="session-caregiver">${session.caregiver}</div>
+                  <div class="session-time">${session.time}</div>
                 </div>
-                
-                <div class="session-time">
-                  <div class="time-main">${session.time}</div>
-                  <div class="time-duration">${session.duration}</div>
-                </div>
-                
                 <div class="session-status status-${session.status}">
-                  ${session.status === 'scheduled' ? 'Scheduled' : 
-                    session.status === 'completed' ? 'Completed' : 'Upcoming'}
-                </div>
-                
-                <div class="session-actions">
-                  ${session.status === 'scheduled' ? 
-                    `<button class="action-btn btn-join">Join</button>` :
-                    session.status === 'completed' ? 
-                    `<button class="action-btn btn-view">View Report</button>` :
-                    `<button class="action-btn btn-view">View Details</button>`
-                  }
+                  ${session.status}
                 </div>
               </div>
-            `).join('')}
-          </div>
-          
-          <!-- Virtual Care Tools -->
-          <div class="tools-section">
-            <h3 class="section-title">
-              <i class="bi bi-tools"></i>
-              Virtual Care Tools
-            </h3>
-            
-            <button class="tool-item">
-              <i class="bi bi-camera-video"></i>
-              Video Call
-            </button>
-            
-            <button class="tool-item">
-              <i class="bi bi-mic"></i>
-              Voice Call
-            </button>
-            
-            <button class="tool-item">
-              <i class="bi bi-chat-dots"></i>
-              Text Chat
-            </button>
-            
-            <button class="tool-item">
-              <i class="bi bi-share"></i>
-              Screen Share
-            </button>
-            
-            <button class="tool-item">
-              <i class="bi bi-record-circle"></i>
-              Session Recording
-            </button>
-            
-            <button class="tool-item">
-              <i class="bi bi-file-earmark-text"></i>
-              Health Notes
-            </button>
-          </div>
-        </div>
-        
-        <!-- Quick Actions -->
-        <div class="quick-actions">
-          <h3 class="section-title">
-            <i class="bi bi-lightning"></i>
-            Quick Actions
-          </h3>
-          
-          <div class="action-grid">
-            <div class="action-card">
-              <div class="action-icon">
-                <i class="bi bi-calendar-plus"></i>
+              
+              <div class="session-details">
+                <div class="detail-row">
+                  <span class="detail-label">Duration:</span>
+                  <span class="detail-value">${session.duration}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Notes:</span>
+                  <span class="detail-value">${session.notes}</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-label">Connection:</span>
+                  <span class="detail-value">${session.connection}</span>
+                </div>
               </div>
-              <div class="action-title">Schedule Session</div>
-              <div class="action-desc">Book a virtual appointment</div>
-            </div>
-            
-            <div class="action-card">
-              <div class="action-icon">
-                <i class="bi bi-people"></i>
+              
+              <div class="session-actions">
+                ${session.status === 'scheduled' ? `
+                  <button class="action-btn join-btn">
+                    <i class="bi bi-camera-video"></i>
+                    Join
+                  </button>
+                  <button class="action-btn reschedule-btn">
+                    <i class="bi bi-calendar"></i>
+                    Reschedule
+                  </button>
+                ` : session.status === 'upcoming' ? `
+                  <button class="action-btn view-btn">
+                    <i class="bi bi-eye"></i>
+                    View
+                  </button>
+                  <button class="action-btn cancel-btn">
+                    <i class="bi bi-x-circle"></i>
+                    Cancel
+                  </button>
+                ` : `
+                  <button class="action-btn view-btn">
+                    <i class="bi bi-eye"></i>
+                    View Details
+                  </button>
+                  <button class="action-btn join-btn">
+                    <i class="bi bi-camera-video"></i>
+                    Reconnect
+                  </button>
+                `}
               </div>
-              <div class="action-title">Find Caregiver</div>
-              <div class="action-desc">Search for available caregivers</div>
             </div>
-            
-            <div class="action-card">
-              <div class="action-icon">
-                <i class="bi bi-graph-up"></i>
-              </div>
-              <div class="action-title">Session History</div>
-              <div class="action-desc">View past sessions</div>
-            </div>
-            
-            <div class="action-card">
-              <div class="action-icon">
-                <i class="bi bi-gear"></i>
-              </div>
-              <div class="action-title">Settings</div>
-              <div class="action-desc">Configure virtual care</div>
-            </div>
-          </div>
+          `).join('')}
         </div>
       </div>
     `;

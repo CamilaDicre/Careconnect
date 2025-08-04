@@ -1081,321 +1081,463 @@ class CalendarView extends HTMLElement {
       <style>
         * {
           font-family: 'Poppins', sans-serif;
+          box-sizing: border-box;
         }
         
-        section {
-          padding: 2rem;
-          max-width: 1000px;
+        .calendar-container {
+          padding: 30px;
+          max-width: 1200px;
           margin: 0 auto;
+          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+          border-radius: 25px;
+          box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
         }
-        .calendar-header {
-          margin-bottom: 2rem;
+
+        .calendar-hero {
+          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          border-radius: 20px;
+          padding: 30px;
+          margin-bottom: 30px;
+          color: white;
           text-align: center;
+          position: relative;
+          overflow: hidden;
+          box-shadow: 0 10px 30px rgba(25, 118, 210, 0.3);
         }
-        .calendar-header h2 {
-          color: #f5f5dc;
-          margin-bottom: 0.6rem;
-          font-family: 'Poppins', sans-serif;
-          font-size: 2.2rem;
-          font-weight: 600;
+
+        .calendar-hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
+          pointer-events: none;
         }
-        .calendar-header p {
-          font-family: 'Poppins', sans-serif;
-          color: #f5f5dc;
+
+        .hero-content {
+          position: relative;
+          z-index: 2;
+        }
+
+        .calendar-title {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin-bottom: 10px;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .calendar-subtitle {
           font-size: 1.1rem;
-          font-weight: 500;
+          opacity: 0.9;
+          margin-bottom: 20px;
         }
+
+        .stats-bar {
+          display: flex;
+          justify-content: center;
+          gap: 30px;
+          margin-top: 20px;
+        }
+
+        .stat-item {
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
+          padding: 15px 25px;
+          border-radius: 20px;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .stat-number {
+          font-size: 1.5rem;
+          font-weight: 700;
+          display: block;
+        }
+
+        .stat-label {
+          font-size: 0.9rem;
+          opacity: 0.8;
+        }
+
         .calendar-controls {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          margin-bottom: 1.5rem;
-          max-width: 800px;
-          margin-left: auto;
-          margin-right: auto;
+          margin-bottom: 30px;
+          background: white;
+          padding: 25px;
+          border-radius: 20px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
         }
+
         .month-navigator {
           display: flex;
           align-items: center;
-          gap: 1rem;
+          gap: 20px;
         }
+
         .nav-btn {
-          background: transparent;
-          color: #1976d2;
-          border: 2px solid #1976d2;
-          padding: 0.8rem 1.2rem;
-          border-radius: 12px;
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          color: white;
+          border: none;
+          padding: 12px 16px;
+          border-radius: 15px;
           cursor: pointer;
-          font-family: 'Poppins', sans-serif;
           font-size: 1rem;
           font-weight: 600;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
           display: flex;
           align-items: center;
           justify-content: center;
           min-width: 50px;
           height: 50px;
-          position: relative;
-          user-select: none;
-          -webkit-user-select: none;
-          -moz-user-select: none;
-          -ms-user-select: none;
-          z-index: 100;
+          box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
         }
+
         .nav-btn:hover {
-          background: #1976d2;
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(25, 118, 210, 0.4);
         }
-        .nav-btn::before {
-          content: '';
-          position: absolute;
-          width: 10px;
-          height: 10px;
-          border: 2px solid #1976d2;
-          border-top: none;
-          border-right: none;
-          transition: all 0.3s;
-          pointer-events: none;
-        }
-        .nav-btn:hover::before {
-          border-color: white;
-        }
-        .nav-btn#prev-month::before {
-          left: 20px;
-          transform: rotate(45deg);
-        }
-        .nav-btn#next-month::before {
-          right: 20px;
-          transform: rotate(-135deg);
-        }
-        .nav-btn i {
-          font-size: 1.2rem;
-          font-weight: bold;
-        }
+
         .current-month {
-          font-size: 1.5rem;
-          font-weight: 600;
-          color: #f5f5dc;
-          font-family: 'Poppins', sans-serif;
-          min-width: 180px;
+          font-size: 1.8rem;
+          font-weight: 700;
+          color: #333;
+          min-width: 200px;
           text-align: center;
         }
+
         .add-event-btn {
-          background: transparent;
-          color: #28a745;
-          border: 2px solid #28a745;
-          padding: 0.8rem 1.8rem;
-          border-radius: 12px;
+          background: linear-gradient(135deg, #28a745, #20c997);
+          color: white;
+          border: none;
+          padding: 15px 25px;
+          border-radius: 15px;
           cursor: pointer;
-          font-family: 'Poppins', sans-serif;
           font-size: 1rem;
           font-weight: 600;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 10px;
+          box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
         }
+
         .add-event-btn:hover {
-          background: #28a745;
-          color: white;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-        }
-        .add-event-btn::before {
-          content: '+';
-          font-size: 1.5rem;
-          font-weight: bold;
-          color: #28a745;
-          transition: all 0.3s;
-        }
-        .add-event-btn:hover::before {
-          color: white;
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(40, 167, 69, 0.4);
         }
 
         .calendar-grid {
           display: grid;
           grid-template-columns: repeat(7, 1fr);
-          gap: 1px;
-          background: #e9ecef;
-          border-radius: 12px;
+          gap: 2px;
+          background: white;
+          border-radius: 20px;
           overflow: hidden;
-          box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-          max-width: 800px;
-          margin: 0 auto;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+          margin-bottom: 30px;
         }
+
         .calendar-day-header {
-          background: #f8f9fa;
-          padding: 0.8rem 0.5rem;
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          color: white;
+          padding: 20px 10px;
           text-align: center;
-          font-weight: 600;
-          color: #495057;
-          font-family: 'Poppins', sans-serif;
-          font-size: 0.9rem;
+          font-weight: 700;
+          font-size: 1rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
         }
+
         .calendar-day {
           background: white;
-          min-height: 80px;
-          padding: 0.5rem;
+          min-height: 120px;
+          padding: 15px;
           position: relative;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
           cursor: pointer;
+          border: 1px solid #f0f0f0;
         }
+
         .calendar-day:hover {
-          background: #f8f9fa;
+          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          transform: scale(1.02);
+          box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+          z-index: 10;
         }
+
         .calendar-day.today {
-          background: #e3f2fd;
-          border: 2px solid #1976d2;
+          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+          border: 3px solid #1976d2;
+          box-shadow: 0 5px 20px rgba(25, 118, 210, 0.3);
         }
+
         .calendar-day.selected {
-          background: #e8f5e8;
-          border: 2px solid #28a745;
+          background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+          border: 3px solid #28a745;
+          box-shadow: 0 5px 20px rgba(40, 167, 69, 0.3);
         }
+
         .calendar-day.other-month {
           background: #f8f9fa;
           color: #adb5bd;
         }
+
         .day-number {
-          font-weight: 600;
-          font-size: 0.9rem;
-          color: #212529;
-          margin-bottom: 0.3rem;
+          font-weight: 700;
+          font-size: 1.1rem;
+          color: #333;
+          margin-bottom: 10px;
         }
+
         .day-number.other-month {
           color: #adb5bd;
         }
+
+        .event-indicators {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 4px;
+          margin-top: 8px;
+        }
+
         .event-indicator {
-          position: absolute;
-          bottom: 6px;
-          right: 6px;
-          width: 14px;
-          height: 14px;
+          width: 12px;
+          height: 12px;
           border-radius: 50%;
-          background: #1976d2;
           border: 2px solid white;
-          box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
-          z-index: 10;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
+
         .event-indicator.appointment {
-          background: #28a745;
-          box-shadow: 0 2px 4px rgba(40, 167, 69, 0.3);
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
         }
+
         .event-indicator.medicine {
-          background: #1976d2;
-          box-shadow: 0 2px 4px rgba(25, 118, 210, 0.3);
+          background: linear-gradient(135deg, #28a745, #20c997);
         }
+
         .event-indicator.checkup {
-          background: #ffc107;
-          box-shadow: 0 2px 4px rgba(255, 193, 7, 0.3);
+          background: linear-gradient(135deg, #ffc107, #ff9800);
         }
+
         .event-indicator.therapy {
-          background: #6f42c1;
-          box-shadow: 0 2px 4px rgba(111, 66, 193, 0.3);
+          background: linear-gradient(135deg, #dc3545, #e91e63);
         }
+
         .events-panel {
           background: white;
-          border-radius: 12px;
-          padding: 1rem;
-          box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-          margin-top: 1rem;
-          max-width: 600px;
-          margin-left: auto;
-          margin-right: auto;
+          border-radius: 20px;
+          padding: 30px;
+          box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         }
-        .events-panel h3 {
+
+        .events-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 25px;
+          padding-bottom: 15px;
+          border-bottom: 2px solid #f0f0f0;
+        }
+
+        .events-title {
           color: #1976d2;
-          margin-bottom: 0.8rem;
-          font-size: 1.1rem;
-          font-weight: 600;
+          font-size: 1.5rem;
+          font-weight: 700;
+          margin: 0;
         }
+
+        .events-date {
+          color: #666;
+          font-size: 1rem;
+          font-weight: 500;
+        }
+
         .event-item {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
-          padding: 0.6rem;
-          background: #f8f9fa;
-          border-radius: 8px;
-          margin-bottom: 0.4rem;
-          border-left: 3px solid;
-          transition: all 0.3s;
+          gap: 15px;
+          padding: 20px;
+          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          border-radius: 15px;
+          margin-bottom: 15px;
+          border-left: 5px solid;
+          transition: all 0.3s ease;
+          box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
         }
+
         .event-item:hover {
-          transform: translateX(3px);
-          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+          transform: translateX(5px);
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
         }
+
         .event-time {
-          font-weight: 600;
-          color: #495057;
-          font-size: 0.75rem;
-          min-width: 45px;
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          color: white;
+          padding: 8px 12px;
+          border-radius: 10px;
+          font-weight: 700;
+          font-size: 0.9rem;
+          min-width: 60px;
+          text-align: center;
         }
-        .event-title {
-          font-weight: 600;
-          color: #212529;
+
+        .event-content {
           flex: 1;
-          font-size: 0.8rem;
         }
+
+        .event-title {
+          font-weight: 700;
+          color: #333;
+          font-size: 1rem;
+          margin-bottom: 5px;
+        }
+
         .event-type {
-          padding: 0.15rem 0.5rem;
-          border-radius: 12px;
-          font-size: 0.65rem;
+          padding: 5px 12px;
+          border-radius: 20px;
+          font-size: 0.8rem;
           font-weight: 600;
           text-transform: uppercase;
           display: flex;
           align-items: center;
-          gap: 0.3rem;
+          gap: 5px;
+          width: fit-content;
         }
-        .medicine-icon {
-          font-size: 0.8rem;
-          color: #155724;
+
+        .type-appointment { 
+          background: linear-gradient(135deg, #e3f2fd, #bbdefb); 
+          color: #1976d2; 
         }
-        .type-appointment { background: #e3f2fd; color: #1976d2; }
-        .type-medicine { background: #d4edda; color: #155724; }
-        .type-checkup { background: #fff3cd; color: #856404; }
-        .type-therapy { background: #f8d7da; color: #721c24; }
+
+        .type-medicine { 
+          background: linear-gradient(135deg, #e8f5e8, #c8e6c9); 
+          color: #155724; 
+        }
+
+        .type-checkup { 
+          background: linear-gradient(135deg, #fff3cd, #ffeaa7); 
+          color: #856404; 
+        }
+
+        .type-therapy { 
+          background: linear-gradient(135deg, #f8d7da, #f5c6cb); 
+          color: #721c24; 
+        }
+
+        .no-events {
+          text-align: center;
+          padding: 40px;
+          color: #666;
+          font-size: 1.1rem;
+        }
+
+        .no-events-icon {
+          font-size: 3rem;
+          margin-bottom: 15px;
+          opacity: 0.5;
+        }
+
+        @media (max-width: 768px) {
+          .calendar-container {
+            padding: 20px;
+          }
+          
+          .calendar-controls {
+            flex-direction: column;
+            gap: 20px;
+          }
+          
+          .current-month {
+            font-size: 1.5rem;
+          }
+          
+          .calendar-day {
+            min-height: 80px;
+            padding: 10px;
+          }
+          
+          .day-number {
+            font-size: 1rem;
+          }
+          
+          .event-indicators {
+            gap: 2px;
+          }
+          
+          .event-indicator {
+            width: 8px;
+            height: 8px;
+          }
+        }
       </style>
       
-      <section>
-        <div class="calendar-header">
-                      <h2>Medical Calendar</h2>
-          <p>Manage your appointments, medications and medical events</p>
+      <div class="calendar-container">
+        <div class="calendar-hero">
+          <div class="hero-content">
+            <h1 class="calendar-title">📅 Medical Calendar</h1>
+            <p class="calendar-subtitle">Manage your appointments, medications and medical events</p>
+            <div class="stats-bar">
+              <div class="stat-item">
+                <span class="stat-number">${this.getEvents().length}</span>
+                <span class="stat-label">Total Events</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">${this.getEvents().filter(e => e.type === 'appointment').length}</span>
+                <span class="stat-label">Appointments</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">${this.getEvents().filter(e => e.type === 'medicine').length}</span>
+                <span class="stat-label">Medications</span>
+              </div>
+            </div>
+          </div>
         </div>
         
         <div class="calendar-controls">
           <div class="month-navigator">
-            <button class="nav-btn" id="prev-month"></button>
+            <button class="nav-btn" id="prev-month">
+              <i class="bi bi-chevron-left"></i>
+            </button>
             <span class="current-month">${monthNames[month]} ${year}</span>
-            <button class="nav-btn" id="next-month"></button>
+            <button class="nav-btn" id="next-month">
+              <i class="bi bi-chevron-right"></i>
+            </button>
           </div>
           <button class="add-event-btn">
-            Agregar Evento
+            <i class="bi bi-plus-circle"></i>
+            Add Event
           </button>
         </div>
         
         <div class="calendar-grid">
-          <div class="calendar-day-header">Dom</div>
-          <div class="calendar-day-header">Lun</div>
-          <div class="calendar-day-header">Mar</div>
-          <div class="calendar-day-header">Mié</div>
-          <div class="calendar-day-header">Jue</div>
-          <div class="calendar-day-header">Vie</div>
-          <div class="calendar-day-header">Sáb</div>
+          <div class="calendar-day-header">Sun</div>
+          <div class="calendar-day-header">Mon</div>
+          <div class="calendar-day-header">Tue</div>
+          <div class="calendar-day-header">Wed</div>
+          <div class="calendar-day-header">Thu</div>
+          <div class="calendar-day-header">Fri</div>
+          <div class="calendar-day-header">Sat</div>
           
           ${this.generateCalendarDays(year, month, daysInMonth, firstDay)}
         </div>
         
         <div class="events-panel">
-          <h3>Eventos del ${this.selectedDate.toLocaleDateString('es-ES', { 
-            weekday: 'long', 
-            year: 'numeric', 
-            month: 'long', 
-            day: 'numeric' 
-          })}</h3>
+          <div class="events-header">
+            <h3 class="events-title">Events for ${this.selectedDate.toLocaleDateString('en-US', { 
+              weekday: 'long', 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })}</h3>
+            <span class="events-date">${this.getEventsForDate(this.selectedDate).length} events</span>
+          </div>
           ${this.renderEventsForSelectedDate()}
         </div>
-      </section>
+      </div>
     `;
   }
   generateCalendarDays(year, month, daysInMonth, firstDay) {
@@ -1428,15 +1570,15 @@ class CalendarView extends HTMLElement {
       if (isToday) dayClasses += ' today';
       if (isSelected) dayClasses += ' selected';
       
-      let indicatorClass = '';
-      if (events.length > 0) {
-        const eventType = events[0].type; // Usar el primer evento para determinar el color
-        indicatorClass = `event-indicator ${eventType}`;
-      }
+      // Crear indicadores de eventos únicos
+      const uniqueEventTypes = [...new Set(events.map(e => e.type))];
+      const eventIndicators = uniqueEventTypes.map(type => 
+        `<div class="event-indicator ${type}"></div>`
+      ).join('');
       
       days += `<div class="${dayClasses}" data-date="${dateStr}">
         <div class="day-number">${day}</div>
-        ${events.length > 0 ? `<div class="${indicatorClass}"></div>` : ''}
+        ${events.length > 0 ? `<div class="event-indicators">${eventIndicators}</div>` : ''}
       </div>`;
     }
     
@@ -1457,16 +1599,26 @@ class CalendarView extends HTMLElement {
     const events = this.getEventsForDate(this.selectedDate);
     
     if (events.length === 0) {
-      return '<p style="color: #6c757d; text-align: center; padding: 1.5rem; font-size: 0.9rem;">No hay eventos programados para este día</p>';
+      return `
+        <div class="no-events">
+          <div class="no-events-icon">📅</div>
+          <p>No events scheduled for this day</p>
+        </div>
+      `;
     }
     
     return events.map(event => `
       <div class="event-item" style="border-left-color: ${event.color}">
         <div class="event-time">${event.time}</div>
-        <div class="event-title">${event.title}</div>
-        <div class="event-type type-${event.type}">
-          ${event.type === 'medicine' ? '<span class="medicine-icon">💊</span>' : ''}
-          ${event.type}
+        <div class="event-content">
+          <div class="event-title">${event.title}</div>
+          <div class="event-type type-${event.type}">
+            ${event.type === 'medicine' ? '<span class="medicine-icon">💊</span>' : ''}
+            ${event.type === 'appointment' ? '<span class="appointment-icon">👨‍⚕️</span>' : ''}
+            ${event.type === 'checkup' ? '<span class="checkup-icon">📊</span>' : ''}
+            ${event.type === 'therapy' ? '<span class="therapy-icon">🏥</span>' : ''}
+            ${event.type}
+          </div>
         </div>
       </div>
     `).join('');

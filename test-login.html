@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Login System - Careconnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .login-form {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .login-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .login-form button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Test Login System</h1>
+    
+    <div class="test-section">
+        <h2>1. Test localStorage Availability</h2>
+        <button class="test-button" onclick="testLocalStorage()">Test localStorage</button>
+        <div id="localStorage-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Test User Registration</h2>
+        <button class="test-button" onclick="testUserRegistration()">Create Test Users</button>
+        <div id="registration-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Test Login System</h2>
+        <div class="login-form">
+            <h3>Login Test</h3>
+            <input type="text" id="test-username" placeholder="Username or email">
+            <input type="password" id="test-password" placeholder="Password">
+            <button onclick="testLogin()">Test Login</button>
+        </div>
+        <div id="login-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Current Users</h2>
+        <button class="test-button" onclick="showAllUsers()">Show All Users</button>
+        <div id="users-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>5. Test Logout</h2>
+        <button class="test-button" onclick="testLogout()">Test Logout</button>
+        <div id="logout-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>6. Clear All Data</h2>
+        <button class="test-button" onclick="clearAllData()" style="background: #dc3545;">Clear localStorage</button>
+        <div id="clear-result" class="result"></div>
+    </div>
+
+    <script src="js/localStorage-utils.js"></script>
+    <script>
+        function showResult(elementId, message, isSuccess = true) {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${isSuccess ? 'success' : 'error'}`;
+        }
+
+        function testLocalStorage() {
+            try {
+                if (!LocalStorageUtils.isAvailable()) {
+                    showResult('localStorage-result', '❌ localStorage is not available', false);
+                    return;
+                }
+                showResult('localStorage-result', '✅ localStorage is working correctly');
+            } catch (error) {
+                showResult('localStorage-result', `❌ localStorage error: ${error.message}`, false);
+            }
+        }
+
+        function testUserRegistration() {
+            try {
+                if (!LocalStorageUtils.isAvailable()) {
+                    showResult('registration-result', '❌ LocalStorageUtils not available', false);
+                    return;
+                }
+
+                // Crear usuarios de prueba
+                const testUsers = [
+                    {
+                        username: "Test Caregiver",
+                        email: "caregiver@test.com",
+                        password: "password123",
+                        phone: "123-456-7890",
+                        birthdate: "15-03-1990",
+                        gender: "Female",
+                        address: "Test Address",
+                        experience: "5 years",
+                        education: "Nursing Degree",
+                        certifications: "CPR, First Aid",
+                        skills: "Patient care, medication management",
+                        languages: "English, Spanish",
+                        bio: "Experienced caregiver",
+                        availability: "Full-time",
+                        role: "cuidador",
+                        registrationDate: new Date().toISOString(),
+                        id: "caregiver1"
+                    },
+                    {
+                        username: "Test Patient",
+                        email: "patient@test.com",
+                        password: "password123",
+                        role: "paciente",
+                        gender: "Male",
+                        registrationDate: new Date().toISOString(),
+                        id: "patient1"
+                    }
+                ];
+
+                // Obtener usuarios existentes
+                let users = LocalStorageUtils.getItem('users', []);
+                if (!Array.isArray(users)) {
+                    users = [];
+                }
+
+                // Agregar usuarios de prueba (evitar duplicados)
+                let addedCount = 0;
+                testUsers.forEach(testUser => {
+                    if (!users.some(u => u.email === testUser.email)) {
+                        users.push(testUser);
+                        addedCount++;
+                    }
+                });
+
+                // Guardar usuarios
+                const success = LocalStorageUtils.setItem('users', users, 5000000);
+                
+                if (success) {
+                    showResult('registration-result', `✅ Test users created successfully!\nAdded: ${addedCount} users\nTotal users: ${users.length}\n\nTest accounts:\n- Caregiver: caregiver@test.com / password123\n- Patient: patient@test.com / password123`);
+                } else {
+                    showResult('registration-result', '❌ Failed to save test users', false);
+                }
+            } catch (error) {
+                showResult('registration-result', `❌ Registration error: ${error.message}`, false);
+            }
+        }
+
+        function testLogin() {
+            try {
+                const usernameOrEmail = document.getElementById('test-username').value.trim();
+                const password = document.getElementById('test-password').value;
+
+                if (!usernameOrEmail || !password) {
+                    showResult('login-result', '❌ Please enter both username/email and password', false);
+                    return;
+                }
+
+                const users = LocalStorageUtils.getItem('users', []);
+                const user = users.find(u => 
+                    (u.username === usernameOrEmail || u.email === usernameOrEmail.toLowerCase()) && 
+                    u.password === password
+                );
+
+                if (user) {
+                    // Simular login exitoso
+                    LocalStorageUtils.setItem('loggedInUser', user.username);
+                    LocalStorageUtils.setItem('userRole', user.role);
+                    LocalStorageUtils.setItem('currentUserId', user.id);
+
+                    showResult('login-result', `✅ Login successful!\nUsername: ${user.username}\nEmail: ${user.email}\nRole: ${user.role}\nID: ${user.id}\n\nSession data saved to localStorage.`);
+                } else {
+                    showResult('login-result', '❌ Login failed. Invalid username/email or password.', false);
+                }
+            } catch (error) {
+                showResult('login-result', `❌ Login error: ${error.message}`, false);
+            }
+        }
+
+        function showAllUsers() {
+            try {
+                const users = LocalStorageUtils.getItem('users', []);
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                const userRole = LocalStorageUtils.getItem('userRole');
+                const currentUserId = LocalStorageUtils.getItem('currentUserId');
+
+                let result = `📊 Current localStorage Data:\n\n`;
+                result += `Total Users: ${users.length}\n`;
+                result += `Logged In User: ${loggedInUser || 'None'}\n`;
+                result += `User Role: ${userRole || 'None'}\n`;
+                result += `Current User ID: ${currentUserId || 'None'}\n\n`;
+
+                if (users.length > 0) {
+                    result += `Users List:\n`;
+                    users.forEach((user, index) => {
+                        result += `${index + 1}. ${user.username} (${user.email}) - ${user.role}\n`;
+                    });
+                }
+
+                showResult('users-result', result);
+            } catch (error) {
+                showResult('users-result', `❌ Error: ${error.message}`, false);
+            }
+        }
+
+        function testLogout() {
+            try {
+                LocalStorageUtils.removeItem('loggedInUser');
+                LocalStorageUtils.removeItem('userRole');
+                LocalStorageUtils.removeItem('currentUserId');
+                
+                showResult('logout-result', '✅ Logout successful! All session data cleared.');
+            } catch (error) {
+                showResult('logout-result', `❌ Logout error: ${error.message}`, false);
+            }
+        }
+
+        function clearAllData() {
+            try {
+                LocalStorageUtils.clear();
+                showResult('clear-result', '✅ All localStorage data cleared successfully');
+            } catch (error) {
+                showResult('clear-result', `❌ Clear error: ${error.message}`, false);
+            }
+        }
+    </script>
+</body>
+</html> 

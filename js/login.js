@@ -256,36 +256,40 @@ const users = [
   
   function login() {
     try {
-      const username = document.getElementById("login-user").value.trim();
+      const usernameOrEmail = document.getElementById("login-user").value.trim();
       const password = document.getElementById("login-pass").value;
       
       // Validar campos de entrada
-      if (!username || !password) {
-        showAlert('Please enter both username and password', 'danger', 'loginError');
+      if (!usernameOrEmail || !password) {
+        showAlert('Please enter both username/email and password', 'danger', 'loginError');
         return;
       }
       
-      if (username.length > 100) {
-        showAlert('Username is too long', 'danger', 'loginError');
+      if (usernameOrEmail.length > 100) {
+        showAlert('Username/email is too long', 'danger', 'loginError');
         return;
       }
       
-      console.log('Intentando login con:', username, password);
+      console.log('Intentando login con:', usernameOrEmail, password);
     
       const users = getUsers();
-      const user = users.find(u => u.username === username && u.password === password);
+      // Buscar usuario por username o email
+      const user = users.find(u => 
+        (u.username === usernameOrEmail || u.email === usernameOrEmail.toLowerCase()) && 
+        u.password === password
+      );
     
       if (user) {
         try {
           // Guardar datos de sesión usando utilidades
-          LocalStorageUtils.setItem("loggedInUser", username);
+          LocalStorageUtils.setItem("loggedInUser", user.username);
           LocalStorageUtils.setItem("userRole", user.role);
           if (user.id) {
             LocalStorageUtils.setItem("currentUserId", user.id);
           }
           
           updateLoginUI();
-          showBanner('Signed in!', 'success');
+          showBanner('Signed in successfully!', 'success');
           // Redirigir según el rol
           setTimeout(() => {
             if (user.role === "admin") {
@@ -302,7 +306,7 @@ const users = [
         }
       } else {
         console.log('Login fallido, mostrando mensaje de error');
-        showAlert('Incorrect username or password, please check and try again', 'danger', 'loginError');
+        showAlert('Incorrect username/email or password, please check and try again', 'danger', 'loginError');
       }
     } catch (error) {
       console.error('Error during login:', error);

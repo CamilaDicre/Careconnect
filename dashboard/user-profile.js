@@ -10,49 +10,87 @@ class UserProfile extends HTMLElement {
     return window.userType || 'patient';
   }
   getProfileData() {
-    // Read logged in user from localStorage
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.username === loggedInUser);
-    if (user) {
+    // Use AvatarUtils to get user data
+    if (window.AvatarUtils) {
+      const userData = AvatarUtils.getUserDataWithAvatar();
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
+      
       return {
-        name: user.username || '-',
-        age: user.age || '-',
-        gender: user.gender || user.sexo || '-',
-        photo: user.photo || 'assets/people/woman-whiteshirt.png',
-        type: user.role === 'patient' ? 'Patient' : (user.role === 'caregiver' ? 'Caregiver' : user.role),
-        areas: user.areas || null,
-        email: user.email || '-',
-        phone: user.phone || '-',
-        address: user.address || '-',
-        experience: user.experience || '-',
-        education: user.education || '-',
-        certifications: user.certifications || '-',
-        skills: user.skills || '-',
-        languages: user.languages || '-',
-        bio: user.bio || '-',
-        availability: user.availability || '-',
+        ...userData,
+        name: user ? (user.name || user.username || 'User') : 'User',
+        age: this.getUserField('age'),
+        gender: this.getUserField('gender') || this.getUserField('sexo'),
+        type: this.getUserField('role') === 'patient' ? 'Patient' : (this.getUserField('role') === 'caregiver' ? 'Caregiver' : this.getUserField('role')),
+        areas: this.getUserField('areas') ? (Array.isArray(this.getUserField('areas')) ? this.getUserField('areas') : [this.getUserField('areas')]) : [],
+        phone: this.getUserField('phone'),
+        address: this.getUserField('address'),
+        experience: this.getUserField('experience'),
+        education: this.getUserField('education'),
+        certifications: this.getUserField('certifications'),
+        skills: this.getUserField('skills'),
+        languages: this.getUserField('languages'),
+        bio: this.getUserField('bio'),
+        availability: this.getUserField('availability'),
       };
     } else {
-      return {
-        name: 'User',
-        age: '-',
-        gender: '-',
-        photo: 'assets/people/woman-whiteshirt.png',
-        type: '-',
-        areas: null,
-        email: '-',
-        phone: '-',
-        address: '-',
-        experience: '-',
-        education: '-',
-        certifications: '-',
-        skills: '-',
-        languages: '-',
-        bio: '-',
-        availability: '-',
-      };
+      // Fallback to original method
+      const loggedInUser = localStorage.getItem('loggedInUser');
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
+      
+      if (user) {
+        return {
+          name: user.name || user.username || 'User',
+          initials: user.username ? user.username.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) : 'U',
+          avatarColor: 'linear-gradient(135deg, #667eea, #764ba2)',
+          age: user.age || '-',
+          gender: user.gender || user.sexo || '-',
+          photo: user.photo || null,
+          type: user.role === 'patient' ? 'Patient' : (user.role === 'caregiver' ? 'Caregiver' : user.role),
+          areas: user.areas ? (Array.isArray(user.areas) ? user.areas : [user.areas]) : [],
+          email: user.email || '-',
+          phone: user.phone || '-',
+          address: user.address || '-',
+          experience: user.experience || '-',
+          education: user.education || '-',
+          certifications: user.certifications || '-',
+          skills: user.skills || '-',
+          languages: user.languages || '-',
+          bio: user.bio || '-',
+          availability: user.availability || '-',
+        };
+      } else {
+        return {
+          name: 'User',
+          initials: 'U',
+          avatarColor: 'linear-gradient(135deg, #667eea, #764ba2)',
+          age: '-',
+          gender: '-',
+          photo: null,
+          type: '-',
+          areas: [],
+          email: '-',
+          phone: '-',
+          address: '-',
+          experience: '-',
+          education: '-',
+          certifications: '-',
+          skills: '-',
+          languages: '-',
+          bio: '-',
+          availability: '-',
+        };
+      }
     }
+  }
+  
+  getUserField(field) {
+    const loggedInUser = localStorage.getItem('loggedInUser');
+    const users = JSON.parse(localStorage.getItem('users') || '[]');
+    const user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
+    return user ? user[field] : '-';
   }
   render() {
     const data = this.getProfileData();
@@ -60,194 +98,450 @@ class UserProfile extends HTMLElement {
       <style>
         * {
           font-family: 'Poppins', sans-serif;
+          box-sizing: border-box;
         }
         
-        section {
-          padding: 2.5rem;
-          max-width: 800px;
+        .profile-container {
+          padding: 20px;
+          max-width: 1200px;
           margin: 0 auto;
+          min-height: calc(100vh - 200px);
         }
-        .profile-card {
-          background: white;
-          border-radius: 16px;
-          box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-          padding: 2.5rem;
+        
+        .profile-hero {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 25px;
+          padding: 40px;
+          margin-bottom: 30px;
+          position: relative;
+          overflow: hidden;
+          color: white;
+          box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
         }
-        .profile-header {
+        
+        .profile-hero::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: linear-gradient(45deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.1) 100%);
+          pointer-events: none;
+        }
+        
+        .hero-content {
           display: flex;
           align-items: center;
-          gap: 2.5rem;
-          margin-bottom: 2.5rem;
+          gap: 30px;
+          position: relative;
+          z-index: 2;
         }
-        .profile-photo {
+        
+        .profile-avatar {
           width: 120px;
           height: 120px;
           border-radius: 50%;
+          border: 4px solid rgba(255, 255, 255, 0.3);
           object-fit: cover;
-          border: 4px solid #e3eafc;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+          transition: transform 0.3s ease;
         }
-        .profile-info h2 {
-          color: #1976d2;
-          margin-bottom: 0.75rem;
+        
+        .profile-avatar.initials {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 2.5rem;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+          letter-spacing: 1px;
           font-family: 'Poppins', sans-serif;
-          font-size: 2rem;
-          font-weight: 600;
         }
-        .profile-badge {
+        
+        .profile-avatar:hover {
+          transform: scale(1.05);
+        }
+        
+        .hero-info h1 {
+          font-size: 2.5rem;
+          font-weight: 700;
+          margin: 0 0 10px 0;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .hero-badge {
           display: inline-block;
-          background: #e3eafc;
-          color: #1976d2;
-          padding: 0.4rem 1.2rem;
+          background: rgba(255, 255, 255, 0.2);
+          backdrop-filter: blur(10px);
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          color: white;
+          padding: 8px 20px;
           border-radius: 25px;
           font-size: 1rem;
           font-weight: 600;
-          font-family: 'Poppins', sans-serif;
+          margin-bottom: 15px;
         }
-        .profile-details {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-          gap: 1.2rem;
-          margin-bottom: 2.5rem;
-        }
-        .detail-item {
-          padding: 1.2rem;
-          background: #f8f9fa;
-          border-radius: 12px;
-          border-left: 4px solid #1976d2;
-        }
-        .detail-label {
-          font-size: 1rem;
-          color: #6c757d;
-          margin-bottom: 0.4rem;
-          font-family: 'Poppins', sans-serif;
-          font-weight: 500;
-        }
-        .detail-value {
-          font-weight: 600;
-          color: #212529;
-          font-family: 'Poppins', sans-serif;
+        
+        .hero-email {
           font-size: 1.1rem;
+          opacity: 0.9;
+          margin: 0;
         }
-        .areas-section {
-          margin-top: 1.5rem;
+        
+        .profile-sections {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
         }
-        .areas-section h3 {
-          font-family: 'Poppins', sans-serif;
-          color: #212529;
-          margin-bottom: 1.2rem;
+        
+        .profile-section {
+          background: white;
+          border-radius: 20px;
+          padding: 30px;
+          box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+          border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .section-title {
           font-size: 1.5rem;
-          font-weight: 600;
+          font-weight: 700;
+          color: #333;
+          margin-bottom: 25px;
+          display: flex;
+          align-items: center;
+          gap: 12px;
         }
-        .areas-list {
+        
+        .section-title i {
+          color: #667eea;
+          font-size: 1.3rem;
+        }
+        
+        .info-grid {
+          display: grid;
+          gap: 20px;
+        }
+        
+        .info-item {
+          display: flex;
+          align-items: center;
+          gap: 15px;
+          padding: 15px;
+          background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+          border-radius: 15px;
+          border-left: 4px solid #667eea;
+          transition: all 0.3s ease;
+        }
+        
+        .info-item:hover {
+          transform: translateX(5px);
+          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .info-icon {
+          width: 40px;
+          height: 40px;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          border-radius: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 1.2rem;
+        }
+        
+        .info-content {
+          flex: 1;
+        }
+        
+        .info-label {
+          font-size: 0.9rem;
+          color: #666;
+          font-weight: 500;
+          margin-bottom: 5px;
+        }
+        
+        .info-value {
+          font-size: 1.1rem;
+          font-weight: 600;
+          color: #333;
+        }
+        
+        .skills-section {
+          grid-column: 1 / -1;
+        }
+        
+        .skills-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 15px;
+        }
+        
+        .skill-item {
+          background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+          padding: 20px;
+          border-radius: 15px;
+          border-left: 4px solid #1976d2;
+          transition: all 0.3s ease;
+        }
+        
+        .skill-item:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 20px rgba(25, 118, 210, 0.2);
+        }
+        
+        .skill-title {
+          font-weight: 600;
+          color: #1976d2;
+          margin-bottom: 8px;
+          font-size: 1rem;
+        }
+        
+        .skill-value {
+          color: #333;
+          font-size: 0.95rem;
+        }
+        
+        .areas-tags {
           display: flex;
           flex-wrap: wrap;
-          gap: 0.8rem;
+          gap: 10px;
+          margin-top: 15px;
         }
+        
         .area-tag {
-          background: #d1ecf1;
-          color: #0c5460;
-          padding: 0.6rem 1.2rem;
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          padding: 8px 16px;
           border-radius: 20px;
           font-size: 0.9rem;
-          font-family: 'Poppins', sans-serif;
           font-weight: 500;
+          box-shadow: 0 3px 10px rgba(102, 126, 234, 0.3);
         }
-        .logout-btn {
-          background: #dc3545;
-          color: white;
-          border: none;
-          padding: 0.8rem 1.8rem;
-          border-radius: 12px;
+        
+        .action-buttons {
+          grid-column: 1 / -1;
+          display: flex;
+          gap: 20px;
+          justify-content: center;
+          margin-top: 30px;
+        }
+        
+        .action-btn {
+          padding: 15px 30px;
+          border-radius: 25px;
           font-weight: 600;
-          cursor: pointer;
-          transition: all 0.3s;
-          font-family: 'Poppins', sans-serif;
           font-size: 1rem;
-          margin-top: 1.5rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          border: none;
+          display: flex;
+          align-items: center;
+          gap: 10px;
         }
+        
+        .edit-btn {
+          background: linear-gradient(135deg, #667eea, #764ba2);
+          color: white;
+          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+        }
+        
+        .edit-btn:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+        
+        .logout-btn {
+          background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+          color: white;
+          box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
         .logout-btn:hover {
-          background: #c82333;
-          transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+          transform: translateY(-3px);
+          box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
         }
-        .logout-btn i {
-          margin-right: 0.5rem;
-          font-size: 1.1rem;
+        
+        @media (max-width: 768px) {
+          .profile-sections {
+            grid-template-columns: 1fr;
+          }
+          
+          .hero-content {
+            flex-direction: column;
+            text-align: center;
+          }
+          
+          .action-buttons {
+            flex-direction: column;
+          }
         }
       </style>
-      <section>
-        <div class="profile-card">
-          <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">My Profile</h1>
-          <div class="profile-header">
-            <img src="${data.photo}" alt="Profile photo" class="profile-photo">
-            <div class="profile-info">
-              <h2>${data.name}</h2>
-              <span class="profile-badge">${data.type}</span>
-              <div style="margin-top:8px;color:#555;font-size:1rem;">${data.email}</div>
+      
+      <div class="profile-container">
+        <!-- Hero Section -->
+        <div class="profile-hero">
+          <div class="hero-content">
+            ${data.photo ? 
+              `<img src="${data.photo}" alt="Profile photo" class="profile-avatar">` :
+              `<div class="profile-avatar initials" style="background: ${data.avatarColor};">${data.initials}</div>`
+            }
+            <div class="hero-info">
+              <h1>${data.name}</h1>
+              <span class="hero-badge">${data.type}</span>
+              <p class="hero-email">${data.email}</p>
             </div>
           </div>
-          
-          <div class="profile-details">
-            <div class="detail-item">
-              <div class="detail-label">Age</div>
-              <div class="detail-value">${data.age} years</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Gender</div>
-              <div class="detail-value">${data.gender}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Phone</div>
-              <div class="detail-value">${data.phone}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Address</div>
-              <div class="detail-value">${data.address}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Experience</div>
-              <div class="detail-value">${data.experience}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Education</div>
-              <div class="detail-value">${data.education}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Certifications</div>
-              <div class="detail-value">${data.certifications}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Skills</div>
-              <div class="detail-value">${data.skills}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Languages</div>
-              <div class="detail-value">${data.languages}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Bio</div>
-              <div class="detail-value">${data.bio}</div>
-            </div>
-            <div class="detail-item">
-              <div class="detail-label">Availability</div>
-              <div class="detail-value">${data.availability}</div>
-            </div>
-          </div>
-          
-          ${data.areas ? `
-            <div class="areas-section">
-              <h3>Study Areas</h3>
-              <div class="areas-list">
-                ${data.areas.map(area => `<span class="area-tag">${area}</span>`).join('')}
+        </div>
+        
+        <!-- Profile Sections -->
+        <div class="profile-sections">
+          <!-- Personal Information -->
+          <div class="profile-section">
+            <h2 class="section-title">
+              <i class="bi bi-person-circle"></i>
+              Personal Information
+            </h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-calendar"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Age</div>
+                  <div class="info-value">${data.age} years</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-gender-ambiguous"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Gender</div>
+                  <div class="info-value">${data.gender}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-telephone"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Phone</div>
+                  <div class="info-value">${data.phone}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-geo-alt"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Address</div>
+                  <div class="info-value">${data.address}</div>
+                </div>
               </div>
             </div>
-          ` : ''}
+          </div>
           
-          <button class="logout-btn" onclick="logout()">
-            <i class="bi bi-box-arrow-right"></i> Logout
-          </button>
+          <!-- Professional Information -->
+          <div class="profile-section">
+            <h2 class="section-title">
+              <i class="bi bi-briefcase"></i>
+              Professional Info
+            </h2>
+            <div class="info-grid">
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-clock-history"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Experience</div>
+                  <div class="info-value">${data.experience}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Education</div>
+                  <div class="info-value">${data.education}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-award"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Certifications</div>
+                  <div class="info-value">${data.certifications}</div>
+                </div>
+              </div>
+              
+              <div class="info-item">
+                <div class="info-icon">
+                  <i class="bi bi-translate"></i>
+                </div>
+                <div class="info-content">
+                  <div class="info-label">Languages</div>
+                  <div class="info-value">${data.languages}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Skills & Bio Section -->
+          <div class="profile-section skills-section">
+            <h2 class="section-title">
+              <i class="bi bi-lightbulb"></i>
+              Skills & Bio
+            </h2>
+            <div class="skills-grid">
+              <div class="skill-item">
+                <div class="skill-title">Skills</div>
+                <div class="skill-value">${data.skills}</div>
+              </div>
+              
+              <div class="skill-item">
+                <div class="skill-title">Bio</div>
+                <div class="skill-value">${data.bio}</div>
+              </div>
+              
+              <div class="skill-item">
+                <div class="skill-title">Availability</div>
+                <div class="skill-value">${data.availability}</div>
+              </div>
+            </div>
+            
+            ${data.areas && Array.isArray(data.areas) ? `
+              <div style="margin-top: 25px;">
+                <h3 style="color: #333; margin-bottom: 15px; font-weight: 600;">Study Areas</h3>
+                <div class="areas-tags">
+                  ${data.areas.map(area => `<span class="area-tag">${area}</span>`).join('')}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+          
+          <!-- Action Buttons -->
+          <div class="action-buttons">
+            <button class="action-btn edit-btn">
+              <i class="bi bi-pencil"></i>
+              Edit Profile
+            </button>
+            <button class="action-btn logout-btn" onclick="logout()">
+              <i class="bi bi-box-arrow-right"></i>
+              Logout
+            </button>
+          </div>
         </div>
-      </section>
+      </div>
     `;
   }
 }

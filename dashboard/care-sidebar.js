@@ -6,9 +6,19 @@ class CareSidebar extends HTMLElement {
     this.isCollapsed = false;
   }
   connectedCallback() {
-    this.render();
-    this.attachEvents();
-    this.adjustMainContent();
+    // Wait for LocalStorageUtils to be available
+    if (typeof LocalStorageUtils === 'undefined') {
+      setTimeout(() => {
+        this.render();
+        this.attachEvents();
+        this.adjustMainContent();
+      }, 100);
+    } else {
+      this.render();
+      this.attachEvents();
+      this.adjustMainContent();
+    }
+    
     // Floating button to collapse/restore sidebar
     const btn = document.getElementById('sidebar-toggle-btn');
     if (btn) {
@@ -19,14 +29,69 @@ class CareSidebar extends HTMLElement {
     return window.userType || 'patient';
   }
   getUserData() {
-    const username = localStorage.getItem('loggedInUser') || 'Patient';
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.username === username && u.role === 'patient');
-    let displayName = user ? (user.name || user.username) : username;
-    let photo = user && user.photo ? user.photo : '../assets/people/woman-whiteshirt.png';
+    // Check if LocalStorageUtils is available
+    if (typeof LocalStorageUtils === 'undefined') {
+      return {
+        name: 'Patient',
+        initials: 'P',
+        avatarColor: 'linear-gradient(135deg, #667eea, #764ba2)',
+        photo: null,
+        email: '-',
+        username: '-'
+      };
+    }
+    
+    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+    const users = LocalStorageUtils.getItem('users', []);
+    
+    // First try to find by username/email without role restriction
+    let user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
+    
+    // If not found, try with role restriction (check both English and Spanish roles)
+    if (!user) {
+      user = users.find(u => (u.username === loggedInUser || u.email === loggedInUser) && 
+        (u.role === 'patient' || u.role === 'paciente' || u.role === 'cuidador'));
+    }
+    
+    let displayName = user ? (user.name || user.username) : 'Patient';
+    
+    // Calculate initials from name
+    const getInitials = (name) => {
+      if (!name) return 'U';
+      return name.split(' ').map(word => word.charAt(0).toUpperCase()).join('').slice(0, 2);
+    };
+    
+    // Generate unique color based on name
+    const getAvatarColor = (name) => {
+      if (!name) return 'linear-gradient(135deg, #667eea, #764ba2)';
+      
+      const colors = [
+        'linear-gradient(135deg, #667eea, #764ba2)', // Purple
+        'linear-gradient(135deg, #f093fb, #f5576c)', // Pink
+        'linear-gradient(135deg, #4facfe, #00f2fe)', // Blue
+        'linear-gradient(135deg, #43e97b, #38f9d7)', // Green
+        'linear-gradient(135deg, #fa709a, #fee140)', // Orange
+        'linear-gradient(135deg, #a8edea, #fed6e3)', // Mint
+        'linear-gradient(135deg, #ff9a9e, #fecfef)', // Rose
+        'linear-gradient(135deg, #ffecd2, #fcb69f)', // Peach
+        'linear-gradient(135deg, #ff9a9e, #fad0c4)', // Coral
+        'linear-gradient(135deg, #a18cd1, #fbc2eb)'  // Lavender
+      ];
+      
+      // Simple hash function to get consistent color for same name
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) {
+        hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      const index = Math.abs(hash) % colors.length;
+      return colors[index];
+    };
+    
     return {
       name: displayName,
-      photo: photo,
+      initials: getInitials(displayName),
+      avatarColor: getAvatarColor(displayName),
+      photo: user && user.photo ? user.photo : null,
       email: user ? (user.email || '-') : '-',
       username: user ? user.username : '-'
     };
@@ -42,14 +107,16 @@ class CareSidebar extends HTMLElement {
       { id: 'virtual-care', label: 'Virtual Care', icon: 'bi-camera-video' },
       { id: 'appointment-booking', label: 'Book Appointment', icon: 'bi-calendar-plus' },
       { id: 'health-monitoring', label: 'Health Monitoring', icon: 'bi-heart-pulse' },
-      { id: 'emergency-contacts', label: 'Emergency Contacts', icon: 'bi-telephone' }
+      { id: 'emergency-contacts', label: 'Emergency Contacts', icon: 'bi-telephone' },
+      { id: 'games', label: 'Games', icon: 'bi-controller' }
     ];
   }
   render() {
     const sections = this.getSections();
     const userData = this.getUserData();
     // Calculate initials for avatar if no custom photo
-    const initials = userData.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2);
+    const initials = userData.initials;
+    
     this.sections = sections;
     this.shadowRoot.innerHTML = `
       <style>
@@ -78,8 +145,8 @@ class CareSidebar extends HTMLElement {
         }
         
         nav.minimized .sidebar-header {
-          padding: 15px 8px;
-          min-height: 70px;
+          padding: 10px 8px;
+          min-height: 60px;
           justify-content: center;
         }
         
@@ -113,8 +180,13 @@ class CareSidebar extends HTMLElement {
           transform: scale(1.2);
         }
         
+        nav.minimized .logo-section {
+          padding: 15px 8px;
+          justify-content: center;
+        }
+        
         .logo-section {
-          padding: 30px 25px;
+          padding: 20px 25px;
           background: #f8f9fa;
           border-bottom: 1px solid #e9ecef;
           display: flex;
@@ -155,13 +227,13 @@ class CareSidebar extends HTMLElement {
         }
         
         .sidebar-header {
-          padding: 40px 30px;
+          padding: 25px 30px;
           background: #f8f9fa;
           border-bottom: 1px solid #e9ecef;
           display: flex;
           align-items: center;
           justify-content: flex-start;
-          min-height: 140px;
+          min-height: 120px;
           position: relative;
         }
         
@@ -190,6 +262,9 @@ class CareSidebar extends HTMLElement {
           color: #667eea;
           border: 3px solid #e9ecef;
           overflow: hidden;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .user-photo img {
@@ -197,6 +272,13 @@ class CareSidebar extends HTMLElement {
           height: 100%;
           border-radius: 50%;
           object-fit: cover;
+        }
+        
+        .user-photo span {
+          font-size: 28px;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
         
         .user-details h4 {
@@ -329,10 +411,8 @@ class CareSidebar extends HTMLElement {
         <div class="sidebar-header">
           <div class="header-left">
             <div class="user-info">
-              <div class="user-photo">
-                ${(userData.photo && userData.photo !== '../assets/people/woman-whiteshirt.png')
-                  ? `<img src="${userData.photo}" alt="Profile photo" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'font-size:32px;font-weight:700;color:#667eea;\'>${initials}</span>';">`
-                  : `<span style="font-size:32px;font-weight:700;color:#667eea;">${initials}</span>`}
+              <div class="user-photo" style="background: ${userData.avatarColor};">
+                ${userData.photo ? `<img src="${userData.photo}" alt="Profile photo">` : `<span>${userData.initials}</span>`}
               </div>
               <div class="user-details">
                 <h4>${userData.name}</h4>
@@ -402,6 +482,12 @@ class CareSidebar extends HTMLElement {
               <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M22 16.92V19A2 2 0 0 1 20 21C10.61 21 3 13.39 3 4A2 2 0 0 1 5 2H7.09A2 2 0 0 1 9.06 3.06L11.29 6.29A2 2 0 0 1 11.29 8.71L9.17 10.83A16.06 16.06 0 0 0 13.17 14.83L15.29 12.71A2 2 0 0 1 17.71 12.71L20.94 14.94A2 2 0 0 1 22 16.92Z" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </span>
             <span>Emergency Contacts</span>
+          </button>
+          <button class="sidebar-btn" data-section="games">
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M6 9H4.5A2.5 2.5 0 0 1 2 6.5V4.5A2.5 2.5 0 0 1 4.5 2H6.5A2.5 2.5 0 0 1 9 4.5V6" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 9H19.5A2.5 2.5 0 0 1 22 11.5V13.5A2.5 2.5 0 0 1 19.5 16H17.5A2.5 2.5 0 0 1 15 13.5V12" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 15H4.5A2.5 2.5 0 0 1 2 12.5V10.5A2.5 2.5 0 0 1 4.5 8H6.5A2.5 2.5 0 0 1 9 10.5V12" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 15H19.5A2.5 2.5 0 0 1 22 17.5V19.5A2.5 2.5 0 0 1 19.5 22H17.5A2.5 2.5 0 0 1 15 19.5V18" stroke="#5271ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </span>
+            <span>Games</span>
           </button>
           <button class="sidebar-btn logout-btn" onclick="logout()">
             <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
@@ -530,6 +616,21 @@ class CareSidebar extends HTMLElement {
         case 'caregivers':
           sectionContent = '<caregiver-search></caregiver-search>';
           break;
+        case 'virtual-care':
+          sectionContent = '<virtual-care></virtual-care>';
+          break;
+        case 'appointment-booking':
+          sectionContent = '<appointment-booking></appointment-booking>';
+          break;
+        case 'health-monitoring':
+          sectionContent = '<health-monitoring></health-monitoring>';
+          break;
+        case 'emergency-contacts':
+          sectionContent = '<emergency-contacts></emergency-contacts>';
+          break;
+        case 'games':
+          sectionContent = '<games-section></games-section>';
+          break;
         default:
           sectionContent = '<overview-section></overview-section>';
       }
@@ -537,6 +638,7 @@ class CareSidebar extends HTMLElement {
       // Add footer to all sections
       main.innerHTML = `
         <div style="min-height: calc(100vh - 40px); display: flex; flex-direction: column;">
+          <dashboard-header></dashboard-header>
           <div style="flex: 1;">
             ${sectionContent}
           </div>

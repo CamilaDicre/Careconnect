@@ -10,9 +10,9 @@ class CaregiverOverview extends HTMLElement {
   
   render() {
     // Get logged in caregiver data
-    let loggedInUser = localStorage.getItem('loggedInUser');
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    let user = users.find(u => u.username === loggedInUser && u.role === 'caregiver');
+    let loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+    let users = LocalStorageUtils.getItem('users', []);
+    let user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
     let profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=1976d2&color=fff&size=128&rounded=true';
     let displayName = user ? (user.name || user.username) : 'Caregiver';
     let displayEmail = user ? (user.email || '-') : '-';

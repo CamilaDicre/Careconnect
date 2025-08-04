@@ -9,21 +9,36 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        
         .dashboard-page {
             background: #f8f9fa;
             min-height: 100vh;
             font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
         }
         
         #dashboard-content {
             margin-left: 350px;
+            margin-top: 180px;
             transition: margin-left 0.4s ease;
-            padding: 20px;
-            min-height: 100vh;
+            padding: 0;
+            min-height: calc(100vh - 180px);
         }
         
         #dashboard-content.sidebar-collapsed {
             margin-left: 90px;
+            margin-top: 180px;
         }
         
         /* Estilos para la notificación modal de autenticación */
@@ -189,8 +204,11 @@
     
     <script src="welcome-overlay.js"></script>
     <script src="care-sidebar.js"></script>
+    <script src="dashboard-header.js"></script>
     <script src="overview-section.js"></script>
     <script src="user-profile.js"></script>
+    <script src="../js/localStorage-utils.js"></script>
+    <script src="../js/avatar-utils.js"></script>
     <script src="medicine-list.js"></script>
     <script src="health-charts.js"></script>
     <script src="calendar-view.js"></script>
@@ -200,6 +218,7 @@
     <script src="appointment-booking.js"></script>
     <script src="health-monitoring.js"></script>
     <script src="emergency-contacts.js"></script>
+    <script src="games-section.js"></script>
     <script src="dashboard-footer.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -249,8 +268,8 @@
         // Verificación de autenticación al cargar la página
         document.addEventListener('DOMContentLoaded', function() {
             // --- Protección de acceso para pacientes ---
-            const loggedInUser = localStorage.getItem('loggedInUser');
-            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+            const users = LocalStorageUtils.getItem('users', []);
             const user = users.find(u => u.username === loggedInUser && u.role === 'paciente');
             
             if (!loggedInUser || !user) {
@@ -327,19 +346,37 @@
         }
         
         // Handle sidebar collapse
-        function handleSidebarToggle() {
+        function handleSidebarToggle(event) {
             const main = document.getElementById('dashboard-content');
             const nav = document.querySelector('care-sidebar').shadowRoot.querySelector('nav');
+            const header = document.querySelector('dashboard-header');
             
             if (nav.classList.contains('minimized')) {
                 main.classList.remove('sidebar-collapsed');
+                if (header) {
+                    header.adjustHeader(false);
+                }
             } else {
                 main.classList.add('sidebar-collapsed');
+                if (header) {
+                    header.adjustHeader(true);
+                }
             }
         }
         
         // Listen for sidebar toggle events
         document.addEventListener('sidebarToggle', handleSidebarToggle);
+        
+        // Initialize header position
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('dashboard-header');
+            if (header) {
+                // Trigger initial adjustment
+                setTimeout(() => {
+                    header.adjustHeader(false);
+                }, 100);
+            }
+        });
     </script>
 </body>
 </html> 

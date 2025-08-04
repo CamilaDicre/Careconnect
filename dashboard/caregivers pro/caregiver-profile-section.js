@@ -4,9 +4,9 @@ class CaregiverProfileSection extends HTMLElement {
   }
 
   render() {
-    let loggedInUser = localStorage.getItem('loggedInUser');
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    let user = users.find(u => u.username === loggedInUser && u.role === 'caregiver');
+    let loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+    let users = LocalStorageUtils.getItem('users', []);
+    let user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
     let profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=1976d2&color=fff&size=128&rounded=true';
     let displayName = user ? (user.name || user.username) : 'Caregiver';
     let displayEmail = user ? (user.email || '-') : '-';
@@ -188,9 +188,9 @@ class CaregiverProfileSection extends HTMLElement {
   }
 
   saveProfile() {
-    let loggedInUser = localStorage.getItem('loggedInUser');
-    let users = JSON.parse(localStorage.getItem('users') || '[]');
-    let idx = users.findIndex(u => u.username === loggedInUser && u.role === 'caregiver');
+    let loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+    let users = LocalStorageUtils.getItem('users', []);
+    let idx = users.findIndex(u => u.username === loggedInUser && u.role === 'cuidador');
     if (idx !== -1) {
       const name = this.querySelector('#nameValue input').value.trim();
       const email = this.querySelector('#emailValue input').value.trim();
@@ -200,7 +200,7 @@ class CaregiverProfileSection extends HTMLElement {
       users[idx].email = email;
       users[idx].phone = phone;
       users[idx].titles = titles;
-      localStorage.setItem('users', JSON.stringify(users));
+      LocalStorageUtils.setItem('users', users);
     }
     this.render();
   }

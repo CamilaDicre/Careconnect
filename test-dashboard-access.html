@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Dashboard Access - Careconnect</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-section {
+            background: white;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .test-button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        .test-button:hover {
+            background: #0056b3;
+        }
+        .result {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            white-space: pre-wrap;
+        }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        .warning { background: #fff3cd; border-color: #ffeaa7; }
+    </style>
+</head>
+<body>
+    <h1>Test Dashboard Access</h1>
+    
+    <div class="test-section">
+        <h2>1. Current Session Status</h2>
+        <button class="test-button" onclick="checkSessionStatus()">Check Session</button>
+        <div id="session-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>2. Test User Registration & Login</h2>
+        <button class="test-button" onclick="createTestUser()">Create Test User</button>
+        <button class="test-button" onclick="simulateLogin()">Simulate Login</button>
+        <div id="user-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>3. Test Dashboard Access</h2>
+        <button class="test-button" onclick="testPatientDashboard()">Test Patient Dashboard</button>
+        <button class="test-button" onclick="testCaregiverDashboard()">Test Caregiver Dashboard</button>
+        <div id="dashboard-result" class="result"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>4. Quick Access Links</h2>
+        <a href="pages/login.html" class="test-button" style="text-decoration: none; display: inline-block;">Go to Login</a>
+        <a href="pages/register-caregiver.html" class="test-button" style="text-decoration: none; display: inline-block;">Register Caregiver</a>
+        <a href="dashboard/dashboard.html" class="test-button" style="text-decoration: none; display: inline-block;">Patient Dashboard</a>
+        <a href="dashboard/caregivers pro/Caregiver-pro.html" class="test-button" style="text-decoration: none; display: inline-block;">Caregiver Dashboard</a>
+    </div>
+
+    <script src="js/localStorage-utils.js"></script>
+    <script>
+        function showResult(elementId, message, type = 'success') {
+            const element = document.getElementById(elementId);
+            element.textContent = message;
+            element.className = `result ${type}`;
+        }
+
+        function checkSessionStatus() {
+            try {
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                const userRole = LocalStorageUtils.getItem('userRole');
+                const currentUserId = LocalStorageUtils.getItem('currentUserId');
+                const users = LocalStorageUtils.getItem('users', []);
+
+                let result = `📊 Session Status:\n\n`;
+                result += `Logged In User: ${loggedInUser || 'None'}\n`;
+                result += `User Role: ${userRole || 'None'}\n`;
+                result += `Current User ID: ${currentUserId || 'None'}\n`;
+                result += `Total Users: ${users.length}\n\n`;
+
+                if (loggedInUser) {
+                    const user = users.find(u => u.username === loggedInUser);
+                    if (user) {
+                        result += `User Details:\n`;
+                        result += `- Username: ${user.username}\n`;
+                        result += `- Email: ${user.email}\n`;
+                        result += `- Role: ${user.role}\n`;
+                        result += `- ID: ${user.id}\n`;
+                    } else {
+                        result += `⚠️ User not found in users list!\n`;
+                    }
+                }
+
+                showResult('session-result', result, loggedInUser ? 'success' : 'warning');
+            } catch (error) {
+                showResult('session-result', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function createTestUser() {
+            try {
+                const testUser = {
+                    username: "Test User",
+                    email: "test@example.com",
+                    password: "password123",
+                    role: "paciente",
+                    gender: "Male",
+                    registrationDate: new Date().toISOString(),
+                    id: "test_user_1"
+                };
+
+                let users = LocalStorageUtils.getItem('users', []);
+                if (!Array.isArray(users)) {
+                    users = [];
+                }
+
+                // Remove existing test user if exists
+                users = users.filter(u => u.email !== testUser.email);
+                users.push(testUser);
+
+                const success = LocalStorageUtils.setItem('users', users);
+                
+                if (success) {
+                    showResult('user-result', `✅ Test user created successfully!\nUsername: ${testUser.username}\nEmail: ${testUser.email}\nRole: ${testUser.role}\nID: ${testUser.id}`);
+                } else {
+                    showResult('user-result', '❌ Failed to create test user', 'error');
+                }
+            } catch (error) {
+                showResult('user-result', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function simulateLogin() {
+            try {
+                const users = LocalStorageUtils.getItem('users', []);
+                const testUser = users.find(u => u.email === 'test@example.com');
+
+                if (!testUser) {
+                    showResult('user-result', '❌ Test user not found. Please create test user first.', 'error');
+                    return;
+                }
+
+                // Simulate login
+                LocalStorageUtils.setItem('loggedInUser', testUser.username);
+                LocalStorageUtils.setItem('userRole', testUser.role);
+                LocalStorageUtils.setItem('currentUserId', testUser.id);
+
+                showResult('user-result', `✅ Login successful!\nUsername: ${testUser.username}\nRole: ${testUser.role}\nSession data saved.`);
+            } catch (error) {
+                showResult('user-result', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function testPatientDashboard() {
+            try {
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                const users = LocalStorageUtils.getItem('users', []);
+                const user = users.find(u => u.username === loggedInUser && u.role === 'paciente');
+
+                if (!loggedInUser || !user) {
+                    showResult('dashboard-result', '❌ Access denied: Must be logged in as patient\n\nTo test:\n1. Create test user\n2. Simulate login\n3. Try again', 'error');
+                    return;
+                }
+
+                showResult('dashboard-result', `✅ Patient dashboard access granted!\nUsername: ${user.username}\nRole: ${user.role}\n\nYou can now access the patient dashboard.`, 'success');
+            } catch (error) {
+                showResult('dashboard-result', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        function testCaregiverDashboard() {
+            try {
+                const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+                const users = LocalStorageUtils.getItem('users', []);
+                const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+
+                if (!loggedInUser || !user) {
+                    showResult('dashboard-result', '❌ Access denied: Must be logged in as caregiver\n\nTo test:\n1. Register a caregiver\n2. Login with caregiver account\n3. Try again', 'error');
+                    return;
+                }
+
+                showResult('dashboard-result', `✅ Caregiver dashboard access granted!\nUsername: ${user.username}\nRole: ${user.role}\n\nYou can now access the caregiver dashboard.`, 'success');
+            } catch (error) {
+                showResult('dashboard-result', `❌ Error: ${error.message}`, 'error');
+            }
+        }
+
+        // Auto-check session status on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkSessionStatus();
+        });
+    </script>
+</body>
+</html> 
