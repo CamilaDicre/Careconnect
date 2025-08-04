@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Careconnect - Caregiver Registration</title>
+  <title>Careconnect - Registro de Cuidador</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/auth.css">
+  <style>
     .caregiver-container {
       max-width: 500px;
       margin: 48px auto 32px auto;
@@ -167,6 +168,11 @@
     .caregiver-main-btn:hover {
       background: linear-gradient(90deg, #1565c0 60%, #1976d2 100%);
     }
+    .caregiver-main-btn:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      opacity: 0.7;
+    }
     @media (max-width: 600px) {
       .caregiver-container {
         padding: 1.2rem 0.2rem 1.2rem 0.2rem;
@@ -185,7 +191,6 @@
       -moz-appearance: textfield;
     }
     .caregiver-form input[type="date"] {
-      /* Custom date text input styles */
       background: #f6f8fc;
       border-radius: 12px;
       border: none;
@@ -212,293 +217,416 @@
     }
     
     /* Estilos para los símbolos de género */
-    #gender option[value="male"] {
+    #gender option[value="masculino"] {
       color: #1976d2;
       font-weight: 500;
     }
-    #gender option[value="female"] {
+    #gender option[value="femenino"] {
       color: #e91e63;
       font-weight: 500;
     }
     #gender option[value=""] {
       color: #666;
     }
+
+    /* Mensajes de error y éxito */
+    .message-banner {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 9999;
+      text-align: center;
+      display: none;
+    }
+    
+    .error-field {
+      border-color: #d32f2f !important;
+      background-color: #ffebee !important;
+    }
+    
+    .success-field {
+      border-color: #2e7d32 !important;
+      background-color: #e8f5e8 !important;
+    }
   </style>
 </head>
 <body>
+  <div id="messageBanner" class="message-banner"></div>
   <a href="login.html#register" class="back-home-btn">
     <i class="bi bi-arrow-left"></i>
-    <span>Back to register</span>
+    <span>Volver al registro</span>
   </a>
   <div class="caregiver-container">
     <div class="caregiver-logo">
       <div style="display:flex; align-items:center; justify-content:center; gap:2px;">
-        <img src="assets/Frame - 1.svg" alt="Careconnect Logo" style="width: 100px; height: 100px; border-radius: 0; background: transparent;">
+        <img src="../assets/Frame - 1.svg" alt="Careconnect Logo" style="width: 100px; height: 100px; border-radius: 0; background: transparent;">
         <span style="font-family: 'Poppins', Arial, sans-serif; font-size: 2.3rem; font-weight: 700; color: #1565c0; letter-spacing: 2.5px; text-shadow: 0 2px 6px rgba(25,118,210,0.10), 0 1px 0 #fff;">areconnect</span>
       </div>
     </div>
     <div class="caregiver-header">
-      <div style="font-size:1.08rem; color:#1976d2; margin-bottom:0.5rem; font-weight:500; letter-spacing:0.5px;">Please fill in your personal and professional information</div>
+      <div style="font-size:1.08rem; color:#1976d2; margin-bottom:0.5rem; font-weight:500; letter-spacing:0.5px;">Completa tu información personal y profesional</div>
     </div>
-    <form class="caregiver-form">
+    <form class="caregiver-form" id="caregiverForm">
       <div class="form-section">
-        <label for="fullName">Full Name</label>
+        <label for="fullName">Nombre Completo</label>
         <div class="input-group">
           <i class="bi bi-person"></i>
-          <input type="text" id="fullName" name="fullName" placeholder="Your full name" required>
+          <input type="text" id="fullName" name="fullName" placeholder="Tu nombre completo" required>
         </div>
-        <label for="email">Email</label>
+        <label for="email">Correo Electrónico</label>
         <div class="input-group">
           <i class="bi bi-envelope"></i>
-          <input type="email" id="email" name="email" placeholder="Your email" required>
+          <input type="email" id="email" name="email" placeholder="Tu correo electrónico" required>
         </div>
-        <label for="password">Password</label>
+        <label for="password">Contraseña</label>
         <div class="input-group">
           <i class="bi bi-lock"></i>
-          <input type="password" id="password" name="password" placeholder="Create a password" required>
+          <input type="password" id="password" name="password" placeholder="Crea una contraseña" required>
         </div>
-        <label for="phone">Phone Number</label>
+        <label for="phone">Número de Teléfono</label>
         <div class="input-group">
           <i class="bi bi-telephone"></i>
-          <input type="tel" id="phone" name="phone" placeholder="Your phone number" required>
+          <input type="tel" id="phone" name="phone" placeholder="Tu número de teléfono" required>
         </div>
-        <label for="birthdate">Date of Birth</label>
+        <label for="birthdate">Fecha de Nacimiento</label>
         <div class="input-group">
           <i class="bi bi-calendar"></i>
-          <input type="text" id="birthdate" name="birthdate" required placeholder="DD-MM-YYYY (e.g. 25-12-1970)" pattern="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d\d$" maxlength="10" autocomplete="off" inputmode="numeric">
+          <input type="text" id="birthdate" name="birthdate" required placeholder="DD-MM-YYYY (ej. 25-12-1970)" pattern="^(0[1-9]|[12][0-9]|3[01])-(0[1-9]|1[0-2])-(19|20)\d\d$" maxlength="10" autocomplete="off" inputmode="numeric">
         </div>
-        <label for="gender">Gender</label>
+        <label for="gender">Género</label>
         <div class="input-group">
           <i class="bi bi-gender-ambiguous"></i>
           <select id="gender" name="gender" required>
-            <option value="">Select gender</option>
-            <option value="female">♀ Female</option>
-            <option value="male">♂ Male</option>
+            <option value="">Seleccionar género</option>
+            <option value="femenino">♀ Femenino</option>
+            <option value="masculino">♂ Masculino</option>
           </select>
         </div>
-        <label for="address">Address</label>
+        <label for="address">Dirección</label>
         <div class="input-group">
           <i class="bi bi-geo-alt"></i>
-          <input type="text" id="address" name="address" placeholder="Your address" required>
+          <input type="text" id="address" name="address" placeholder="Tu dirección" required>
         </div>
       </div>
       <div class="form-section">
-        <label for="experience">Experience (years)</label>
+        <label for="experience">Experiencia (años)</label>
         <div class="input-group">
           <i class="bi bi-briefcase"></i>
-          <input type="number" id="experience" name="experience" min="0" max="60" placeholder="Years of experience" required inputmode="numeric" style="text-align:center;">
+          <input type="number" id="experience" name="experience" min="0" max="60" placeholder="Años de experiencia" required inputmode="numeric" style="text-align:center;">
         </div>
-        <label for="education">Education</label>
+        <label for="education">Educación</label>
         <div class="input-group">
           <i class="bi bi-mortarboard"></i>
-          <input type="text" id="education" name="education" placeholder="Your education" required>
+          <input type="text" id="education" name="education" placeholder="Tu educación" required>
         </div>
-        <label for="certifications">Certifications</label>
+        <label for="certifications">Certificaciones</label>
         <div class="input-group">
           <i class="bi bi-award"></i>
-          <input type="text" id="certifications" name="certifications" placeholder="Any certifications (optional)">
+          <input type="text" id="certifications" name="certifications" placeholder="Certificaciones (opcional)">
         </div>
-        <label for="skills">Skills</label>
+        <label for="skills">Habilidades</label>
         <div class="input-group">
           <i class="bi bi-stars"></i>
-          <textarea id="skills" name="skills" placeholder="List your skills, separated by commas" required></textarea>
+          <textarea id="skills" name="skills" placeholder="Lista tus habilidades, separadas por comas" required></textarea>
         </div>
-        <label for="languages">Languages</label>
+        <label for="languages">Idiomas</label>
         <div class="input-group">
           <i class="bi bi-translate"></i>
-          <input type="text" id="languages" name="languages" placeholder="Languages you speak" required>
+          <input type="text" id="languages" name="languages" placeholder="Idiomas que hablas" required>
         </div>
-        <label for="bio">Short Bio</label>
+        <label for="bio">Biografía Corta</label>
         <div class="input-group">
           <i class="bi bi-chat-left-text"></i>
-          <textarea id="bio" name="bio" placeholder="Tell us about yourself" required></textarea>
+          <textarea id="bio" name="bio" placeholder="Cuéntanos sobre ti" required></textarea>
         </div>
-        <label for="availability">Availability</label>
+        <label for="availability">Disponibilidad</label>
         <div class="input-group">
           <i class="bi bi-clock"></i>
           <select id="availability" name="availability" required>
-            <option value="">Select availability</option>
-            <option value="fulltime">Full-time</option>
-            <option value="parttime">Part-time</option>
-            <option value="weekends">Weekends</option>
-            <option value="nights">Nights</option>
+            <option value="">Seleccionar disponibilidad</option>
+            <option value="tiempo_completo">Tiempo completo</option>
+            <option value="tiempo_parcial">Tiempo parcial</option>
+            <option value="fines_semana">Fines de semana</option>
+            <option value="noches">Noches</option>
           </select>
         </div>
       </div>
-      <button type="submit" class="caregiver-main-btn">Submit Profile</button>
+      <button type="submit" class="caregiver-main-btn" id="submitBtn">Crear Perfil</button>
     </form>
   </div>
   <script src="../js/localStorage-utils.js"></script>
   <script>
-    document.querySelector('.caregiver-form').onsubmit = function(e) {
-      e.preventDefault();
+    // Función para mostrar mensajes
+    function showBanner(message, type = 'success') {
+      const banner = document.getElementById('messageBanner');
+      if (!banner) return;
       
-      // Obtener todos los campos requeridos
-      const requiredFields = [
-        'fullName', 'email', 'password', 'phone', 'birthdate', 'gender', 
-        'address', 'experience', 'education', 'skills', 
-        'languages', 'bio', 'availability'
-      ];
+      const bgColor = type === 'success' ? '#d1fae5' : '#fee2e2';
+      const textColor = type === 'success' ? '#065f46' : '#991b1b';
+      const borderColor = type === 'success' ? '#10b981' : '#ef4444';
       
-      // Validar que todos los campos requeridos estén completos
-      let isValid = true;
-      requiredFields.forEach(fieldId => {
-        const field = document.getElementById(fieldId);
-        if (!field.value.trim()) {
-          isValid = false;
-          field.style.borderColor = '#d32f2f';
-          field.style.backgroundColor = '#ffebee';
-        } else {
-          field.style.borderColor = '';
-          field.style.backgroundColor = '';
-        }
-      });
+      banner.innerHTML = `
+        <div style="display:inline-block;margin:16px auto;padding:16px 32px;background:${bgColor};color:${textColor};border-radius:8px;font-size:1.2rem;font-weight:bold;box-shadow:0 2px 8px rgba(0,0,0,0.08);border:1px solid ${borderColor};">
+          ${message}
+        </div>
+      `;
+      banner.style.display = 'block';
+      setTimeout(() => {
+        banner.style.display = 'none';
+        banner.innerHTML = '';
+      }, 3000);
+    }
+
+    // Función para validar campos
+    function validateField(field, validationRules) {
+      const value = field.value.trim();
+      const fieldName = field.name || field.id;
       
-      if (!isValid) {
-        alert('Please fill in all required fields.');
-        return;
+      // Limpiar clases de error/éxito
+      field.classList.remove('error-field', 'success-field');
+      
+      // Validar campo requerido
+      if (validationRules.required && !value) {
+        field.classList.add('error-field');
+        return `El campo ${fieldName} es requerido.`;
       }
       
-      // Validaciones adicionales
-      const fullName = document.getElementById('fullName').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-      const phone = document.getElementById('phone').value.trim();
-      const birthdate = document.getElementById('birthdate').value.trim();
-      const bio = document.getElementById('bio').value.trim();
-      const skills = document.getElementById('skills').value.trim();
-      const address = document.getElementById('address').value.trim();
+      if (!value) return null; // Campo vacío pero no requerido
       
-      // Validar longitud de campos
-      if (fullName.length > 100) {
-        alert('Full name is too long. Maximum 100 characters.');
-        return;
+      // Validar longitud mínima
+      if (validationRules.minLength && value.length < validationRules.minLength) {
+        field.classList.add('error-field');
+        return `${fieldName} debe tener al menos ${validationRules.minLength} caracteres.`;
       }
       
-      if (email.length > 100) {
-        alert('Email is too long. Maximum 100 characters.');
-        return;
-      }
-      
-      if (password.length < 6) {
-        alert('Password must be at least 6 characters long.');
-        return;
-      }
-      
-      if (phone.length > 20) {
-        alert('Phone number is too long. Maximum 20 characters.');
-        return;
-      }
-      
-      if (address.length > 200) {
-        alert('Address is too long. Maximum 200 characters.');
-        return;
-      }
-      
-      if (bio.length > 500) {
-        alert('Bio is too long. Maximum 500 characters.');
-        return;
-      }
-      
-      if (skills.length > 300) {
-        alert('Skills list is too long. Maximum 300 characters.');
-        return;
+      // Validar longitud máxima
+      if (validationRules.maxLength && value.length > validationRules.maxLength) {
+        field.classList.add('error-field');
+        return `${fieldName} no puede tener más de ${validationRules.maxLength} caracteres.`;
       }
       
       // Validar formato de email
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(email)) {
-        alert('Please enter a valid email address.');
-        return;
+      if (validationRules.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        field.classList.add('error-field');
+        return 'Por favor ingresa un correo electrónico válido.';
       }
       
-      // Validar formato de fecha (más flexible)
-      const dateRegex = /^(0?[1-9]|[12][0-9]|3[01])[\/\-\.](0?[1-9]|1[0-2])[\/\-\.](19|20)\d\d$/;
-      if (!dateRegex.test(birthdate)) {
-        alert('Please enter a valid date in format DD/MM/YYYY, DD-MM-YYYY, or DD.MM.YYYY');
-        return;
+      // Validar formato de fecha
+      if (validationRules.date && !/^(0?[1-9]|[12][0-9]|3[01])[\/\-\.](0?[1-9]|1[0-2])[\/\-\.](19|20)\d\d$/.test(value)) {
+        field.classList.add('error-field');
+        return 'Por favor ingresa una fecha válida en formato DD/MM/YYYY, DD-MM-YYYY, o DD.MM.YYYY';
       }
       
-      // Verificar si localStorage está disponible
-      if (!LocalStorageUtils.isAvailable()) {
-        alert('localStorage is not available in your browser. Please enable it or try a different browser.');
-        return;
-      }
-      
-      // Mostrar estado de carga en el botón
-      const submitBtn = this.querySelector('.caregiver-main-btn');
-      const originalText = submitBtn.textContent;
-      submitBtn.textContent = 'Submitting...';
-      submitBtn.classList.add('loading');
-      
-      // Simular proceso de envío (1 segundo)
-      setTimeout(() => {
-        try {
-          // Guardar datos en localStorage con sanitización
-          const user = {
-            username: LocalStorageUtils.sanitizeText(fullName),
-            email: email.toLowerCase().trim(),
-            password: password, // Guardar la contraseña como está
-            phone: LocalStorageUtils.sanitizeText(phone),
-            birthdate: LocalStorageUtils.normalizeDate(birthdate) || birthdate,
-            gender: document.getElementById('gender').value,
-            address: LocalStorageUtils.sanitizeText(address),
-            experience: LocalStorageUtils.sanitizeText(document.getElementById('experience').value.trim()),
-            education: LocalStorageUtils.sanitizeText(document.getElementById('education').value.trim()),
-            certifications: LocalStorageUtils.sanitizeText(document.getElementById('certifications').value.trim()),
-            skills: LocalStorageUtils.sanitizeText(skills),
-            languages: LocalStorageUtils.sanitizeText(document.getElementById('languages').value.trim()),
-            bio: LocalStorageUtils.sanitizeText(bio),
-            availability: document.getElementById('availability').value,
-            role: 'cuidador',
-            registrationDate: new Date().toISOString(),
-            id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
-          };
-          
-          // Obtener usuarios existentes
-          let users = LocalStorageUtils.getItem('users', []);
-          if (!Array.isArray(users)) {
-            users = [];
-          }
-          
-          // Evitar duplicados por email
-          if (users.some(u => u.email === user.email)) {
-            alert('Ya existe un usuario registrado con este email.');
-            submitBtn.textContent = originalText;
-            submitBtn.classList.remove('loading');
-            return;
-          }
-          
-          // Agregar nuevo usuario
-          users.push(user);
-          
-          // Guardar usuarios actualizados
-          if (!LocalStorageUtils.setItem('users', users, 5000000)) { // 5MB límite
-            alert('Error al guardar los datos. Por favor, verifica que tienes suficiente espacio de almacenamiento.');
-            submitBtn.textContent = originalText;
-            submitBtn.classList.remove('loading');
-            return;
-          }
-          
-          // Guardar datos de sesión
-          LocalStorageUtils.setItem('loggedInUser', user.username);
-          LocalStorageUtils.setItem('userRole', user.role);
-          LocalStorageUtils.setItem('currentUserId', user.id);
-          
-          // Mostrar mensaje de éxito
-          alert('¡Registro exitoso! Redirigiendo al dashboard...');
-          
-          // Redirigir al dashboard de cuidadores
-          window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
-          
-        } catch (error) {
-          console.error('Error during registration:', error);
-          alert('Error durante el registro. Por favor, intenta de nuevo.');
-          submitBtn.textContent = originalText;
-          submitBtn.classList.remove('loading');
+      // Validar número
+      if (validationRules.number) {
+        const num = parseInt(value);
+        if (isNaN(num) || num < validationRules.min || num > validationRules.max) {
+          field.classList.add('error-field');
+          return `${fieldName} debe ser un número entre ${validationRules.min} y ${validationRules.max}.`;
         }
-      }, 1000);
-    };
+      }
+      
+      // Si pasa todas las validaciones
+      field.classList.add('success-field');
+      return null;
+    }
+
+    // Función para obtener usuarios
+    function getUsers() {
+      try {
+        if (!LocalStorageUtils.isAvailable()) {
+          console.warn('localStorage no está disponible');
+          return [];
+        }
+        
+        const users = LocalStorageUtils.getItem('users', []);
+        return Array.isArray(users) ? users : [];
+      } catch (error) {
+        console.error('Error obteniendo usuarios:', error);
+        return [];
+      }
+    }
+
+    // Función para guardar usuarios
+    function saveUsers(users) {
+      try {
+        if (!Array.isArray(users)) {
+          throw new Error('Users debe ser un array');
+        }
+        
+        return LocalStorageUtils.setItem('users', users, 5000000); // 5MB límite
+      } catch (error) {
+        console.error('Error guardando usuarios:', error);
+        return false;
+      }
+    }
+
+    // Función para registrar cuidador
+    function registerCaregiver(formData) {
+      try {
+        // Verificar si localStorage está disponible
+        if (!LocalStorageUtils.isAvailable()) {
+          throw new Error('localStorage no está disponible en tu navegador. Por favor, habilítalo o prueba con un navegador diferente.');
+        }
+        
+        // Obtener usuarios existentes
+        let users = getUsers();
+        
+        // Verificar duplicados por email
+        if (users.some(u => u.email === formData.email.toLowerCase())) {
+          throw new Error('Ya existe un usuario registrado con este correo electrónico.');
+        }
+        
+        // Crear nuevo usuario cuidador
+        const newCaregiver = {
+          username: LocalStorageUtils.sanitizeText(formData.fullName),
+          email: formData.email.toLowerCase().trim(),
+          password: formData.password,
+          phone: LocalStorageUtils.sanitizeText(formData.phone),
+          birthdate: LocalStorageUtils.normalizeDate(formData.birthdate) || formData.birthdate,
+          gender: formData.gender,
+          address: LocalStorageUtils.sanitizeText(formData.address),
+          experience: LocalStorageUtils.sanitizeText(formData.experience),
+          education: LocalStorageUtils.sanitizeText(formData.education),
+          certifications: LocalStorageUtils.sanitizeText(formData.certifications),
+          skills: LocalStorageUtils.sanitizeText(formData.skills),
+          languages: LocalStorageUtils.sanitizeText(formData.languages),
+          bio: LocalStorageUtils.sanitizeText(formData.bio),
+          availability: formData.availability,
+          role: 'cuidador',
+          registrationDate: new Date().toISOString(),
+          id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+        };
+        
+        // Agregar nuevo usuario
+        users.push(newCaregiver);
+        
+        // Guardar usuarios actualizados
+        if (!saveUsers(users)) {
+          throw new Error('Error al guardar los datos. Por favor, verifica que tienes suficiente espacio de almacenamiento.');
+        }
+        
+        // Guardar datos de sesión
+        LocalStorageUtils.setItem('loggedInUser', newCaregiver.username);
+        LocalStorageUtils.setItem('userRole', newCaregiver.role);
+        LocalStorageUtils.setItem('currentUserId', newCaregiver.id);
+        
+        return newCaregiver;
+      } catch (error) {
+        throw error;
+      }
+    }
+
+    // Manejar envío del formulario
+    document.getElementById('caregiverForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn.textContent;
+      
+      // Deshabilitar botón y mostrar estado de carga
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Creando perfil...';
+      
+      try {
+        // Definir reglas de validación
+        const validationRules = {
+          fullName: { required: true, maxLength: 100 },
+          email: { required: true, maxLength: 100, email: true },
+          password: { required: true, minLength: 6, maxLength: 50 },
+          phone: { required: true, maxLength: 20 },
+          birthdate: { required: true, date: true },
+          gender: { required: true },
+          address: { required: true, maxLength: 200 },
+          experience: { required: true, number: true, min: 0, max: 60 },
+          education: { required: true, maxLength: 100 },
+          skills: { required: true, maxLength: 300 },
+          languages: { required: true, maxLength: 100 },
+          bio: { required: true, maxLength: 500 },
+          availability: { required: true }
+        };
+        
+        // Validar todos los campos
+        const errors = [];
+        const formData = {};
+        
+        Object.keys(validationRules).forEach(fieldName => {
+          const field = document.getElementById(fieldName);
+          if (field) {
+            const error = validateField(field, validationRules[fieldName]);
+            if (error) {
+              errors.push(error);
+            } else {
+              formData[fieldName] = field.value.trim();
+            }
+          }
+        });
+        
+        // Si hay errores, mostrarlos y detener
+        if (errors.length > 0) {
+          showBanner(errors.join('\n'), 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalText;
+          return;
+        }
+        
+        // Simular proceso de registro (1 segundo)
+        setTimeout(() => {
+          try {
+            // Registrar cuidador
+            const newCaregiver = registerCaregiver(formData);
+            
+            // Mostrar mensaje de éxito
+            showBanner('¡Registro exitoso! Redirigiendo al dashboard...', 'success');
+            
+            // Redirigir al dashboard de cuidadores después de 1.5 segundos
+            setTimeout(() => {
+              window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
+            }, 1500);
+            
+          } catch (error) {
+            console.error('Error durante el registro:', error);
+            showBanner(error.message, 'error');
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+          }
+        }, 1000);
+        
+      } catch (error) {
+        console.error('Error en el formulario:', error);
+        showBanner('Error inesperado. Por favor, intenta de nuevo.', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = originalText;
+      }
+    });
+
+    // Validación en tiempo real
+    const fields = document.querySelectorAll('.caregiver-form input, .caregiver-form select, .caregiver-form textarea');
+    fields.forEach(field => {
+      field.addEventListener('blur', function() {
+        const fieldName = this.name || this.id;
+        const validationRules = {
+          fullName: { required: true, maxLength: 100 },
+          email: { required: true, maxLength: 100, email: true },
+          password: { required: true, minLength: 6, maxLength: 50 },
+          phone: { required: true, maxLength: 20 },
+          birthdate: { required: true, date: true },
+          gender: { required: true },
+          address: { required: true, maxLength: 200 },
+          experience: { required: true, number: true, min: 0, max: 60 },
+          education: { required: true, maxLength: 100 },
+          skills: { required: true, maxLength: 300 },
+          languages: { required: true, maxLength: 100 },
+          bio: { required: true, maxLength: 500 },
+          availability: { required: true }
+        };
+        
+        if (validationRules[fieldName]) {
+          validateField(this, validationRules[fieldName]);
+        }
+      });
+    });
   </script>
 </body>
 </html> 
