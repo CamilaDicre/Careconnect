@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security - Careconnect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('assets/logo-pattern.png') repeat;
+            background-size: 200px 200px;
+            min-height: 100vh;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .policy-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+            padding: 40px 30px;
+            margin-bottom: 30px;
+        }
+
+        .policy-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #f4f5f7;
+        }
+
+        .policy-header h1 {
+            color: royalblue;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .policy-header p {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .policy-section {
+            margin-bottom: 35px;
+            background: #f4f5f7;
+            border-radius: 12px;
+            padding: 25px 20px;
+            transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+        }
+
+        .policy-section:hover {
+            background: #e9ecf3;
+            box-shadow: 0 4px 16px rgba(65,105,225,0.10);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .policy-section h2 {
+            color: royalblue;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .policy-section h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .policy-section p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .policy-section ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .policy-section li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            color: #444;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: royalblue;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(65,105,225,0.08);
+        }
+
+        .back-button:hover {
+            background: #274b8e;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 16px rgba(65,105,225,0.2);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, royalblue, #4a69bd);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .contact-info p {
+            color: #e8e8e8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .security-feature {
+            background: #fff;
+            border: 2px solid #e9ecf3;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .security-feature:hover {
+            border-color: royalblue;
+            box-shadow: 0 2px 8px rgba(65,105,225,0.1);
+        }
+
+        .security-feature h4 {
+            color: royalblue;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        .security-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .policy-card {
+                padding: 30px 20px;
+            }
+
+            .policy-header h1 {
+                font-size: 2rem;
+            }
+
+            .policy-section {
+                padding: 20px 15px;
+            }
+
+            .policy-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .policy-section h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .policy-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .policy-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .policy-section p, .policy-section li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="policy-card">
+            <div style="text-align:center; margin-bottom: 18px;">
+                <img src="assets/Frame - 1.svg" alt="Careconnect Logo" style="max-width: 120px; height: auto; margin-bottom: 10px;" />
+            </div>
+            <div class="policy-header">
+                <h1>Security & Trust</h1>
+                <p>Protecting your health information with enterprise-grade security</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>Our Security Commitment</h2>
+                <p>At Careconnect, we understand that health information is among the most sensitive personal data. We are committed to protecting your privacy and security with industry-leading measures that exceed healthcare industry standards. Your trust is our highest priority.</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>Data Protection Standards</h2>
+                <p>We implement comprehensive security measures to protect your information:</p>
+                
+                <div class="security-feature">
+                    <h4>Encryption & Data Protection</h4>
+                    <ul>
+                        <li><strong>AES-256 encryption</strong> for data at rest and in transit</li>
+                        <li><strong>TLS 1.3</strong> secure connections for all communications</li>
+                        <li><strong>End-to-end encryption</strong> for sensitive health data</li>
+                        <li><strong>Database encryption</strong> with industry-standard algorithms</li>
+                    </ul>
+                </div>
+
+                <div class="security-feature">
+                    <h4>Access Control & Authentication</h4>
+                    <ul>
+                        <li><strong>Multi-factor authentication (MFA)</strong> for all accounts</li>
+                        <li><strong>Role-based access controls</strong> with least privilege principles</li>
+                        <li><strong>Biometric authentication</strong> support for mobile devices</li>
+                        <li><strong>Session management</strong> with automatic timeouts</li>
+                    </ul>
+                </div>
+
+                <div class="security-feature">
+                    <h4>Infrastructure Security</h4>
+                    <ul>
+                        <li><strong>Cloud security</strong> with AWS/Azure enterprise-grade protection</li>
+                        <li><strong>Regular security audits</strong> and penetration testing</li>
+                        <li><strong>24/7 monitoring</strong> and threat detection</li>
+                        <li><strong>Automated backups</strong> with geographic redundancy</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h2>Compliance & Certifications</h2>
+                <p>We maintain compliance with the highest security and privacy standards:</p>
+                <ul>
+                    <li><strong>HIPAA Compliance:</strong> Full compliance with Health Insurance Portability and Accountability Act</li>
+                    <li><strong>GDPR Compliance:</strong> European General Data Protection Regulation</li>
+                    <li><strong>ISO 27001:</strong> Information Security Management System certification</li>
+                    <li><strong>SOC 2 Type II:</strong> Service Organization Control 2 certification</li>
+                    <li><strong>HITECH Act:</strong> Health Information Technology for Economic and Clinical Health compliance</li>
+                </ul>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <span class="security-badge">HIPAA Compliant</span>
+                    <span class="security-badge">GDPR Compliant</span>
+                    <span class="security-badge">ISO 27001</span>
+                    <span class="security-badge">SOC 2 Type II</span>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h2>Security Monitoring & Incident Response</h2>
+                <p>Our security operations team works around the clock to protect your data:</p>
+                <ul>
+                    <li><strong>Real-time monitoring:</strong> 24/7 security operations center</li>
+                    <li><strong>Threat intelligence:</strong> Advanced threat detection and prevention</li>
+                    <li><strong>Incident response:</strong> Rapid response to security events</li>
+                    <li><strong>Vulnerability management:</strong> Regular security assessments and updates</li>
+                    <li><strong>Security training:</strong> Ongoing staff security awareness programs</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Data Privacy & User Control</h2>
+                <p>You have complete control over your data and privacy settings:</p>
+                <ul>
+                    <li><strong>Data ownership:</strong> You own and control your health information</li>
+                    <li><strong>Consent management:</strong> Granular control over data sharing</li>
+                    <li><strong>Data portability:</strong> Export your data at any time</li>
+                    <li><strong>Right to deletion:</strong> Request complete data removal</li>
+                    <li><strong>Audit logs:</strong> Track all access to your information</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Third-Party Security</h2>
+                <p>We carefully vet and monitor all third-party services:</p>
+                <ul>
+                    <li><strong>Vendor assessment:</strong> Rigorous security evaluation of all partners</li>
+                    <li><strong>Data processing agreements:</strong> Strict contractual security requirements</li>
+                    <li><strong>Regular audits:</strong> Ongoing monitoring of third-party security</li>
+                    <li><strong>Limited access:</strong> Minimal data sharing with trusted partners only</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Security Best Practices for Users</h2>
+                <p>Help us keep your account secure by following these best practices:</p>
+                <ul>
+                    <li><strong>Strong passwords:</strong> Use unique, complex passwords for your account</li>
+                    <li><strong>Enable MFA:</strong> Always use multi-factor authentication</li>
+                    <li><strong>Regular updates:</strong> Keep your devices and apps updated</li>
+                    <li><strong>Secure networks:</strong> Avoid using public Wi-Fi for sensitive activities</li>
+                    <li><strong>Logout properly:</strong> Always log out when using shared devices</li>
+                    <li><strong>Report suspicious activity:</strong> Contact us immediately if you notice anything unusual</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Security Incident Response</h2>
+                <p>In the unlikely event of a security incident, we have a comprehensive response plan:</p>
+                <ul>
+                    <li><strong>Immediate response:</strong> 24/7 incident response team</li>
+                    <li><strong>User notification:</strong> Prompt notification of any security events</li>
+                    <li><strong>Regulatory reporting:</strong> Compliance with legal reporting requirements</li>
+                    <li><strong>Recovery procedures:</strong> Rapid system recovery and data restoration</li>
+                    <li><strong>Post-incident review:</strong> Comprehensive analysis and improvement</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Security Testing & Validation</h2>
+                <p>We regularly validate our security measures through:</p>
+                <ul>
+                    <li><strong>Penetration testing:</strong> Regular external security assessments</li>
+                    <li><strong>Vulnerability scanning:</strong> Continuous automated security testing</li>
+                    <li><strong>Code security reviews:</strong> Regular application security audits</li>
+                    <li><strong>Third-party audits:</strong> Independent security certifications</li>
+                    <li><strong>Bug bounty program:</strong> Rewards for security researchers</li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3>Security Support</h3>
+                <p>For security concerns or to report suspicious activity:</p>
+                <p><strong>Security Email:</strong> security@careconnect.com</p>
+                <p><strong>Security Hotline:</strong> +507 123-4567</p>
+                <p><strong>Response Time:</strong> Within 4 hours for critical issues</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="index.html" class="back-button">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

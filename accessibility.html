@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accessibility - Careconnect</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: url('assets/logo-pattern.png') repeat;
+            background-size: 200px 200px;
+            min-height: 100vh;
+            color: #222;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .policy-card {
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 8px 32px rgba(44,62,80,0.18);
+            padding: 40px 30px;
+            margin-bottom: 30px;
+        }
+
+        .policy-header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 30px;
+            border-bottom: 3px solid #f4f5f7;
+        }
+
+        .policy-header h1 {
+            color: royalblue;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .policy-header p {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .policy-section {
+            margin-bottom: 35px;
+            background: #f4f5f7;
+            border-radius: 12px;
+            padding: 25px 20px;
+            transition: box-shadow 0.2s, background 0.2s, transform 0.15s;
+        }
+
+        .policy-section:hover {
+            background: #e9ecf3;
+            box-shadow: 0 4px 16px rgba(65,105,225,0.10);
+            transform: translateY(-2px) scale(1.01);
+        }
+
+        .policy-section h2 {
+            color: royalblue;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .policy-section h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin: 20px 0 10px 0;
+            font-weight: 600;
+        }
+
+        .policy-section p {
+            margin-bottom: 15px;
+            font-size: 1.05rem;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        .policy-section ul {
+            margin: 15px 0;
+            padding-left: 25px;
+        }
+
+        .policy-section li {
+            margin-bottom: 8px;
+            font-size: 1.05rem;
+            color: #444;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: royalblue;
+            color: white;
+            text-decoration: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(65,105,225,0.08);
+        }
+
+        .back-button:hover {
+            background: #274b8e;
+            transform: translateY(-2px) scale(1.03);
+            box-shadow: 0 4px 16px rgba(65,105,225,0.2);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, royalblue, #4a69bd);
+            color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .contact-info p {
+            color: #e8e8e8;
+            margin-bottom: 10px;
+            font-size: 1.05rem;
+        }
+
+        .accessibility-feature {
+            background: #fff;
+            border: 2px solid #e9ecf3;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 10px 0;
+            transition: all 0.3s ease;
+        }
+
+        .accessibility-feature:hover {
+            border-color: royalblue;
+            box-shadow: 0 2px 8px rgba(65,105,225,0.1);
+        }
+
+        .accessibility-feature h4 {
+            color: royalblue;
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 15px;
+            }
+
+            .policy-card {
+                padding: 30px 20px;
+            }
+
+            .policy-header h1 {
+                font-size: 2rem;
+            }
+
+            .policy-section {
+                padding: 20px 15px;
+            }
+
+            .policy-section h2 {
+                font-size: 1.6rem;
+            }
+
+            .policy-section h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .policy-header h1 {
+                font-size: 1.8rem;
+            }
+
+            .policy-section h2 {
+                font-size: 1.4rem;
+            }
+
+            .policy-section p, .policy-section li {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="policy-card">
+            <div style="text-align:center; margin-bottom: 18px;">
+                <img src="assets/Frame - 1.svg" alt="Careconnect Logo" style="max-width: 120px; height: auto; margin-bottom: 10px;" />
+            </div>
+            <div class="policy-header">
+                <h1>Accessibility Statement</h1>
+                <p>Committed to making Careconnect accessible for everyone</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>Our Commitment to Accessibility</h2>
+                <p>Careconnect is committed to ensuring digital accessibility for people with disabilities. We are continually improving the user experience for everyone and applying the relevant accessibility standards to make our platform inclusive for all users, especially seniors and individuals with diverse abilities.</p>
+            </div>
+
+            <div class="policy-section">
+                <h2>Accessibility Features</h2>
+                <p>Our platform includes the following accessibility features designed to enhance usability for all users:</p>
+                
+                <div class="accessibility-feature">
+                    <h4>Visual Accessibility</h4>
+                    <ul>
+                        <li>High contrast color schemes and large, readable fonts</li>
+                        <li>Clear typography with adequate spacing and line height</li>
+                        <li>Consistent visual hierarchy and navigation</li>
+                        <li>Alternative text for images and icons</li>
+                    </ul>
+                </div>
+
+                <div class="accessibility-feature">
+                    <h4>Keyboard Navigation</h4>
+                    <ul>
+                        <li>Full keyboard accessibility for all interactive elements</li>
+                        <li>Visible focus indicators for keyboard users</li>
+                        <li>Logical tab order throughout the platform</li>
+                        <li>Keyboard shortcuts for common actions</li>
+                    </ul>
+                </div>
+
+                <div class="accessibility-feature">
+                    <h4>Screen Reader Support</h4>
+                    <ul>
+                        <li>Compatible with popular screen readers (JAWS, NVDA, VoiceOver)</li>
+                        <li>Semantic HTML structure for proper navigation</li>
+                        <li>Descriptive labels and ARIA attributes</li>
+                        <li>Clear heading structure and landmarks</li>
+                    </ul>
+                </div>
+
+                <div class="accessibility-feature">
+                    <h4>Motor and Mobility Support</h4>
+                    <ul>
+                        <li>Large touch targets for mobile devices</li>
+                        <li>Adjustable timing for form submissions</li>
+                        <li>Voice control compatibility</li>
+                        <li>Gesture alternatives for complex interactions</li>
+                    </ul>
+                </div>
+
+                <div class="accessibility-feature">
+                    <h4>Cognitive and Learning Support</h4>
+                    <ul>
+                        <li>Simple, clear language and instructions</li>
+                        <li>Consistent interface design and navigation</li>
+                        <li>Error prevention and clear error messages</li>
+                        <li>Multiple ways to complete tasks</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="policy-section">
+                <h2>Compliance Standards</h2>
+                <p>We strive to conform to the following accessibility standards:</p>
+                <ul>
+                    <li><strong>WCAG 2.1 AA:</strong> Web Content Accessibility Guidelines</li>
+                    <li><strong>Section 508:</strong> Rehabilitation Act of 1973</li>
+                    <li><strong>ADA Title III:</strong> Americans with Disabilities Act</li>
+                    <li><strong>EN 301 549:</strong> European accessibility standard</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Ongoing Improvements</h2>
+                <p>We are continuously working to improve accessibility by:</p>
+                <ul>
+                    <li>Regular accessibility audits and testing</li>
+                    <li>User feedback and testing with people with disabilities</li>
+                    <li>Training our development team on accessibility best practices</li>
+                    <li>Monitoring and implementing new accessibility technologies</li>
+                    <li>Regular updates to meet evolving accessibility standards</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Testing and Evaluation</h2>
+                <p>Our accessibility testing includes:</p>
+                <ul>
+                    <li>Automated accessibility testing tools</li>
+                    <li>Manual testing with assistive technologies</li>
+                    <li>User testing with individuals with disabilities</li>
+                    <li>Expert accessibility reviews</li>
+                    <li>Regular compliance assessments</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Feedback and Support</h2>
+                <p>We welcome feedback on the accessibility of our platform. If you experience accessibility barriers or have suggestions for improvement, please contact us:</p>
+                <ul>
+                    <li>Email us at accessibility@careconnect.com</li>
+                    <li>Call our accessibility support line: +507 123-4567</li>
+                    <li>Use our feedback form on the platform</li>
+                    <li>Report issues through our support chat</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Assistive Technology Compatibility</h2>
+                <p>Our platform is designed to work with the following assistive technologies:</p>
+                <ul>
+                    <li><strong>Screen Readers:</strong> JAWS, NVDA, VoiceOver, TalkBack</li>
+                    <li><strong>Screen Magnifiers:</strong> ZoomText, Magnifier</li>
+                    <li><strong>Voice Recognition:</strong> Dragon NaturallySpeaking, Voice Control</li>
+                    <li><strong>Switch Devices:</strong> Various switch control systems</li>
+                    <li><strong>Braille Displays:</strong> Compatible with screen reader output</li>
+                </ul>
+            </div>
+
+            <div class="policy-section">
+                <h2>Browser and Device Support</h2>
+                <p>We support accessibility features across multiple browsers and devices:</p>
+                <ul>
+                    <li>Chrome, Firefox, Safari, and Edge browsers</li>
+                    <li>Mobile devices (iOS and Android)</li>
+                    <li>Tablets and desktop computers</li>
+                    <li>High-DPI displays and various screen sizes</li>
+                </ul>
+            </div>
+
+            <div class="contact-info">
+                <h3>Accessibility Support</h3>
+                <p>For accessibility assistance or to report issues:</p>
+                <p><strong>Email:</strong> accessibility@careconnect.com</p>
+                <p><strong>Phone:</strong> +507 123-4567</p>
+                <p><strong>Response Time:</strong> Within 48 hours</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="index.html" class="back-button">Back to Home</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

@@ -2,287 +2,600 @@ class CaregiverSidebar extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.collapsed = false;
+    this.isCollapsed = false;
+    this.currentSection = 'overview';
   }
 
   connectedCallback() {
     this.render();
-    this.addListeners();
+    this.attachEvents();
+    this.loadUserData();
+    this.adjustMainContent();
+  }
+
+  loadUserData() {
+    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+    const users = LocalStorageUtils.getItem('users', []);
+    const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+    
+    if (user) {
+      this.userData = {
+        name: user.name || user.username,
+        email: user.email || '',
+        photo: user.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(user.name || user.username)}&background=2563eb&color=fff&size=128&rounded=true`,
+        role: 'Professional Caregiver',
+        status: 'Online'
+      };
+    } else {
+      this.userData = {
+        name: 'Caregiver',
+        email: '',
+        photo: 'https://ui-avatars.com/api/?name=C&background=2563eb&color=fff&size=128&rounded=true',
+        role: 'Professional Caregiver',
+        status: 'Online'
+      };
+    }
   }
 
   render() {
     this.shadowRoot.innerHTML = `
       <style>
-        :host {
-          --sidebar-width: 260px;
-          --sidebar-collapsed: 70px;
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+        
+        * {
+          font-family: 'Inter', 'Poppins', sans-serif;
+          box-sizing: border-box;
         }
-        .sidebar {
+        
+        nav {
           position: fixed;
-          top: 0; left: 0; bottom: 0;
-          width: var(--sidebar-width);
-          background: linear-gradient(135deg, #1976d2, #42a5f5 80%);
-          color: #fff;
-          box-shadow: 2px 0 18px rgba(25,118,210,0.08);
-          z-index: 1000;
+          top: 0;
+          left: 0;
+          height: 100vh;
+          width: 350px;
+          background: linear-gradient(180deg, #1e40af 0%, #3b82f6 100%);
+          color: white;
+          box-shadow: 4px 0 24px rgba(37, 99, 235, 0.15);
           display: flex;
           flex-direction: column;
-          align-items: stretch;
-          transition: width 0.3s cubic-bezier(.4,2,.6,1);
-          font-size: 1.18rem;
+          z-index: 1000;
+          transition: all 0.4s ease;
+          overflow: hidden;
         }
-        .sidebar.collapsed {
-          width: var(--sidebar-collapsed);
+        
+        nav.minimized {
+          width: 90px;
         }
+        
+        nav.minimized .sidebar-header {
+          padding: 10px 8px;
+          min-height: 60px;
+          justify-content: center;
+        }
+        
+        nav.minimized .user-info {
+          display: none;
+        }
+        
+        nav.minimized .sidebar-menu {
+          padding: 15px 0;
+        }
+        
+        nav.minimized .sidebar-btn {
+          padding: 15px 12px;
+          justify-content: center;
+        }
+        
+        nav.minimized .sidebar-btn span {
+          display: none;
+        }
+        
+        nav.minimized .sidebar-btn i {
+          font-size: 24px;
+          width: auto;
+        }
+        
+        nav.minimized .logo-text {
+          display: none;
+        }
+        
+        nav.minimized .logo-icon {
+          transform: scale(1.2);
+        }
+        
+        nav.minimized .logo-section {
+          padding: 15px 8px;
+          justify-content: center;
+        }
+        
         .logo-section {
-          padding: 20px 18px 12px 18px;
-          background: #f8f9fa;
-          border-bottom: 1px solid #e9ecef;
+          padding: 20px 25px;
+          background: rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
           display: flex;
           align-items: center;
-          gap: 8px;
-          transition: all 0.3s;
+          justify-content: space-between;
           position: relative;
+        }
+        
+        .logo-content {
+          display: flex;
+          align-items: center;
+          gap: 10px;
           cursor: pointer;
-          user-select: none;
+          transition: all 0.3s;
+          padding: 8px;
+          border-radius: 12px;
         }
-        .logo-section:active {
-          background: #e3eafc;
+        
+        .logo-content:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: scale(1.05);
         }
+        
         .logo-icon {
-          width: 40px;
-          height: 40px;
+          width: 50px;
+          height: 50px;
+          border-radius: 12px;
+          background: rgba(255, 255, 255, 0.15);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          overflow: hidden;
+          transition: all 0.3s;
+        }
+        
+        .logo-text {
+          color: white;
+          font-weight: 700;
+          font-size: 22px;
+          margin: 0;
+          transition: all 0.3s;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .sidebar-header {
+          padding: 25px 30px;
+          background: rgba(255, 255, 255, 0.05);
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          min-height: 120px;
+          position: relative;
+        }
+        
+        .header-left {
+          display: flex;
+          align-items: center;
+          gap: 20px;
+        }
+        
+        .user-info {
+          display: flex;
+          align-items: center;
+          gap: 18px;
+          color: white;
+        }
+        
+        .user-photo {
+          width: 70px;
+          height: 70px;
           border-radius: 50%;
           background: #fff;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 2px 8px rgba(25,118,210,0.08);
+          font-size: 28px;
+          color: #2563eb;
+          border: 3px solid rgba(255, 255, 255, 0.2);
           overflow: hidden;
-        }
-        .logo-icon img {
-          width: 32px;
-          height: 32px;
-          display: block;
-        }
-        .logo-text {
-          color: #1976d2;
-          font-family: 'Poppins', sans-serif;
           font-weight: 700;
-          font-size: 1.5rem;
-          margin: 0;
-          letter-spacing: 1px;
-          transition: all 0.3s;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
-        .sidebar.collapsed .logo-text { display: none; }
-        .toggle-btn { display: none; }
-        .sidebar-header { display: none; }
-        .sidebar-nav {
+        
+        .user-photo img {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+        
+        .user-photo span {
+          font-size: 28px;
+          font-weight: 700;
+          color: white;
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .user-details h4 {
+          margin: 0;
+          font-size: 20px;
+          font-weight: 600;
+          color: white;
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        .user-details p {
+          margin: 0;
+          font-size: 16px;
+          opacity: 0.7;
+          color: rgba(255, 255, 255, 0.8);
+          font-family: 'Poppins', sans-serif;
+        }
+        
+        .user-status {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.75rem;
+          color: #10b981;
+          margin-top: 4px;
+        }
+        
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: #10b981;
+          animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+          0%, 100% { opacity: 1; }
+          50% { opacity: 0.5; }
+        }
+        
+        .sidebar-menu {
           flex: 1;
           display: flex;
           flex-direction: column;
-          gap: 6px;
-          margin-top: 18px;
+          gap: 4px;
+          padding: 16px 12px;
+          overflow-y: auto;
         }
-        .nav-item {
+        
+        .nav-section {
+          margin-bottom: 16px;
+        }
+        
+        .nav-section-title {
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: rgba(255, 255, 255, 0.7);
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+          margin: 0 0 8px 16px;
+          transition: all 0.3s;
+        }
+        
+        nav.minimized .nav-section-title {
+          display: none;
+        }
+        
+        .sidebar-btn {
           display: flex;
           align-items: center;
-          gap: 16px;
-          padding: 14px 28px;
-          font-size: 1.08rem;
+          gap: 12px;
+          padding: 12px 16px;
+          font-size: 0.875rem;
           font-weight: 500;
-          color: #fff;
+          color: white;
           border: none;
           background: none;
           cursor: pointer;
-          border-radius: 10px 0 0 10px;
-          transition: background 0.18s, color 0.18s, padding 0.18s;
+          border-radius: 12px;
+          transition: all 0.3s;
           outline: none;
+          position: relative;
+          text-decoration: none;
+          width: 100%;
+          text-align: left;
         }
-        .nav-item.active, .nav-item:hover {
-          background: rgba(255,255,255,0.13);
-          color: #fff;
+        
+        .sidebar-btn:hover {
+          background: rgba(255, 255, 255, 0.1);
+          transform: translateX(4px);
         }
-        .nav-item i {
-          font-size: 1.3rem;
+        
+        .sidebar-btn.active {
+          background: rgba(255, 255, 255, 0.15);
+          color: white;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
-        .sidebar.collapsed .nav-item span {
-          display: none;
-        }
-        .sidebar-footer {
-          padding: 22px 24px 18px 24px;
-          border-top: 1px solid rgba(255,255,255,0.08);
-          font-size: 1.08rem;
-          opacity: 0.95;
-          background: linear-gradient(90deg, #1976d2 60%, #42a5f5 100%);
-          color: #fff;
-          text-align: center;
-          letter-spacing: 0.5px;
-          font-weight: 500;
-          border-radius: 0 0 12px 12px;
-          box-shadow: 0 -2px 12px rgba(25,118,210,0.08);
-        }
-        .toggle-btn {
+        
+        .sidebar-btn.active::before {
+          content: '';
           position: absolute;
-          right: 8px;
+          left: 0;
           top: 50%;
           transform: translateY(-50%);
-          width: 36px; height: 36px;
-          background: #fff;
-          color: #1976d2;
-          border-radius: 50%;
-          border: none;
-          box-shadow: 0 2px 8px rgba(25,118,210,0.10);
-          display: flex; align-items: center; justify-content: center;
-          cursor: pointer;
-          font-size: 1.3rem;
-          transition: background 0.2s, color 0.2s;
+          width: 4px;
+          height: 20px;
+          background: white;
+          border-radius: 0 2px 2px 0;
         }
-        .toggle-btn:hover { background: #1976d2; color: #fff; }
-        @media (max-width: 900px) {
-          .sidebar { position: fixed; left: 0; top: 0; width: 100vw; height: 70px; flex-direction: row; align-items: center; }
-          .sidebar-header, .sidebar-footer { display: none; }
-          .sidebar-nav { flex-direction: row; gap: 0; margin: 0; }
-          .nav-item { flex: 1; justify-content: center; border-radius: 0; padding: 10px 0; }
-          .sidebar.collapsed { width: 100vw; }
+        
+        .sidebar-btn i {
+          font-size: 1.125rem;
+          width: 20px;
+          text-align: center;
+          transition: all 0.3s;
+          display: inline-block;
+          font-style: normal;
+          font-variant: normal;
+          text-rendering: auto;
+          line-height: 1;
+        }
+        
+        .sidebar-btn i::before {
+          font-family: "bootstrap-icons" !important;
+          font-weight: normal !important;
+          font-style: normal !important;
+          font-variant: normal !important;
+          text-transform: none !important;
+          line-height: 1;
+          vertical-align: middle;
+        }
+        
+        .sidebar-btn span {
+          flex: 1;
+          transition: all 0.3s;
+        }
+        
+        nav.minimized .sidebar-btn span {
+          display: none;
+        }
+        
+        .sidebar-btn.logout-btn {
+          color: #ff4757;
+        }
+        
+        .sidebar-btn.logout-btn:hover {
+          background: rgba(255, 71, 87, 0.1);
+        }
+        
+        /* Scrollbar personalizada */
+        .sidebar-menu::-webkit-scrollbar {
+          width: 4px;
+        }
+        
+        .sidebar-menu::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        
+        .sidebar-menu::-webkit-scrollbar-thumb {
+          background: rgba(255, 255, 255, 0.2);
+          border-radius: 2px;
+        }
+        
+        .sidebar-menu::-webkit-scrollbar-thumb:hover {
+          background: rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+          nav {
+            transform: translateX(-100%);
+          }
+          
+          nav.mobile-open {
+            transform: translateX(0);
+          }
         }
       </style>
-      <nav class="sidebar">
-        <div class="logo-section" id="logo-toggle">
-          <div class="logo-icon">
-            <img src="../../assets/Frame - 1.svg" alt="Logo" />
+      
+      <nav>
+        <!-- Logo section -->
+        <div class="logo-section">
+          <div class="logo-content" id="logo-toggle">
+            <img src="../../assets/Frame - 1.svg" alt="Logo" class="logo-icon">
+            <h1 class="logo-text">CareConnect</h1>
           </div>
-          <span class="logo-text">areConnect</span>
         </div>
-        <div class="sidebar-nav">
-          <button class="nav-item active" data-section="overview">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Casa amigable con corazón -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M24 8L8 20h4v16h24V20h4L24 8z" fill="#fff" stroke="#fff" stroke-width="1"/>
-                <path d="M20 28h8v8h-8z" fill="#1976d2"/>
-                <path d="M18 16h12v4H18z" fill="#1976d2"/>
-                <circle cx="24" cy="32" r="2" fill="#fff"/>
-              </svg>
-            </span>
-            <span>Home</span>
-          </button>
-          <button class="nav-item" data-section="virtual-care">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Video llamada amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="12" width="20" height="16" rx="3" fill="#fff"/>
-                <path d="M28 20l8-4v12l-8-4z" fill="#1976d2"/>
-                <circle cx="18" cy="20" r="2" fill="#1976d2"/>
-                <path d="M16 24c0 1.1.9 2 2 2s2-.9 2-2-.9-2-2-2-2 .9-2 2z" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Virtual Care</span>
-          </button>
-          <button class="nav-item" data-section="medication">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Frasco de medicina amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="16" y="8" width="16" height="32" rx="3" fill="#fff"/>
-                <rect x="12" y="12" width="8" height="8" rx="2" fill="#1976d2"/>
-                <rect x="20" y="16" width="8" height="2" rx="1" fill="#1976d2"/>
-                <rect x="20" y="22" width="8" height="2" rx="1" fill="#1976d2"/>
-                <rect x="20" y="28" width="8" height="2" rx="1" fill="#1976d2"/>
-                <circle cx="24" cy="34" r="2" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Medications</span>
-          </button>
-          <button class="nav-item" data-section="documents">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Carpeta de documentos amigable -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M8 12h12l4 4h16v20H8V12z" fill="#fff"/>
-                <path d="M20 12l4 4h16" fill="none" stroke="#1976d2" stroke-width="2"/>
-                <rect x="12" y="20" width="16" height="2" rx="1" fill="#1976d2"/>
-                <rect x="12" y="26" width="12" height="2" rx="1" fill="#1976d2"/>
-                <rect x="12" y="32" width="14" height="2" rx="1" fill="#1976d2"/>
-                <circle cx="16" cy="38" r="1" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Documents</span>
-          </button>
-          <button class="nav-item" data-section="earnings">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Friendly statistics chart -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect x="8" y="32" width="6" height="8" rx="1" fill="#fff"/>
-                <rect x="18" y="24" width="6" height="16" rx="1" fill="#fff"/>
-                <rect x="28" y="16" width="6" height="24" rx="1" fill="#fff"/>
-                <rect x="38" y="8" width="6" height="32" rx="1" fill="#fff"/>
-                <circle cx="11" cy="36" r="1" fill="#1976d2"/>
-                <circle cx="21" cy="28" r="1" fill="#1976d2"/>
-                <circle cx="31" cy="20" r="1" fill="#1976d2"/>
-                <circle cx="41" cy="12" r="1" fill="#1976d2"/>
-              </svg>
-            </span>
-            <span>Statistics</span>
-          </button>
-          <button class="nav-item" data-section="profile">
-            <span class="sidebar-icon" aria-hidden="true" style="width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;">
-              <!-- Professional caregiver profile -->
-              <svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="24" cy="16" r="8" fill="#fff"/>
-                <path d="M8 40c0-8.8 7.2-16 16-16s16 7.2 16 16" fill="#fff"/>
-                <!-- Ojos más definidos -->
-                <ellipse cx="20" cy="14" rx="1.5" ry="2" fill="#1976d2"/>
-                <ellipse cx="28" cy="14" rx="1.5" ry="2" fill="#1976d2"/>
-                <!-- Pupilas -->
-                <circle cx="20" cy="14" r="0.8" fill="#fff"/>
-                <circle cx="28" cy="14" r="0.8" fill="#fff"/>
-                <!-- Nariz -->
-                <path d="M24 18l-1 2h2z" fill="#1976d2"/>
-                <!-- Boca más expresiva -->
-                <path d="M20 22c0 1.5 1.8 2.5 4 2.5s4-1 4-2.5" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
-                <!-- Cabello -->
-                <path d="M16 10c0-2 1.5-4 4-4s4 2 4 4" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
-                <path d="M24 10c0-2 1.5-4 4-4s4 2 4 4" fill="none" stroke="#1976d2" stroke-width="1.5" stroke-linecap="round"/>
-                <!-- Cuello -->
-                <rect x="22" y="24" width="4" height="3" fill="#fff"/>
-                <!-- Hombros -->
-                <path d="M16 36c0-4.4 3.6-8 8-8s8 3.6 8 8" fill="none" stroke="#1976d2" stroke-width="2"/>
-              </svg>
-            </span>
-            <span>Profile</span>
-          </button>
+        
+        <div class="sidebar-header">
+          <div class="header-left">
+            <div class="user-info">
+              <div class="user-photo">
+                <img src="${this.userData?.photo || ''}" alt="Avatar" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <span style="display: none;">${this.userData?.name?.charAt(0) || 'C'}</span>
+              </div>
+              <div class="user-details">
+                <h4>${this.userData?.name || 'Caregiver'}</h4>
+                <p>${this.userData?.role || 'Professional Caregiver'}</p>
+                <div class="user-status">
+                  <div class="status-dot"></div>
+                  <span>${this.userData?.status || 'Online'}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="sidebar-footer">
-          <div style="display:flex;flex-direction:column;align-items:center;gap:6px;">
-            <span><i class="bi bi-person-badge"></i> Professional Caregiver</span>
-            <span style="font-size:1rem;opacity:0.8;">CareConnect &copy; ${new Date().getFullYear()}</span>
-            <span style="font-size:0.95rem;opacity:0.7;">Support: support@careconnect.com</span>
+        
+        <div class="sidebar-menu">
+          <div class="nav-section">
+            <div class="nav-section-title">Main</div>
+            <button class="sidebar-btn ${this.currentSection === 'overview' ? 'active' : ''}" data-section="overview">
+              <i class="bi bi-speedometer2"></i>
+              <span>Dashboard</span>
+            </button>
+            <button class="sidebar-btn ${this.currentSection === 'virtual-care' ? 'active' : ''}" data-section="virtual-care">
+              <i class="bi bi-camera-video-fill"></i>
+              <span>Virtual Care</span>
+            </button>
+            <button class="sidebar-btn ${this.currentSection === 'medication' ? 'active' : ''}" data-section="medication">
+              <i class="bi bi-pills"></i>
+              <span>Medications</span>
+            </button>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Management</div>
+            <button class="sidebar-btn ${this.currentSection === 'documents' ? 'active' : ''}" data-section="documents">
+              <i class="bi bi-folder2-open"></i>
+              <span>Documents</span>
+            </button>
+            <button class="sidebar-btn ${this.currentSection === 'earnings' ? 'active' : ''}" data-section="earnings">
+              <i class="bi bi-cash-stack"></i>
+              <span>Earnings</span>
+            </button>
+          </div>
+
+          <div class="nav-section">
+            <div class="nav-section-title">Account</div>
+            <button class="sidebar-btn ${this.currentSection === 'profile' ? 'active' : ''}" data-section="profile">
+              <i class="bi bi-person-badge"></i>
+              <span>My Profile</span>
+            </button>
+            <button class="sidebar-btn logout-btn" onclick="logout()">
+              <i class="bi bi-power"></i>
+              <span>Logout</span>
+            </button>
           </div>
         </div>
       </nav>
     `;
   }
 
-  addListeners() {
-    const nav = this.shadowRoot.querySelector('.sidebar');
-    const navItems = this.shadowRoot.querySelectorAll('.nav-item');
-    // Section navigation
-    navItems.forEach(btn => {
+  attachEvents() {
+    const menu = this.shadowRoot.querySelector('.sidebar-menu');
+    if (!menu) return;
+    
+    menu.querySelectorAll('.sidebar-btn').forEach(btn => {
+      if (btn.classList.contains('logout-btn')) return;
+      
       btn.addEventListener('click', e => {
-        navItems.forEach(b => b.classList.remove('active'));
+        menu.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const section = btn.getAttribute('data-section');
-        this.dispatchEvent(new CustomEvent('sectionChange', { detail: { section }, bubbles: true, composed: true }));
+        this.showSection(btn.dataset.section);
       });
     });
-    // Collapse/expand sidebar using logo as button
-    const logoToggle = this.shadowRoot.getElementById('logo-toggle');
+    
+    // Add event for logo as toggle button
+    const logoToggle = this.shadowRoot.querySelector('#logo-toggle');
     if (logoToggle) {
       logoToggle.addEventListener('click', () => {
-        this.collapsed = !this.collapsed;
-        nav.classList.toggle('collapsed', this.collapsed);
-        this.dispatchEvent(new CustomEvent('sidebarToggle', { detail: { collapsed: this.collapsed }, bubbles: true, composed: true }));
+        this.toggleSidebar();
       });
     }
+    
+    // By default, activate the first section
+    const firstBtn = menu.querySelector('.sidebar-btn');
+    if (firstBtn) {
+      firstBtn.classList.add('active');
+      this.showSection(firstBtn.dataset.section);
+    }
+  }
+
+  toggleSidebar() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const main = document.getElementById('mainContent');
+    this.isCollapsed = !this.isCollapsed;
+    if (this.isCollapsed) {
+      nav.classList.add('minimized');
+      if (main) {
+        main.classList.add('sidebar-collapsed');
+        main.style.marginLeft = '90px';
+      }
+    } else {
+      nav.classList.remove('minimized');
+      if (main) {
+        main.classList.remove('sidebar-collapsed');
+        main.style.marginLeft = '350px';
+      }
+    }
+    // Dispatch custom event
+    document.dispatchEvent(new CustomEvent('sidebarToggle', {
+      detail: { collapsed: this.isCollapsed }
+    }));
+  }
+
+  showSidebar() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const main = document.getElementById('mainContent');
+    
+    nav.classList.remove('minimized');
+    if (main) {
+      main.classList.remove('sidebar-collapsed');
+      main.style.marginLeft = '350px';
+    }
+    this.isCollapsed = false;
+  }
+
+  hideSidebar() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const main = document.getElementById('mainContent');
+    
+    nav.classList.add('minimized');
+    if (main) {
+      main.classList.add('sidebar-collapsed');
+      main.style.marginLeft = '90px';
+    }
+    this.isCollapsed = true;
+  }
+
+  adjustMainContent() {
+    const main = document.getElementById('mainContent');
+    const nav = this.shadowRoot.querySelector('nav');
+    if (main) {
+      main.style.transition = 'margin-left 0.4s ease';
+    }
+    // Initialize sidebar expanded by default on all devices
+    if (nav) {
+      nav.classList.remove('minimized');
+      if (main) {
+        main.classList.remove('sidebar-collapsed');
+        main.style.marginLeft = '350px';
+      }
+    }
+  }
+
+  showSection(section) {
+    const main = document.getElementById('dashboard-content');
+    if (!main) return;
+    
+    // Add smooth but short transition
+    main.style.transition = 'opacity 0.2s ease';
+    main.style.opacity = '0';
+    
+    setTimeout(() => {
+      main.innerHTML = '';
+      let sectionContent = '';
+      
+      switch(section) {
+        case 'overview':
+          sectionContent = '<caregiver-overview></caregiver-overview>';
+          break;
+        case 'virtual-care':
+          sectionContent = '<virtual-care></virtual-care>';
+          break;
+        case 'medication':
+          sectionContent = '<medication-management></medication-management>';
+          break;
+        case 'documents':
+          sectionContent = '<caregiver-documents></caregiver-documents>';
+          break;
+        case 'earnings':
+          sectionContent = '<earnings-statistics></earnings-statistics>';
+          break;
+        case 'profile':
+          sectionContent = '<caregiver-profile-section></caregiver-profile-section>';
+          break;
+        default:
+          sectionContent = '<caregiver-overview></caregiver-overview>';
+      }
+      
+      main.innerHTML = sectionContent;
+      main.style.opacity = '1';
+      
+      // Dispatch custom event
+      document.dispatchEvent(new CustomEvent('sectionChange', {
+        detail: { section: section }
+      }));
+    }, 200);
   }
 }
 
