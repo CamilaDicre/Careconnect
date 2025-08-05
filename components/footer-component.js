@@ -111,6 +111,20 @@ class FooterComponent extends HTMLElement {
                     width: 100%;
                 }
 
+                .footer-section .footer-services-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .footer-section .footer-services-list li {
+                    color: #e8e8e8;
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    margin-bottom: 16px;
+                    padding: 8px 0;
+                }
+
                 .footer-section .newsletter-form {
                     margin-top: 25px;
                 }
@@ -669,11 +683,11 @@ class FooterComponent extends HTMLElement {
                         <!-- Services -->
                         <div class="footer-col">
                             <h3>Our services</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">Medicine Tracker</a></li>
-                                <li><a href="#">Secure Family Chat</a></li>
-                                <li><a href="#">Appointment Calendar</a></li>
-                                <li><a href="#">Caregiver Connect</a></li>
+                            <ul class="footer-services-list">
+                                <li>Medicine Tracker</li>
+                                <li>Secure Family Chat</li>
+                                <li>Appointment Calendar</li>
+                                <li>Caregiver Connect</li>
                             </ul>
                         </div>
 
