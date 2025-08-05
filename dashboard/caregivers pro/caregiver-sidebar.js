@@ -7,10 +7,43 @@ class CaregiverSidebar extends HTMLElement {
   }
 
   connectedCallback() {
+    // Load sidebar state from localStorage
+    this.loadSidebarState();
+    
     this.render();
     this.attachEvents();
     this.loadUserData();
     this.adjustMainContent();
+  }
+
+  loadSidebarState() {
+    // Load sidebar collapsed state from localStorage
+    if (typeof LocalStorageUtils !== 'undefined') {
+      this.isCollapsed = LocalStorageUtils.getItem('sidebarCollapsed', false);
+    } else {
+      // Fallback to localStorage directly
+      try {
+        const savedState = localStorage.getItem('sidebarCollapsed');
+        this.isCollapsed = savedState ? JSON.parse(savedState) : false;
+      } catch (error) {
+        console.error('Error loading sidebar state:', error);
+        this.isCollapsed = false;
+      }
+    }
+  }
+
+  saveSidebarState() {
+    // Save sidebar collapsed state to localStorage
+    if (typeof LocalStorageUtils !== 'undefined') {
+      LocalStorageUtils.setItem('sidebarCollapsed', this.isCollapsed);
+    } else {
+      // Fallback to localStorage directly
+      try {
+        localStorage.setItem('sidebarCollapsed', JSON.stringify(this.isCollapsed));
+      } catch (error) {
+        console.error('Error saving sidebar state:', error);
+      }
+    }
   }
 
   loadUserData() {
@@ -38,6 +71,9 @@ class CaregiverSidebar extends HTMLElement {
   }
 
   render() {
+    // Apply collapsed state to nav element
+    const navClass = this.isCollapsed ? 'minimized' : '';
+    
     this.shadowRoot.innerHTML = `
       <style>
         @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
@@ -387,7 +423,7 @@ class CaregiverSidebar extends HTMLElement {
         }
       </style>
       
-      <nav>
+              <nav class="${navClass}">
         <!-- Logo section -->
         <div class="logo-section">
           <div class="logo-content" id="logo-toggle">
@@ -494,6 +530,7 @@ class CaregiverSidebar extends HTMLElement {
     const nav = this.shadowRoot.querySelector('nav');
     const main = document.getElementById('mainContent');
     this.isCollapsed = !this.isCollapsed;
+    
     if (this.isCollapsed) {
       nav.classList.add('minimized');
       if (main) {
@@ -507,6 +544,10 @@ class CaregiverSidebar extends HTMLElement {
         main.style.marginLeft = '350px';
       }
     }
+    
+    // Save state to localStorage
+    this.saveSidebarState();
+    
     // Dispatch custom event
     document.dispatchEvent(new CustomEvent('sidebarToggle', {
       detail: { collapsed: this.isCollapsed }
@@ -543,12 +584,21 @@ class CaregiverSidebar extends HTMLElement {
     if (main) {
       main.style.transition = 'margin-left 0.4s ease';
     }
-    // Initialize sidebar expanded by default on all devices
+    
+    // Apply saved sidebar state
     if (nav) {
-      nav.classList.remove('minimized');
-      if (main) {
-        main.classList.remove('sidebar-collapsed');
-        main.style.marginLeft = '350px';
+      if (this.isCollapsed) {
+        nav.classList.add('minimized');
+        if (main) {
+          main.classList.add('sidebar-collapsed');
+          main.style.marginLeft = '90px';
+        }
+      } else {
+        nav.classList.remove('minimized');
+        if (main) {
+          main.classList.remove('sidebar-collapsed');
+          main.style.marginLeft = '350px';
+        }
       }
     }
   }

@@ -395,6 +395,7 @@
     <script src="../js/components.js"></script>
     <script src="welcome-overlay.js"></script>
     <script src="care-sidebar.js"></script>
+    <script src="sidebar-utils.js"></script>
     <script src="dashboard-header.js"></script>
     <script src="overview-section.js"></script>
     <script src="user-profile.js"></script>
@@ -564,38 +565,14 @@
             }, 1500);
         }
         
-        // Handle sidebar collapse
+        // Handle sidebar collapse (simplified - now handled by SidebarUtils)
         function handleSidebarToggle(event) {
-            const main = document.getElementById('dashboard-content');
-            const nav = document.querySelector('care-sidebar').shadowRoot.querySelector('nav');
-            const header = document.querySelector('dashboard-header');
-            
-            if (nav.classList.contains('minimized')) {
-                main.classList.remove('sidebar-collapsed');
-                if (header) {
-                    header.adjustHeader(false);
-                }
-            } else {
-                main.classList.add('sidebar-collapsed');
-                if (header) {
-                    header.adjustHeader(true);
-                }
-            }
+            // This function is now handled automatically by SidebarUtils
+            // The state is saved and applied consistently across all components
         }
         
         // Listen for sidebar toggle events
         document.addEventListener('sidebarToggle', handleSidebarToggle);
-        
-        // Initialize header position
-        document.addEventListener('DOMContentLoaded', function() {
-            const header = document.querySelector('dashboard-header');
-            if (header) {
-                // Trigger initial adjustment
-                setTimeout(() => {
-                    header.adjustHeader(false);
-                }, 100);
-            }
-        });
     </script>
 </body>
 </html> 
