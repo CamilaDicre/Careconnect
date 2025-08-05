@@ -17,7 +17,7 @@ class SplashScreen {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -36,7 +36,7 @@ class SplashScreen {
             <img src="assets/Frame - 1.svg" alt="Careconnect" style="width: 150px; height: auto; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.2));">
           </div>
           <h1 style="font-size: 53px; font-weight: 700; margin: 0 0 15px 0; animation: textSlideIn 1s ease-out 0.5s both;">Careconnect</h1>
-          <p style="font-size: 27px; margin: 0 0 40px 0; opacity: 0.9; animation: textSlideIn 1s ease-out 0.7s both;">Connecting Care, Empowering Lives</p>
+          <p style="font-size: 42px; font-weight: 800; margin: 0 0 40px 0; opacity: 0.95; animation: textSlideIn 1s ease-out 0.7s both; letter-spacing: 1px;">Connecting Care, Empowering Lives</p>
           
           <!-- Loading bar -->
           <div style="width: 200px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; margin: 0 auto; position: relative; overflow: hidden; animation: barEntrance 1s ease-out 1s both;">
