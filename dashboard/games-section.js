@@ -1151,7 +1151,7 @@ class GamesSection extends HTMLElement {
   }
 
   startWordGame(container) {
-    const words = ['HEALTH', 'CARE', 'DOCTOR', 'MEDICINE', 'PATIENT', 'HOSPITAL'];
+    const words = ['HEALTH', 'CARE', 'DOCTOR', 'MEDICINE', 'PATIENT', 'HOSPITAL', 'CONNECT', 'PILLS', 'NURSE', 'CAREGIVER', 'LOVE', 'EXERCISE', 'MEALS'];
     this.currentWord = words[Math.floor(Math.random() * words.length)];
     let guessedLetters = new Set();
     let wrongGuesses = 0;
