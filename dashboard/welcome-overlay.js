@@ -85,7 +85,7 @@ class WelcomeOverlay extends HTMLElement {
         .overlay {
           position: fixed;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -120,15 +120,19 @@ class WelcomeOverlay extends HTMLElement {
           animation: iconPulse 2s ease-in-out infinite;
         }
         
-        .welcome-greeting {
-          font-size: 32px;
-          font-weight: 700;
-          color: #2c3e50;
-          margin-bottom: 15px;
-          line-height: 1.2;
-          animation: textSlideIn 1s ease-out 0.3s both;
+        .welcome-title {
+          font-size: 3.5rem;
+          font-weight: 900;
+          color: #1976d2;
+          margin-bottom: 18px;
+          letter-spacing: 1px;
         }
-        
+        .welcome-greeting {
+          font-size: 2.5rem;
+          font-weight: 800;
+          color: #1565c0;
+          margin-bottom: 14px;
+        }
         .welcome-name {
           font-size: 36px;
           font-weight: 800;
@@ -141,11 +145,9 @@ class WelcomeOverlay extends HTMLElement {
         }
         
         .welcome-message {
-          font-size: 18px;
-          color: #7f8c8d;
-          line-height: 1.6;
-          font-family: 'Josefin Sans', sans-serif;
-          animation: textSlideIn 1s ease-out 0.7s both;
+          font-size: 1.6rem;
+          color: #1976d2;
+          margin-bottom: 28px;
         }
         
         .welcome-emoji {
@@ -306,7 +308,7 @@ class WelcomeOverlay extends HTMLElement {
         
         <div class="welcome-card">
           <i class="bi bi-heart-fill welcome-icon"></i>
-          <div class="welcome-greeting">${userData.greeting}</div>
+          <div class="welcome-title">${userData.greeting}</div>
           <div class="welcome-name">${userData.name}</div>
           <div class="welcome-message">
             ${userData.message} <span class="welcome-emoji">${userData.emoji}</span>

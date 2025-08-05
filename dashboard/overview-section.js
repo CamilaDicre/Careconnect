@@ -30,7 +30,7 @@ class OverviewSection extends HTMLElement {
         }
 
         .overview-hero {
-          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
           border-radius: 25px;
           padding: 40px;
           margin-bottom: 30px;
@@ -121,15 +121,15 @@ class OverviewSection extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          background: linear-gradient(135deg, #2196f3, #1976d2);
           transform: scaleX(0);
           transition: transform 0.3s ease;
         }
 
         .dashboard-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(102, 126, 234, 0.15);
-          border-color: #667eea;
+          box-shadow: 0 15px 40px rgba(33, 150, 243, 0.15);
+          border-color: #2196f3;
         }
 
         .dashboard-card:hover::before {
@@ -154,11 +154,11 @@ class OverviewSection extends HTMLElement {
 
         .card-icon {
           font-size: 1.5rem;
-          color: #667eea;
+          color: #1976d2;
         }
 
         .card-action {
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          background: linear-gradient(135deg, #2196f3, #1976d2);
           color: white;
           border: none;
           padding: 8px 15px;
@@ -171,7 +171,7 @@ class OverviewSection extends HTMLElement {
 
         .card-action:hover {
           transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
         }
 
         .stats-grid {
@@ -191,7 +191,7 @@ class OverviewSection extends HTMLElement {
         .stat-value {
           font-size: 1.8rem;
           font-weight: 700;
-          color: #667eea;
+          color: #1976d2;
           margin-bottom: 5px;
         }
 
@@ -356,7 +356,7 @@ class OverviewSection extends HTMLElement {
         .metric-value {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #667eea;
+          color: #1976d2;
           margin-bottom: 5px;
         }
 
