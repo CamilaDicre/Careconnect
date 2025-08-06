@@ -804,6 +804,26 @@ class GamesSection extends HTMLElement {
               Play Now
             </button>
           </div>
+
+          <div class="game-card" data-game="crossword">
+            <i class="bi bi-list-ol game-icon"></i>
+            <h3 class="game-title">Crossword Puzzle</h3>
+            <p class="game-description">Complete the crossword puzzle to test your vocabulary and problem-solving skills.</p>
+            <div class="game-features">
+              <span class="feature-tag">Vocabulary</span>
+              <span class="feature-tag">Knowledge</span>
+              <span class="feature-tag">Problem Solving</span>
+            </div>
+            <div class="game-difficulty">
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot active"></span>
+            </div>
+            <button class="play-btn">
+              <i class="bi bi-play-circle"></i>
+              Play Now
+            </button>
+          </div>
         </div>
 
         <div class="game-area" id="gameArea">
@@ -966,6 +986,8 @@ class GamesSection extends HTMLElement {
                 this.updateScore();
                 
                 if (matchedPairs === symbols.length) {
+                  this.level++; // Increment level when player wins
+                  this.updateScore();
                   this.showContinueButtons();
                   setTimeout(() => {
                     this.endGame();
@@ -1019,6 +1041,8 @@ class GamesSection extends HTMLElement {
             renderPuzzle();
             
             if (this.isPuzzleSolved()) {
+              this.level++; // Increment level when player wins
+              this.updateScore();
               this.endGame();
             }
           }
@@ -1047,6 +1071,7 @@ class GamesSection extends HTMLElement {
   startMathGame(container) {
     let currentProblem = this.generateMathProblem();
     let timeLeft = 30;
+    let questionsAnswered = 0; // Track number of questions answered
 
     const renderProblem = () => {
       container.innerHTML = `
@@ -1078,10 +1103,13 @@ class GamesSection extends HTMLElement {
             this.score += 5; // Bonus for correct answer
             this.updateScore();
             
-            // Check if we should continue to next level
-            const levelConfig = this.getCurrentLevelConfig();
-            if (this.score >= levelConfig.scoreTarget) {
+            questionsAnswered++; // Increment questions counter
+            
+            // Check if we should continue to next level (after 5 questions)
+            if (questionsAnswered >= 5) {
+              const levelConfig = this.getCurrentLevelConfig();
               this.score += levelConfig.bonus; // Add level completion bonus
+              this.level++; // Increment level when player wins
               this.updateScore();
               this.showContinueButtons();
               setTimeout(() => {
@@ -1216,6 +1244,7 @@ class GamesSection extends HTMLElement {
             setTimeout(() => {
               if (hasWon) {
                 this.score += 20;
+                this.level++; // Increment level when player wins
                 this.updateScore();
                 this.showWordGameResult(true);
               } else {
@@ -1235,6 +1264,12 @@ class GamesSection extends HTMLElement {
   }
 
   showWordGameResult(won) {
+    // Clear the timer when showing result
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    
     const container = this.shadowRoot.querySelector('#gameBoard');
     
     const resultTitle = won ? '🎉 Congratulations! You Won!' : '😔 Try Again!';
@@ -1338,7 +1373,6 @@ class GamesSection extends HTMLElement {
     
     let sequence = [];
     let playerSequence = [];
-    let level = this.level;
     
     // Increase sequence length based on difficulty
     const baseLength = 3 + Math.floor(difficulty / 2);
@@ -1418,10 +1452,9 @@ class GamesSection extends HTMLElement {
               const isCorrect = playerSequence.every((val, i) => val === sequence[i]);
               
               if (isCorrect) {
-                this.score += level * 10;
+                this.score += this.level * 10;
                 this.updateScore();
-                level++;
-                this.level = level;
+                this.level++; // Increment level when player wins
                 
                 // Continue to next level or end game
                 const levelConfig = this.getCurrentLevelConfig();
@@ -1480,7 +1513,12 @@ class GamesSection extends HTMLElement {
       }
       
       if (timeLeft <= 0) {
-        this.endGame();
+        // For Word Search game, show lose screen when timer runs out
+        if (this.currentGame === 'word') {
+          this.showWordGameResult(false);
+        } else {
+          this.endGame();
+        }
       }
     }, 1000);
   }
@@ -1598,6 +1636,12 @@ class GamesSection extends HTMLElement {
     this.score += levelConfig.bonus; // Bonus for continuing
     this.updateScore();
     
+    // Clear the existing timer before starting the new level
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    
     // Restart the current game with increased difficulty
     const gameBoard = this.shadowRoot.querySelector('#gameBoard');
     
@@ -1624,6 +1668,9 @@ class GamesSection extends HTMLElement {
           this.startSequenceGame(gameBoard);
           break;
       }
+      
+      // Restart the timer for the new level
+      this.startTimer();
     }
   }
 
