@@ -466,6 +466,153 @@ class GamesSection extends HTMLElement {
           border-color: #f44336;
         }
 
+        .crossword-container {
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+        }
+
+        .crossword-grid {
+          display: grid;
+          grid-template-columns: repeat(7, 1fr);
+          gap: 2px;
+          margin: 20px auto;
+          max-width: 350px;
+          background: #333;
+          padding: 10px;
+          border-radius: 15px;
+        }
+
+        .crossword-cell {
+          width: 28px;
+          height: 28px;
+          background: white;
+          border: 1px solid #ccc;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-weight: 700;
+          font-size: 0.9rem;
+          cursor: pointer;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        .crossword-cell .cell-number {
+          position: absolute;
+          top: 1px;
+          left: 2px;
+          font-size: 0.6rem;
+          font-weight: 600;
+          color: #1976d2;
+          background: rgba(255, 255, 255, 0.9);
+          border-radius: 2px;
+          padding: 0 1px;
+          line-height: 1;
+        }
+
+        .crossword-cell.filled .cell-number {
+          color: rgba(255, 255, 255, 0.8);
+          background: rgba(0, 0, 0, 0.2);
+        }
+
+        .crossword-cell.completed .cell-number {
+          color: rgba(255, 255, 255, 0.9);
+          background: rgba(0, 0, 0, 0.3);
+        }
+
+        .crossword-cell:hover {
+          background: #e3f2fd;
+          transform: scale(1.05);
+        }
+
+        .crossword-cell.filled {
+          background: linear-gradient(135deg, #4caf50, #45a049);
+          color: white;
+          border-color: #4caf50;
+        }
+
+        .crossword-cell.empty {
+          background: #f5f5f5;
+          border-color: #ddd;
+        }
+
+        .crossword-cell.blocked {
+          background: #333;
+          border-color: #333;
+          cursor: not-allowed;
+        }
+
+        .crossword-clues {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 30px;
+          margin-top: 30px;
+          max-width: 600px;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        .clue-section {
+          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          padding: 20px;
+          border-radius: 15px;
+          border: 1px solid rgba(25, 118, 210, 0.1);
+        }
+
+        .clue-section h3 {
+          color: #1976d2;
+          font-size: 1.2rem;
+          font-weight: 600;
+          margin-bottom: 15px;
+          text-align: center;
+        }
+
+        .clue-item {
+          margin-bottom: 10px;
+          padding: 8px 12px;
+          background: white;
+          border-radius: 8px;
+          border-left: 4px solid #1976d2;
+          font-size: 0.9rem;
+          line-height: 1.4;
+        }
+
+        .clue-item.completed {
+          background: linear-gradient(135deg, #e8f5e8, #d4edda);
+          border-left-color: #4caf50;
+          color: #155724;
+        }
+
+
+
+        .crossword-cell.selected {
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          color: white;
+          border-color: #1976d2;
+          transform: scale(1.1);
+        }
+
+        .crossword-cell.completed {
+          background: linear-gradient(135deg, #4caf50, #45a049);
+          color: white;
+          border-color: #4caf50;
+          animation: completedPulse 0.6s ease-out;
+        }
+
+        @keyframes completedPulse {
+          0% { transform: scale(1); }
+          50% { transform: scale(1.15); }
+          100% { transform: scale(1); }
+        }
+
+        @keyframes fadeInOut {
+          0% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+          20% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          80% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+          100% { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+        }
+
         .back-btn {
           background: linear-gradient(135deg, #666, #555);
           color: white;
@@ -937,6 +1084,10 @@ class GamesSection extends HTMLElement {
         currentGameTitle.textContent = 'Sequence Memory';
         this.startSequenceGame(gameBoard);
         break;
+      case 'crossword':
+        currentGameTitle.textContent = 'Crossword Puzzle';
+        this.startCrosswordGame(gameBoard);
+        break;
     }
 
     this.startTimer();
@@ -1293,6 +1444,74 @@ class GamesSection extends HTMLElement {
     this.showWordGameButtons();
   }
 
+  showMathGameResult(won) {
+    // Clear the timer when showing result
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    
+    const container = this.shadowRoot.querySelector('#gameBoard');
+    
+    const resultTitle = won ? '🎉 Level Complete!' : '⏰ Time\'s Up!';
+    const resultMessage = won ? 'Great job! You completed the level!' : 'The timer ran out. Better luck next time!';
+    const resultColor = won ? '#4caf50' : '#f44336';
+    
+    container.innerHTML = `
+      <div style="text-align: center; margin: 30px 0;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: ${resultColor}; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          ${resultTitle}
+        </h2>
+        <div style="font-size: 1.5rem; color: #333; margin-bottom: 30px; font-weight: 600;">
+          ${resultMessage}
+        </div>
+        <div style="font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Final Score: ${this.score} points
+        </div>
+        <div style="font-size: 1rem; color: #888; margin-bottom: 40px;">
+          Level: ${this.level} (${this.getCurrentLevelConfig().description})
+        </div>
+      </div>
+    `;
+    
+    // Show custom buttons for Math Challenge game
+    this.showMathGameButtons();
+  }
+
+  showCrosswordGameResult(won) {
+    // Clear the timer when showing result
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    
+    const container = this.shadowRoot.querySelector('#gameBoard');
+    
+    const resultTitle = won ? '🎉 Puzzle Complete!' : '⏰ Time\'s Up!';
+    const resultMessage = won ? 'Excellent! You solved the crossword!' : 'The timer ran out. Try again!';
+    const resultColor = won ? '#4caf50' : '#f44336';
+    
+    container.innerHTML = `
+      <div style="text-align: center; margin: 30px 0;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; color: ${resultColor}; margin-bottom: 20px; text-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+          ${resultTitle}
+        </h2>
+        <div style="font-size: 1.5rem; color: #333; margin-bottom: 30px; font-weight: 600;">
+          ${resultMessage}
+        </div>
+        <div style="font-size: 1.2rem; color: #666; margin-bottom: 40px;">
+          Final Score: ${this.score} points
+        </div>
+        <div style="font-size: 1rem; color: #888; margin-bottom: 40px;">
+          Level: ${this.level} (${this.getCurrentLevelConfig().description})
+        </div>
+      </div>
+    `;
+    
+    // Show custom buttons for Crossword game
+    this.showCrosswordGameButtons();
+  }
+
   startColorGame(container) {
     const colors = ['#ff4757', '#2ed573', '#3742fa', '#ffa502', '#ff6348', '#5352ed'];
     let currentColor = '';
@@ -1486,6 +1705,299 @@ class GamesSection extends HTMLElement {
     showSequence();
   }
 
+  startCrosswordGame(container) {
+    const levelConfig = this.getCurrentLevelConfig();
+    const difficulty = levelConfig.difficulty;
+    
+    // Crossword puzzle data - 7x7 grid with multiple intersecting words
+    const crosswordData = {
+      grid: [
+        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', '', ' ', ' ', ' ', '', ' '],
+        [' ', '', ' ', '', ' ', '', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
+        [' ', '', ' ', '', ' ', '', ' '],
+        [' ', '', ' ', ' ', ' ', '', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+      ],
+      clues: {
+        across: [
+          { number: 1, clue: "Medical professional who treats patients", answer: "DOCTOR", startRow: 0, startCol: 0, length: 6 },
+          { number: 4, clue: "Feeling of affection and care", answer: "LOVE", startRow: 1, startCol: 2, length: 4 },
+          { number: 6, clue: "Building where sick people are treated", answer: "HOSPITAL", startRow: 3, startCol: 0, length: 8 },
+          { number: 8, clue: "Physical activity for fitness", answer: "EXERCISE", startRow: 5, startCol: 2, length: 8 },
+          { number: 9, clue: "Medicine in tablet form", answer: "PILLS", startRow: 6, startCol: 0, length: 5 }
+        ],
+        down: [
+          { number: 1, clue: "Food consumed for nutrition", answer: "DIET", startRow: 0, startCol: 0, length: 4 },
+          { number: 2, clue: "State of being free from illness", answer: "HEALTH", startRow: 0, startCol: 2, length: 6 },
+          { number: 3, clue: "Person who provides medical care", answer: "NURSE", startRow: 1, startCol: 4, length: 5 },
+          { number: 5, clue: "Substance used to treat illness", answer: "MEDICINE", startRow: 0, startCol: 6, length: 8 },
+          { number: 7, clue: "Organ that pumps blood", answer: "HEART", startRow: 2, startCol: 2, length: 5 }
+        ]
+      }
+    };
+
+    let currentInput = '';
+    let selectedCell = null;
+    let completedWords = new Set();
+
+    // Create a map of cell numbers for clue starting positions
+    const getCellNumbers = () => {
+      const cellNumbers = {};
+      const allClues = [...crosswordData.clues.across, ...crosswordData.clues.down];
+      
+      allClues.forEach(clue => {
+        const cellId = `${clue.startRow}-${clue.startCol}`;
+        if (!cellNumbers[cellId]) {
+          cellNumbers[cellId] = [];
+        }
+        cellNumbers[cellId].push(clue.number);
+      });
+      
+      return cellNumbers;
+    };
+
+    const cellNumbers = getCellNumbers();
+
+    const renderCrossword = () => {
+      container.innerHTML = `
+        <div class="crossword-container">
+          <div class="crossword-grid">
+            ${crosswordData.grid.map((row, rowIndex) => 
+              row.map((cell, colIndex) => {
+                const cellId = `${rowIndex}-${colIndex}`;
+                const isBlocked = cell === '';
+                const isEmptyCell = cell === ' ';
+                const isFilled = cell !== '' && cell !== ' ';
+                const isSelected = selectedCell === cellId;
+                const numbers = cellNumbers[cellId] || [];
+                
+                return `
+                  <div class="crossword-cell ${isBlocked ? 'blocked' : isFilled ? 'filled' : 'empty'} ${isSelected ? 'selected' : ''}" 
+                       data-row="${rowIndex}" 
+                       data-col="${colIndex}" 
+                       data-id="${cellId}">
+                    ${numbers.length > 0 ? `<span class="cell-number">${numbers.join(',')}</span>` : ''}
+                    <span class="cell-letter">${isFilled ? cell : ''}</span>
+                  </div>
+                `;
+              }).join('')
+            ).join('')}
+          </div>
+          
+
+          
+          <div class="crossword-clues">
+            <div class="clue-section">
+              <h3>Across</h3>
+              ${crosswordData.clues.across.map(clue => `
+                <div class="clue-item ${completedWords.has(clue.answer) ? 'completed' : ''}">
+                  <strong>${clue.number}.</strong> ${clue.clue}
+                </div>
+              `).join('')}
+            </div>
+            <div class="clue-section">
+              <h3>Down</h3>
+              ${crosswordData.clues.down.map(clue => `
+                <div class="clue-item ${completedWords.has(clue.answer) ? 'completed' : ''}">
+                  <strong>${clue.number}.</strong> ${clue.clue}
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Add event listeners
+      const cells = container.querySelectorAll('.crossword-cell:not(.blocked)');
+
+      cells.forEach(cell => {
+        cell.addEventListener('click', () => {
+          selectedCell = cell.dataset.id;
+          cells.forEach(c => c.classList.remove('selected'));
+          cell.classList.add('selected');
+        });
+      });
+
+      // Add keyboard event listener to the container
+      container.addEventListener('keydown', (e) => {
+        if (!selectedCell) return;
+
+        const key = e.key.toUpperCase();
+        
+        // Handle letter input
+        if (key.match(/[A-Z]/) && key.length === 1) {
+          e.preventDefault();
+          const selectedCellElement = container.querySelector(`[data-id="${selectedCell}"]`);
+          if (selectedCellElement && !selectedCellElement.classList.contains('blocked')) {
+            const [row, col] = selectedCell.split('-').map(Number);
+            const letterSpan = selectedCellElement.querySelector('.cell-letter');
+            
+            // Update the cell
+            if (letterSpan) {
+              letterSpan.textContent = key;
+            }
+            selectedCellElement.classList.remove('empty');
+            selectedCellElement.classList.add('filled');
+            crosswordData.grid[row][col] = key;
+            
+            // Check if any words are completed
+            checkCompletedWords();
+            
+            // Move to next cell (optional - you can remove this if you don't want auto-advance)
+            moveToNextCell();
+          }
+        }
+        
+        // Handle backspace/delete
+        if (key === 'BACKSPACE' || key === 'DELETE') {
+          e.preventDefault();
+          const selectedCellElement = container.querySelector(`[data-id="${selectedCell}"]`);
+          if (selectedCellElement && !selectedCellElement.classList.contains('blocked')) {
+            const [row, col] = selectedCell.split('-').map(Number);
+            const letterSpan = selectedCellElement.querySelector('.cell-letter');
+            
+            // Clear the cell
+            if (letterSpan) {
+              letterSpan.textContent = '';
+            }
+            selectedCellElement.classList.remove('filled');
+            selectedCellElement.classList.add('empty');
+            crosswordData.grid[row][col] = ' ';
+            
+            // Check completed words again
+            checkCompletedWords();
+          }
+        }
+      });
+
+      // Make container focusable for keyboard events
+      container.setAttribute('tabindex', '0');
+      container.focus();
+
+      function checkCompletedWords() {
+        const allClues = [...crosswordData.clues.across, ...crosswordData.clues.down];
+        
+        allClues.forEach(clue => {
+          if (!completedWords.has(clue.answer)) {
+            const wordLetters = getWordFromGrid(clue);
+            if (wordLetters === clue.answer) {
+              // Word completed!
+              completedWords.add(clue.answer);
+              this.score += 20;
+              this.updateScore();
+              
+              // Highlight the completed word
+              highlightCompletedWord(clue);
+              
+              // Show success message
+              showMessage(`"${clue.answer}" completed!`, 'success');
+              
+              // Check if puzzle is complete
+              if (completedWords.size === allClues.length) {
+                setTimeout(() => {
+                  this.level++;
+                  this.updateScore();
+                  this.showContinueButtons();
+                  setTimeout(() => {
+                    this.endGame();
+                  }, 1000);
+                }, 1500);
+              }
+            }
+          }
+        });
+      }
+
+      function getWordFromGrid(clue) {
+        const { startRow, startCol, length } = clue;
+        const isDown = crosswordData.clues.down.includes(clue);
+        let word = '';
+        
+        for (let i = 0; i < length; i++) {
+          const row = isDown ? startRow + i : startRow;
+          const col = isDown ? startCol : startCol + i;
+          
+          if (row < crosswordData.grid.length && col < crosswordData.grid[0].length) {
+            const letter = crosswordData.grid[row][col];
+            if (letter === ' ' || letter === '') {
+              return ''; // Incomplete word
+            }
+            word += letter;
+          }
+        }
+        
+        return word;
+      }
+
+      function highlightCompletedWord(clue) {
+        const { startRow, startCol, length } = clue;
+        const isDown = crosswordData.clues.down.includes(clue);
+        
+        for (let i = 0; i < length; i++) {
+          const row = isDown ? startRow + i : startRow;
+          const col = isDown ? startCol : startCol + i;
+          const cellId = `${row}-${col}`;
+          const cell = container.querySelector(`[data-id="${cellId}"]`);
+          
+          if (cell) {
+            cell.classList.add('completed');
+          }
+        }
+      }
+
+      function moveToNextCell() {
+        if (!selectedCell) return;
+        
+        const [currentRow, currentCol] = selectedCell.split('-').map(Number);
+        const cells = container.querySelectorAll('.crossword-cell:not(.blocked)');
+        
+        // Find next available cell (simple right then down navigation)
+        for (let row = currentRow; row < crosswordData.grid.length; row++) {
+          for (let col = (row === currentRow ? currentCol + 1 : 0); col < crosswordData.grid[0].length; col++) {
+            const cellId = `${row}-${col}`;
+            const cell = container.querySelector(`[data-id="${cellId}"]`);
+            if (cell && !cell.classList.contains('blocked')) {
+              selectedCell = cellId;
+              cells.forEach(c => c.classList.remove('selected'));
+              cell.classList.add('selected');
+              return;
+            }
+          }
+        }
+      }
+
+
+
+      function showMessage(message, type) {
+        const messageDiv = document.createElement('div');
+        messageDiv.textContent = message;
+        messageDiv.style.cssText = `
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          background: ${type === 'success' ? 'linear-gradient(135deg, #4caf50, #45a049)' : 'linear-gradient(135deg, #f44336, #d32f2f)'};
+          color: white;
+          padding: 15px 25px;
+          border-radius: 25px;
+          font-weight: 600;
+          z-index: 1000;
+          animation: fadeInOut 2s ease-in-out;
+        `;
+        
+        container.appendChild(messageDiv);
+        
+        setTimeout(() => {
+          messageDiv.remove();
+        }, 2000);
+      }
+    };
+
+    renderCrossword();
+  }
+
   startTimer() {
     const levelConfig = this.getCurrentLevelConfig();
     let timeLeft = levelConfig.timeLimit;
@@ -1516,6 +2028,10 @@ class GamesSection extends HTMLElement {
         // For Word Search game, show lose screen when timer runs out
         if (this.currentGame === 'word') {
           this.showWordGameResult(false);
+        } else if (this.currentGame === 'math') {
+          this.showMathGameResult(false);
+        } else if (this.currentGame === 'crossword') {
+          this.showCrosswordGameResult(false);
         } else {
           this.endGame();
         }
@@ -1667,6 +2183,9 @@ class GamesSection extends HTMLElement {
         case 'sequence':
           this.startSequenceGame(gameBoard);
           break;
+        case 'crossword':
+          this.startCrosswordGame(gameBoard);
+          break;
       }
       
       // Restart the timer for the new level
@@ -1776,6 +2295,80 @@ class GamesSection extends HTMLElement {
     });
   }
 
+  showMathGameButtons() {
+    const gameControls = this.shadowRoot.querySelector('.game-controls');
+    
+    // Hide default buttons
+    const continueBtn = this.shadowRoot.querySelector('#continueBtn');
+    const restartBtn = this.shadowRoot.querySelector('#restartBtn');
+    const backBtn = this.shadowRoot.querySelector('#backBtn');
+    
+    if (continueBtn) continueBtn.style.display = 'none';
+    if (restartBtn) restartBtn.style.display = 'none';
+    if (backBtn) backBtn.style.display = 'none';
+    
+    // Create custom buttons for Math Challenge
+    gameControls.innerHTML = `
+      <button class="game-btn math-restart-btn" id="mathRestartBtn">
+        <i class="bi bi-play-circle"></i>
+        Restart
+      </button>
+      <button class="back-btn" id="mathBackBtn">
+        <i class="bi bi-arrow-left"></i>
+        Back to Games
+      </button>
+    `;
+    
+    // Add event listeners for Math Challenge buttons
+    const mathRestartBtn = this.shadowRoot.querySelector('#mathRestartBtn');
+    const mathBackBtn = this.shadowRoot.querySelector('#mathBackBtn');
+    
+    mathRestartBtn.addEventListener('click', () => {
+      this.restartMathGame();
+    });
+    
+    mathBackBtn.addEventListener('click', () => {
+      this.showGamesList();
+    });
+  }
+
+  showCrosswordGameButtons() {
+    const gameControls = this.shadowRoot.querySelector('.game-controls');
+    
+    // Hide default buttons
+    const continueBtn = this.shadowRoot.querySelector('#continueBtn');
+    const restartBtn = this.shadowRoot.querySelector('#restartBtn');
+    const backBtn = this.shadowRoot.querySelector('#backBtn');
+    
+    if (continueBtn) continueBtn.style.display = 'none';
+    if (restartBtn) restartBtn.style.display = 'none';
+    if (backBtn) backBtn.style.display = 'none';
+    
+    // Create custom buttons for Crossword game
+    gameControls.innerHTML = `
+      <button class="game-btn crossword-restart-btn" id="crosswordRestartBtn">
+        <i class="bi bi-play-circle"></i>
+        Restart
+      </button>
+      <button class="back-btn" id="crosswordBackBtn">
+        <i class="bi bi-arrow-left"></i>
+        Back to Games
+      </button>
+    `;
+    
+    // Add event listeners for Crossword buttons
+    const crosswordRestartBtn = this.shadowRoot.querySelector('#crosswordRestartBtn');
+    const crosswordBackBtn = this.shadowRoot.querySelector('#crosswordBackBtn');
+    
+    crosswordRestartBtn.addEventListener('click', () => {
+      this.restartCrosswordGame();
+    });
+    
+    crosswordBackBtn.addEventListener('click', () => {
+      this.showGamesList();
+    });
+  }
+
     restartWordGame() {
     // Hide the Restart button immediately when clicked
     const wordRestartBtn = this.shadowRoot.querySelector('#wordRestartBtn');
@@ -1798,6 +2391,54 @@ class GamesSection extends HTMLElement {
     // Restart the Word Search game
     const gameBoard = this.shadowRoot.querySelector('#gameBoard');
     this.startWordGame(gameBoard);
+  }
+
+  restartMathGame() {
+    // Hide the Restart button immediately when clicked
+    const mathRestartBtn = this.shadowRoot.querySelector('#mathRestartBtn');
+    if (mathRestartBtn) {
+      mathRestartBtn.style.display = 'none';
+    }
+    
+    // Reset score and level for Math Challenge
+    this.score = 0;
+    this.level = 1;
+    this.updateScore();
+
+    // Reset and restart the timer for Math Challenge
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    this.startTimer();
+
+    // Restart the Math Challenge game
+    const gameBoard = this.shadowRoot.querySelector('#gameBoard');
+    this.startMathGame(gameBoard);
+  }
+
+  restartCrosswordGame() {
+    // Hide the Restart button immediately when clicked
+    const crosswordRestartBtn = this.shadowRoot.querySelector('#crosswordRestartBtn');
+    if (crosswordRestartBtn) {
+      crosswordRestartBtn.style.display = 'none';
+    }
+    
+    // Reset score and level for Crossword game
+    this.score = 0;
+    this.level = 1;
+    this.updateScore();
+
+    // Reset and restart the timer for Crossword game
+    if (this.gameTimer) {
+      clearInterval(this.gameTimer);
+      this.gameTimer = null;
+    }
+    this.startTimer();
+
+    // Restart the Crossword game
+    const gameBoard = this.shadowRoot.querySelector('#gameBoard');
+    this.startCrosswordGame(gameBoard);
   }
 
   showGamesList() {
