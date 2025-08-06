@@ -951,7 +951,7 @@ class GamesSection extends HTMLElement {
               Play Now
             </button>
           </div>
-
+          <!--
           <div class="game-card" data-game="crossword">
             <i class="bi bi-list-ol game-icon"></i>
             <h3 class="game-title">Crossword Puzzle</h3>
@@ -971,6 +971,7 @@ class GamesSection extends HTMLElement {
               Play Now
             </button>
           </div>
+          -->
         </div>
 
         <div class="game-area" id="gameArea">
