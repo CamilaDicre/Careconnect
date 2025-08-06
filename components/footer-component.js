@@ -22,7 +22,7 @@ class FooterComponent extends HTMLElement {
                     color: white;
                     padding: 80px 0 0;
                     position: relative;
-                    font-family: 'Arial', sans-serif;
+                    font-family: 'Poppins', sans-serif;
                 }
 
                 .footer-section::before {
@@ -57,7 +57,7 @@ class FooterComponent extends HTMLElement {
                     font-size: 1.8rem;
                     font-weight: 700;
                     margin-bottom: 25px;
-                    font-family: 'Arial', sans-serif;
+                    font-family: 'Poppins', sans-serif;
                     letter-spacing: 0.5px;
                 }
 
@@ -109,6 +109,20 @@ class FooterComponent extends HTMLElement {
 
                 .footer-section .footer-links a:hover::before {
                     width: 100%;
+                }
+
+                .footer-section .footer-services-list {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+
+                .footer-section .footer-services-list li {
+                    color: #e8e8e8;
+                    font-size: 1.1rem;
+                    font-weight: 500;
+                    margin-bottom: 16px;
+                    padding: 8px 0;
                 }
 
                 .footer-section .newsletter-form {
@@ -669,11 +683,11 @@ class FooterComponent extends HTMLElement {
                         <!-- Services -->
                         <div class="footer-col">
                             <h3>Our services</h3>
-                            <ul class="footer-links">
-                                <li><a href="#">Medicine Tracker</a></li>
-                                <li><a href="#">Secure Family Chat</a></li>
-                                <li><a href="#">Appointment Calendar</a></li>
-                                <li><a href="#">Caregiver Connect</a></li>
+                            <ul class="footer-services-list">
+                                <li>Medicine Tracker</li>
+                                <li>Secure Family Chat</li>
+                                <li>Appointment Calendar</li>
+                                <li>Caregiver Connect</li>
                             </ul>
                         </div>
 
@@ -759,7 +773,7 @@ class FooterComponent extends HTMLElement {
               height: 100vh;
               overflow: auto;
               background: rgba(44, 62, 80, 0.7);
-              font-family: 'Arial', sans-serif;
+              font-family: 'Poppins', sans-serif;
             }
             .terms-modal-content {
               background: #fff;
@@ -954,7 +968,7 @@ class FooterComponent extends HTMLElement {
               height: 100vh;
               overflow: auto;
               background: rgba(44, 62, 80, 0.7);
-              font-family: 'Arial', sans-serif;
+              font-family: 'Poppins', sans-serif;
             }
             .cookie-modal-content {
               background: #fff;
@@ -1228,7 +1242,7 @@ class FooterComponent extends HTMLElement {
                 padding: 28px 48px;
                 border-radius: 20px;
                 box-shadow: 0 8px 32px rgba(25,118,210,0.18);
-                font-family: 'Poppins', Arial, sans-serif;
+                font-family: 'Poppins', sans-serif;
                 font-weight: 600;
                 font-size: 1.35rem;
                 z-index: 100000;

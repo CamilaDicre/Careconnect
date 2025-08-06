@@ -107,7 +107,7 @@ class CaregiverOverview extends HTMLElement {
     this.shadowRoot.innerHTML = `
       <style>
         * { 
-          font-family: 'Inter', 'Poppins', sans-serif; 
+          font-family: 'Poppins', sans-serif; 
           box-sizing: border-box; 
         }
         
