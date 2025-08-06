@@ -541,7 +541,7 @@ class CaregiverSidebar extends HTMLElement {
       nav.classList.remove('minimized');
       if (main) {
         main.classList.remove('sidebar-collapsed');
-        main.style.marginLeft = '350px';
+        main.style.marginLeft = '200px';
       }
     }
     
@@ -561,7 +561,7 @@ class CaregiverSidebar extends HTMLElement {
     nav.classList.remove('minimized');
     if (main) {
       main.classList.remove('sidebar-collapsed');
-      main.style.marginLeft = '350px';
+      main.style.marginLeft = '200px';
     }
     this.isCollapsed = false;
   }
@@ -597,7 +597,7 @@ class CaregiverSidebar extends HTMLElement {
         nav.classList.remove('minimized');
         if (main) {
           main.classList.remove('sidebar-collapsed');
-          main.style.marginLeft = '350px';
+          main.style.marginLeft = '200px';
         }
       }
     }

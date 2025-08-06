@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Cuidador - CareConnect</title>
+    <title>Caregiver Dashboard - CareConnect</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -49,7 +49,7 @@
         
         .main-content {
             flex: 1;
-            margin-left: 350px;
+            margin-left: 200px;
             transition: all 0.4s ease;
             padding: 24px;
             background: rgba(248, 250, 252, 0.95);
@@ -455,7 +455,7 @@
     <div id="loadingOverlay" class="loading-overlay">
         <div class="loading-spinner">
             <div class="spinner"></div>
-            <div class="loading-text" id="loadingText">Cargando...</div>
+            <div class="loading-text" id="loadingText">Loading...</div>
         </div>
     </div>
     
@@ -465,9 +465,9 @@
             <div class="logout-icon">
                 <i class="bi bi-box-arrow-right"></i>
             </div>
-            <div class="logout-text">¡Hasta pronto, Cuidador!</div>
-            <div class="logout-subtext">Gracias por tu dedicación y cuidado</div>
-            <div class="logout-message">Tu trabajo hace la diferencia. ¡Esperamos verte pronto!</div>
+            <div class="logout-text">See you soon, Caregiver!</div>
+            <div class="logout-subtext">Thank you for your dedication and care</div>
+            <div class="logout-message">Your work makes a difference. We hope to see you soon!</div>
         </div>
     </div>
     
@@ -477,10 +477,10 @@
             <div class="auth-modal-icon">
                 <i class="bi bi-shield-lock"></i>
             </div>
-            <h2 class="auth-modal-title">Acceso Restringido</h2>
-            <p class="auth-modal-message" id="authMessage">Debes estar conectado para acceder al dashboard.</p>
-            <a href="#" class="auth-modal-button" id="authButton">Ir al Login</a>
-            <div class="auth-modal-countdown" id="authCountdown">Redirigiendo en <span id="countdownNumber">7</span> segundos...</div>
+            <h2 class="auth-modal-title">Restricted Access</h2>
+            <p class="auth-modal-message" id="authMessage">You must be logged in to access the dashboard.</p>
+            <a href="#" class="auth-modal-button" id="authButton">Go to Login</a>
+            <div class="auth-modal-countdown" id="authCountdown">Redirecting in <span id="countdownNumber">7</span> seconds...</div>
         </div>
     </div>
 
@@ -562,12 +562,12 @@
             
             getTitle(type) {
                 const titles = {
-                    success: 'Éxito',
-                    warning: 'Advertencia',
+                    success: 'Success',
+                    warning: 'Warning',
                     error: 'Error',
-                    info: 'Información'
+                    info: 'Information'
                 };
-                return titles[type] || 'Notificación';
+                return titles[type] || 'Notification';
             }
         }
         
@@ -578,7 +578,7 @@
                 this.text = document.getElementById('loadingText');
             }
             
-            show(message = 'Cargando...') {
+            show(message = 'Loading...') {
                 this.text.textContent = message;
                 this.overlay.classList.add('show');
             }
@@ -618,7 +618,7 @@
         // Función de logout con transición elegante
         function logout() {
             // Mostrar notificación de cierre de sesión
-            window.notifications.show('Cerrando sesión...', 'info', 2000);
+            window.notifications.show('Logging out...', 'info', 2000);
             
             // Iniciar transición de salida
             setTimeout(() => {
@@ -668,7 +668,7 @@
             window.loading = new LoadingSystem();
             
             // Mostrar loading inicial
-            window.loading.show('Inicializando dashboard...');
+            window.loading.show('Initializing dashboard...');
             
             // --- Protección de acceso ---
             if (!LocalStorageUtils.isAvailable()) {
@@ -713,19 +713,19 @@
                 const targetSection = e.detail.section;
                 
                 // Mostrar loading durante la transición
-                window.loading.show('Cargando sección...');
+                window.loading.show('Loading section...');
                 
                 // Ocultar loading después de un breve delay
                 setTimeout(() => {
                     window.loading.hide();
-                    window.notifications.show(`Sección ${targetSection} cargada`, 'success', 2000);
+                    window.notifications.show(`Section ${targetSection} loaded`, 'success', 2000);
                 }, 500);
             });
             
             // Simular carga inicial
             setTimeout(() => {
                 window.loading.hide();
-                window.notifications.show('¡Dashboard cargado exitosamente!', 'success', 3000);
+                window.notifications.show('Dashboard loaded successfully!', 'success', 3000);
             }, 1500);
             
             // Event listeners para mejor UX
@@ -734,7 +734,7 @@
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
                     // Aquí se puede implementar búsqueda rápida
-                    window.notifications.show('Búsqueda rápida (próximamente)', 'info', 2000);
+                    window.notifications.show('Quick search (coming soon)', 'info', 2000);
                 }
             });
         });

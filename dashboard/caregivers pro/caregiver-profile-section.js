@@ -11,7 +11,7 @@ class CaregiverProfileSection extends HTMLElement {
     let displayName = user ? (user.name || user.username) : 'Caregiver';
     let displayEmail = user ? (user.email || '-') : '-';
     let displayPhone = user ? (user.phone || '-') : '-';
-    let displayTitles = user ? (user.titles || 'No especificado') : 'No especificado';
+    let displayTitles = user ? (user.titles || 'Not specified') : 'Not specified';
 
     this.innerHTML = `
       <style>

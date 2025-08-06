@@ -626,7 +626,7 @@ class UserProfile extends HTMLElement {
             }
             <div class="hero-info">
               <h1>${data.name}</h1>
-              <span class="hero-badge">${data.role === 'patient' ? 'Paciente' : 'Cuidador'}</span>
+              <span class="hero-badge">${data.role === 'patient' ? 'Patient' : 'Caregiver'}</span>
               <p class="hero-email">${data.email}</p>
             </div>
           </div>
@@ -636,14 +636,14 @@ class UserProfile extends HTMLElement {
         <div class="help-section">
           <h2 class="help-title">
             <i class="bi bi-clipboard2-pulse"></i>
-            ¡Ayúdanos a saber más de ti!
+            Help us get to know you!
           </h2>
           <p class="help-message">
-            Completa tu perfil con información importante para brindarte una mejor atención médica y cuidado personalizado.
+            Complete your profile with important information so we can provide you with better medical care and personalized support.
           </p>
           <button class="help-btn" onclick="this.getRootNode().host.toggleEditMode()">
             <i class="bi bi-pencil-square"></i>
-            ${this.isEditing ? 'Ver Perfil' : 'Completar Perfil'}
+            ${this.isEditing ? 'View Profile' : 'Complete Profile'}
           </button>
         </div>
         
@@ -653,7 +653,7 @@ class UserProfile extends HTMLElement {
           <div class="profile-section">
             <h2 class="section-title">
               <i class="bi bi-person-badge"></i>
-              Información Personal
+              Personal Information
             </h2>
             ${this.isEditing ? this.renderPersonalInfoForm() : this.renderPersonalInfo()}
           </div>
@@ -662,7 +662,7 @@ class UserProfile extends HTMLElement {
           <div class="profile-section medical-section">
             <h2 class="section-title">
               <i class="bi bi-heart-pulse"></i>
-              Información Médica
+              Medical Information
             </h2>
             ${this.isEditing ? this.renderMedicalInfoForm() : this.renderMedicalInfo()}
           </div>
@@ -671,7 +671,7 @@ class UserProfile extends HTMLElement {
           <div class="profile-section">
             <h2 class="section-title">
               <i class="bi bi-telephone-plus"></i>
-              Contacto de Emergencia
+              Emergency Contact
             </h2>
             ${this.isEditing ? this.renderEmergencyContactForm() : this.renderEmergencyContact()}
           </div>
@@ -680,7 +680,7 @@ class UserProfile extends HTMLElement {
           <div class="profile-section">
             <h2 class="section-title">
               <i class="bi bi-gear"></i>
-              Preferencias
+              Preferences
             </h2>
             ${this.isEditing ? this.renderPreferencesForm() : this.renderPreferences()}
           </div>
@@ -691,21 +691,21 @@ class UserProfile extends HTMLElement {
           ${this.isEditing ? `
             <button class="action-btn save-btn" onclick="this.getRootNode().host.saveProfile()">
               <i class="bi bi-check-circle"></i>
-              Guardar Cambios
+              Save Changes
             </button>
             <button class="action-btn cancel-btn" onclick="this.getRootNode().host.toggleEditMode()">
               <i class="bi bi-x-circle"></i>
-              Cancelar
+              Cancel
             </button>
           ` : `
             <button class="action-btn edit-btn" onclick="this.getRootNode().host.toggleEditMode()">
               <i class="bi bi-pencil"></i>
-              Editar Perfil
+              Edit Profile
             </button>
           `}
           <button class="action-btn logout-btn" onclick="logout()">
             <i class="bi bi-box-arrow-right"></i>
-            Cerrar Sesión
+            Log Out
           </button>
         </div>
       </div>
@@ -721,8 +721,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-calendar-event"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Edad</div>
-            <div class="info-value">${data.age || 'No especificada'}</div>
+            <div class="info-label">Age</div>
+            <div class="info-value">${data.age || 'Not specified'}</div>
           </div>
         </div>
         
@@ -731,8 +731,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-person-heart"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Género</div>
-            <div class="info-value">${data.gender || 'No especificado'}</div>
+            <div class="info-label">Gender</div>
+            <div class="info-value">${data.gender || 'Not specified'}</div>
           </div>
         </div>
         
@@ -741,8 +741,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-telephone-fill"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Teléfono</div>
-            <div class="info-value">${data.phone || 'No especificado'}</div>
+            <div class="info-label">Phone</div>
+            <div class="info-value">${data.phone || 'Not specified'}</div>
           </div>
         </div>
         
@@ -751,8 +751,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-geo-alt-fill"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Dirección</div>
-            <div class="info-value">${data.address || 'No especificada'}</div>
+            <div class="info-label">Address</div>
+            <div class="info-value">${data.address || 'Not specified'}</div>
           </div>
         </div>
       </div>
@@ -764,35 +764,35 @@ class UserProfile extends HTMLElement {
     return `
       <div class="info-grid">
         <div class="form-group">
-          <label class="form-label">Edad</label>
+          <label class="form-label">Age</label>
           <input type="number" class="form-input" value="${data.age}" 
                  onchange="this.getRootNode().host.updateField('age', this.value)" 
-                 placeholder="Ingresa tu edad">
+                 placeholder="Enter your age">
         </div>
         
         <div class="form-group">
-          <label class="form-label">Género</label>
+          <label class="form-label">Gender</label>
           <select class="form-select" onchange="this.getRootNode().host.updateField('gender', this.value)">
-            <option value="">Selecciona tu género</option>
-            <option value="Masculino" ${data.gender === 'Masculino' ? 'selected' : ''}>Masculino</option>
-            <option value="Femenino" ${data.gender === 'Femenino' ? 'selected' : ''}>Femenino</option>
-            <option value="No binario" ${data.gender === 'No binario' ? 'selected' : ''}>No binario</option>
-            <option value="Prefiero no decir" ${data.gender === 'Prefiero no decir' ? 'selected' : ''}>Prefiero no decir</option>
+            <option value="">Select your gender</option>
+            <option value="Masculino" ${data.gender === 'Masculino' ? 'selected' : ''}>Male</option>
+            <option value="Femenino" ${data.gender === 'Femenino' ? 'selected' : ''}>Female</option>
+            <option value="No binario" ${data.gender === 'No binario' ? 'selected' : ''}>Non-binary</option>
+            <option value="Prefiero no decir" ${data.gender === 'Prefiero no decir' ? 'selected' : ''}>Prefer not to say</option>
           </select>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Teléfono</label>
+          <label class="form-label">Phone</label>
           <input type="tel" class="form-input" value="${data.phone}" 
                  onchange="this.getRootNode().host.updateField('phone', this.value)" 
-                 placeholder="Ingresa tu teléfono">
+                 placeholder="Enter your phone number">
         </div>
         
         <div class="form-group">
-          <label class="form-label">Dirección</label>
+          <label class="form-label">Address</label>
           <input type="text" class="form-input" value="${data.address}" 
                  onchange="this.getRootNode().host.updateField('address', this.value)" 
-                 placeholder="Ingresa tu dirección">
+                 placeholder="Enter your address">
         </div>
       </div>
     `;
@@ -805,48 +805,48 @@ class UserProfile extends HTMLElement {
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-exclamation-triangle"></i>
-            Alergias
+            Allergies
           </div>
           ${data.allergies && data.allergies.length > 0 ? 
             data.allergies.map(allergy => `<div class="array-item"><span class="array-item-text">${allergy}</span></div>`).join('') :
-            '<p style="color: #666; font-style: italic;">No hay alergias registradas</p>'
+            '<p style="color: #666; font-style: italic;">No allergies registered</p>'
           }
         </div>
         
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-capsule"></i>
-            Medicamentos
+            Medications
           </div>
           ${data.medications && data.medications.length > 0 ? 
             data.medications.map(med => `<div class="array-item"><span class="array-item-text">${med}</span></div>`).join('') :
-            '<p style="color: #666; font-style: italic;">No hay medicamentos registrados</p>'
+            '<p style="color: #666; font-style: italic;">No medications registered</p>'
           }
         </div>
         
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-clipboard2-pulse"></i>
-            Condiciones Médicas
+            Medical Conditions
           </div>
           ${data.conditions && data.conditions.length > 0 ? 
             data.conditions.map(condition => `<div class="array-item"><span class="array-item-text">${condition}</span></div>`).join('') :
-            '<p style="color: #666; font-style: italic;">No hay condiciones registradas</p>'
+            '<p style="color: #666; font-style: italic;">No medical conditions registered</p>'
           }
         </div>
         
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-info-circle"></i>
-            Información Adicional
+            Additional Information
           </div>
           <div class="info-item">
             <div class="info-icon">
               <i class="bi bi-droplet"></i>
             </div>
             <div class="info-content">
-              <div class="info-label">Tipo de Sangre</div>
-              <div class="info-value">${data.bloodType || 'No especificado'}</div>
+              <div class="info-label">Blood Type</div>
+              <div class="info-value">${data.bloodType || 'Not specified'}</div>
             </div>
           </div>
           <div class="info-item">
@@ -854,8 +854,8 @@ class UserProfile extends HTMLElement {
               <i class="bi bi-rulers"></i>
             </div>
             <div class="info-content">
-              <div class="info-label">Altura</div>
-              <div class="info-value">${data.height || 'No especificada'}</div>
+              <div class="info-label">Height</div>
+              <div class="info-value">${data.height || 'Not specified'}</div>
             </div>
           </div>
           <div class="info-item">
@@ -863,8 +863,8 @@ class UserProfile extends HTMLElement {
               <i class="bi bi-speedometer2"></i>
             </div>
             <div class="info-content">
-              <div class="info-label">Peso</div>
-              <div class="info-value">${data.weight || 'No especificado'}</div>
+              <div class="info-label">Weight</div>
+              <div class="info-value">${data.weight || 'Not specified'}</div>
             </div>
           </div>
         </div>
@@ -879,7 +879,7 @@ class UserProfile extends HTMLElement {
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-exclamation-triangle"></i>
-            Alergias
+            Allergies
           </div>
           ${data.allergies && data.allergies.length > 0 ? 
             data.allergies.map((allergy, index) => `
@@ -892,7 +892,7 @@ class UserProfile extends HTMLElement {
             `).join('') : ''
           }
           <div class="array-input-container">
-            <input type="text" class="array-input" id="allergyInput" placeholder="Agregar alergia">
+            <input type="text" class="array-input" id="allergyInput" placeholder="Add allergy">
             <button class="add-btn" onclick="
               const input = this.getRootNode().host.shadowRoot.getElementById('allergyInput');
               if (input.value.trim()) {
@@ -909,7 +909,7 @@ class UserProfile extends HTMLElement {
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-capsule"></i>
-            Medicamentos
+            Medications
           </div>
           ${data.medications && data.medications.length > 0 ? 
             data.medications.map((med, index) => `
@@ -922,7 +922,7 @@ class UserProfile extends HTMLElement {
             `).join('') : ''
           }
           <div class="array-input-container">
-            <input type="text" class="array-input" id="medicationInput" placeholder="Agregar medicamento">
+            <input type="text" class="array-input" id="medicationInput" placeholder="Add medication">
             <button class="add-btn" onclick="
               const input = this.getRootNode().host.shadowRoot.getElementById('medicationInput');
               if (input.value.trim()) {
@@ -939,7 +939,7 @@ class UserProfile extends HTMLElement {
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-clipboard2-pulse"></i>
-            Condiciones Médicas
+            Medical Conditions
           </div>
           ${data.conditions && data.conditions.length > 0 ? 
             data.conditions.map((condition, index) => `
@@ -952,7 +952,7 @@ class UserProfile extends HTMLElement {
             `).join('') : ''
           }
           <div class="array-input-container">
-            <input type="text" class="array-input" id="conditionInput" placeholder="Agregar condición médica">
+            <input type="text" class="array-input" id="conditionInput" placeholder="Add medical condition">
             <button class="add-btn" onclick="
               const input = this.getRootNode().host.shadowRoot.getElementById('conditionInput');
               if (input.value.trim()) {
@@ -969,12 +969,12 @@ class UserProfile extends HTMLElement {
         <div class="medical-card">
           <div class="medical-card-title">
             <i class="bi bi-info-circle"></i>
-            Información Adicional
+            Additional Information
           </div>
           <div class="form-group">
-            <label class="form-label">Tipo de Sangre</label>
+            <label class="form-label">Blood Type</label>
             <select class="form-select" onchange="this.getRootNode().host.updateField('bloodType', this.value)">
-              <option value="">Selecciona tipo de sangre</option>
+              <option value="">Select blood type</option>
               <option value="A+" ${data.bloodType === 'A+' ? 'selected' : ''}>A+</option>
               <option value="A-" ${data.bloodType === 'A-' ? 'selected' : ''}>A-</option>
               <option value="B+" ${data.bloodType === 'B+' ? 'selected' : ''}>B+</option>
@@ -986,16 +986,16 @@ class UserProfile extends HTMLElement {
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label">Altura (cm)</label>
+            <label class="form-label">Height (cm)</label>
             <input type="number" class="form-input" value="${data.height}" 
                    onchange="this.getRootNode().host.updateField('height', this.value)" 
-                   placeholder="Ingresa tu altura en cm">
+                   placeholder="Enter your height in cm">
           </div>
           <div class="form-group">
-            <label class="form-label">Peso (kg)</label>
+            <label class="form-label">Weight (kg)</label>
             <input type="number" class="form-input" value="${data.weight}" 
                    onchange="this.getRootNode().host.updateField('weight', this.value)" 
-                   placeholder="Ingresa tu peso en kg">
+                   placeholder="Enter your weight in kg">
           </div>
         </div>
       </div>
@@ -1011,8 +1011,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-person-badge"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Nombre del Contacto</div>
-            <div class="info-value">${data.name || 'No especificado'}</div>
+            <div class="info-label">Contact Name</div>
+            <div class="info-value">${data.name || 'Not specified'}</div>
           </div>
         </div>
         
@@ -1021,8 +1021,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-telephone-fill"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Teléfono</div>
-            <div class="info-value">${data.phone || 'No especificado'}</div>
+            <div class="info-label">Phone</div>
+            <div class="info-value">${data.phone || 'Not specified'}</div>
           </div>
         </div>
         
@@ -1031,8 +1031,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-heart"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Relación</div>
-            <div class="info-value">${data.relationship || 'No especificada'}</div>
+            <div class="info-label">Relationship</div>
+            <div class="info-value">${data.relationship || 'Not specified'}</div>
           </div>
         </div>
       </div>
@@ -1044,30 +1044,30 @@ class UserProfile extends HTMLElement {
     return `
       <div class="info-grid">
         <div class="form-group">
-          <label class="form-label">Nombre del Contacto</label>
+          <label class="form-label">Contact Name</label>
           <input type="text" class="form-input" value="${data.name}" 
                  onchange="this.getRootNode().host.updateNestedField('emergencyContact', 'name', this.value)" 
-                 placeholder="Nombre completo">
+                 placeholder="Full name">
         </div>
         
         <div class="form-group">
-          <label class="form-label">Teléfono</label>
+          <label class="form-label">Phone</label>
           <input type="tel" class="form-input" value="${data.phone}" 
                  onchange="this.getRootNode().host.updateNestedField('emergencyContact', 'phone', this.value)" 
-                 placeholder="Número de teléfono">
+                 placeholder="Phone number">
         </div>
         
         <div class="form-group">
-          <label class="form-label">Relación</label>
+          <label class="form-label">Relationship</label>
           <select class="form-select" onchange="this.getRootNode().host.updateNestedField('emergencyContact', 'relationship', this.value)">
-            <option value="">Selecciona la relación</option>
-            <option value="Cónyuge" ${data.relationship === 'Cónyuge' ? 'selected' : ''}>Cónyuge</option>
-            <option value="Hijo/a" ${data.relationship === 'Hijo/a' ? 'selected' : ''}>Hijo/a</option>
-            <option value="Padre" ${data.relationship === 'Padre' ? 'selected' : ''}>Padre</option>
-            <option value="Madre" ${data.relationship === 'Madre' ? 'selected' : ''}>Madre</option>
-            <option value="Hermano/a" ${data.relationship === 'Hermano/a' ? 'selected' : ''}>Hermano/a</option>
-            <option value="Amigo/a" ${data.relationship === 'Amigo/a' ? 'selected' : ''}>Amigo/a</option>
-            <option value="Otro" ${data.relationship === 'Otro' ? 'selected' : ''}>Otro</option>
+            <option value="">Select relationship</option>
+            <option value="Cónyuge" ${data.relationship === 'Cónyuge' ? 'selected' : ''}>Spouse</option>
+            <option value="Hijo/a" ${data.relationship === 'Hijo/a' ? 'selected' : ''}>Child</option>
+            <option value="Padre" ${data.relationship === 'Padre' ? 'selected' : ''}>Father</option>
+            <option value="Madre" ${data.relationship === 'Madre' ? 'selected' : ''}>Mother</option>
+            <option value="Hermano/a" ${data.relationship === 'Hermano/a' ? 'selected' : ''}>Sibling</option>
+            <option value="Amigo/a" ${data.relationship === 'Amigo/a' ? 'selected' : ''}>Friend</option>
+            <option value="Otro" ${data.relationship === 'Otro' ? 'selected' : ''}>Other</option>
           </select>
         </div>
       </div>
@@ -1083,7 +1083,7 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-translate"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Idioma Preferido</div>
+            <div class="info-label">Preferred Language</div>
             <div class="info-value">${data.language}</div>
           </div>
         </div>
@@ -1093,8 +1093,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-bell-fill"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Notificaciones</div>
-            <div class="info-value">${data.notifications ? 'Activadas' : 'Desactivadas'}</div>
+            <div class="info-label">Notifications</div>
+            <div class="info-value">${data.notifications ? 'Enabled' : 'Disabled'}</div>
           </div>
         </div>
         
@@ -1103,8 +1103,8 @@ class UserProfile extends HTMLElement {
             <i class="bi bi-universal-access-circle"></i>
           </div>
           <div class="info-content">
-            <div class="info-label">Accesibilidad</div>
-            <div class="info-value">${data.accessibility ? 'Activada' : 'Desactivada'}</div>
+            <div class="info-label">Accessibility</div>
+            <div class="info-value">${data.accessibility ? 'Enabled' : 'Disabled'}</div>
           </div>
         </div>
       </div>
@@ -1116,27 +1116,27 @@ class UserProfile extends HTMLElement {
     return `
       <div class="info-grid">
         <div class="form-group">
-          <label class="form-label">Idioma Preferido</label>
+          <label class="form-label">Preferred Language</label>
           <select class="form-select" onchange="this.getRootNode().host.updateNestedField('preferences', 'language', this.value)">
-            <option value="Español" ${data.language === 'Español' ? 'selected' : ''}>Español</option>
+            <option value="Español" ${data.language === 'Español' ? 'selected' : ''}>Spanish</option>
             <option value="English" ${data.language === 'English' ? 'selected' : ''}>English</option>
-            <option value="Français" ${data.language === 'Français' ? 'selected' : ''}>Français</option>
+            <option value="Français" ${data.language === 'Français' ? 'selected' : ''}>French</option>
           </select>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Notificaciones</label>
+          <label class="form-label">Notifications</label>
           <select class="form-select" onchange="this.getRootNode().host.updateNestedField('preferences', 'notifications', this.value === 'true')">
-            <option value="true" ${data.notifications ? 'selected' : ''}>Activadas</option>
-            <option value="false" ${!data.notifications ? 'selected' : ''}>Desactivadas</option>
+            <option value="true" ${data.notifications ? 'selected' : ''}>Enabled</option>
+            <option value="false" ${!data.notifications ? 'selected' : ''}>Disabled</option>
           </select>
         </div>
         
         <div class="form-group">
-          <label class="form-label">Accesibilidad</label>
+          <label class="form-label">Accessibility</label>
           <select class="form-select" onchange="this.getRootNode().host.updateNestedField('preferences', 'accessibility', this.value === 'true')">
-            <option value="true" ${data.accessibility ? 'selected' : ''}>Activada</option>
-            <option value="false" ${!data.accessibility ? 'selected' : ''}>Desactivada</option>
+            <option value="true" ${data.accessibility ? 'selected' : ''}>Enabled</option>
+            <option value="false" ${!data.accessibility ? 'selected' : ''}>Disabled</option>
           </select>
         </div>
       </div>

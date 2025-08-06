@@ -561,11 +561,11 @@ class CaregiverOverview extends HTMLElement {
             <div class="profile-email">${displayEmail}</div>
             <div class="profile-role">${displayTitles}</div>
             <div class="profile-actions">
-              <button onclick="window.notifications.show('Función de edición próximamente', 'info', 3000)">
-                <i class="bi bi-pencil-square me-2"></i>Editar Perfil
+              <button onclick="window.notifications.show('Edit feature coming soon', 'info', 3000)">
+                <i class="bi bi-pencil-square me-2"></i>Edit Profile
               </button>
-              <button onclick="window.notifications.show('Función de configuración próximamente', 'info', 3000)">
-                <i class="bi bi-gear me-2"></i>Configuración
+              <button onclick="window.notifications.show('Settings feature coming soon', 'info', 3000)">
+                <i class="bi bi-gear me-2"></i>Settings
               </button>
             </div>
           </div>
@@ -580,10 +580,10 @@ class CaregiverOverview extends HTMLElement {
               </div>
             </div>
             <div class="stat-value">${this.data.stats.totalPatients}</div>
-            <div class="stat-label">Pacientes Totales</div>
+            <div class="stat-label">Total Patients</div>
             <div class="stat-change positive">
               <i class="bi bi-arrow-up"></i>
-              +2 este mes
+              +2 this month
             </div>
           </div>
 
@@ -594,10 +594,10 @@ class CaregiverOverview extends HTMLElement {
               </div>
             </div>
             <div class="stat-value">${this.data.stats.activeSessions}</div>
-            <div class="stat-label">Sesiones Activas</div>
+            <div class="stat-label">Active Sessions</div>
             <div class="stat-change positive">
               <i class="bi bi-arrow-up"></i>
-              +1 hoy
+              +1 today
             </div>
           </div>
 
