@@ -48,7 +48,7 @@
         
         .main-content {
             flex: 1;
-            margin-left: 200px;
+            margin-left: 0;
             transition: all 0.4s ease;
             padding: 24px;
             background: rgba(248, 250, 252, 0.95);
@@ -57,7 +57,7 @@
         }
         
         .main-content.sidebar-collapsed {
-            margin-left: 90px;
+            margin-left: 0;
         }
         
         .content-area {
@@ -502,17 +502,17 @@
 
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.min.js"></script>
-    <script src="../../js/localStorage-utils.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="../../js/localStorage-utils.js?v=2.0"></script>
     <script src="../sidebar-utils.js"></script>
-    <script src="caregiver-sidebar.js?v=2.3"></script>
-         <script src="caregiver-overview.js?v=2.1"></script>
-    <script src="caregiver-profile-section.js?v=2.0"></script>
-         <script src="virtual-care.js?v=2.1"></script>
-         <script src="medication-management.js?v=2.1"></script>
-    <script src="caregiver-documents.js?v=2.0"></script>
-    <script src="earnings-statistics.js?v=2.0"></script>
-    <script src="caregiver-footer.js?v=2.0"></script>
+    <script src="caregiver-sidebar.js?v=2.5"></script>
+    <script src="caregiver-overview.js?v=2.3"></script>
+    <script src="caregiver-profile-section.js?v=2.5"></script>
+    <script src="virtual-care.js?v=2.3"></script>
+    <script src="medication-management.js?v=2.3"></script>
+    <script src="caregiver-documents.js?v=2.2"></script>
+    <script src="earnings-statistics.js?v=2.2"></script>
+    <script src="caregiver-footer.js?v=2.2"></script>
     
     <script>
         // Sistema de notificaciones mejorado
@@ -662,6 +662,33 @@
         
         // Dashboard functionality mejorado
         document.addEventListener('DOMContentLoaded', function() {
+            // Verificar que LocalStorageUtils esté disponible
+            if (typeof LocalStorageUtils === 'undefined') {
+                console.error('LocalStorageUtils no está disponible');
+                showAuthModal(
+                    'Error: LocalStorageUtils no está disponible. Por favor, recarga la página.',
+                    '../../pages/login.html',
+                    7
+                );
+                return;
+            }
+            
+            // Verificar que los custom elements básicos estén disponibles
+            const basicElements = ['caregiver-sidebar'];
+            const missingBasicElements = basicElements.filter(elementName => {
+                return !customElements.get(elementName);
+            });
+            
+            if (missingBasicElements.length > 0) {
+                console.error('Elementos básicos faltantes:', missingBasicElements);
+                showAuthModal(
+                    'Error: Algunos componentes básicos no están disponibles. Por favor, recarga la página.',
+                    '../../pages/login.html',
+                    7
+                );
+                return;
+            }
+            
             // Inicializar sistemas
             window.notifications = new NotificationSystem();
             window.loading = new LoadingSystem();
@@ -692,34 +719,38 @@
             }
             // --- Fin protección de acceso ---
 
-            // Forzar recarga del sidebar para asegurar que se vean los cambios
+            // Asegurar que el sidebar esté disponible y funcionando
             let sidebar = document.querySelector('caregiver-sidebar');
-            if (sidebar) {
-                sidebar.remove();
-                const newSidebar = document.createElement('caregiver-sidebar');
-                document.querySelector('.dashboard-container').prepend(newSidebar);
-                sidebar = newSidebar;
+            if (!sidebar) {
+                console.log('Creando nuevo sidebar...');
+                sidebar = document.createElement('caregiver-sidebar');
+                document.querySelector('.dashboard-container').prepend(sidebar);
             }
+            
             const mainContent = document.getElementById('mainContent');
             
             // Handle sidebar toggle
-            sidebar.addEventListener('sidebarToggle', function(e) {
-                mainContent.classList.toggle('sidebar-collapsed', e.detail.collapsed);
-            });
-            
-            // Handle section navigation
-            sidebar.addEventListener('sectionChange', function(e) {
-                const targetSection = e.detail.section;
+            if (sidebar) {
+                sidebar.addEventListener('sidebarToggle', function(e) {
+                    mainContent.classList.toggle('sidebar-collapsed', e.detail.collapsed);
+                });
                 
-                // Mostrar loading durante la transición
-                window.loading.show('Loading section...');
-                
-                // Ocultar loading después de un breve delay
-                setTimeout(() => {
-                    window.loading.hide();
-                    window.notifications.show(`Section ${targetSection} loaded`, 'success', 2000);
-                }, 500);
-            });
+                // Handle section navigation
+                sidebar.addEventListener('sectionChange', function(e) {
+                    const targetSection = e.detail.section;
+                    
+                    // Mostrar loading durante la transición
+                    window.loading.show('Loading section...');
+                    
+                    // Ocultar loading después de un breve delay
+                    setTimeout(() => {
+                        window.loading.hide();
+                        window.notifications.show(`Section ${targetSection} loaded`, 'success', 2000);
+                    }, 500);
+                });
+            } else {
+                console.error('Sidebar no encontrado');
+            }
             
             // Simular carga inicial
             setTimeout(() => {
@@ -737,6 +768,61 @@
                 }
             });
         });
+        
+        // Función para verificar que todos los componentes estén disponibles
+        function checkComponentsAvailability() {
+            const requiredComponents = [
+                'LocalStorageUtils'
+            ];
+            
+            const requiredCustomElements = [
+                'caregiver-sidebar',
+                'caregiver-overview',
+                'caregiver-profile-section',
+                'virtual-care',
+                'medication-management',
+                'caregiver-documents',
+                'earnings-statistics',
+                'caregiver-footer'
+            ];
+            
+            // Verificar componentes normales
+            const missingComponents = requiredComponents.filter(component => {
+                return typeof window[component] === 'undefined';
+            });
+            
+            // Verificar custom elements
+            const missingCustomElements = requiredCustomElements.filter(elementName => {
+                return !customElements.get(elementName);
+            });
+            
+            if (missingComponents.length > 0) {
+                console.error('Componentes faltantes:', missingComponents);
+                return false;
+            }
+            
+            if (missingCustomElements.length > 0) {
+                console.error('Custom elements faltantes:', missingCustomElements);
+                return false;
+            }
+            
+            return true;
+        }
+        
+        // Verificar componentes después de un breve delay
+        setTimeout(() => {
+            if (!checkComponentsAvailability()) {
+                console.error('Algunos componentes no están disponibles');
+                if (window.notifications) {
+                    window.notifications.show('Error: Algunos componentes no están disponibles. Recargando...', 'error', 5000);
+                }
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2000);
+            } else {
+                // console.log('Todos los componentes están disponibles');
+            }
+        }, 2000);
     </script>
 </body>
 </html> 

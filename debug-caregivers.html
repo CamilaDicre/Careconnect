@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Caregivers - CareConnect</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .debug-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        .debug-header {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        .debug-content {
+            padding: 2rem;
+        }
+        .status-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-left: 4px solid #007bff;
+        }
+        .status-success {
+            border-left-color: #28a745;
+            background: #d4edda;
+        }
+        .status-warning {
+            border-left-color: #ffc107;
+            background: #fff3cd;
+        }
+        .status-error {
+            border-left-color: #dc3545;
+            background: #f8d7da;
+        }
+        .btn-debug {
+            margin: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+        .btn-warning {
+            background: #ffc107;
+            color: #212529;
+        }
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        .btn-debug:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .data-display {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .caregiver-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .caregiver-item {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .caregiver-name {
+            font-weight: 600;
+            color: #007bff;
+            margin-bottom: 0.5rem;
+        }
+        .caregiver-details {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+    <div class="debug-container">
+        <div class="debug-header">
+            <h1><i class="bi bi-bug"></i> Debug Caregivers</h1>
+            <p>Diagnóstico y solución rápida para el sistema de cuidadores</p>
+        </div>
+        
+        <div class="debug-content">
+            <!-- Estado del Sistema -->
+            <div class="status-card" id="systemStatus">
+                <h4><i class="bi bi-info-circle"></i> Estado del Sistema</h4>
+                <div id="statusContent">Cargando...</div>
+            </div>
+            
+            <!-- Controles de Debug -->
+            <div class="status-card">
+                <h4><i class="bi bi-tools"></i> Controles de Debug</h4>
+                <div class="text-center">
+                    <button class="btn-debug btn-success" onclick="addCaregivers()">
+                        <i class="bi bi-plus-circle"></i> Agregar Cuidadores
+                    </button>
+                    <button class="btn-debug btn-primary" onclick="checkSystem()">
+                        <i class="bi bi-search"></i> Verificar Sistema
+                    </button>
+                    <button class="btn-debug btn-warning" onclick="clearData()">
+                        <i class="bi bi-trash"></i> Limpiar Datos
+                    </button>
+                    <button class="btn-debug btn-danger" onclick="resetSystem()">
+                        <i class="bi bi-arrow-clockwise"></i> Reset Completo
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Datos del localStorage -->
+            <div class="status-card">
+                <h4><i class="bi bi-database"></i> Datos del localStorage</h4>
+                <div class="data-display" id="localStorageData">
+                    Cargando datos...
+                </div>
+            </div>
+            
+            <!-- Lista de Cuidadores -->
+            <div class="status-card">
+                <h4><i class="bi bi-people"></i> Cuidadores Registrados</h4>
+                <div id="caregiversList">
+                    <p>Cargando cuidadores...</p>
+                </div>
+            </div>
+            
+            <!-- Logs de Consola -->
+            <div class="status-card">
+                <h4><i class="bi bi-terminal"></i> Logs de Consola</h4>
+                <div class="data-display" id="consoleLogs">
+                    Los logs aparecerán aquí...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/localStorage-utils.js"></script>
+    <script src="js/sample-caregivers.js"></script>
+    
+    <script>
+        // Función para agregar cuidadores
+        function addCaregivers() {
+            try {
+                console.log('🔄 Agregando cuidadores de prueba...');
+                SampleCaregivers.createSampleCaregivers();
+                showMessage('✅ Cuidadores agregados exitosamente', 'success');
+                setTimeout(checkSystem, 1000);
+            } catch (error) {
+                showMessage('❌ Error: ' + error.message, 'error');
+                console.error('Error adding caregivers:', error);
+            }
+        }
+        
+        // Función para verificar el sistema
+        function checkSystem() {
+            try {
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const caregivers = users.filter(u => u.role === 'caregiver' || u.role === 'cuidador');
+                
+                updateSystemStatus(users, caregivers);
+                updateLocalStorageData();
+                updateCaregiversList(caregivers);
+                
+                showMessage(`📊 Sistema verificado: ${caregivers.length} cuidadores encontrados`, 'success');
+            } catch (error) {
+                showMessage('❌ Error verificando sistema: ' + error.message, 'error');
+                console.error('Error checking system:', error);
+            }
+        }
+        
+        // Función para limpiar datos
+        function clearData() {
+            if (confirm('¿Estás seguro de que quieres limpiar todos los datos?')) {
+                try {
+                    localStorage.clear();
+                    showMessage('🗑️ Datos limpiados', 'warning');
+                    setTimeout(checkSystem, 500);
+                } catch (error) {
+                    showMessage('❌ Error limpiando datos: ' + error.message, 'error');
+                }
+            }
+        }
+        
+        // Función para reset completo
+        function resetSystem() {
+            if (confirm('⚠️ ¿Estás seguro de que quieres hacer un reset completo del sistema?')) {
+                try {
+                    localStorage.clear();
+                    // Agregar cuidadores automáticamente después del reset
+                    setTimeout(() => {
+                        addCaregivers();
+                    }, 500);
+                    showMessage('🔄 Sistema reseteado y cuidadores agregados', 'success');
+                } catch (error) {
+                    showMessage('❌ Error en reset: ' + error.message, 'error');
+                }
+            }
+        }
+        
+        // Función para actualizar estado del sistema
+        function updateSystemStatus(users, caregivers) {
+            const statusCard = document.getElementById('systemStatus');
+            const statusContent = document.getElementById('statusContent');
+            
+            let statusClass = 'status-error';
+            let statusIcon = '❌';
+            let statusText = 'Sistema con problemas';
+            
+            if (users.length > 0 && caregivers.length > 0) {
+                statusClass = 'status-success';
+                statusIcon = '✅';
+                statusText = `Sistema funcionando correctamente`;
+            } else if (users.length > 0) {
+                statusClass = 'status-warning';
+                statusIcon = '⚠️';
+                statusText = 'Usuarios encontrados pero no hay cuidadores';
+            }
+            
+            statusCard.className = `status-card ${statusClass}`;
+            statusContent.innerHTML = `
+                <p><strong>${statusIcon} ${statusText}</strong></p>
+                <p>Total usuarios: ${users.length}</p>
+                <p>Cuidadores: ${caregivers.length}</p>
+                <p>localStorage disponible: ${typeof(Storage) !== "undefined" ? 'Sí' : 'No'}</p>
+            `;
+        }
+        
+        // Función para actualizar datos del localStorage
+        function updateLocalStorageData() {
+            const dataDisplay = document.getElementById('localStorageData');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            dataDisplay.innerHTML = `
+                <strong>Usuarios en localStorage:</strong><br>
+                ${JSON.stringify(users, null, 2)}
+            `;
+        }
+        
+        // Función para actualizar lista de cuidadores
+        function updateCaregiversList(caregivers) {
+            const caregiversList = document.getElementById('caregiversList');
+            
+            if (caregivers.length === 0) {
+                caregiversList.innerHTML = '<p class="text-muted">No hay cuidadores registrados</p>';
+                return;
+            }
+            
+            const caregiversHTML = caregivers.map(caregiver => `
+                <div class="caregiver-item">
+                    <div class="caregiver-name">${caregiver.username || 'Sin nombre'}</div>
+                    <div class="caregiver-details">
+                        <strong>Email:</strong> ${caregiver.email || 'No especificado'}<br>
+                        <strong>Rol:</strong> ${caregiver.role || 'No especificado'}<br>
+                        <strong>Especialidad:</strong> ${caregiver.skills || 'No especificada'}<br>
+                        <strong>Experiencia:</strong> ${caregiver.experience || 'No especificada'}<br>
+                        <strong>Ubicación:</strong> ${caregiver.address || 'No especificada'}
+                    </div>
+                </div>
+            `).join('');
+            
+            caregiversList.innerHTML = `
+                <div class="caregiver-list">
+                    ${caregiversHTML}
+                </div>
+            `;
+        }
+        
+        // Función para mostrar mensajes
+        function showMessage(message, type) {
+            const logsDiv = document.getElementById('consoleLogs');
+            const timestamp = new Date().toLocaleTimeString();
+            const logEntry = `[${timestamp}] ${message}\n`;
+            
+            logsDiv.innerHTML += logEntry;
+            logsDiv.scrollTop = logsDiv.scrollHeight;
+            
+            console.log(message);
+        }
+        
+        // Inicializar al cargar la página
+        document.addEventListener('DOMContentLoaded', function() {
+            showMessage('🚀 Página de debug cargada', 'info');
+            checkSystem();
+        });
+        
+        // Interceptar console.log para mostrar en la página
+        const originalLog = console.log;
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const logsDiv = document.getElementById('consoleLogs');
+            if (logsDiv) {
+                const timestamp = new Date().toLocaleTimeString();
+                const message = args.join(' ');
+                logsDiv.innerHTML += `[${timestamp}] ${message}\n`;
+                logsDiv.scrollTop = logsDiv.scrollHeight;
+            }
+        };
+    </script>
+</body>
+</html>

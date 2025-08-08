@@ -38,7 +38,7 @@ class GlobalLoading extends HTMLElement {
   render() {
     this.shadowRoot.innerHTML = `
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        /* Google Fonts loaded via CDN in HTML head */
         
         .loading-overlay {
           position: fixed;

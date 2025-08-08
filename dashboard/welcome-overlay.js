@@ -80,7 +80,7 @@ class WelcomeOverlay extends HTMLElement {
     const userData = this.getUserData();
     this.shadowRoot.innerHTML = `
       <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Josefin+Sans:wght@300;400;500;600&display=swap');
+        /* Google Fonts loaded via CDN in HTML head */
         
         .overlay {
           position: fixed;

@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test localStorage Fix - CareConnect</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .status-item {
+            padding: 1rem;
+            margin: 0.5rem 0;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        .status-success {
+            background: #d4edda;
+            border-left-color: #28a745;
+            color: #155724;
+        }
+        .status-error {
+            background: #f8d7da;
+            border-left-color: #dc3545;
+            color: #721c24;
+        }
+        .status-warning {
+            background: #fff3cd;
+            border-left-color: #ffc107;
+            color: #856404;
+        }
+        .status-info {
+            background: #d1ecf1;
+            border-left-color: #17a2b8;
+            color: #0c5460;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh;">
+    <div class="test-container">
+        <div class="text-center mb-4">
+            <h1 class="text-primary fw-bold mb-3">
+                <i class="bi bi-tools me-2"></i>
+                Test localStorage Fix
+            </h1>
+            <p class="text-muted">Verificación de la corrección del error de localStorage</p>
+        </div>
+
+        <div id="testResults">
+            <div class="text-center">
+                <div class="spinner-border text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+                <p class="mt-2">Ejecutando pruebas...</p>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <button class="btn btn-primary me-2" onclick="runTests()">
+                <i class="bi bi-arrow-clockwise me-2"></i>
+                Ejecutar Pruebas
+            </button>
+            <a href="index.html" class="btn btn-outline-primary">
+                <i class="bi bi-house me-2"></i>
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts en el orden correcto -->
+    <script src="js/localStorage-utils.js"></script>
+    <script src="js/login.js"></script>
+    <script>
+        function addStatus(message, type = 'info') {
+            const resultsDiv = document.getElementById('testResults');
+            const statusDiv = document.createElement('div');
+            statusDiv.className = `status-item status-${type}`;
+            statusDiv.innerHTML = `
+                <div class="d-flex align-items-center">
+                    <i class="bi bi-${type === 'success' ? 'check-circle' : type === 'error' ? 'x-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+            resultsDiv.appendChild(statusDiv);
+        }
+
+        function runTests() {
+            const resultsDiv = document.getElementById('testResults');
+            resultsDiv.innerHTML = '';
+            
+            addStatus('🔍 Iniciando pruebas de localStorage...', 'info');
+
+            // Test 1: Verificar si LocalStorageUtils está disponible
+            if (typeof LocalStorageUtils !== 'undefined') {
+                addStatus('✅ LocalStorageUtils está cargado correctamente', 'success');
+            } else {
+                addStatus('❌ LocalStorageUtils NO está disponible', 'error');
+                return;
+            }
+
+            // Test 2: Verificar si localStorage está disponible
+            if (LocalStorageUtils.isAvailable()) {
+                addStatus('✅ localStorage está disponible en el navegador', 'success');
+            } else {
+                addStatus('❌ localStorage NO está disponible', 'error');
+                return;
+            }
+
+            // Test 3: Verificar función getUsers
+            try {
+                const users = getUsers();
+                if (Array.isArray(users)) {
+                    addStatus(`✅ Función getUsers() funciona correctamente (${users.length} usuarios)`, 'success');
+                } else {
+                    addStatus('❌ Función getUsers() no retorna un array', 'error');
+                }
+            } catch (error) {
+                addStatus(`❌ Error en getUsers(): ${error.message}`, 'error');
+            }
+
+            // Test 4: Verificar función saveUsers
+            try {
+                const testUsers = [
+                    { username: "test", email: "test@test.com", role: "test", password: "test" }
+                ];
+                const result = saveUsers(testUsers);
+                if (result) {
+                    addStatus('✅ Función saveUsers() funciona correctamente', 'success');
+                } else {
+                    addStatus('❌ Función saveUsers() falló', 'error');
+                }
+            } catch (error) {
+                addStatus(`❌ Error en saveUsers(): ${error.message}`, 'error');
+            }
+
+            // Test 5: Verificar que no hay errores en la consola
+            const originalError = console.error;
+            let hasErrors = false;
+            console.error = function(...args) {
+                hasErrors = true;
+                originalError.apply(console, args);
+            };
+
+            // Ejecutar getUsers una vez más para verificar
+            try {
+                getUsers();
+            } catch (error) {
+                hasErrors = true;
+            }
+
+            console.error = originalError;
+
+            if (!hasErrors) {
+                addStatus('✅ No se detectaron errores en la consola', 'success');
+            } else {
+                addStatus('⚠️ Se detectaron errores en la consola (revisa F12)', 'warning');
+            }
+
+            // Test 6: Verificar espacio disponible
+            try {
+                const usedSpace = LocalStorageUtils.getUsedSpace();
+                addStatus(`ℹ️ Espacio usado en localStorage: ${(usedSpace / 1024).toFixed(2)} KB`, 'info');
+            } catch (error) {
+                addStatus(`⚠️ No se pudo verificar el espacio: ${error.message}`, 'warning');
+            }
+
+            // Test 7: Verificar usuarios actuales
+            try {
+                const currentUsers = getUsers();
+                const caregivers = currentUsers.filter(u => u.role === 'caregiver');
+                const admins = currentUsers.filter(u => u.role === 'admin');
+                const patients = currentUsers.filter(u => u.role === 'paciente');
+
+                addStatus(`📊 Usuarios actuales: ${currentUsers.length} total`, 'info');
+                addStatus(`   - Cuidadores: ${caregivers.length}`, 'info');
+                addStatus(`   - Administradores: ${admins.length}`, 'info');
+                addStatus(`   - Pacientes: ${patients.length}`, 'info');
+            } catch (error) {
+                addStatus(`❌ Error al contar usuarios: ${error.message}`, 'error');
+            }
+
+            addStatus('🎉 Pruebas completadas', 'success');
+        }
+
+        // Ejecutar pruebas automáticamente al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(runTests, 500);
+        });
+    </script>
+</body>
+</html>

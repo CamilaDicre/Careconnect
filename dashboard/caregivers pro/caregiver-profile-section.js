@@ -51,7 +51,37 @@ class CaregiverProfileSection extends HTMLElement {
           font-size: 2rem;
           font-weight: 700;
           margin-bottom: 8px;
-          text-align: left;
+          text-align: center;
+        }
+        .personal-info-section {
+          text-align: center;
+          margin-bottom: 32px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .personal-info-section h3 {
+          color: #1976d2;
+          font-size: 1.5rem;
+          font-weight: 600;
+          margin-bottom: 16px;
+          text-align: center;
+        }
+        #profileForm {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 100%;
+          max-width: 500px;
+          margin: 0 auto;
+        }
+        .profile-row {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          margin-bottom: 18px;
+          width: 100%;
+          justify-content: center;
         }
         .profile-photo {
           width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #1976d2; background: #f8f9fa; display: block; margin-bottom: 18px;
@@ -146,6 +176,9 @@ class CaregiverProfileSection extends HTMLElement {
               <button id="logoutBtn" title="Log out"><svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg> Log Out</button>
             </div>
           </div>
+        </div>
+        <div class="personal-info-section">
+          <h3>Personal Information</h3>
         </div>
         <form id="profileForm">
           <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/></svg> Name:</span><span class="profile-value" id="nameValue">${displayName}</span></div>
