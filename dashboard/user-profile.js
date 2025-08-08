@@ -262,12 +262,63 @@ class UserProfile extends HTMLElement {
           gap: 30px;
         }
         
+        .profile-section:first-child {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          text-align: center;
+          margin-left: 170px !important;
+          margin-right: 30px !important;
+          transform: translateX(100px) !important;
+          position: relative;
+          left: 60px;
+          width: calc(100% - 60px);
+        }
+        
+        .profile-section:first-child .section-title {
+          justify-content: center;
+        }
+        
+        .profile-section:first-child .info-grid {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: calc(100% - 60px);
+          max-width: none;
+          margin: 0 auto;
+        }
+        
+        .profile-section:first-child .info-item {
+          width: 100%;
+          justify-content: center;
+          padding: 15px;
+          margin-bottom: 10px;
+        }
+        
+        .profile-section:first-child .form-group {
+          width: 100%;
+          text-align: center;
+        }
+        
+        .profile-section:first-child .form-input,
+        .profile-section:first-child .form-select {
+          text-align: center;
+        }
+        
+        .profile-section:first-child .info-content {
+          text-align: center;
+        }
+        
         .profile-section {
           background: white;
           border-radius: 20px;
           padding: 30px;
           box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
           border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+        
+        .profile-section:first-child {
+          padding: 30px;
         }
         
         .section-title {
