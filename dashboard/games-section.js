@@ -474,25 +474,26 @@ class GamesSection extends HTMLElement {
 
         .crossword-grid {
           display: grid;
-          grid-template-columns: repeat(7, 1fr);
-          gap: 2px;
+          grid-template-columns: repeat(9, 1fr);
+          gap: 0px;
           margin: 20px auto;
-          max-width: 350px;
+          max-width: 450px;
           background: #333;
-          padding: 10px;
+          padding: 0;
           border-radius: 15px;
+          overflow: hidden;
         }
 
         .crossword-cell {
-          width: 28px;
-          height: 28px;
+          width: 45px;
+          height: 45px;
           background: white;
           border: 1px solid #ccc;
           display: flex;
           align-items: center;
           justify-content: center;
           font-weight: 700;
-          font-size: 0.9rem;
+          font-size: 0.85rem;
           cursor: pointer;
           transition: all 0.3s ease;
           position: relative;
@@ -586,18 +587,55 @@ class GamesSection extends HTMLElement {
 
 
 
-        .crossword-cell.selected {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
-          color: white;
-          border-color: #1976d2;
-          transform: scale(1.1);
-        }
+
 
         .crossword-cell.completed {
           background: linear-gradient(135deg, #4caf50, #45a049);
           color: white;
           border-color: #4caf50;
           animation: completedPulse 0.6s ease-out;
+        }
+
+        .crossword-cell.direction-highlight {
+          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+          border-color: #1976d2;
+          box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+        }
+
+        .crossword-cell.selected {
+          background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+          color: white !important;
+          border-color: #1976d2 !important;
+          transform: scale(1.1) !important;
+          box-shadow: 0 0 12px rgba(25, 118, 210, 0.5) !important;
+          z-index: 10 !important;
+        }
+
+        .crossword-cell.selected .cell-number {
+          color: rgba(255, 255, 255, 0.9) !important;
+          background: rgba(0, 0, 0, 0.2) !important;
+        }
+
+        .crossword-direction-indicator {
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          color: white;
+          padding: 10px 20px;
+          border-radius: 15px;
+          margin-bottom: 15px;
+          text-align: center;
+          font-weight: 600;
+          box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+        }
+
+        .crossword-instructions {
+          background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+          padding: 8px 15px;
+          border-radius: 10px;
+          margin-bottom: 15px;
+          text-align: center;
+          font-size: 0.9rem;
+          color: #666;
+          border: 1px solid rgba(25, 118, 210, 0.1);
         }
 
         @keyframes completedPulse {
@@ -1710,31 +1748,35 @@ class GamesSection extends HTMLElement {
     const levelConfig = this.getCurrentLevelConfig();
     const difficulty = levelConfig.difficulty;
     
-    // Crossword puzzle data - 7x7 grid with multiple intersecting words
+    // Crossword puzzle data - 9x9 grid with properly sized words
     const crosswordData = {
       grid: [
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '', ' ', ' ', ' ', '', ' '],
-        [' ', '', ' ', '', ' ', '', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '', ' ', '', ' ', '', ' '],
-        [' ', '', ' ', ' ', ' ', '', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ['', ' ', ' ', '', '', '', '', '', ' '],
+        [' ', ' ', ' ', ' ', '', '', '', '', ' '],
+        [' ', ' ', ' ', '', '', '', '', '', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', '', '', ' '],
+        [' ', ' ', ' ', '', '', ' ', '', '', ' '],
+        [' ', '', ' ', '', ' ', ' ', ' ', ' ', ' '],
+        [' ', '', '', '', '', ' ', '', '', ' '],
+        ['', '', '', '', '', ' ', '', '', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ''],
+        ['', '', ' ', ' ', ' ', ' ', ' ', '', ''],
+        ['', '', '', '', '', ' ', '', '', ''],
       ],
       clues: {
         across: [
-          { number: 1, clue: "Medical professional who treats patients", answer: "DOCTOR", startRow: 0, startCol: 0, length: 6 },
-          { number: 4, clue: "Feeling of affection and care", answer: "LOVE", startRow: 1, startCol: 2, length: 4 },
-          { number: 6, clue: "Building where sick people are treated", answer: "HOSPITAL", startRow: 3, startCol: 0, length: 8 },
-          { number: 8, clue: "Physical activity for fitness", answer: "EXERCISE", startRow: 5, startCol: 2, length: 8 },
-          { number: 9, clue: "Medicine in tablet form", answer: "PILLS", startRow: 6, startCol: 0, length: 5 }
+          { number: 1, clue: "Food consumed for nutrition", answer: "DIET", startRow: 1, startCol: 0, length: 4 },
+          { number: 2, clue: "Substance used to treat illness", answer: "MEDICINE", startRow: 8, startCol: 0, length: 8 },
+          { number: 3, clue: "Feeling of affection and care", answer: "LOVE", startRow: 3, startCol: 2, length: 4 },
+          { number: 4, clue: "Organ that pumps blood", answer: "HEART", startRow: 5, startCol: 4, length: 5 },
+          { number: 5, clue: "Person who provides medical care", answer: "NURSE", startRow: 9, startCol: 2, length: 5 },
         ],
         down: [
-          { number: 1, clue: "Food consumed for nutrition", answer: "DIET", startRow: 0, startCol: 0, length: 4 },
-          { number: 2, clue: "State of being free from illness", answer: "HEALTH", startRow: 0, startCol: 2, length: 6 },
-          { number: 3, clue: "Person who provides medical care", answer: "NURSE", startRow: 1, startCol: 4, length: 5 },
-          { number: 5, clue: "Substance used to treat illness", answer: "MEDICINE", startRow: 0, startCol: 6, length: 8 },
-          { number: 7, clue: "Organ that pumps blood", answer: "HEART", startRow: 2, startCol: 2, length: 5 }
+          { number: 6, clue: "Medical professional who treats patients", answer: "DOCTOR", startRow: 1, startCol: 0, length: 6 },
+          { number: 7, clue: "Building where sick people are treated", answer: "HOSPITAL", startRow: 0, startCol: 8, length: 8 },
+          { number: 8, clue: "Physical activity for fitness", answer: "EXERCISE", startRow: 3, startCol: 5  , length: 8 },
+          { number: 9, clue: "Medicine in tablet form", answer: "PILLS", startRow: 0, startCol: 1, length: 5 },
+          { number: 10, clue: "State of being free from illness", answer: "HEALTH", startRow: 0, startCol: 2, length: 6 },
         ]
       }
     };
@@ -1760,10 +1802,21 @@ class GamesSection extends HTMLElement {
     };
 
     const cellNumbers = getCellNumbers();
+    
+    // Add typing direction state
+    let typingDirection = 'across'; // 'across' or 'down'
 
     const renderCrossword = () => {
       container.innerHTML = `
         <div class="crossword-container">
+          <div class="crossword-direction-indicator">
+            <i class="bi bi-arrow-${typingDirection === 'across' ? 'right' : 'down'}"></i>
+            Typing Direction: ${typingDirection.toUpperCase()}
+          </div>
+          <div class="crossword-instructions">
+            <i class="bi bi-info-circle"></i>
+            Press TAB to change direction • Click selected cell to toggle
+          </div>
           <div class="crossword-grid">
             ${crosswordData.grid.map((row, rowIndex) => 
               row.map((cell, colIndex) => {
@@ -1772,10 +1825,11 @@ class GamesSection extends HTMLElement {
                 const isEmptyCell = cell === ' ';
                 const isFilled = cell !== '' && cell !== ' ';
                 const isSelected = selectedCell === cellId;
+                const isDirectionHighlight = isDirectionHighlighted(rowIndex, colIndex);
                 const numbers = cellNumbers[cellId] || [];
                 
                 return `
-                  <div class="crossword-cell ${isBlocked ? 'blocked' : isFilled ? 'filled' : 'empty'} ${isSelected ? 'selected' : ''}" 
+                  <div class="crossword-cell ${isBlocked ? 'blocked' : isFilled ? 'filled' : 'empty'} ${isSelected ? 'selected' : ''} ${isDirectionHighlight ? 'direction-highlight' : ''}" 
                        data-row="${rowIndex}" 
                        data-col="${colIndex}" 
                        data-id="${cellId}">
@@ -1810,20 +1864,37 @@ class GamesSection extends HTMLElement {
         </div>
       `;
 
-      // Add event listeners
+      // Remove any existing click event listeners
       const cells = container.querySelectorAll('.crossword-cell:not(.blocked)');
-
+      
       cells.forEach(cell => {
         cell.addEventListener('click', () => {
-          selectedCell = cell.dataset.id;
-          cells.forEach(c => c.classList.remove('selected'));
-          cell.classList.add('selected');
+          // If clicking the already selected cell, toggle direction
+          if (selectedCell === cell.dataset.id) {
+            typingDirection = typingDirection === 'across' ? 'down' : 'across';
+            updateDirectionIndicator();
+            updateDirectionHighlights();
+          } else {
+            selectedCell = cell.dataset.id;
+            cells.forEach(c => c.classList.remove('selected'));
+            cell.classList.add('selected');
+            updateDirectionHighlights();
+          }
         });
       });
 
       // Add keyboard event listener to the container
       container.addEventListener('keydown', (e) => {
         if (!selectedCell) return;
+
+        // Toggle direction with Tab
+        if (e.key === 'Tab') {
+          e.preventDefault();
+          typingDirection = typingDirection === 'across' ? 'down' : 'across';
+          updateDirectionIndicator();
+          updateDirectionHighlights();
+          return;
+        }
 
         const key = e.key.toUpperCase();
         
@@ -1846,8 +1917,9 @@ class GamesSection extends HTMLElement {
             // Check if any words are completed
             checkCompletedWords();
             
-            // Move to next cell (optional - you can remove this if you don't want auto-advance)
+            // Move to next cell (now supports direction)
             moveToNextCell();
+            updateDirectionHighlights();
           }
         }
         
@@ -1869,6 +1941,10 @@ class GamesSection extends HTMLElement {
             
             // Check completed words again
             checkCompletedWords();
+            
+            // Move to previous cell based on direction
+            moveToPreviousCell();
+            updateDirectionHighlights();
           }
         }
       });
@@ -1876,6 +1952,43 @@ class GamesSection extends HTMLElement {
       // Make container focusable for keyboard events
       container.setAttribute('tabindex', '0');
       container.focus();
+
+      function isDirectionHighlighted(row, col) {
+        if (!selectedCell) return false;
+        
+        const [selectedRow, selectedCol] = selectedCell.split('-').map(Number);
+        
+        if (typingDirection === 'across') {
+          // Highlight cells in the same row as selected cell
+          return row === selectedRow && col >= selectedCol;
+        } else {
+          // Highlight cells in the same column as selected cell
+          return col === selectedCol && row >= selectedRow;
+        }
+      }
+
+      function updateDirectionIndicator() {
+        const directionIndicator = container.querySelector('.crossword-direction-indicator');
+        if (directionIndicator) {
+          const icon = typingDirection === 'across' ? 'bi-arrow-right' : 'bi-arrow-down';
+          directionIndicator.innerHTML = `
+            <i class="bi ${icon}"></i>
+            Typing Direction: ${typingDirection.toUpperCase()}
+          `;
+        }
+      }
+
+      function updateDirectionHighlights() {
+        const cells = container.querySelectorAll('.crossword-cell');
+        cells.forEach(cell => {
+          const [row, col] = cell.dataset.id.split('-').map(Number);
+          if (isDirectionHighlighted(row, col)) {
+            cell.classList.add('direction-highlight');
+          } else {
+            cell.classList.remove('direction-highlight');
+          }
+        });
+      }
 
       function checkCompletedWords() {
         const allClues = [...crosswordData.clues.across, ...crosswordData.clues.down];
@@ -1950,22 +2063,72 @@ class GamesSection extends HTMLElement {
 
       function moveToNextCell() {
         if (!selectedCell) return;
-        
         const [currentRow, currentCol] = selectedCell.split('-').map(Number);
         const cells = container.querySelectorAll('.crossword-cell:not(.blocked)');
-        
-        // Find next available cell (simple right then down navigation)
-        for (let row = currentRow; row < crosswordData.grid.length; row++) {
-          for (let col = (row === currentRow ? currentCol + 1 : 0); col < crosswordData.grid[0].length; col++) {
-            const cellId = `${row}-${col}`;
+        let nextCellId = null;
+        if (typingDirection === 'across') {
+          // Move right
+          for (let col = currentCol + 1; col < crosswordData.grid[0].length; col++) {
+            const cellId = `${currentRow}-${col}`;
             const cell = container.querySelector(`[data-id="${cellId}"]`);
             if (cell && !cell.classList.contains('blocked')) {
-              selectedCell = cellId;
-              cells.forEach(c => c.classList.remove('selected'));
-              cell.classList.add('selected');
-              return;
+              nextCellId = cellId;
+              break;
             }
           }
+        } else {
+          // Move down
+          for (let row = currentRow + 1; row < crosswordData.grid.length; row++) {
+            const cellId = `${row}-${currentCol}`;
+            const cell = container.querySelector(`[data-id="${cellId}"]`);
+            if (cell && !cell.classList.contains('blocked')) {
+              nextCellId = cellId;
+              break;
+            }
+          }
+        }
+        if (nextCellId) {
+          selectedCell = nextCellId;
+          cells.forEach(c => c.classList.remove('selected'));
+          const nextCell = container.querySelector(`[data-id="${selectedCell}"]`);
+          if (nextCell) nextCell.classList.add('selected');
+          updateDirectionHighlights();
+        }
+      }
+
+      function moveToPreviousCell() {
+        if (!selectedCell) return;
+        const [currentRow, currentCol] = selectedCell.split('-').map(Number);
+        const cells = container.querySelectorAll('.crossword-cell:not(.blocked)');
+        let previousCellId = null;
+        
+        if (typingDirection === 'across') {
+          // Move left
+          for (let col = currentCol - 1; col >= 0; col--) {
+            const cellId = `${currentRow}-${col}`;
+            const cell = container.querySelector(`[data-id="${cellId}"]`);
+            if (cell && !cell.classList.contains('blocked')) {
+              previousCellId = cellId;
+              break;
+            }
+          }
+        } else {
+          // Move up
+          for (let row = currentRow - 1; row >= 0; row--) {
+            const cellId = `${row}-${currentCol}`;
+            const cell = container.querySelector(`[data-id="${cellId}"]`);
+            if (cell && !cell.classList.contains('blocked')) {
+              previousCellId = cellId;
+              break;
+            }
+          }
+        }
+        
+        if (previousCellId) {
+          selectedCell = previousCellId;
+          cells.forEach(c => c.classList.remove('selected'));
+          const previousCell = container.querySelector(`[data-id="${selectedCell}"]`);
+          if (previousCell) previousCell.classList.add('selected');
         }
       }
 
