@@ -2,240 +2,466 @@ class CaregiverSearch extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
+    this.filterValue = '';
+    this.sortBy = 'name';
+    this.locationFilter = '';
+    this.specialtyFilter = '';
   }
+
   connectedCallback() {
     this.render();
   }
+
   getCaregivers() {
-    // Get real caregivers from the system
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    // Only users with caregiver role
-    return users.filter(u => u.role === 'caregiver').map(u => ({
-      name: u.username || '-',
-      specialty: u.skills || '-',
-      rating: u.rating || 4.5,
-      experience: u.experience || '-',
-      location: u.address || '-',
-      photo: u.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(u.username || '-') + '&background=1976d2&color=fff&size=128&rounded=true',
-      available: true,
-      price: u.price || '$20/hora'
-    }));
+    try {
+      // Get real caregivers from the system
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      
+      // Only users with caregiver role
+      const caregivers = users.filter(u => u.role === 'caregiver' || u.role === 'cuidador').map(u => ({
+        name: u.username || '-',
+        specialty: u.skills || u.specialty || 'Cuidado general',
+        rating: u.rating || 4.5,
+        experience: u.experience || '5 años',
+        location: u.address || u.location || 'Ubicación no especificada',
+        photo: u.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.username || '-')}&background=1976d2&color=fff&size=128&rounded=true`,
+        available: u.available !== false, // Default to true if not specified
+        price: u.price || '$25/hora',
+        description: u.description || 'Cuidador profesional con experiencia en atención domiciliaria.',
+        email: u.email || '',
+        id: u.id || u.username
+      }));
+
+      console.log(`Found ${caregivers.length} caregivers in the system`);
+      return caregivers;
+    } catch (error) {
+      console.error('Error getting caregivers:', error);
+      return [];
+    }
   }
+
   render() {
     let caregivers = this.getCaregivers();
-    // Filtro por nombre o especialidad
-    const filterInput = this.filterValue || '';
-    if (filterInput) {
+    
+    // Apply filters
+    if (this.filterValue) {
       caregivers = caregivers.filter(c =>
-        c.name.toLowerCase().includes(filterInput.toLowerCase()) ||
-        c.specialty.toLowerCase().includes(filterInput.toLowerCase())
+        c.name.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        c.specialty.toLowerCase().includes(this.filterValue.toLowerCase()) ||
+        c.description.toLowerCase().includes(this.filterValue.toLowerCase())
       );
     }
+
+    if (this.locationFilter) {
+      caregivers = caregivers.filter(c =>
+        c.location.toLowerCase().includes(this.locationFilter.toLowerCase())
+      );
+    }
+
+    if (this.specialtyFilter) {
+      caregivers = caregivers.filter(c =>
+        c.specialty.toLowerCase().includes(this.specialtyFilter.toLowerCase())
+      );
+    }
+
+    // Apply sorting
+    caregivers.sort((a, b) => {
+      switch (this.sortBy) {
+        case 'rating':
+          return b.rating - a.rating;
+        case 'experience':
+          return parseInt(b.experience) - parseInt(a.experience);
+        case 'price':
+          return parseFloat(a.price.replace(/[^0-9.]/g, '')) - parseFloat(b.price.replace(/[^0-9.]/g, ''));
+        default:
+          return a.name.localeCompare(b.name);
+      }
+    });
+
     this.shadowRoot.innerHTML = `
       <style>
         * {
           font-family: 'Poppins', sans-serif;
+          box-sizing: border-box;
         }
         
         section {
-          padding: 2.5rem;
-          max-width: 1200px;
+          padding: 2rem;
+          max-width: 1400px;
           margin: 0 auto;
+          background: #f8f9fa;
+          min-height: 100vh;
         }
+
+        .search-container {
+          background: white;
+          border-radius: 20px;
+          padding: 2rem;
+          box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+          margin-bottom: 2rem;
+        }
+
         .search-header {
-          margin-bottom: 2.5rem;
+          text-align: center;
+          margin-bottom: 2rem;
         }
-        .search-header h2 {
+
+        .search-header h1 {
           color: #1976d2;
-          margin-bottom: 0.8rem;
-          font-family: 'Poppins', sans-serif;
-          font-size: 2rem;
-          font-weight: 600;
+          margin-bottom: 0.5rem;
+          font-size: 2.5rem;
+          font-weight: 700;
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
         }
+
         .search-header p {
-          font-family: 'Poppins', sans-serif;
           color: #6c757d;
           font-size: 1.1rem;
           font-weight: 500;
+          margin: 0;
         }
+
         .search-filters {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          gap: 1rem;
+          margin-bottom: 2rem;
+        }
+
+        .filter-group {
           display: flex;
-          gap: 1.2rem;
-          margin-bottom: 2.5rem;
-          flex-wrap: wrap;
+          flex-direction: column;
+          gap: 0.5rem;
         }
-        .filter-input {
-          padding: 0.8rem 1.2rem;
-          border: 2px solid #dee2e6;
+
+        .filter-label {
+          font-weight: 600;
+          color: #495057;
+          font-size: 0.9rem;
+        }
+
+        .filter-input, .filter-select {
+          padding: 0.8rem 1rem;
+          border: 2px solid #e9ecef;
           border-radius: 12px;
           font-size: 1rem;
-          font-family: 'Poppins', sans-serif;
           font-weight: 500;
-          min-width: 180px;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
+          background: white;
         }
-        .filter-input:focus {
+
+        .filter-input:focus, .filter-select:focus {
           outline: none;
           border-color: #1976d2;
           box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+          transform: translateY(-1px);
         }
-        .filter-select {
-          padding: 0.8rem 1.2rem;
-          border: 2px solid #dee2e6;
-          border-radius: 12px;
-          font-size: 1rem;
-          font-family: 'Poppins', sans-serif;
-          font-weight: 500;
-          min-width: 160px;
-          transition: all 0.3s;
-        }
-        .filter-select:focus {
-          outline: none;
-          border-color: #1976d2;
-          box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
-        }
+
         .search-btn {
-          background: #1976d2;
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
           color: white;
           border: none;
-          padding: 0.8rem 1.8rem;
+          padding: 0.8rem 2rem;
           border-radius: 12px;
           cursor: pointer;
-          font-family: 'Poppins', sans-serif;
-          font-size: 1rem;
           font-weight: 600;
-          transition: all 0.3s;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          align-self: end;
         }
+
         .search-btn:hover {
-          background: #1565c0;
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 8px 25px rgba(25, 118, 210, 0.3);
         }
+
+        .results-info {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 1.5rem;
+          padding: 1rem;
+          background: #e3f2fd;
+          border-radius: 12px;
+          border-left: 4px solid #1976d2;
+        }
+
+        .results-count {
+          font-weight: 600;
+          color: #1976d2;
+        }
+
+        .sort-controls {
+          display: flex;
+          gap: 1rem;
+          align-items: center;
+        }
+
+        .sort-label {
+          font-weight: 600;
+          color: #495057;
+          font-size: 0.9rem;
+        }
+
         .caregivers-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+          grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
           gap: 1.5rem;
         }
+
         .caregiver-card {
           background: white;
-          border-radius: 16px;
-          padding: 1.8rem;
-          box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+          border-radius: 20px;
+          padding: 1.5rem;
+          box-shadow: 0 4px 20px rgba(0,0,0,0.08);
           border: 1px solid #e9ecef;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
+          position: relative;
+          overflow: hidden;
         }
+
+        .caregiver-card::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          height: 4px;
+          background: linear-gradient(135deg, #1976d2, #42a5f5);
+        }
+
         .caregiver-card:hover {
-          transform: translateY(-3px);
-          box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+          transform: translateY(-5px);
+          box-shadow: 0 12px 40px rgba(0,0,0,0.15);
         }
+
         .caregiver-header {
           display: flex;
           align-items: center;
-          gap: 1.2rem;
+          gap: 1rem;
           margin-bottom: 1.2rem;
         }
+
         .caregiver-photo {
-          width: 65px;
-          height: 65px;
+          width: 70px;
+          height: 70px;
           border-radius: 50%;
           object-fit: cover;
-          border: 3px solid #e3eafc;
+          border: 3px solid #e3f2fd;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
+
         .caregiver-info h3 {
-          margin: 0 0 0.4rem 0;
+          margin: 0 0 0.3rem 0;
           color: #212529;
-          font-family: 'Poppins', sans-serif;
-          font-size: 1.2rem;
-          font-weight: 600;
+          font-size: 1.3rem;
+          font-weight: 700;
         }
+
         .caregiver-specialty {
           color: #6c757d;
-          font-size: 0.9rem;
-          font-family: 'Poppins', sans-serif;
+          font-size: 0.95rem;
           font-weight: 500;
-          margin-bottom: 0.4rem;
+          margin-bottom: 0.3rem;
         }
+
         .caregiver-rating {
           display: flex;
           align-items: center;
-          gap: 0.4rem;
+          gap: 0.3rem;
           color: #ffc107;
           font-size: 0.9rem;
-          font-family: 'Poppins', sans-serif;
           font-weight: 600;
         }
+
         .caregiver-rating i {
-          font-size: 1.1rem;
+          font-size: 1rem;
         }
+
         .caregiver-details {
           margin-bottom: 1.2rem;
         }
+
         .detail-row {
           display: flex;
           justify-content: space-between;
-          margin-bottom: 0.6rem;
+          margin-bottom: 0.5rem;
           font-size: 0.9rem;
-          font-family: 'Poppins', sans-serif;
-          padding: 0.4rem 0;
+          padding: 0.3rem 0;
           border-bottom: 1px solid #f8f9fa;
         }
+
         .detail-label {
           color: #6c757d;
           font-weight: 500;
         }
+
         .detail-value {
           font-weight: 600;
           color: #212529;
         }
+
         .availability-badge {
           display: inline-block;
           padding: 0.4rem 0.8rem;
           border-radius: 25px;
-          font-size: 0.85rem;
+          font-size: 0.8rem;
           font-weight: 600;
-          font-family: 'Poppins', sans-serif;
         }
+
         .available {
           background: #d4edda;
           color: #155724;
         }
+
         .unavailable {
           background: #f8d7da;
           color: #721c24;
         }
+
         .contact-btn {
           width: 100%;
-          background: #28a745;
+          background: linear-gradient(135deg, #28a745, #20c997);
           color: white;
           border: none;
           padding: 0.8rem;
           border-radius: 12px;
           cursor: pointer;
           font-weight: 600;
-          font-family: 'Poppins', sans-serif;
           font-size: 1rem;
-          transition: all 0.3s;
+          transition: all 0.3s ease;
         }
+
         .contact-btn:hover:not(:disabled) {
-          background: #218838;
           transform: translateY(-2px);
-          box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+          box-shadow: 0 6px 20px rgba(40, 167, 69, 0.3);
         }
+
         .contact-btn:disabled {
           background: #6c757d;
           cursor: not-allowed;
+          transform: none;
+        }
+
+        .no-results {
+          text-align: center;
+          padding: 3rem;
+          color: #6c757d;
+          font-size: 1.1rem;
+        }
+
+        .no-results i {
+          font-size: 3rem;
+          color: #dee2e6;
+          margin-bottom: 1rem;
+          display: block;
+        }
+
+        .loading {
+          text-align: center;
+          padding: 2rem;
+          color: #1976d2;
+        }
+
+        .loading i {
+          font-size: 2rem;
+          animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+          section {
+            padding: 1rem;
+          }
+          
+          .search-filters {
+            grid-template-columns: 1fr;
+          }
+          
+          .caregivers-grid {
+            grid-template-columns: 1fr;
+          }
+          
+          .results-info {
+            flex-direction: column;
+            gap: 1rem;
+            text-align: center;
+          }
         }
       </style>
+
       <section>
-        <h1 style="color:#1976d2;font-size:2.2rem;font-weight:700;margin-bottom:1.5rem;text-align:center;">Search Caregivers</h1>
-        <div class="search-header">
-          <h2 style="font-size:1.3rem;font-weight:600;">Find registered professional caregivers</h2>
-          <input type="text" class="filter-input" id="filterInput" placeholder="Search by name or specialty" value="${filterInput}">
+        <div class="search-container">
+          <div class="search-header">
+            <h1>🔍 Buscar Cuidadores</h1>
+            <p>Encuentra cuidadores profesionales registrados en nuestra plataforma</p>
+          </div>
+          
+          <div class="search-filters">
+            <div class="filter-group">
+              <label class="filter-label">Buscar por nombre o especialidad</label>
+              <input type="text" class="filter-input" id="filterInput" placeholder="Ej: María, fisioterapia..." value="${this.filterValue}">
+            </div>
+            
+            <div class="filter-group">
+              <label class="filter-label">Ubicación</label>
+              <input type="text" class="filter-input" id="locationFilter" placeholder="Ej: Madrid, Barcelona..." value="${this.locationFilter}">
+            </div>
+            
+            <div class="filter-group">
+              <label class="filter-label">Especialidad</label>
+              <select class="filter-select" id="specialtyFilter">
+                <option value="">Todas las especialidades</option>
+                <option value="cuidado de ancianos" ${this.specialtyFilter === 'cuidado de ancianos' ? 'selected' : ''}>Cuidado de ancianos</option>
+                <option value="fisioterapia" ${this.specialtyFilter === 'fisioterapia' ? 'selected' : ''}>Fisioterapia</option>
+                <option value="enfermería" ${this.specialtyFilter === 'enfermería' ? 'selected' : ''}>Enfermería</option>
+                <option value="psicología" ${this.specialtyFilter === 'psicología' ? 'selected' : ''}>Psicología</option>
+                <option value="nutrición" ${this.specialtyFilter === 'nutrición' ? 'selected' : ''}>Nutrición</option>
+                <option value="terapia ocupacional" ${this.specialtyFilter === 'terapia ocupacional' ? 'selected' : ''}>Terapia ocupacional</option>
+              </select>
+            </div>
+            
+            <div class="filter-group">
+              <label class="filter-label">Ordenar por</label>
+              <select class="filter-select" id="sortBy">
+                <option value="name" ${this.sortBy === 'name' ? 'selected' : ''}>Nombre</option>
+                <option value="rating" ${this.sortBy === 'rating' ? 'selected' : ''}>Calificación</option>
+                <option value="experience" ${this.sortBy === 'experience' ? 'selected' : ''}>Experiencia</option>
+                <option value="price" ${this.sortBy === 'price' ? 'selected' : ''}>Precio</option>
+              </select>
+            </div>
+            
+            <button class="search-btn" id="searchBtn">
+              <i class="bi bi-search"></i> Buscar
+            </button>
+          </div>
+        </div>
+
+        <div class="results-info">
+          <div class="results-count">
+            <i class="bi bi-people-fill"></i>
+            ${caregivers.length} cuidador${caregivers.length !== 1 ? 'es' : ''} encontrado${caregivers.length !== 1 ? 's' : ''}
+          </div>
+          <div class="sort-controls">
+            <span class="sort-label">Ordenado por: ${this.getSortLabel()}</span>
+          </div>
         </div>
         
-        <div class="caregiver-list">
-          ${caregivers.length === 0 ? `<div style='color:#888;text-align:center;margin:2rem 0;'>No registered caregivers. Use the search to try with another term.</div>` : ''}
-          ${caregivers.map(caregiver => `
+        <div class="caregivers-grid">
+          ${caregivers.length === 0 ? `
+            <div class="no-results">
+              <i class="bi bi-search"></i>
+              <h3>No se encontraron cuidadores</h3>
+              <p>Intenta con otros términos de búsqueda o filtros diferentes.</p>
+            </div>
+          ` : caregivers.map(caregiver => `
             <div class="caregiver-card">
               <div class="caregiver-header">
                 <img src="${caregiver.photo}" alt="${caregiver.name}" class="caregiver-photo">
@@ -251,43 +477,93 @@ class CaregiverSearch extends HTMLElement {
               
               <div class="caregiver-details">
                 <div class="detail-row">
-                  <span class="detail-label">Experience:</span>
+                  <span class="detail-label">Experiencia:</span>
                   <span class="detail-value">${caregiver.experience}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Location:</span>
+                  <span class="detail-label">Ubicación:</span>
                   <span class="detail-value">${caregiver.location}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Price:</span>
+                  <span class="detail-label">Precio:</span>
                   <span class="detail-value">${caregiver.price}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Status:</span>
+                  <span class="detail-label">Estado:</span>
                   <span class="availability-badge ${caregiver.available ? 'available' : 'unavailable'}">
-                    ${caregiver.available ? 'Available' : 'Not available'}
+                    ${caregiver.available ? 'Disponible' : 'No disponible'}
                   </span>
                 </div>
               </div>
               
-              <button class="contact-btn" ${!caregiver.available ? 'disabled' : ''}>
-                ${caregiver.available ? 'Contact' : 'Not available'}
+              <button class="contact-btn" ${!caregiver.available ? 'disabled' : ''} onclick="contactCaregiver('${caregiver.id}', '${caregiver.name}')">
+                ${caregiver.available ? 'Contactar' : 'No disponible'}
               </button>
             </div>
           `).join('')}
         </div>
       </section>
     `;
+    
     this.attachEvents();
   }
+
+  getSortLabel() {
+    const labels = {
+      'name': 'Nombre',
+      'rating': 'Calificación',
+      'experience': 'Experiencia',
+      'price': 'Precio'
+    };
+    return labels[this.sortBy] || 'Nombre';
+  }
+
   attachEvents() {
     const filterInput = this.shadowRoot.getElementById('filterInput');
+    const locationFilter = this.shadowRoot.getElementById('locationFilter');
+    const specialtyFilter = this.shadowRoot.getElementById('specialtyFilter');
+    const sortBy = this.shadowRoot.getElementById('sortBy');
+    const searchBtn = this.shadowRoot.getElementById('searchBtn');
+
     if (filterInput) {
-      filterInput.oninput = (e) => {
+      filterInput.addEventListener('input', (e) => {
         this.filterValue = e.target.value;
         this.render();
-      };
+      });
+    }
+
+    if (locationFilter) {
+      locationFilter.addEventListener('input', (e) => {
+        this.locationFilter = e.target.value;
+        this.render();
+      });
+    }
+
+    if (specialtyFilter) {
+      specialtyFilter.addEventListener('change', (e) => {
+        this.specialtyFilter = e.target.value;
+        this.render();
+      });
+    }
+
+    if (sortBy) {
+      sortBy.addEventListener('change', (e) => {
+        this.sortBy = e.target.value;
+        this.render();
+      });
+    }
+
+    if (searchBtn) {
+      searchBtn.addEventListener('click', () => {
+        this.render();
+      });
     }
   }
 }
+
+// Global function to contact caregivers
+window.contactCaregiver = function(caregiverId, caregiverName) {
+  alert(`Contactando a ${caregiverName}...\n\nEsta funcionalidad se implementará próximamente.\n\nPor ahora, puedes usar los datos de contacto del cuidador para comunicarte directamente.`);
+};
+
 customElements.define('caregiver-search', CaregiverSearch); 

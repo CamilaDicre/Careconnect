@@ -76,7 +76,7 @@ class CaregiverSidebar extends HTMLElement {
     
     this.shadowRoot.innerHTML = `
       <style>
-        @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
+        /* Bootstrap Icons loaded via CDN in HTML head */
         
         * {
           font-family: 'Poppins', sans-serif;
@@ -117,27 +117,32 @@ class CaregiverSidebar extends HTMLElement {
           padding: 15px 0;
         }
         
-        nav.minimized .sidebar-btn {
-          padding: 15px 12px;
-          justify-content: center;
-        }
+                 nav.minimized .sidebar-btn {
+           padding: 15px 12px;
+           justify-content: center;
+           margin: 2px 8px;
+           border-radius: 8px;
+         }
         
         nav.minimized .sidebar-btn span {
           display: none;
         }
         
-        nav.minimized .sidebar-btn i {
-          font-size: 24px;
-          width: auto;
-        }
+                 nav.minimized .sidebar-btn i {
+           font-size: 20px;
+           width: 20px;
+           text-align: center;
+         }
         
         nav.minimized .logo-text {
           display: none;
         }
         
-        nav.minimized .logo-icon {
-          transform: scale(1.2);
-        }
+                 nav.minimized .logo-icon {
+           transform: scale(1.1);
+           width: 40px;
+           height: 40px;
+         }
         
         nav.minimized .logo-section {
           padding: 15px 8px;
@@ -331,10 +336,15 @@ class CaregiverSidebar extends HTMLElement {
           text-align: left;
         }
         
-        .sidebar-btn:hover {
-          background: rgba(255, 255, 255, 0.1);
-          transform: translateX(4px);
-        }
+                 .sidebar-btn:hover {
+           background: rgba(255, 255, 255, 0.1);
+           transform: translateX(4px);
+         }
+         
+         nav.minimized .sidebar-btn:hover {
+           background: rgba(255, 255, 255, 0.15);
+           transform: scale(1.1);
+         }
         
         .sidebar-btn.active {
           background: rgba(255, 255, 255, 0.15);
@@ -342,17 +352,22 @@ class CaregiverSidebar extends HTMLElement {
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
         
-        .sidebar-btn.active::before {
-          content: '';
-          position: absolute;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-          width: 4px;
-          height: 20px;
-          background: white;
-          border-radius: 0 2px 2px 0;
-        }
+                 .sidebar-btn.active::before {
+           content: '';
+           position: absolute;
+           left: 0;
+           top: 50%;
+           transform: translateY(-50%);
+           width: 4px;
+           height: 20px;
+           background: white;
+           border-radius: 0 2px 2px 0;
+         }
+         
+         nav.minimized .sidebar-btn.active::before {
+           width: 3px;
+           height: 16px;
+         }
         
         .sidebar-btn i {
           font-size: 1.125rem;
@@ -535,13 +550,13 @@ class CaregiverSidebar extends HTMLElement {
       nav.classList.add('minimized');
       if (main) {
         main.classList.add('sidebar-collapsed');
-        main.style.marginLeft = '90px';
+        main.style.marginLeft = '';
       }
     } else {
       nav.classList.remove('minimized');
       if (main) {
         main.classList.remove('sidebar-collapsed');
-        main.style.marginLeft = '200px';
+        main.style.marginLeft = '';
       }
     }
     
@@ -561,7 +576,7 @@ class CaregiverSidebar extends HTMLElement {
     nav.classList.remove('minimized');
     if (main) {
       main.classList.remove('sidebar-collapsed');
-      main.style.marginLeft = '200px';
+      main.style.marginLeft = '';
     }
     this.isCollapsed = false;
   }
@@ -573,7 +588,7 @@ class CaregiverSidebar extends HTMLElement {
     nav.classList.add('minimized');
     if (main) {
       main.classList.add('sidebar-collapsed');
-      main.style.marginLeft = '90px';
+      main.style.marginLeft = '';
     }
     this.isCollapsed = true;
   }
@@ -582,7 +597,7 @@ class CaregiverSidebar extends HTMLElement {
     const main = document.getElementById('mainContent');
     const nav = this.shadowRoot.querySelector('nav');
     if (main) {
-      main.style.transition = 'margin-left 0.4s ease';
+      main.style.transition = 'all 0.4s ease';
     }
     
     // Apply saved sidebar state
@@ -591,13 +606,13 @@ class CaregiverSidebar extends HTMLElement {
         nav.classList.add('minimized');
         if (main) {
           main.classList.add('sidebar-collapsed');
-          main.style.marginLeft = '90px';
+          main.style.marginLeft = '';
         }
       } else {
         nav.classList.remove('minimized');
         if (main) {
           main.classList.remove('sidebar-collapsed');
-          main.style.marginLeft = '200px';
+          main.style.marginLeft = '';
         }
       }
     }

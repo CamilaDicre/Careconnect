@@ -99,7 +99,7 @@ class SidebarUtils {
     // Aplicar estado al componente sidebar
     this.applySidebarComponentState(collapsed);
     
-    console.log('Sidebar state initialized:', collapsed ? 'collapsed' : 'expanded');
+    // console.log('Sidebar state initialized:', collapsed ? 'collapsed' : 'expanded');
   }
 
   /**
@@ -116,7 +116,7 @@ class SidebarUtils {
       this.applySidebarState(collapsed);
       this.applyHeaderState(collapsed);
       
-      console.log('Sidebar state changed:', collapsed ? 'collapsed' : 'expanded');
+      // console.log('Sidebar state changed:', collapsed ? 'collapsed' : 'expanded');
     });
   }
 
@@ -136,7 +136,7 @@ class SidebarUtils {
     // Escuchar cambios futuros
     this.listenForSidebarChanges();
     
-    console.log('Sidebar synchronization setup complete');
+    // console.log('Sidebar synchronization setup complete');
   }
 }
 
