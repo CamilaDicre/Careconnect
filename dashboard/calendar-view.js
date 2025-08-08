@@ -2,8 +2,8 @@ class CalendarView extends HTMLElement {
   constructor() {
     super();
     this.attachShadow({ mode: 'open' });
-    this.currentDate = new Date(2024, 0, 1); // Enero 2024
-    this.selectedDate = new Date(2024, 0, 1); // Enero 2024
+    this.currentDate = new Date(2024, 0, 1); // January 2024
+    this.selectedDate = new Date(2024, 0, 1); // January 2024
   }
   connectedCallback() {
     this.render();
@@ -429,7 +429,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 53,
-        title: 'Cita con Dr. García',
+        title: 'Appointment with Dr. Garcia',
         date: '2024-01-01',
         time: '09:00',
         type: 'appointment',
@@ -445,7 +445,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 55,
-        title: 'Control de presión',
+        title: 'Blood Pressure Check',
         date: '2024-01-02',
         time: '07:00',
         type: 'checkup',
@@ -461,7 +461,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 57,
-        title: 'Sesión de fisioterapia',
+        title: 'Physical Therapy Session',
         date: '2024-01-03',
         time: '15:30',
         type: 'therapy',
@@ -477,7 +477,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 59,
-        title: 'Consulta dermatología',
+        title: 'Dermatology Consultation',
         date: '2024-01-04',
         time: '11:00',
         type: 'appointment',
@@ -493,7 +493,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 61,
-        title: 'Control de glucosa',
+        title: 'Glucose Check',
         date: '2024-01-05',
         time: '07:30',
         type: 'checkup',
@@ -509,7 +509,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 63,
-        title: 'Sesión de rehabilitación',
+        title: 'Rehabilitation Session',
         date: '2024-01-06',
         time: '16:00',
         type: 'therapy',
@@ -525,7 +525,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 65,
-        title: 'Cita con Dr. López',
+        title: 'Appointment with Dr. Lopez',
         date: '2024-01-07',
         time: '14:00',
         type: 'appointment',
@@ -541,7 +541,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 67,
-        title: 'Cita con Dr. Rodríguez',
+        title: 'Appointment with Dr. Rodriguez',
         date: '2024-01-08',
         time: '10:00',
         type: 'appointment',
@@ -557,7 +557,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 69,
-        title: 'Control de presión',
+        title: 'Blood Pressure Check',
         date: '2024-01-10',
         time: '07:00',
         type: 'checkup',
@@ -573,7 +573,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 71,
-        title: 'Sesión de fisioterapia',
+        title: 'Physical Therapy Session',
         date: '2024-01-12',
         time: '15:30',
         type: 'therapy',
@@ -589,7 +589,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 73,
-        title: 'Consulta cardiología',
+        title: 'Cardiology Consultation',
         date: '2024-01-15',
         time: '14:00',
         type: 'appointment',
@@ -605,7 +605,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 75,
-        title: 'Control de glucosa',
+        title: 'Glucose Check',
         date: '2024-01-18',
         time: '07:30',
         type: 'checkup',
@@ -621,7 +621,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 77,
-        title: 'Sesión de rehabilitación',
+        title: 'Rehabilitation Session',
         date: '2024-01-20',
         time: '16:00',
         type: 'therapy',
@@ -637,7 +637,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 79,
-        title: 'Cita con Dr. Martínez',
+        title: 'Appointment with Dr. Martinez',
         date: '2024-01-22',
         time: '11:00',
         type: 'appointment',
@@ -651,10 +651,10 @@ class CalendarView extends HTMLElement {
         type: 'medicine',
         color: '#28a745'
       },
-      // Febrero 2024
+      // February 2024
       {
         id: 81,
-        title: 'Cita con Dr. García',
+        title: 'Appointment with Dr. Garcia',
         date: '2024-02-01',
         time: '09:00',
         type: 'appointment',
@@ -670,7 +670,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 83,
-        title: 'Control de presión',
+        title: 'Blood Pressure Check',
         date: '2024-02-05',
         time: '07:00',
         type: 'checkup',
@@ -686,7 +686,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 85,
-        title: 'Sesión de fisioterapia',
+        title: 'Physical Therapy Session',
         date: '2024-02-08',
         time: '15:30',
         type: 'therapy',
@@ -702,7 +702,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 87,
-        title: 'Consulta cardiología',
+        title: 'Cardiology Consultation',
         date: '2024-02-12',
         time: '14:00',
         type: 'appointment',
@@ -718,7 +718,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 89,
-        title: 'Control de glucosa',
+        title: 'Glucose Check',
         date: '2024-02-15',
         time: '07:30',
         type: 'checkup',
@@ -734,7 +734,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 91,
-        title: 'Sesión de rehabilitación',
+        title: 'Rehabilitation Session',
         date: '2024-02-19',
         time: '16:00',
         type: 'therapy',
@@ -750,7 +750,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 93,
-        title: 'Cita con Dr. López',
+        title: 'Appointment with Dr. Lopez',
         date: '2024-02-22',
         time: '11:00',
         type: 'appointment',
@@ -766,7 +766,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 95,
-        title: 'Control de peso',
+        title: 'Weight Check',
         date: '2024-02-26',
         time: '09:00',
         type: 'checkup',
@@ -780,10 +780,10 @@ class CalendarView extends HTMLElement {
         type: 'medicine',
         color: '#28a745'
       },
-      // Marzo 2024
+      // March 2024
       {
         id: 97,
-        title: 'Cita con Dr. Rodríguez',
+        title: 'Appointment with Dr. Rodriguez',
         date: '2024-03-01',
         time: '10:00',
         type: 'appointment',
@@ -799,7 +799,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 99,
-        title: 'Control de presión',
+        title: 'Blood Pressure Check',
         date: '2024-03-05',
         time: '07:00',
         type: 'checkup',
@@ -815,7 +815,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 101,
-        title: 'Sesión de fisioterapia',
+        title: 'Physical Therapy Session',
         date: '2024-03-08',
         time: '15:30',
         type: 'therapy',
@@ -831,7 +831,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 103,
-        title: 'Consulta oftalmología',
+        title: 'Ophthalmology Consultation',
         date: '2024-03-12',
         time: '14:00',
         type: 'appointment',
@@ -847,7 +847,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 105,
-        title: 'Control de glucosa',
+        title: 'Glucose Check',
         date: '2024-03-15',
         time: '07:30',
         type: 'checkup',
@@ -863,7 +863,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 107,
-        title: 'Sesión de rehabilitación',
+        title: 'Rehabilitation Session',
         date: '2024-03-19',
         time: '16:00',
         type: 'therapy',
@@ -879,7 +879,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 109,
-        title: 'Cita con Dr. Martínez',
+        title: 'Appointment with Dr. Martinez',
         date: '2024-03-22',
         time: '11:00',
         type: 'appointment',
@@ -895,7 +895,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 111,
-        title: 'Control de peso',
+        title: 'Weight Check',
         date: '2024-03-26',
         time: '09:00',
         type: 'checkup',
@@ -909,10 +909,10 @@ class CalendarView extends HTMLElement {
         type: 'medicine',
         color: '#28a745'
       },
-      // Abril 2024
+      // April 2024
       {
         id: 113,
-        title: 'Cita con Dr. García',
+        title: 'Appointment with Dr. Garcia',
         date: '2024-04-01',
         time: '09:00',
         type: 'appointment',
@@ -928,7 +928,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 115,
-        title: 'Control de presión',
+        title: 'Blood Pressure Check',
         date: '2024-04-05',
         time: '07:00',
         type: 'checkup',
@@ -944,7 +944,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 117,
-        title: 'Sesión de fisioterapia',
+        title: 'Physical Therapy Session',
         date: '2024-04-08',
         time: '15:30',
         type: 'therapy',
@@ -960,7 +960,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 119,
-        title: 'Consulta cardiología',
+        title: 'Cardiology Consultation',
         date: '2024-04-12',
         time: '14:00',
         type: 'appointment',
@@ -976,7 +976,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 121,
-        title: 'Control de glucosa',
+        title: 'Glucose Check',
         date: '2024-04-15',
         time: '07:30',
         type: 'checkup',
@@ -992,7 +992,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 123,
-        title: 'Sesión de rehabilitación',
+        title: 'Rehabilitation Session',
         date: '2024-04-19',
         time: '16:00',
         type: 'therapy',
@@ -1008,7 +1008,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 125,
-        title: 'Cita con Dr. López',
+        title: 'Appointment with Dr. Lopez',
         date: '2024-04-22',
         time: '11:00',
         type: 'appointment',
@@ -1024,7 +1024,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 127,
-        title: 'Control de peso',
+        title: 'Weight Check',
         date: '2024-04-26',
         time: '09:00',
         type: 'checkup',
@@ -1040,7 +1040,7 @@ class CalendarView extends HTMLElement {
       },
       {
         id: 129,
-        title: 'Consulta dermatología',
+        title: 'Dermatology Consultation',
         date: '2024-04-29',
         time: '14:00',
         type: 'appointment',
@@ -1074,8 +1074,8 @@ class CalendarView extends HTMLElement {
     const month = this.currentDate.getMonth();
     const daysInMonth = this.getDaysInMonth(year, month);
     const firstDay = this.getFirstDayOfMonth(year, month);
-    const monthNames = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 
-                       'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 
+                       'July', 'August', 'September', 'October', 'November', 'December'];
     
     this.shadowRoot.innerHTML = `
       <style>
@@ -1545,7 +1545,7 @@ class CalendarView extends HTMLElement {
     const today = new Date();
     const selectedDateStr = this.formatDate(this.selectedDate);
     
-    // Días del mes anterior
+    // Days from previous month
     const prevMonth = month === 0 ? 11 : month - 1;
     const prevYear = month === 0 ? year - 1 : year;
     const daysInPrevMonth = this.getDaysInMonth(prevYear, prevMonth);
@@ -1558,7 +1558,7 @@ class CalendarView extends HTMLElement {
       </div>`;
     }
     
-    // Días del mes actual
+    // Days from current month
     for (let day = 1; day <= daysInMonth; day++) {
       const date = new Date(year, month, day);
       const dateStr = this.formatDate(date);
@@ -1570,7 +1570,7 @@ class CalendarView extends HTMLElement {
       if (isToday) dayClasses += ' today';
       if (isSelected) dayClasses += ' selected';
       
-      // Crear indicadores de eventos únicos
+      // Create unique event indicators
       const uniqueEventTypes = [...new Set(events.map(e => e.type))];
       const eventIndicators = uniqueEventTypes.map(type => 
         `<div class="event-indicator ${type}"></div>`
@@ -1582,7 +1582,7 @@ class CalendarView extends HTMLElement {
       </div>`;
     }
     
-    // Días del mes siguiente
+    // Days from next month
     const remainingDays = 42 - (firstDay + daysInMonth);
     for (let day = 1; day <= remainingDays; day++) {
       const nextMonth = month === 11 ? 0 : month + 1;
@@ -1624,17 +1624,17 @@ class CalendarView extends HTMLElement {
     `).join('');
   }
   attachEvents() {
-    // Navegación de meses
+    // Month navigation
     const prevBtn = this.shadowRoot.querySelector('#prev-month');
     const nextBtn = this.shadowRoot.querySelector('#next-month');
     
-    console.log('Botones encontrados:', { prevBtn: !!prevBtn, nextBtn: !!nextBtn });
+            console.log('Buttons found:', { prevBtn: !!prevBtn, nextBtn: !!nextBtn });
     
     if (prevBtn) {
       prevBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Botón anterior clickeado');
+        console.log('Previous button clicked');
         this.currentDate.setMonth(this.currentDate.getMonth() - 1);
         this.render();
         this.attachEvents();
@@ -1645,14 +1645,14 @@ class CalendarView extends HTMLElement {
       nextBtn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('Botón siguiente clickeado');
+        console.log('Next button clicked');
         this.currentDate.setMonth(this.currentDate.getMonth() + 1);
         this.render();
         this.attachEvents();
       });
     }
     
-    // Selección de días
+    // Day selection
     const calendarDays = this.shadowRoot.querySelectorAll('.calendar-day');
     calendarDays.forEach(day => {
       day.addEventListener('click', () => {
