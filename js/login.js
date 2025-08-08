@@ -179,6 +179,12 @@ const users = [
   // Utilidad para obtener usuarios desde localStorage o usar los hardcodeados
   function getUsers() {
     try {
+      // Verificar si LocalStorageUtils está disponible
+      if (typeof LocalStorageUtils === 'undefined') {
+        console.warn('LocalStorageUtils is not loaded, using fallback');
+        return ensureAmethAdmin(getDefaultUsers());
+      }
+      
       // Verificar si localStorage está disponible
       if (!LocalStorageUtils.isAvailable()) {
         console.warn('localStorage is not available');
@@ -280,7 +286,7 @@ const users = [
         return true;
       }
       
-      console.log('✅ Admin Ameth ya existe y está protegido');
+      // console.log('✅ Admin Ameth ya existe y está protegido');
       return true;
     } catch (error) {
       console.error('❌ Error al verificar/restaurar admin Ameth:', error);
@@ -336,6 +342,12 @@ const users = [
   
   function saveUsers(users) {
     try {
+      // Verificar si LocalStorageUtils está disponible
+      if (typeof LocalStorageUtils === 'undefined') {
+        console.warn('LocalStorageUtils is not loaded, cannot save users');
+        return false;
+      }
+      
       // Validar que users sea un array
       if (!Array.isArray(users)) {
         throw new Error('Users must be an array');

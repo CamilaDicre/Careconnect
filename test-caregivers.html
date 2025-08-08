@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Caregivers - CareConnect</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        .btn-action {
+            margin: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-action:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .status-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #1976d2;
+        }
+        .caregiver-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 1rem;
+        }
+        .caregiver-item {
+            background: white;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        .caregiver-item:last-child {
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh;">
+    <div class="test-container">
+        <div class="text-center mb-4">
+            <h1 class="text-primary fw-bold mb-3">
+                <i class="bi bi-people-fill me-2"></i>
+                Test Caregivers
+            </h1>
+            <p class="text-muted">Herramienta para gestionar cuidadores de prueba en CareConnect</p>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-primary text-white">
+                        <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Acciones</h5>
+                    </div>
+                    <div class="card-body">
+                        <button class="btn btn-success btn-action w-100" onclick="addCaregivers()">
+                            <i class="bi bi-person-plus me-2"></i>
+                            Agregar Cuidadores de Prueba
+                        </button>
+                        
+                        <button class="btn btn-warning btn-action w-100" onclick="removeCaregivers()">
+                            <i class="bi bi-person-x me-2"></i>
+                            Eliminar Cuidadores de Prueba
+                        </button>
+                        
+                        <button class="btn btn-info btn-action w-100" onclick="listCaregivers()">
+                            <i class="bi bi-list-ul me-2"></i>
+                            Ver Cuidadores Registrados
+                        </button>
+                        
+                        <button class="btn btn-secondary btn-action w-100" onclick="clearAllUsers()">
+                            <i class="bi bi-trash me-2"></i>
+                            Limpiar Todos los Usuarios
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-info text-white">
+                        <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Estado</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="statusBox" class="status-box">
+                            <p class="mb-0">Haz clic en una acción para comenzar...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="bi bi-people me-2"></i>Lista de Cuidadores</h5>
+                </div>
+                <div class="card-body">
+                    <div id="caregiverList" class="caregiver-list">
+                        <p class="text-muted text-center">Los cuidadores aparecerán aquí...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-4 text-center">
+            <a href="dashboard/dashboard.html" class="btn btn-primary btn-action">
+                <i class="bi bi-arrow-right me-2"></i>
+                Ir al Dashboard
+            </a>
+            <a href="index.html" class="btn btn-outline-primary btn-action">
+                <i class="bi bi-house me-2"></i>
+                Volver al Inicio
+            </a>
+        </div>
+    </div>
+
+    <script src="js/sample-caregivers.js"></script>
+    <script>
+        function updateStatus(message, type = 'info') {
+            const statusBox = document.getElementById('statusBox');
+            const colors = {
+                'success': '#d4edda',
+                'error': '#f8d7da',
+                'warning': '#fff3cd',
+                'info': '#d1ecf1'
+            };
+            const borders = {
+                'success': '#28a745',
+                'error': '#dc3545',
+                'warning': '#ffc107',
+                'info': '#17a2b8'
+            };
+            
+            statusBox.style.background = colors[type];
+            statusBox.style.borderLeftColor = borders[type];
+            statusBox.innerHTML = `<p class="mb-0">${message}</p>`;
+        }
+
+        function updateCaregiverList() {
+            const caregiverList = document.getElementById('caregiverList');
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const caregivers = users.filter(user => user.role === 'caregiver');
+            
+            if (caregivers.length === 0) {
+                caregiverList.innerHTML = '<p class="text-muted text-center">No hay cuidadores registrados</p>';
+                return;
+            }
+            
+            caregiverList.innerHTML = caregivers.map((caregiver, index) => `
+                <div class="caregiver-item">
+                    <div class="d-flex align-items-center">
+                        <img src="${caregiver.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(caregiver.username) + '&background=1976d2&color=fff&size=40&rounded=true'}" 
+                             alt="${caregiver.username}" 
+                             class="rounded-circle me-3" 
+                             style="width: 40px; height: 40px;">
+                        <div class="flex-grow-1">
+                            <h6 class="mb-1 fw-bold">${caregiver.username}</h6>
+                            <small class="text-muted">${caregiver.skills || 'Sin especialidad'}</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-primary">${caregiver.rating || 'N/A'} ⭐</span>
+                            <br>
+                            <small class="text-muted">${caregiver.price || 'N/A'}</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addCaregivers() {
+            try {
+                SampleCaregivers.createSampleCaregivers();
+                updateStatus('✅ Cuidadores de prueba agregados exitosamente', 'success');
+                updateCaregiverList();
+            } catch (error) {
+                updateStatus('❌ Error al agregar cuidadores: ' + error.message, 'error');
+            }
+        }
+
+        function removeCaregivers() {
+            try {
+                SampleCaregivers.removeSampleCaregivers();
+                updateStatus('✅ Cuidadores de prueba eliminados exitosamente', 'warning');
+                updateCaregiverList();
+            } catch (error) {
+                updateStatus('❌ Error al eliminar cuidadores: ' + error.message, 'error');
+            }
+        }
+
+        function listCaregivers() {
+            try {
+                SampleCaregivers.listCaregivers();
+                updateStatus('📋 Lista de cuidadores mostrada en la consola', 'info');
+                updateCaregiverList();
+            } catch (error) {
+                updateStatus('❌ Error al listar cuidadores: ' + error.message, 'error');
+            }
+        }
+
+        function clearAllUsers() {
+            if (confirm('¿Estás seguro de que quieres eliminar TODOS los usuarios del sistema? Esta acción no se puede deshacer.')) {
+                try {
+                    localStorage.removeItem('users');
+                    updateStatus('🗑️ Todos los usuarios han sido eliminados', 'warning');
+                    updateCaregiverList();
+                } catch (error) {
+                    updateStatus('❌ Error al limpiar usuarios: ' + error.message, 'error');
+                }
+            }
+        }
+
+        // Cargar lista inicial
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCaregiverList();
+        });
+    </script>
+</body>
+</html>
