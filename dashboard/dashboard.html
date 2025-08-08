@@ -398,7 +398,7 @@
     <script src="sidebar-utils.js"></script>
     <script src="dashboard-header.js"></script>
     <script src="overview-section.js"></script>
-    <script src="user-profile.js"></script>
+    <script src="user-profile.js?v=3.1"></script>
     <script src="../js/localStorage-utils.js"></script>
     <script src="../js/avatar-utils.js"></script>
     <script src="medicine-list.js"></script>
@@ -573,6 +573,16 @@
         
         // Listen for sidebar toggle events
         document.addEventListener('sidebarToggle', handleSidebarToggle);
+        
+        // Force reload user-profile component to apply changes
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(() => {
+                const userProfile = document.querySelector('user-profile');
+                if (userProfile) {
+                    userProfile.render();
+                }
+            }, 1000);
+        });
     </script>
 </body>
 </html> 
