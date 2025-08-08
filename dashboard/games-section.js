@@ -475,7 +475,7 @@ class GamesSection extends HTMLElement {
         .crossword-grid {
           display: grid;
           grid-template-columns: repeat(9, 1fr);
-          gap: 0;
+          gap: 0px;
           margin: 20px auto;
           max-width: 450px;
           background: #333;
@@ -1749,30 +1749,32 @@ class GamesSection extends HTMLElement {
     // Crossword puzzle data - 9x9 grid with properly sized words
     const crosswordData = {
       grid: [
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '', ' ', ' ', ' ', ' ', '', ' ', ' '],
-        [' ', '', ' ', '', ' ', '', ' ', '', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '', ' ', '', ' ', '', ' ', '', ' '],
-        [' ', '', ' ', ' ', ' ', ' ', '', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' '],
-        [' ', '', ' ', ' ', ' ', ' ', '', ' ', ' '],
-        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ']
+        ['', ' ', ' ', '', '', '', '', '', ' '],
+        [' ', ' ', ' ', ' ', '', '', '', '', ' '],
+        [' ', ' ', ' ', '', '', '', '', '', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', '', '', ' '],
+        [' ', ' ', ' ', '', '', ' ', '', '', ' '],
+        [' ', '', ' ', '', ' ', ' ', ' ', ' ', ' '],
+        [' ', '', '', '', '', ' ', '', '', ' '],
+        ['', '', '', '', '', ' ', '', '', ' '],
+        [' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ''],
+        ['', '', ' ', ' ', ' ', ' ', ' ', '', ''],
+        ['', '', '', '', '', ' ', '', '', ''],
       ],
       clues: {
         across: [
-          { number: 1, clue: "Food consumed for nutrition", answer: "DIET", startRow: 0, startCol: 0, length: 4 },
-          { number: 2, clue: "State of being free from illness", answer: "HEALTH", startRow: 0, startCol: 5, length: 6 },
-          { number: 3, clue: "Substance used to treat illness", answer: "MEDICINE", startRow: 0, startCol: 6, length: 8 },
-          { number: 4, clue: "Building where sick people are treated", answer: "HOSPITAL", startRow: 3, startCol: 0, length: 8 },
-          { number: 5, clue: "Feeling of affection and care", answer: "LOVE", startRow: 1, startCol: 2, length: 4 },
-          { number: 6, clue: "Organ that pumps blood", answer: "HEART", startRow: 2, startCol: 4, length: 5 },
-          { number: 7, clue: "Medicine in tablet form", answer: "PILLS", startRow: 6, startCol: 0, length: 5 }
+          { number: 1, clue: "Food consumed for nutrition", answer: "DIET", startRow: 1, startCol: 0, length: 4 },
+          { number: 2, clue: "Substance used to treat illness", answer: "MEDICINE", startRow: 8, startCol: 0, length: 8 },
+          { number: 3, clue: "Feeling of affection and care", answer: "LOVE", startRow: 3, startCol: 2, length: 4 },
+          { number: 4, clue: "Organ that pumps blood", answer: "HEART", startRow: 5, startCol: 4, length: 5 },
+          { number: 5, clue: "Person who provides medical care", answer: "NURSE", startRow: 9, startCol: 2, length: 5 },
         ],
         down: [
-          { number: 1, clue: "Medical professional who treats patients", answer: "DOCTOR", startRow: 0, startCol: 0, length: 6 },
-          { number: 2, clue: "Person who provides medical care", answer: "NURSE", startRow: 1, startCol: 4, length: 5 },
-          { number: 3, clue: "Physical activity for fitness", answer: "EXERCISE", startRow: 0, startCol: 5, length: 8 }
+          { number: 6, clue: "Medical professional who treats patients", answer: "DOCTOR", startRow: 1, startCol: 0, length: 6 },
+          { number: 7, clue: "Building where sick people are treated", answer: "HOSPITAL", startRow: 0, startCol: 8, length: 8 },
+          { number: 8, clue: "Physical activity for fitness", answer: "EXERCISE", startRow: 3, startCol: 5  , length: 8 },
+          { number: 9, clue: "Medicine in tablet form", answer: "PILLS", startRow: 0, startCol: 1, length: 5 },
+          { number: 10, clue: "State of being free from illness", answer: "HEALTH", startRow: 0, startCol: 2, length: 6 },
         ]
       }
     };
