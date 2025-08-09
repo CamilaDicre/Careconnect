@@ -76,7 +76,7 @@ class CaregiverSidebar extends HTMLElement {
     
     this.shadowRoot.innerHTML = `
       <style>
-        /* Bootstrap Icons loaded via CDN in HTML head */
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
         
         * {
           font-family: 'Poppins', sans-serif;
@@ -132,6 +132,7 @@ class CaregiverSidebar extends HTMLElement {
            font-size: 20px;
            width: 20px;
            text-align: center;
+           display: block !important;
          }
         
         nav.minimized .logo-text {
@@ -471,7 +472,7 @@ class CaregiverSidebar extends HTMLElement {
             <div class="nav-section-title">Main</div>
             <button class="sidebar-btn ${this.currentSection === 'overview' ? 'active' : ''}" data-section="overview">
               <i class="bi bi-speedometer2"></i>
-              <span>Dashboard</span>
+              <span>Home</span>
             </button>
             <button class="sidebar-btn ${this.currentSection === 'virtual-care' ? 'active' : ''}" data-section="virtual-care">
               <i class="bi bi-camera-video-fill"></i>

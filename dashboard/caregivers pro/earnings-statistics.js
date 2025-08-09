@@ -54,31 +54,31 @@ class EarningsStatistics extends HTMLElement {
         {
           id: 1,
           patient: 'Maria Gonzalez',
-          service: 'Cuidado Matutino',
+          service: 'Morning Care',
           amount: 85,
           date: '2024-12-25',
           status: 'completed',
-          duration: '2 horas',
+          duration: '2 hours',
           type: 'in-person'
         },
         {
           id: 2,
           patient: 'Robert Wilson',
-          service: 'Cuidado Vespertino',
+          service: 'Evening Care',
           amount: 95,
           date: '2024-12-25',
           status: 'completed',
-          duration: '2.5 horas',
+          duration: '2.5 hours',
           type: 'in-person'
         },
         {
           id: 3,
           patient: 'Linda Martinez',
-          service: 'Cuidado Nocturno',
+          service: 'Night Care',
           amount: 75,
           date: '2024-12-24',
           status: 'completed',
-          duration: '1.5 horas',
+          duration: '1.5 hours',
           type: 'virtual'
         },
         {
@@ -94,20 +94,20 @@ class EarningsStatistics extends HTMLElement {
         {
           id: 5,
           patient: 'Carlos Rodriguez',
-          service: 'Cuidado Especializado',
+          service: 'Specialized Care',
           amount: 120,
           date: '2024-12-23',
           status: 'completed',
-          duration: '3 horas',
+          duration: '3 hours',
           type: 'in-person'
         }
       ],
       earningsByService: [
-        { service: 'Cuidado Matutino', earnings: 850, percentage: 30 },
-        { service: 'Cuidado Vespertino', earnings: 680, percentage: 24 },
-        { service: 'Cuidado Nocturno', earnings: 570, percentage: 20 },
-        { service: 'Consulta Virtual', earnings: 480, percentage: 17 },
-        { service: 'Cuidado Especializado', earnings: 260, percentage: 9 }
+        { service: 'Morning Care', earnings: 850, percentage: 30 },
+        { service: 'Evening Care', earnings: 680, percentage: 24 },
+        { service: 'Night Care', earnings: 570, percentage: 20 },
+        { service: 'Virtual Consultation', earnings: 480, percentage: 17 },
+        { service: 'Specialized Care', earnings: 260, percentage: 9 }
       ]
     };
   }
@@ -524,12 +524,12 @@ class EarningsStatistics extends HTMLElement {
             <div class="header-icon">
               <i class="bi bi-graph-up"></i>
             </div>
-            Estadísticas de Ganancias
+            Earnings Statistics
           </h2>
           <div class="period-selector">
-            <button class="period-btn ${this.currentPeriod === 'week' ? 'active' : ''}" data-period="week">Semana</button>
-            <button class="period-btn ${this.currentPeriod === 'month' ? 'active' : ''}" data-period="month">Mes</button>
-            <button class="period-btn ${this.currentPeriod === 'year' ? 'active' : ''}" data-period="year">Año</button>
+            <button class="period-btn ${this.currentPeriod === 'week' ? 'active' : ''}" data-period="week">Week</button>
+            <button class="period-btn ${this.currentPeriod === 'month' ? 'active' : ''}" data-period="month">Month</button>
+            <button class="period-btn ${this.currentPeriod === 'year' ? 'active' : ''}" data-period="year">Year</button>
           </div>
         </div>
 
@@ -542,10 +542,10 @@ class EarningsStatistics extends HTMLElement {
               </div>
             </div>
             <div class="metric-value">$${this.data.currentMonth.totalEarnings.toLocaleString()}</div>
-            <div class="metric-label">Ganancias Totales</div>
+            <div class="metric-label">Total Earnings</div>
             <div class="metric-change positive">
               <i class="bi bi-arrow-up"></i>
-              +${this.data.currentMonth.growthRate}% vs mes anterior
+              +${this.data.currentMonth.growthRate}% vs last month
             </div>
           </div>
 
@@ -556,10 +556,10 @@ class EarningsStatistics extends HTMLElement {
               </div>
             </div>
             <div class="metric-value">${this.data.currentMonth.hoursWorked}h</div>
-            <div class="metric-label">Horas Trabajadas</div>
+            <div class="metric-label">Hours Worked</div>
             <div class="metric-change positive">
               <i class="bi bi-arrow-up"></i>
-              +${this.data.currentMonth.hoursWorked - this.data.previousMonth.hoursWorked}h vs mes anterior
+              +${this.data.currentMonth.hoursWorked - this.data.previousMonth.hoursWorked}h vs last month
             </div>
           </div>
 
@@ -570,10 +570,10 @@ class EarningsStatistics extends HTMLElement {
               </div>
             </div>
             <div class="metric-value">${this.data.currentMonth.patientsServed}</div>
-            <div class="metric-label">Pacientes Atendidos</div>
+            <div class="metric-label">Patients Served</div>
             <div class="metric-change positive">
               <i class="bi bi-arrow-up"></i>
-              +${this.data.currentMonth.patientsServed - this.data.previousMonth.patientsServed} vs mes anterior
+              +${this.data.currentMonth.patientsServed - this.data.previousMonth.patientsServed} vs last month
             </div>
           </div>
 
@@ -584,10 +584,10 @@ class EarningsStatistics extends HTMLElement {
               </div>
             </div>
             <div class="metric-value">${this.data.currentMonth.sessionsCompleted}</div>
-            <div class="metric-label">Sesiones Completadas</div>
+            <div class="metric-label">Sessions Completed</div>
             <div class="metric-change positive">
               <i class="bi bi-arrow-up"></i>
-              +${this.data.currentMonth.sessionsCompleted - this.data.previousMonth.sessionsCompleted} vs mes anterior
+              +${this.data.currentMonth.sessionsCompleted - this.data.previousMonth.sessionsCompleted} vs last month
             </div>
           </div>
         </div>
@@ -597,7 +597,7 @@ class EarningsStatistics extends HTMLElement {
           <!-- Gráfico de ganancias -->
           <div class="chart-section">
             <div class="chart-header">
-              <div class="chart-title">Evolución de Ganancias</div>
+              <div class="chart-title">Earnings Evolution</div>
             </div>
             <div class="chart-container">
               <canvas id="earningsChart"></canvas>
@@ -607,7 +607,7 @@ class EarningsStatistics extends HTMLElement {
           <!-- Distribución por servicios -->
           <div class="services-section">
             <div class="services-header">
-              <div class="services-title">Distribución por Servicios</div>
+              <div class="services-title">Service Distribution</div>
             </div>
             <div class="services-list">
               ${this.data.earningsByService.map((service, index) => {
@@ -685,7 +685,7 @@ class EarningsStatistics extends HTMLElement {
         labels: this.data.monthlyData.map(d => d.month),
         datasets: [
           {
-            label: 'Ganancias ($)',
+            label: 'Earnings ($)',
             data: this.data.monthlyData.map(d => d.earnings),
             borderColor: '#10b981',
             backgroundColor: 'rgba(16, 185, 129, 0.1)',
@@ -699,7 +699,7 @@ class EarningsStatistics extends HTMLElement {
             pointHoverRadius: 8
           },
           {
-            label: 'Horas Trabajadas',
+            label: 'Hours Worked',
             data: this.data.monthlyData.map(d => d.hours),
             borderColor: '#3b82f6',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',

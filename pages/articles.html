@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/blog.css">
     <link rel="stylesheet" href="../css/about.css">
+    <link rel="stylesheet" href="../css/responsive-transitions.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+    <link rel="stylesheet" href="../css/splash-screen.css">
     <!--Bootstrap Links-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Bootstrap Icons -->
@@ -15,7 +18,7 @@
     <!--Google Fonts Links-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -190,7 +193,7 @@
             margin-bottom: 3rem;
         }
 
-        .articles-row {
+        .row {
             margin-bottom: 60px;
         }
 
@@ -205,6 +208,8 @@
             margin-top: 20px;
             border: 1px solid var(--gray-100);
             position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
         .article-card:hover {
@@ -463,14 +468,30 @@
                 font-size: 1rem;
             }
 
+            /* Revert to vertical layout on mobile */
+            .article-card {
+                flex-direction: column;
+                min-height: auto;
+            }
+            
+            .article-image {
+                width: 100%;
+                min-width: 100%;
+                height: 200px;
+            }
+
             .article-title {
                 font-size: 1.3rem;
-                min-height: auto;
+                -webkit-line-clamp: unset;
+                overflow: visible;
+                display: block;
             }
 
             .article-excerpt {
                 font-size: 1rem;
-                min-height: auto;
+                -webkit-line-clamp: unset;
+                overflow: visible;
+                display: block;
             }
 
             .cta-title {
@@ -596,25 +617,28 @@
         <!-- Articles Section -->
         <section class="articles-section">
             <div class="container">
-                <h2 class="section-title">Featured Health Articles</h2>
+                <h2 class="section-title">📚 Featured Health Articles</h2>
+                <p style="text-align: center; font-size: 1.2rem; color: var(--gray-600); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Quality information, written by health professionals, to help you live better every day.
+                </p>
                 
                 <div id="articlesContainer">
                     <!-- First Row - 3 Articles -->
-                    <div class="row articles-row">
+                    <div class="row">
                         <div class="col-lg-4 col-md-6" data-categories="diabetes,medication">
                             <article class="article-card">
                                 <div class="article-image">
                                     <img src="https://cdn.pixabay.com/photo/2015/05/21/11/17/diabetes-777002_1280.jpg" alt="Diabetes Management for Seniors">
                                 </div>
                                 <div class="article-content">
-                                    <span class="article-category">Diabetes</span>
-                                    <h3 class="article-title">Complete Guide to Managing Diabetes in Seniors</h3>
+                                    <span class="article-category">🩺 Diabetes</span>
+                                    <h3 class="article-title">Complete Guide to Managing Diabetes</h3>
                                     <p class="article-excerpt">Learn about the best eating habits, exercises, and medications to effectively control diabetes and maintain a healthy lifestyle.</p>
                                     <div class="article-meta">
                                         <span><i class="bi bi-calendar3"></i> March 15, 2024</span>
                                         <span><i class="bi bi-clock"></i> 8 min read</span>
                                     </div>
-                                    <a href="../articles/diabetes-management.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/diabetes-management.html" class="read-more-btn">📖 Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -625,8 +649,8 @@
                                     <img src="https://cdn.pixabay.com/photo/2018/11/20/16/43/laboratory-3827736_1280.jpg" alt="Blood Pressure Control">
                                 </div>
                                 <div class="article-content">
-                                    <span class="article-category">Blood Pressure</span>
-                                    <h3 class="article-title">Blood Pressure Control: Practical Tips for Seniors</h3>
+                                    <span class="article-category">❤️ Blood Pressure</span>
+                                    <h3 class="article-title">Blood Pressure Control: Practical Tips</h3>
                                     <p class="article-excerpt">Discover how to maintain healthy blood pressure through lifestyle changes, medication management, and daily monitoring.</p>
                                     <div class="article-meta">
                                         <span><i class="bi bi-calendar3"></i> March 12, 2024</span>
@@ -643,9 +667,9 @@
                                     <img src="https://cdn.pixabay.com/photo/2017/12/03/12/38/medicine-2994788_1280.jpg" alt="Medication Safety">
                                 </div>
                                 <div class="article-content">
-                                    <span class="article-category">Medication Safety</span>
-                                    <h3 class="article-title">Medication Safety Guide for Seniors</h3>
-                                    <p class="article-excerpt">Essential tips for safely managing your medications, avoiding interactions, and working with your healthcare team.</p>
+                                    <span class="article-category">💊 Medication Safety</span>
+                                    <h3 class="article-title">Medication Safety Guide</h3>
+                                    <p class="article-excerpt">Essential tips for managing your medications safely, avoiding interactions, and working with your healthcare team.</p>
                                     <div class="article-meta">
                                         <span><i class="bi bi-calendar3"></i> March 10, 2024</span>
                                         <span><i class="bi bi-clock"></i> 7 min read</span>
@@ -657,15 +681,15 @@
                     </div>
 
                     <!-- Second Row - 3 Articles -->
-                    <div class="row articles-row">
+                    <div class="row">
                         <div class="col-lg-4 col-md-6" data-categories="exercise,fitness">
                             <article class="article-card">
                                 <div class="article-image">
                                     <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b" alt="Senior Exercise">
                                 </div>
                                 <div class="article-content">
-                                    <span class="article-category">Exercise</span>
-                                    <h3 class="article-title">Safe Exercise Guide for Seniors</h3>
+                                    <span class="article-category">🏃‍♂️ Exercise</span>
+                                    <h3 class="article-title">Safe Exercise Guide</h3>
                                     <p class="article-excerpt">Discover enjoyable and safe exercises that improve strength, balance, and overall health for adults 65 and older.</p>
                                     <div class="article-meta">
                                         <span><i class="bi bi-calendar3"></i> March 8, 2024</span>
@@ -682,8 +706,8 @@
                                     <img src="https://cdn.pixabay.com/photo/2017/09/16/19/21/salad-2756467_1280.jpg" alt="Senior Nutrition">
                                 </div>
                                 <div class="article-content">
-                                    <span class="article-category">Nutrition</span>
-                                    <h3 class="article-title">Complete Nutrition Guide for Seniors</h3>
+                                    <span class="article-category">🥗 Nutrition</span>
+                                    <h3 class="article-title">Complete Nutrition Guide</h3>
                                     <p class="article-excerpt">Learn how to maintain a healthy diet that supports your energy, immune system, and overall well-being as you age.</p>
                                     <div class="article-meta">
                                         <span><i class="bi bi-calendar3"></i> March 5, 2024</span>
@@ -700,7 +724,7 @@
                                     <img src="https://cdn.pixabay.com/photo/2017/07/25/04/55/nurse-2536963_1280.jpg" alt="Caregiver Support">
                                 </div>
                                 <div class="article-content">
-                                    <span class="article-category">Caregiver Support</span>
+                                    <span class="article-category">👨‍⚕️ Caregivers</span>
                                     <h3 class="article-title">How to Choose the Right Caregiver</h3>
                                     <p class="article-excerpt">Essential tips for finding and working with certified caregivers who can support your health and daily needs.</p>
                                     <div class="article-meta">
@@ -708,6 +732,63 @@
                                         <span><i class="bi bi-clock"></i> 6 min read</span>
                                     </div>
                                     <a href="../articles/caregiver-selection.html" class="read-more-btn">Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+
+                    <!-- Third Row - New Articles (Hidden by default for pagination) -->
+                    <div class="row page-2" style="display: none;">
+                        <div class="col-lg-4 col-md-6" data-categories="heart,cardiovascular">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56" alt="Heart Health">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">❤️ Heart</span>
+                                    <h3 class="article-title">Cardiovascular Health in Seniors</h3>
+                                    <p class="article-excerpt">Complete guide to maintaining a healthy and strong heart during senior years with practical and preventive tips.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> March 1, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 10 min read</span>
+                                    </div>
+                                    <a href="../articles/heart-health-seniors.html" class="read-more-btn">📖 Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" data-categories="arthritis,joints">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1559757175-0eb30cd8c063" alt="Arthritis Management">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">🦴 Arthritis</span>
+                                    <h3 class="article-title">Arthritis Management</h3>
+                                    <p class="article-excerpt">Effective strategies for living better with arthritis, maintaining mobility, and reducing pain naturally.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> February 28, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 11 min read</span>
+                                    </div>
+                                    <a href="../articles/arthritis-management.html" class="read-more-btn">📖 Read Article</a>
+                                </div>
+                            </article>
+                        </div>
+
+                        <div class="col-lg-4 col-md-6" data-categories="memory,alzheimer">
+                            <article class="article-card">
+                                <div class="article-image">
+                                    <img src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56" alt="Memory Health">
+                                </div>
+                                <div class="article-content">
+                                    <span class="article-category">🧠 Memory</span>
+                                    <h3 class="article-title">Memory Care</h3>
+                                    <p class="article-excerpt">Exercises and techniques to keep the mind active and prevent cognitive decline in seniors.</p>
+                                    <div class="article-meta">
+                                        <span><i class="bi bi-calendar3"></i> February 25, 2024</span>
+                                        <span><i class="bi bi-clock"></i> 8 min read</span>
+                                    </div>
+                                    <a href="../articles/memory-care.html" class="read-more-btn">📖 Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -744,7 +825,7 @@
             description="Join thousands of seniors who are already using Careconnect to manage their health, connect with caregivers, and access valuable resources. Create your free account today and start your journey to better health."
             primary-btn-text="Create Free Account"
             secondary-btn-text="Sign In"
-            primary-btn-link="register-caregiver.html"
+            primary-btn-link="login.html"
             secondary-btn-link="login.html">
         </cta-component>
     </main>
@@ -753,10 +834,12 @@
     <footer-component></footer-component>
 
     <!--Script code-->
+    <script src="../js/splash-screen.js"></script>
     <script src="../components/header-component.js"></script>
     <script src="../components/footer-component.js"></script>
     <script src="../components/cta-component.js"></script>
     <script src="../js/main.js"></script>
+    <script src="../js/page-transitions.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -845,6 +928,55 @@
 
         // Initialize with all articles visible
         filterArticles();
+
+        // Pagination functionality
+        let currentPage = 1;
+        const totalPages = 2;
+
+        function showPage(pageNum) {
+            // Hide all pages
+            document.querySelectorAll('.articles-row').forEach(row => {
+                if (row.classList.contains('page-2')) {
+                    row.style.display = 'none';
+                } else {
+                    row.style.display = pageNum === 1 ? 'block' : 'none';
+                }
+            });
+            
+            // Show requested page
+            if (pageNum === 2) {
+                document.querySelector('.page-2').style.display = 'block';
+            }
+            
+            // Update page number buttons
+            document.querySelectorAll('.page-number').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.textContent) === pageNum) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            currentPage = pageNum;
+        }
+
+        // Add event listeners to page numbers
+        document.querySelectorAll('.page-number').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const pageNum = parseInt(btn.textContent);
+                showPage(pageNum);
+            });
+        });
+
+        // Add event listeners to navigation buttons
+        document.querySelector('.nav-btn[href="#"]').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (currentPage < totalPages) {
+                showPage(currentPage + 1);
+            }
+        });
+
+        // Initialize with page 1
+        showPage(1);
 
         // Add smooth scrolling for better UX
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {

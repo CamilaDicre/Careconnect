@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manejo de la Artritis en Adultos Mayores - Careconnect</title>
+    <!--CSS Links-->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="stylesheet" href="../css/responsive-transitions.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+    <!--Bootstrap Links-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!--Google Fonts Links-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #1976d2;
+            --primary-dark: #1565c0;
+            --secondary-color: #63a4ff;
+            --white: #ffffff;
+            --light-bg: #f8fafc;
+            --gray-600: #4b5563;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            font-size: 16px;
+            line-height: 1.6;
+            color: var(--gray-800);
+            background-color: var(--light-bg);
+        }
+
+        .article-hero {
+            background: linear-gradient(rgba(25, 118, 210, 0.8), rgba(99, 164, 255, 0.8)),
+                        url('../assets/logo-pattern.png');
+            background-size: cover;
+            background-position: center;
+            padding: 6rem 0 4rem;
+            position: relative;
+            color: white;
+            text-align: center;
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .article-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .article-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .article-section {
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        h3 {
+            color: var(--primary-dark);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 1.5rem;
+        }
+
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+
+        li {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: var(--gray-600);
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-box {
+            background: #e3f2fd;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .warning-box {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .exercise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .exercise-card {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 10px;
+            border: 1px solid #e3f2fd;
+        }
+    </style>
+</head>
+<body>
+    <!-- Back button -->
+    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
+        <a href="../pages/articles.html" style="background: rgba(255,255,255,0.9); padding: 12px 20px; border-radius: 25px; text-decoration: none; color: #1976d2; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.1); backdrop-filter: blur(10px);">
+            <i class="bi bi-arrow-left"></i> Back to Articles
+        </a>
+    </div>
+
+    <main>
+        <!-- Article Hero -->
+        <section class="article-hero">
+            <div class="container">
+                <h1>🦴 Manejo de la Artritis en Adultos Mayores</h1>
+                <p class="lead">Estrategias efectivas para vivir mejor con artritis y mantener la movilidad</p>
+            </div>
+        </section>
+
+        <!-- Article Content -->
+        <div class="article-content">
+            <div class="article-section">
+                <h2>🔍 ¿Qué es la artritis?</h2>
+                <p>La artritis es una inflamación de las articulaciones que causa dolor, rigidez e hinchazón. Es muy común en adultos mayores y puede afectar significativamente la calidad de vida si no se maneja adecuadamente.</p>
+                
+                <h3>Tipos principales de artritis:</h3>
+                <ul>
+                    <li><strong>Osteoartritis:</strong> El tipo más común, causado por el desgaste del cartílago</li>
+                    <li><strong>Artritis reumatoide:</strong> Enfermedad autoinmune que afecta múltiples articulaciones</li>
+                    <li><strong>Artritis psoriásica:</strong> Asociada con la psoriasis de la piel</li>
+                    <li><strong>Gota:</strong> Causada por acumulación de ácido úrico en las articulaciones</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h4><i class="bi bi-info-circle"></i> Síntomas comunes</h4>
+                    <p>Dolor articular, rigidez matutina que dura más de 30 minutos, hinchazón, reducción del rango de movimiento, y fatiga general.</p>
+                </div>
+            </div>
+
+            <div class="article-section">
+                <h2>🏃‍♀️ Ejercicios para la artritis</h2>
+                <p>El ejercicio regular es fundamental para mantener la flexibilidad y fuerza en las articulaciones:</p>
+                
+                <div class="exercise-grid">
+                    <div class="exercise-card">
+                        <h4>🏊‍♀️ Ejercicios en agua</h4>
+                        <p>La natación y aeróbicos acuáticos reducen la carga en las articulaciones mientras proporcionan resistencia.</p>
+                    </div>
+                    <div class="exercise-card">
+                        <h4>🧘‍♀️ Yoga y Tai Chi</h4>
+                        <p>Mejoran la flexibilidad, equilibrio y reducen el estrés. Ideales para artritis de columna y caderas.</p>
+                    </div>
+                    <div class="exercise-card">
+                        <h4>🚶‍♀️ Caminata suave</h4>
+                        <p>Empezar con 10-15 minutos diarios en superficies planas y aumentar gradualmente.</p>
+                    </div>
+                    <div class="exercise-card">
+                        <h4>💪 Ejercicios de resistencia</h4>
+                        <p>Usar bandas elásticas o pesas ligeras para fortalecer músculos alrededor de las articulaciones.</p>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4><i class="bi bi-exclamation-triangle"></i> Precauciones durante el ejercicio</h4>
+                    <p>Pare si siente dolor agudo, evite ejercicios de alto impacto durante brotes inflamatorios, y siempre caliente antes de ejercitarse.</p>
+                </div>
+            </div>
+
+            <div class="article-section">
+                <h2>🍎 Alimentación antiinflamatoria</h2>
+                <p>Una dieta adecuada puede ayudar a reducir la inflamación y el dolor articular:</p>
+                
+                <h3>Alimentos recomendados:</h3>
+                <ul>
+                    <li><strong>Pescados grasos:</strong> salmón, sardinas, caballa (2-3 veces por semana)</li>
+                    <li><strong>Frutas antioxidantes:</strong> arándanos, cerezas, naranjas</li>
+                    <li><strong>Vegetales de hoja verde:</strong> espinaca, kale, brócoli</li>
+                    <li><strong>Nueces y semillas:</strong> nueces, semillas de chía, linaza</li>
+                    <li><strong>Especias antiinflamatorias:</strong> cúrcuma, jengibre, ajo</li>
+                    <li><strong>Aceite de oliva</strong> extra virgen</li>
+                </ul>
+
+                <h3>Alimentos a evitar:</h3>
+                <ul>
+                    <li>Alimentos procesados y azúcares refinados</li>
+                    <li>Grasas trans y frituras</li>
+                    <li>Exceso de carne roja</li>
+                    <li>Alcohol en exceso</li>
+                    <li>Alimentos con alto contenido de sal</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h4><i class="bi bi-cup-hot"></i> Bebida antiinflamatoria</h4>
+                    <p>Té verde con cúrcuma y jengibre: hierva agua, agregue una bolsita de té verde, una pizca de cúrcuma en polvo y jengibre fresco rallado. Endulce con miel si lo desea.</p>
+                </div>
+            </div>
+
+            <div class="article-section">
+                <h2>🧊 Manejo del dolor en casa</h2>
+                <p>Existen varias técnicas que puede usar en casa para aliviar el dolor y la rigidez:</p>
+                
+                <h3>Terapias de calor y frío:</h3>
+                <ul>
+                    <li><strong>Calor:</strong> Compresas calientes, baños tibios para rigidez matutina</li>
+                    <li><strong>Frío:</strong> Bolsas de hielo envueltas en toalla para hinchazón aguda (15-20 minutos)</li>
+                    <li><strong>Alternancia:</strong> 3 minutos de calor seguidos de 1 minuto de frío</li>
+                </ul>
+
+                <h3>Técnicas de relajación:</h3>
+                <ul>
+                    <li>Respiración profunda y meditación</li>
+                    <li>Masajes suaves en las articulaciones afectadas</li>
+                    <li>Técnicas de visualización</li>
+                    <li>Música relajante y aromaterapia</li>
+                </ul>
+
+                <h3>Adaptaciones en el hogar:</h3>
+                <ul>
+                    <li>Usar utensilios con mangos ergonómicos</li>
+                    <li>Instalar barras de apoyo en baños</li>
+                    <li>Usar cojines de apoyo al sentarse</li>
+                    <li>Mantener objetos frecuentes a altura accesible</li>
+                </ul>
+            </div>
+
+            <div class="article-section">
+                <h2>⚠️ Cuándo buscar ayuda médica</h2>
+                <p>Es importante contactar a su médico en las siguientes situaciones:</p>
+                
+                <ul>
+                    <li>Dolor articular severo que no mejora con reposo</li>
+                    <li>Hinchazón significativa o enrojecimiento</li>
+                    <li>Fiebre acompañada de dolor articular</li>
+                    <li>Pérdida súbita de función en una articulación</li>
+                    <li>Efectos secundarios de medicamentos</li>
+                    <li>Empeoramiento progresivo de los síntomas</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4><i class="bi bi-telephone"></i> Emergencia médica</h4>
+                    <p>Busque atención inmediata si experimenta dolor articular severo con fiebre alta, incapacidad total para mover una articulación, o signos de infección.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Health Recommendations Section -->
+        <section style="background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%); padding: 4rem 0; margin: 3rem 0;">
+            <div class="container">
+                <h2 style="text-align: center; color: #1976d2; margin-bottom: 3rem; font-size: 2.5rem;">💊 Tratamientos para la Artritis</h2>
+                
+                <!-- Horizontal Cards Layout -->
+                <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center; margin-bottom: 3rem;">
+                    <!-- Antiinflamatorios Card -->
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); min-width: 280px; max-width: 320px;">
+                        <h3 style="color: #1976d2; margin-bottom: 1rem; text-align: center;">💊 Antiinflamatorios</h3>
+                        <ul style="font-size: 1rem; line-height: 1.6; color: #555; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.8rem;">• <strong>Ibuprofeno:</strong> 400-800mg/8hrs</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Naproxeno:</strong> 220mg/12hrs</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Diclofenaco:</strong> Gel tópico</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Celecoxib:</strong> Protege estómago</li>
+                        </ul>
+                    </div>
+
+                    <!-- Protectores Card -->
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); min-width: 280px; max-width: 320px;">
+                        <h3 style="color: #1976d2; margin-bottom: 1rem; text-align: center;">🦴 Protectores</h3>
+                        <ul style="font-size: 1rem; line-height: 1.6; color: #555; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.8rem;">• <strong>Glucosamina:</strong> 1500mg diarios</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Condroitina:</strong> 800-1200mg</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Colágeno:</strong> 10g diarios</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Ác. hialurónico:</strong> Inyecciones</li>
+                        </ul>
+                    </div>
+
+                    <!-- Naturales Card -->
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); min-width: 280px; max-width: 320px;">
+                        <h3 style="color: #1976d2; margin-bottom: 1rem; text-align: center;">🌿 Naturales</h3>
+                        <ul style="font-size: 1rem; line-height: 1.6; color: #555; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.8rem;">• <strong>Cúrcuma:</strong> 500mg 2x/día</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Omega-3:</strong> 2-3g diarios</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Boswellia:</strong> 300-400mg</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Jengibre:</strong> 250mg 2x/día</li>
+                        </ul>
+                    </div>
+
+                    <!-- Tópicos Card -->
+                    <div style="background: white; padding: 2rem; border-radius: 15px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); min-width: 280px; max-width: 320px;">
+                        <h3 style="color: #1976d2; margin-bottom: 1rem; text-align: center;">🎯 Tópicos</h3>
+                        <ul style="font-size: 1rem; line-height: 1.6; color: #555; list-style: none; padding: 0;">
+                            <li style="margin-bottom: 0.8rem;">• <strong>Capsaicina:</strong> 3-4x/día</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Gel árnica:</strong> Antiinflamatorio</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Parches mentol:</strong> Alivio temporal</li>
+                            <li style="margin-bottom: 0.8rem;">• <strong>Aceite eucalipto:</strong> Masajes</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Warning and Contact -->
+                <div style="text-align: center; padding: 2rem; background: rgba(255,255,255,0.9); border-radius: 15px; margin-bottom: 2rem;">
+                    <p style="color: #e65100; font-weight: 700; font-size: 1.1rem; margin-bottom: 1rem;">⚠️ Consulte siempre a su médico antes de iniciar tratamientos</p>
+                    <a href="../pages/contact.html" style="background: linear-gradient(135deg, #1976d2, #63a4ff); color: white; padding: 12px 25px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 1rem; box-shadow: 0 4px 15px rgba(25,118,210,0.3); display: inline-block;">
+                        🩺 Encontrar Reumatólogo
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Finish Reading Section -->
+        <section style="background: linear-gradient(135deg, #1976d2 0%, #63a4ff 100%); padding: 4rem 0; text-align: center;">
+            <div class="container">
+                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3rem; backdrop-filter: blur(10px);">
+                    <h3 style="color: white; margin-bottom: 1.5rem; font-size: 2rem;">🦴 ¡Maneja tu artritis con confianza!</h3>
+                    <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-bottom: 2.5rem;">
+                        La artritis no tiene que limitar tu vida. Con el tratamiento adecuado y cambios graduales 
+                        puedes mantener tu movilidad y reducir el dolor.
+                    </p>
+                    
+                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                        <a href="../pages/articles.html" style="background: white; color: #1976d2; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(0,0,0,0.2); display: inline-flex; align-items: center; gap: 0.5rem; transition: transform 0.3s ease;">
+                            <i class="bi bi-arrow-left-circle"></i> Finish and View More Articles
+                        </a>
+                        
+                        <a href="../pages/contact.html" style="background: rgba(255,255,255,0.2); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 1.1rem; border: 2px solid rgba(255,255,255,0.3); display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
+                            <i class="bi bi-telephone"></i> Contact Rheumatologist
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!--Script code-->
+    <script src="../js/main.js"></script>
+    <script src="../js/page-transitions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

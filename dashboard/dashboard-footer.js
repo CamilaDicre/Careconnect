@@ -121,8 +121,8 @@ class DashboardFooter extends HTMLElement {
         }
 
         .footer-logo img {
-          width: 30px;
-          height: 30px;
+          width: 34px;
+          height: 34px;
           filter: brightness(0) invert(1);
         }
         
@@ -148,8 +148,8 @@ class DashboardFooter extends HTMLElement {
         <div class="footer-content">
           <div class="footer-row">
             <div class="footer-logo">
-              <img src="../assets/Frame - 1.svg" alt="Careconnect Logo">
-              <span>Careconnect</span>
+              <img src="../assets/Frame-splash.svg" alt="Careconnect Logo">
+              <span>areconnect</span>
             </div>
             <div class="copyright">
               © ${new Date().getFullYear()} Careconnect. All rights reserved.

@@ -8,12 +8,23 @@ class CTAComponent extends HTMLElement {
     }
 
     render() {
+        // Detectar si estamos en /pages/ o en la raíz para rutas correctas
+        const isInPages = window.location.pathname.includes('/pages/');
+        
         const title = this.getAttribute('title') || 'Ready to Get Started?';
         const description = this.getAttribute('description') || 'Join thousands of users who are already using our services. Create your free account today and start your journey.';
         const primaryBtnText = this.getAttribute('primary-btn-text') || 'Create Free Account';
         const secondaryBtnText = this.getAttribute('secondary-btn-text') || 'Sign In';
-        const primaryBtnLink = this.getAttribute('primary-btn-link') || '#';
-        const secondaryBtnLink = this.getAttribute('secondary-btn-link') || '#';
+        let primaryBtnLink = this.getAttribute('primary-btn-link') || '#';
+        let secondaryBtnLink = this.getAttribute('secondary-btn-link') || '#';
+        
+        // Si los botones deben ir a login, usar la misma lógica que el header
+        if (primaryBtnLink === 'login.html') {
+            primaryBtnLink = isInPages ? 'login.html' : 'pages/login.html';
+        }
+        if (secondaryBtnLink === 'login.html') {
+            secondaryBtnLink = isInPages ? 'login.html' : 'pages/login.html';
+        }
 
         this.innerHTML = `
             <style>
@@ -127,8 +138,8 @@ class CTAComponent extends HTMLElement {
                         <h2 class="cta-title">${title}</h2>
                         <p class="cta-description">${description}</p>
                         <div class="cta-buttons">
-                            <a href="${primaryBtnLink}" class="cta-btn cta-btn-primary">${primaryBtnText}</a>
-                            <a href="${secondaryBtnLink}" class="cta-btn cta-btn-secondary">${secondaryBtnText}</a>
+                            <a href="${primaryBtnLink}" class="cta-btn cta-btn-primary" onclick="event.preventDefault(); window.location.href='${primaryBtnLink}'; return false;">${primaryBtnText}</a>
+                            <a href="${secondaryBtnLink}" class="cta-btn cta-btn-secondary" onclick="event.preventDefault(); window.location.href='${secondaryBtnLink}'; return false;">${secondaryBtnText}</a>
                         </div>
                     </div>
                 </div>

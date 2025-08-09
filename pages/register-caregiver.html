@@ -6,6 +6,8 @@
   <title>Careconnect - Registro de Cuidador</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/auth.css">
+  <link rel="stylesheet" href="../css/responsive-transitions.css">
+  <link rel="stylesheet" href="../css/transitions.css">
   <style>
     .caregiver-container {
       max-width: 500px;
@@ -355,8 +357,9 @@
       <button type="submit" class="caregiver-main-btn" id="submitBtn">Crear Perfil</button>
     </form>
   </div>
-  <script src="../js/localStorage-utils.js"></script>
-  <script>
+      <script src="../js/localStorage-utils.js"></script>
+    <script src="../js/page-transitions.js"></script>
+    <script>
     // Función para mostrar mensajes
     function showBanner(message, type = 'success') {
       const banner = document.getElementById('messageBanner');

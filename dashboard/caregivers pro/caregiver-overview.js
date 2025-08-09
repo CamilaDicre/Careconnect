@@ -26,8 +26,8 @@ class CaregiverOverview extends HTMLElement {
           id: 1,
           type: 'session_completed',
           patient: 'Maria Gonzalez',
-          time: '2 horas atrás',
-          description: 'Sesión de cuidado matutino completada',
+          time: '2 hours ago',
+          description: 'Morning care session completed',
           icon: 'bi-check-circle-fill',
           color: '#10b981'
         },
@@ -35,8 +35,8 @@ class CaregiverOverview extends HTMLElement {
           id: 2,
           type: 'medication_reminder',
           patient: 'Robert Wilson',
-          time: '4 horas atrás',
-          description: 'Recordatorio de medicamento enviado',
+          time: '4 hours ago',
+          description: 'Medication reminder sent',
           icon: 'bi-capsule',
           color: '#3b82f6'
         },
@@ -44,8 +44,8 @@ class CaregiverOverview extends HTMLElement {
           id: 3,
           type: 'virtual_call',
           patient: 'Linda Martinez',
-          time: '6 horas atrás',
-          description: 'Llamada virtual programada',
+          time: '6 hours ago',
+          description: 'Virtual call scheduled',
           icon: 'bi-camera-video-fill',
           color: '#8b5cf6'
         },
@@ -53,8 +53,8 @@ class CaregiverOverview extends HTMLElement {
           id: 4,
           type: 'document_uploaded',
           patient: 'Carlos Rodriguez',
-          time: '1 día atrás',
-          description: 'Reporte de salud subido',
+          time: '1 day ago',
+          description: 'Health report uploaded',
           icon: 'bi-file-earmark-text',
           color: '#f59e0b'
         }
@@ -64,29 +64,29 @@ class CaregiverOverview extends HTMLElement {
           id: 1,
           patient: 'Maria Gonzalez',
           time: '09:00 AM',
-          duration: '2 horas',
-          type: 'Cuidado Matutino',
-          status: 'confirmado'
+          duration: '2 hours',
+          type: 'Morning Care',
+          status: 'confirmed'
         },
         {
           id: 2,
           patient: 'Robert Wilson',
           time: '02:00 PM',
-          duration: '1.5 horas',
-          type: 'Cuidado Vespertino',
-          status: 'pendiente'
+          duration: '1.5 hours',
+          type: 'Evening Care',
+          status: 'pending'
         },
         {
           id: 3,
           patient: 'Linda Martinez',
           time: '06:00 PM',
-          duration: '1 hora',
-          type: 'Llamada Virtual',
-          status: 'confirmado'
+          duration: '1 hour',
+          type: 'Virtual Call',
+          status: 'confirmed'
         }
       ],
       weeklyStats: {
-        labels: ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'],
+        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
         sessions: [5, 7, 6, 8, 9, 4, 3],
         earnings: [120, 168, 144, 192, 216, 96, 72]
       }
@@ -409,7 +409,7 @@ class CaregiverOverview extends HTMLElement {
           color: #2563eb;
         }
         
-        /* Sesiones próximas */
+        /* Upcoming Sessions */
         .sessions-section {
           background: #fff;
           border-radius: 16px;
@@ -492,12 +492,12 @@ class CaregiverOverview extends HTMLElement {
           text-transform: uppercase;
         }
         
-        .session-status.confirmado {
+        .session-status.confirmed {
           background: #dcfce7;
           color: #166534;
         }
         
-        .session-status.pendiente {
+        .session-status.pending {
           background: #fef3c7;
           color: #92400e;
         }
@@ -608,10 +608,10 @@ class CaregiverOverview extends HTMLElement {
               </div>
             </div>
             <div class="stat-value">${this.data.stats.completedToday}</div>
-            <div class="stat-label">Completadas Hoy</div>
+            <div class="stat-label">Completed Today</div>
             <div class="stat-change positive">
               <i class="bi bi-arrow-up"></i>
-              +3 vs ayer
+              +3 vs yesterday
             </div>
           </div>
 
@@ -622,10 +622,10 @@ class CaregiverOverview extends HTMLElement {
               </div>
             </div>
             <div class="stat-value">$${this.data.stats.earningsThisMonth.toLocaleString()}</div>
-            <div class="stat-label">Ganancias del Mes</div>
+            <div class="stat-label">Monthly Earnings</div>
             <div class="stat-change positive">
               <i class="bi bi-arrow-up"></i>
-              +7.2% vs mes pasado
+              +7.2% vs last month
             </div>
           </div>
         </div>
@@ -636,14 +636,14 @@ class CaregiverOverview extends HTMLElement {
           <div class="chart-section">
             <div class="chart-header">
               <div class="chart-title">
-                <i class="bi bi-graph-up me-2"></i>Actividad Semanal
+                <i class="bi bi-graph-up me-2"></i>Weekly Activity
               </div>
               <div style="display: flex; gap: 8px;">
                 <button style="padding: 6px 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; font-size: 0.875rem; cursor: pointer;">
-                  <i class="bi bi-calendar-check me-1"></i>Sesiones
+                  <i class="bi bi-calendar-check me-1"></i>Sessions
                 </button>
                 <button style="padding: 6px 12px; border: 1px solid #e5e7eb; border-radius: 8px; background: #fff; font-size: 0.875rem; cursor: pointer;">
-                  <i class="bi bi-currency-dollar me-1"></i>Ganancias
+                  <i class="bi bi-currency-dollar me-1"></i>Earnings
                 </button>
               </div>
             </div>
@@ -652,14 +652,14 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <!-- Actividad reciente -->
+          <!-- Recent Activity -->
           <div class="activity-section">
             <div class="activity-header">
               <div class="activity-title">
-                <i class="bi bi-clock-history me-2"></i>Actividad Reciente
+                <i class="bi bi-clock-history me-2"></i>Recent Activity
               </div>
               <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
-                <i class="bi bi-arrow-right me-1"></i>Ver todo
+                <i class="bi bi-arrow-right me-1"></i>View all
               </button>
             </div>
             <div class="activity-list">
@@ -686,14 +686,14 @@ class CaregiverOverview extends HTMLElement {
           </div>
         </div>
 
-        <!-- Sesiones próximas -->
+        <!-- Upcoming Sessions -->
         <div class="sessions-section">
           <div class="sessions-header">
             <div class="sessions-title">
-              <i class="bi bi-calendar-event me-2"></i>Próximas Sesiones
+              <i class="bi bi-calendar-event me-2"></i>Upcoming Sessions
             </div>
             <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
-              <i class="bi bi-calendar-week me-1"></i>Ver calendario
+              <i class="bi bi-calendar-week me-1"></i>View calendar
             </button>
           </div>
           <div class="sessions-list">
@@ -716,7 +716,7 @@ class CaregiverOverview extends HTMLElement {
                   </div>
                 </div>
                 <div class="session-status ${session.status}">
-                  <i class="bi ${session.status === 'confirmado' ? 'bi-check-circle' : 'bi-clock'} me-1"></i>${session.status}
+                  <i class="bi ${session.status === 'confirmed' ? 'bi-check-circle' : 'bi-clock'} me-1"></i>${session.status}
                 </div>
               </div>
             `).join('')}
@@ -749,7 +749,7 @@ class CaregiverOverview extends HTMLElement {
         labels: this.data.weeklyStats.labels,
         datasets: [
           {
-            label: 'Sesiones',
+            label: 'Sessions',
             data: this.data.weeklyStats.sessions,
             borderColor: '#2563eb',
             backgroundColor: 'rgba(37, 99, 235, 0.1)',
@@ -763,7 +763,7 @@ class CaregiverOverview extends HTMLElement {
             pointHoverRadius: 8
           },
           {
-            label: 'Ganancias ($)',
+            label: 'Earnings ($)',
             data: this.data.weeklyStats.earnings,
             borderColor: '#7c3aed',
             backgroundColor: 'rgba(124, 58, 237, 0.1)',
@@ -870,7 +870,7 @@ class CaregiverOverview extends HTMLElement {
     // Actualizar solo las métricas sin re-renderizar todo
     const statCards = this.shadowRoot.querySelectorAll('.stat-card');
     if (statCards.length >= 4) {
-      // Actualizar sesiones activas
+              // Update active sessions
       const activeSessionsCard = statCards[1];
       const activeSessionsValue = activeSessionsCard.querySelector('.stat-value');
       if (activeSessionsValue) {

@@ -9,6 +9,8 @@ class FooterComponent extends HTMLElement {
     }
 
     render() {
+        const isInPages = window.location.pathname.includes('/pages/');
+        const logoSrc = isInPages ? '../assets/Frame - 1.svg' : 'assets/Frame - 1.svg';
         this.shadowRoot.innerHTML = `
             <style>
                 /* Root Variables */
@@ -18,7 +20,7 @@ class FooterComponent extends HTMLElement {
 
                 /* Footer styles - Optimized for seniors */
                 .footer-section {
-                    background: linear-gradient(135deg, #2c3e50, #34495e);
+                    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
                     color: white;
                     padding: 80px 0 0;
                     position: relative;
@@ -32,7 +34,7 @@ class FooterComponent extends HTMLElement {
                     left: 0;
                     right: 0;
                     height: 6px;
-                    background: linear-gradient(90deg, var(--pal-primary), #3498db);
+                    background: linear-gradient(90deg, #0d47a1, #1565c0);
                 }
 
                 .footer-content {
@@ -105,6 +107,27 @@ class FooterComponent extends HTMLElement {
                     height: 3px;
                     background: var(--pal-primary);
                     transition: width 0.3s ease;
+                }
+
+                /* Brand logo badge for higher contrast */
+                .brand-logo-badge {
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    width: auto;
+                    height: auto;
+                    background: transparent;
+                    border: none;
+                    border-radius: 0;
+                    box-shadow: none;
+                    backdrop-filter: none;
+                }
+
+                .brand-logo-badge img {
+                    width: 30px;
+                    height: 30px;
+                    /* Show native SVG colors (no inversion) */
+                    filter: none;
                 }
 
                 .footer-section .footer-links a:hover::before {
@@ -650,7 +673,12 @@ class FooterComponent extends HTMLElement {
                     <div class="footer-grid">
                         <!-- Company Info -->
                         <div class="footer-col">
-                            <h3>Careconnect</h3>
+                            <h3 style="display:flex;align-items:center;gap:4px;">
+                                <span class="brand-logo-badge">
+                                    <img src="${isInPages ? '../assets/Frame-splash.svg' : 'assets/Frame-splash.svg'}" alt="Careconnect Logo"/>
+                                </span>
+                                areconnect
+                            </h3>
                             <p>We connect caregivers with patients, making healthcare accessible and compassionate for everyone. Our platform bridges the gap between those who need care and those who provide it, specially designed for seniors and their families.</p>
                             
                             <div class="social-links">

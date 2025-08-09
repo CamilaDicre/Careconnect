@@ -1,0 +1,302 @@
+/* Splash Screen & Loading Animations for Careconnect */
+
+/* Main splash screen */
+.splash-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #1976d2 0%, #63a4ff 50%, #bbdefb 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999999;
+  font-family: 'Poppins', sans-serif;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.8s ease-out, visibility 0.8s ease-out;
+}
+
+.splash-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.splash-content {
+  text-align: center;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.splash-logo {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 30px;
+  animation: logoEntrance 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) both;
+}
+
+.splash-logo img {
+  width: 100%;
+  height: 100%;
+  filter: brightness(0) invert(1);
+}
+
+.splash-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 20px 0 10px;
+  letter-spacing: 2px;
+  animation: titleSlideIn 1s ease-out 0.3s both;
+}
+
+.splash-subtitle {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin: 0 0 40px;
+  animation: subtitleSlideIn 1s ease-out 0.5s both;
+}
+
+.splash-loader {
+  margin-top: 40px;
+  animation: loaderFadeIn 1s ease-out 0.7s both;
+}
+
+.splash-progress {
+  width: 200px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+}
+
+.splash-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ffffff, #63a4ff);
+  border-radius: 2px;
+  width: 0%;
+  animation: progressBar 2s cubic-bezier(0.23, 1, 0.32, 1) both;
+}
+
+.splash-dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.splash-dot {
+  width: 12px;
+  height: 12px;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: dotPulse 1.4s ease-in-out infinite;
+}
+
+.splash-dot:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.splash-dot:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+/* Background particles */
+.splash-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  animation: particleFloat 5s ease-in-out infinite;
+}
+
+/* Welcome message */
+.welcome-message {
+  position: fixed;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  text-align: center;
+  animation: welcomeFadeIn 1s ease-out 1s both;
+}
+
+/* Animations */
+@keyframes logoEntrance {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+  }
+  50% {
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@keyframes titleSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes subtitleSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateY(0);
+  }
+}
+
+@keyframes loaderFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes progressBar {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes dotPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+
+@keyframes welcomeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(20px);
+  }
+  to {
+    opacity: 0.9;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+/* Loading overlay improvements */
+.loading-overlay-modern {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99998;
+  font-family: 'Poppins', sans-serif;
+}
+
+.loading-content-modern {
+  text-align: center;
+  color: white;
+  padding: 40px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 350px;
+}
+
+.loading-spinner-modern {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-top: 3px solid #1976d2;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+
+.loading-text-modern {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 0 0 10px;
+}
+
+.loading-subtext-modern {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .splash-title {
+    font-size: 2rem;
+  }
+  
+  .splash-subtitle {
+    font-size: 1rem;
+  }
+  
+  .splash-logo {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .splash-progress {
+    width: 160px;
+  }
+  
+  .loading-content-modern {
+    max-width: 300px;
+    margin: 0 20px;
+    padding: 30px;
+  }
+}
+
+@media (max-width: 480px) {
+  .splash-title {
+    font-size: 1.8rem;
+  }
+  
+  .splash-logo {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .splash-progress {
+    width: 140px;
+  }
+  
+  .loading-content-modern {
+    max-width: 280px;
+    padding: 25px;
+  }
+}

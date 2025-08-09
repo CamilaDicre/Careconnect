@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/responsive-transitions.css">
+    <link rel="stylesheet" href="../../css/transitions.css">
     <style>
         :root {
             --primary-color: #2563eb;
@@ -50,10 +52,11 @@
             flex: 1;
             margin-left: 0;
             transition: all 0.4s ease;
-            padding: 24px;
+            padding: 0;
             background: rgba(248, 250, 252, 0.95);
             backdrop-filter: blur(20px);
             min-height: 100vh;
+            position: relative;
         }
         
         .main-content.sidebar-collapsed {
@@ -64,11 +67,20 @@
             background: var(--bg-primary);
             border-radius: 20px;
             box-shadow: var(--shadow-xl);
-            min-height: calc(100vh - 48px);
+            min-height: calc(100vh - 180px);
+            margin-top: 180px;
+            margin-left: 24px;
+            margin-right: 24px;
+            margin-bottom: 24px;
             overflow: hidden;
             backdrop-filter: blur(20px);
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
+            transition: all 0.4s ease;
+        }
+        
+        .main-content.sidebar-collapsed .content-area {
+            margin-left: 114px;
         }
         
         #dashboard-content {
@@ -492,11 +504,17 @@
         
         <!-- Main Content -->
         <div class="main-content" id="mainContent">
+            <!-- Header Component -->
+            <caregiver-header></caregiver-header>
+            
             <div class="content-area">
                 <div id="dashboard-content">
-                    <!-- El contenido se cargará dinámicamente aquí -->
+                    <!-- Content will be loaded dynamically here -->
                 </div>
             </div>
+            
+            <!-- Footer Component -->
+            <caregiver-footer></caregiver-footer>
         </div>
     </div>
 
@@ -505,6 +523,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <script src="../../js/localStorage-utils.js?v=2.0"></script>
     <script src="../sidebar-utils.js"></script>
+    <script src="caregiver-header.js"></script>
     <script src="caregiver-sidebar.js?v=2.5"></script>
     <script src="caregiver-overview.js?v=2.3"></script>
     <script src="caregiver-profile-section.js?v=2.5"></script>
@@ -513,9 +532,10 @@
     <script src="caregiver-documents.js?v=2.2"></script>
     <script src="earnings-statistics.js?v=2.2"></script>
     <script src="caregiver-footer.js?v=2.2"></script>
+    <script src="caregiver-welcome-overlay.js"></script>
     
     <script>
-        // Sistema de notificaciones mejorado
+        // Enhanced notification system
         class NotificationSystem {
             constructor() {
                 this.container = document.getElementById('notificationContainer');
@@ -570,7 +590,7 @@
             }
         }
         
-        // Sistema de loading
+        // Loading system
         class LoadingSystem {
             constructor() {
                 this.overlay = document.getElementById('loadingOverlay');
@@ -587,7 +607,7 @@
             }
         }
         
-        // Función para mostrar modal de autenticación
+        // Function to show authentication modal
         function showAuthModal(message, redirectUrl, countdownSeconds = 7) {
             const modal = document.getElementById('authModal');
             const messageEl = document.getElementById('authMessage');
@@ -614,19 +634,19 @@
             }, 1000);
         }
         
-        // Función de logout con transición elegante
+        // Logout function with elegant transition
         function logout() {
-            // Mostrar notificación de cierre de sesión
+            // Show logout notification
             window.notifications.show('Logging out...', 'info', 2000);
             
-            // Iniciar transición de salida
+            // Start exit transition
             setTimeout(() => {
-                // Agregar clase de transición al body
+                // Add transition class to body
                 document.body.style.transition = 'all 0.8s ease-in-out';
                 document.body.style.transform = 'scale(0.95)';
                 document.body.style.opacity = '0';
                 
-                // Agregar efecto de blur al contenido
+                // Add blur effect to content
                 const dashboardContainer = document.querySelector('.dashboard-container');
                 if (dashboardContainer) {
                     dashboardContainer.style.transition = 'all 0.8s ease-in-out';
@@ -634,19 +654,19 @@
                     dashboardContainer.style.transform = 'scale(0.9)';
                 }
                 
-                // Mostrar overlay de logout
+                // Show logout overlay
                 const logoutOverlay = document.getElementById('logoutOverlay');
                 if (logoutOverlay) {
                     logoutOverlay.classList.add('show');
                 }
                 
-                // Limpiar datos de sesión
+                // Clear session data
                 setTimeout(() => {
                     LocalStorageUtils.removeItem('loggedInUser');
                     LocalStorageUtils.removeItem('userRole');
                     LocalStorageUtils.removeItem('currentUserId');
                     
-                    // Redirigir al login
+                    // Redirect to login
                     setTimeout(() => {
                         window.location.href = '../../pages/login.html';
                     }, 1000);
@@ -655,51 +675,51 @@
             }, 1500);
         }
         
-        // Limpiar cache y forzar recarga de componentes
+        // Clear cache and force component reload
         if (window.performance && window.performance.navigation.type === window.performance.navigation.TYPE_BACK_FORWARD) {
             window.location.reload();
         }
         
-        // Dashboard functionality mejorado
+        // Enhanced dashboard functionality
         document.addEventListener('DOMContentLoaded', function() {
-            // Verificar que LocalStorageUtils esté disponible
+            // Check if LocalStorageUtils is available
             if (typeof LocalStorageUtils === 'undefined') {
-                console.error('LocalStorageUtils no está disponible');
+                console.error('LocalStorageUtils is not available');
                 showAuthModal(
-                    'Error: LocalStorageUtils no está disponible. Por favor, recarga la página.',
+                    'Error: LocalStorageUtils is not available. Please reload the page.',
                     '../../pages/login.html',
                     7
                 );
                 return;
             }
             
-            // Verificar que los custom elements básicos estén disponibles
+            // Check if basic custom elements are available
             const basicElements = ['caregiver-sidebar'];
             const missingBasicElements = basicElements.filter(elementName => {
                 return !customElements.get(elementName);
             });
             
             if (missingBasicElements.length > 0) {
-                console.error('Elementos básicos faltantes:', missingBasicElements);
+                console.error('Missing basic elements:', missingBasicElements);
                 showAuthModal(
-                    'Error: Algunos componentes básicos no están disponibles. Por favor, recarga la página.',
+                    'Error: Some basic components are not available. Please reload the page.',
                     '../../pages/login.html',
                     7
                 );
                 return;
             }
             
-            // Inicializar sistemas
+            // Initialize systems
             window.notifications = new NotificationSystem();
             window.loading = new LoadingSystem();
             
-            // Mostrar loading inicial
+            // Show initial loading
             window.loading.show('Initializing dashboard...');
             
-            // --- Protección de acceso ---
+            // --- Access protection ---
             if (!LocalStorageUtils.isAvailable()) {
                 showAuthModal(
-                    'localStorage no está disponible en tu navegador. Por favor, habilítalo o prueba con un navegador diferente.',
+                    'localStorage is not available in your browser. Please enable it or try a different browser.',
                     '../../pages/login.html',
                     7
                 );
@@ -711,18 +731,18 @@
             const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
             if (!loggedInUser || !user) {
                 showAuthModal(
-                    'Debes estar conectado como cuidador para acceder al dashboard. Por favor, inicia sesión con tu cuenta de cuidador.',
+                    'You must be logged in as a caregiver to access the dashboard. Please log in with your caregiver account.',
                     '../../pages/login.html',
                     7
                 );
                 return;
             }
-            // --- Fin protección de acceso ---
+            // --- End access protection ---
 
-            // Asegurar que el sidebar esté disponible y funcionando
+            // Ensure sidebar is available and working
             let sidebar = document.querySelector('caregiver-sidebar');
             if (!sidebar) {
-                console.log('Creando nuevo sidebar...');
+                console.log('Creating new sidebar...');
                 sidebar = document.createElement('caregiver-sidebar');
                 document.querySelector('.dashboard-container').prepend(sidebar);
             }
@@ -733,6 +753,12 @@
             if (sidebar) {
                 sidebar.addEventListener('sidebarToggle', function(e) {
                     mainContent.classList.toggle('sidebar-collapsed', e.detail.collapsed);
+                    
+                    // Adjust header position based on sidebar state
+                    const header = document.querySelector('caregiver-header');
+                    if (header && header.adjustHeader) {
+                        header.adjustHeader(e.detail.collapsed);
+                    }
                 });
                 
                 // Handle section navigation
@@ -749,33 +775,63 @@
                     }, 500);
                 });
             } else {
-                console.error('Sidebar no encontrado');
+                console.error('Sidebar not found');
             }
             
-            // Simular carga inicial
+            // Handle header events
+            const header = document.querySelector('caregiver-header');
+            if (header) {
+                header.addEventListener('showNotifications', function(e) {
+                    window.notifications.show('Notifications panel (coming soon)', 'info', 2000);
+                });
+                
+                header.addEventListener('showSchedule', function(e) {
+                    window.notifications.show('Schedule panel (coming soon)', 'info', 2000);
+                });
+                
+                header.addEventListener('showEarnings', function(e) {
+                    window.notifications.show('Earnings panel (coming soon)', 'info', 2000);
+                });
+                
+                header.addEventListener('showEmergency', function(e) {
+                    window.notifications.show('Emergency contact (coming soon)', 'warning', 2000);
+                });
+                
+                header.addEventListener('logoutRequested', function(e) {
+                    logout();
+                });
+                
+                // Listen for sidebar toggle events
+                document.addEventListener('sidebarToggle', function(e) {
+                    header.handleSidebarToggle(e);
+                });
+            }
+            
+            // Simulate initial load
             setTimeout(() => {
                 window.loading.hide();
                 window.notifications.show('Dashboard loaded successfully!', 'success', 3000);
             }, 1500);
             
-            // Event listeners para mejor UX
+            // Event listeners for better UX
             document.addEventListener('keydown', function(e) {
-                // Ctrl/Cmd + K para búsqueda rápida
+                // Ctrl/Cmd + K for quick search
                 if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
                     e.preventDefault();
-                    // Aquí se puede implementar búsqueda rápida
+                    // Quick search can be implemented here
                     window.notifications.show('Quick search (coming soon)', 'info', 2000);
                 }
             });
         });
         
-        // Función para verificar que todos los componentes estén disponibles
+        // Function to check if all components are available
         function checkComponentsAvailability() {
             const requiredComponents = [
                 'LocalStorageUtils'
             ];
             
             const requiredCustomElements = [
+                'caregiver-header',
                 'caregiver-sidebar',
                 'caregiver-overview',
                 'caregiver-profile-section',
@@ -783,46 +839,48 @@
                 'medication-management',
                 'caregiver-documents',
                 'earnings-statistics',
-                'caregiver-footer'
+                'caregiver-footer',
+                'caregiver-welcome-overlay'
             ];
             
-            // Verificar componentes normales
+            // Check normal components
             const missingComponents = requiredComponents.filter(component => {
                 return typeof window[component] === 'undefined';
             });
             
-            // Verificar custom elements
+            // Check custom elements
             const missingCustomElements = requiredCustomElements.filter(elementName => {
                 return !customElements.get(elementName);
             });
             
             if (missingComponents.length > 0) {
-                console.error('Componentes faltantes:', missingComponents);
+                console.error('Missing components:', missingComponents);
                 return false;
             }
             
             if (missingCustomElements.length > 0) {
-                console.error('Custom elements faltantes:', missingCustomElements);
+                console.error('Missing custom elements:', missingCustomElements);
                 return false;
             }
             
             return true;
         }
         
-        // Verificar componentes después de un breve delay
+        // Check components after a brief delay
         setTimeout(() => {
             if (!checkComponentsAvailability()) {
-                console.error('Algunos componentes no están disponibles');
+                console.error('Some components are not available');
                 if (window.notifications) {
-                    window.notifications.show('Error: Algunos componentes no están disponibles. Recargando...', 'error', 5000);
+                    window.notifications.show('Error: Some components are not available. Reloading...', 'error', 5000);
                 }
                 setTimeout(() => {
                     window.location.reload();
                 }, 2000);
             } else {
-                // console.log('Todos los componentes están disponibles');
+                // console.log('All components are available');
             }
         }, 2000);
     </script>
+    <script src="../../js/page-transitions.js"></script>
 </body>
 </html> 

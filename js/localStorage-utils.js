@@ -2,6 +2,8 @@
  * Utilidades para manejar localStorage de manera segura
  */
 
+// Prevenir redeclaración
+if (typeof LocalStorageUtils === 'undefined') {
 class LocalStorageUtils {
   
   /**
@@ -210,6 +212,6 @@ class LocalStorageUtils {
     return '';
   }
 }
-
-// Exportar para uso global
-window.LocalStorageUtils = LocalStorageUtils; 
+  // Exportar para uso global
+  window.LocalStorageUtils = LocalStorageUtils;
+} // Cierre del if para prevenir redeclaración 

@@ -1,11 +1,17 @@
 /* Root Variables */
 :root {
     --pal-primary: royalblue;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+    --transition-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    --transition-smooth: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* Font Setting */
 html {
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 * {
@@ -15,7 +21,7 @@ html {
 }
 
 body {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Josefin Sans', sans-serif;
     font-size: 16px;
     line-height: 1.6;
     color: #1f2937;
@@ -24,14 +30,25 @@ body {
     -moz-osx-font-smoothing: grayscale;
     padding-top: 80px;
     overflow-x: hidden;
+    transition: all var(--transition-normal);
 }
 
-/* Typography for Seniors */
+/* Typography for Seniors - Poppins for headings, Josefin Sans for body */
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Poppins', sans-serif !important;
     font-weight: 600;
     line-height: 1.3;
     color: #111827;
+}
+
+/* Body text elements use Josefin Sans */
+p, span, div, a, button, input, textarea, label, li, td, th {
+    font-family: 'Josefin Sans', sans-serif !important;
+}
+
+/* Ensure form elements use Josefin Sans */
+.form-control, .btn, .form-label, .form-text {
+    font-family: 'Josefin Sans', sans-serif !important;
 }
 
 p {

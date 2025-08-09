@@ -1,11 +1,14 @@
-console.log("login.js loaded!");
+// console.log("login.js loaded!");
 
-const users = [
+// Prevenir redeclaración de variables globales
+if (typeof window.careconnectUsers === 'undefined') {
+window.careconnectUsers = [
     { username: "admin", password: "admin123", role: "admin" },
     { username: "user", password: "pass123", role: "patient" },
     { username: "Ameth", password: "password123", role: "admin" },
     { username: "Josue", password: "testpass456", role: "caregiver" },
   ];
+}
   
   document.addEventListener("DOMContentLoaded", () => {
     // Verificar y restaurar admin Ameth al cargar la página
@@ -229,7 +232,8 @@ const users = [
   }
   
   function getDefaultUsers() {
-    const defaultUsers = [
+    // Usar los usuarios definidos globalmente para evitar redeclaración
+    const defaultUsers = window.careconnectUsers || [
       { username: "admin", password: "admin123", role: "admin", email: "admin@careconnect.com", id: "admin1" },
       { username: "usuario", password: "pass123", role: "paciente", email: "usuario@careconnect.com", id: "user1" },
       { username: "Josue", password: "testpass456", role: "cuidador", email: "josue@careconnect.com", id: "josue1" },
@@ -266,7 +270,7 @@ const users = [
     if (!amethExists) {
       const amethAdmin = createPermanentAdminAmeth();
       users.push(amethAdmin);
-      console.log('✅ Admin permanente Ameth creado/restaurado');
+      // console.log('✅ Admin permanente Ameth creado/restaurado');
     }
     
     return users;
@@ -279,10 +283,10 @@ const users = [
       const amethExists = users.find(u => u.username === "Ameth" && u.isPermanent);
       
       if (!amethExists) {
-        console.log('🔄 Restaurando admin permanente Ameth...');
+        // console.log('🔄 Restaurando admin permanente Ameth...');
         const usersWithAmeth = ensureAmethAdmin(users);
         saveUsers(usersWithAmeth);
-        console.log('✅ Admin Ameth restaurado exitosamente');
+        // console.log('✅ Admin Ameth restaurado exitosamente');
         return true;
       }
       

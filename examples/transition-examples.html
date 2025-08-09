@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careconnect - Transition Examples</title>
+    
+    <!-- CSS Links -->
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive-transitions.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+    
+    <!-- Bootstrap Links -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container py-5">
+        <h1 class="text-center mb-5 fade-in">Transition Examples</h1>
+        
+        <!-- Page Transition Example -->
+        <section class="mb-5">
+            <h2 class="slide-in-left">Page Transitions</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card hover-lift">
+                        <div class="card-body">
+                            <h5 class="card-title">Smooth Page Navigation</h5>
+                            <p class="card-text">Click the button below to see smooth page transitions in action.</p>
+                            <button class="btn btn-primary" onclick="showPageTransition()">Show Transition</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card hover-lift">
+                        <div class="card-body">
+                            <h5 class="card-title">Logout Animation</h5>
+                            <p class="card-text">Experience the beautiful logout farewell message.</p>
+                            <button class="btn btn-warning" onclick="showLogoutTransition()">Show Logout</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Responsive Design Examples -->
+        <section class="mb-5">
+            <h2 class="slide-in-right">Responsive Design</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card hover-lift">
+                        <div class="card-body text-center">
+                            <i class="bi bi-phone display-4 text-primary mb-3"></i>
+                            <h5>Mobile Optimized</h5>
+                            <p>Touch-friendly interface with responsive typography</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card hover-lift">
+                        <div class="card-body text-center">
+                            <i class="bi bi-tablet display-4 text-primary mb-3"></i>
+                            <h5>Tablet Ready</h5>
+                            <p>Perfect layout for tablet devices</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card hover-lift">
+                        <div class="card-body text-center">
+                            <i class="bi bi-laptop display-4 text-primary mb-3"></i>
+                            <h5>Desktop Enhanced</h5>
+                            <p>Full-featured experience on desktop</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Animation Classes -->
+        <section class="mb-5">
+            <h2 class="fade-in">Animation Classes</h2>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <div class="card hover-lift fade-in">
+                        <div class="card-body text-center">
+                            <h6>.fade-in</h6>
+                            <p class="small">Fade in animation</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card hover-lift slide-in-left">
+                        <div class="card-body text-center">
+                            <h6>.slide-in-left</h6>
+                            <p class="small">Slide from left</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card hover-lift slide-in-right">
+                        <div class="card-body text-center">
+                            <h6>.slide-in-right</h6>
+                            <p class="small">Slide from right</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <div class="card hover-lift">
+                        <div class="card-body text-center">
+                            <h6>.hover-lift</h6>
+                            <p class="small">Lift on hover</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Responsive Typography -->
+        <section class="mb-5">
+            <h2 class="fade-in">Responsive Typography</h2>
+            <div class="card">
+                <div class="card-body">
+                    <h1 class="display-1">Large Heading</h1>
+                    <h2 class="display-4">Medium Heading</h2>
+                    <h3 class="h3">Small Heading</h3>
+                    <p class="lead">This text uses responsive sizing with clamp() for optimal readability on all devices.</p>
+                    <p>Regular paragraph text that scales appropriately across different screen sizes.</p>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Interactive Elements -->
+        <section class="mb-5">
+            <h2 class="slide-in-left">Interactive Elements</h2>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <button class="btn btn-primary btn-lg w-100 hover-lift">Primary Button</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <button class="btn btn-outline-primary btn-lg w-100 hover-lift">Outline Button</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <button class="btn btn-success btn-lg w-100 hover-lift">Success Button</button>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <button class="btn btn-warning btn-lg w-100 hover-lift">Warning Button</button>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="../js/page-transitions.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Example functions for transitions
+        function showPageTransition() {
+            const pageTransitions = new PageTransitions();
+            pageTransitions.showTransitionOverlay();
+            
+            setTimeout(() => {
+                pageTransitions.hideTransitionOverlay();
+            }, 2000);
+        }
+        
+        function showLogoutTransition() {
+            const pageTransitions = new PageTransitions();
+            pageTransitions.showLogoutTransition();
+        }
+        
+        // Add animation classes to elements as they come into view
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                    }
+                });
+            });
+            
+            document.querySelectorAll('section').forEach(section => {
+                observer.observe(section);
+            });
+        });
+    </script>
+</body>
+</html> 

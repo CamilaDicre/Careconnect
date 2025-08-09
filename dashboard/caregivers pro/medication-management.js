@@ -65,6 +65,7 @@ class MedicationManagement extends HTMLElement {
     const medications = this.getMedications();
     this.shadowRoot.innerHTML = `
       <style>
+        @import url('https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css');
         * {
           font-family: 'Poppins', sans-serif;
           box-sizing: border-box;
