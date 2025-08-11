@@ -400,7 +400,7 @@ class CaregiverSearch extends HTMLElement {
       <section>
         <div class="search-container">
           <div class="search-header">
-            <h1>🔍 Buscar Cuidadores</h1>
+            <h1>🔍 Find caregivers </h1>
             <p>Encuentra cuidadores profesionales registrados en nuestra plataforma</p>
           </div>
           
