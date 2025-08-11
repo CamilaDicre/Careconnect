@@ -4,6 +4,7 @@ class DashboardHeader extends HTMLElement {
     this.attachShadow({ mode: 'open' });
     this.notifications = [];
     this.currentTime = new Date();
+    this.isCollapsed = false;
   }
 
   connectedCallback() {
@@ -51,6 +52,111 @@ class DashboardHeader extends HTMLElement {
         .header.sidebar-expanded {
           left: 350px;
           right: 0;
+        }
+        
+        /* Mobile responsive styles */
+        @media (max-width: 768px) {
+          .header {
+            left: 0 !important;
+            right: 0 !important;
+            min-height: 120px;
+            padding: 20px 25px;
+          }
+          
+          .header.sidebar-collapsed,
+          .header.sidebar-expanded {
+            left: 0 !important;
+            right: 0 !important;
+          }
+          
+          .header-content {
+            flex-direction: column;
+            gap: 15px;
+            align-items: flex-start;
+          }
+          
+          .header-left {
+            gap: 15px;
+          }
+          
+          .user-info {
+            gap: 12px;
+          }
+          
+          .user-photo {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+          }
+          
+          .user-details h4 {
+            font-size: 16px;
+          }
+          
+          .user-details p {
+            font-size: 13px;
+          }
+          
+          .header-right {
+            gap: 10px;
+          }
+          
+          .header-btn {
+            width: 40px;
+            height: 40px;
+            font-size: 16px;
+          }
+          
+          .time-display {
+            font-size: 14px;
+          }
+          
+          .date-display {
+            font-size: 12px;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .header {
+            min-height: 100px;
+            padding: 15px 20px;
+          }
+          
+          .header-content {
+            gap: 10px;
+          }
+          
+          .header-left {
+            gap: 10px;
+          }
+          
+          .user-photo {
+            width: 45px;
+            height: 45px;
+            font-size: 18px;
+          }
+          
+          .user-details h4 {
+            font-size: 14px;
+          }
+          
+          .user-details p {
+            font-size: 12px;
+          }
+          
+          .header-btn {
+            width: 35px;
+            height: 35px;
+            font-size: 14px;
+          }
+          
+          .time-display {
+            font-size: 12px;
+          }
+          
+          .date-display {
+            font-size: 11px;
+          }
         }
 
         .header::before {
@@ -357,6 +463,11 @@ class DashboardHeader extends HTMLElement {
     // Ajustar header inicialmente
     this.adjustHeader(false); // Por defecto expandido
 
+    // Handle window resize for responsive behavior
+    window.addEventListener('resize', () => {
+      this.adjustHeader(this.isCollapsed || false);
+    });
+
     const notificationBtn = this.shadowRoot.querySelector('#notificationBtn');
     const gamesBtn = this.shadowRoot.querySelector('#gamesBtn');
     const helpBtn = this.shadowRoot.querySelector('#helpBtn');
@@ -381,13 +492,21 @@ class DashboardHeader extends HTMLElement {
 
   adjustHeader(collapsed) {
     const header = this.shadowRoot.querySelector('.header');
+    this.isCollapsed = collapsed;
+    
     if (header) {
-      if (collapsed) {
-        header.classList.remove('sidebar-expanded');
-        header.classList.add('sidebar-collapsed');
+      // On mobile, header should always be full width
+      if (window.innerWidth <= 768) {
+        header.classList.remove('sidebar-expanded', 'sidebar-collapsed');
       } else {
-        header.classList.remove('sidebar-collapsed');
-        header.classList.add('sidebar-expanded');
+        // Desktop behavior
+        if (collapsed) {
+          header.classList.remove('sidebar-expanded');
+          header.classList.add('sidebar-collapsed');
+        } else {
+          header.classList.remove('sidebar-collapsed');
+          header.classList.add('sidebar-expanded');
+        }
       }
     }
   }

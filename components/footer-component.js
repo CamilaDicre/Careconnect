@@ -352,10 +352,14 @@ class FooterComponent extends HTMLElement {
 
                     .footer-content {
                         padding: 0 20px;
+                        max-width: 100%;
+                        overflow: hidden;
                     }
 
                     .copyright-bar .container {
                         padding: 0 20px;
+                        max-width: 100%;
+                        overflow: hidden;
                     }
 
                     .footer-grid {
@@ -370,43 +374,51 @@ class FooterComponent extends HTMLElement {
                     .footer-section h3 {
                         font-size: 1.6rem;
                         margin-bottom: 20px;
+                        word-wrap: break-word;
                     }
 
                     .footer-section p {
                         font-size: 1.05rem;
                         line-height: 1.8;
+                        word-wrap: break-word;
                     }
 
                     .footer-section .footer-links a {
                         font-size: 1.05rem;
                         padding: 10px 0;
+                        word-wrap: break-word;
                     }
 
                     .footer-section .social-links {
                         justify-content: center;
                         gap: 25px;
+                        flex-wrap: wrap;
                     }
 
                     .footer-section .social-links a {
                         width: 60px;
                         height: 60px;
                         font-size: 1.6rem;
+                        flex-shrink: 0;
                     }
 
                     .footer-section .contact-info .contact-item {
                         font-size: 1.05rem;
                         margin-bottom: 18px;
+                        word-wrap: break-word;
                     }
 
                     .footer-section .contact-info .contact-item i {
                         font-size: 1.4rem;
                         width: 30px;
+                        flex-shrink: 0;
                     }
 
                     .footer-section .newsletter-form .newsletter-input {
                         padding: 14px 50px 14px 18px;
                         font-size: 1rem;
                         height: 48px;
+                        max-width: 100%;
                     }
 
                     .newsletter-send-btn {
@@ -424,17 +436,27 @@ class FooterComponent extends HTMLElement {
                     .legal-links {
                         justify-content: center;
                         gap: 20px;
+                        flex-wrap: wrap;
                     }
 
                     .legal-links a {
                         font-size: 1rem;
                         padding: 8px 0;
+                        white-space: nowrap;
                     }
                 }
 
                 @media (max-width: 576px) {
                     .footer-section {
                         padding: 40px 0 0;
+                    }
+
+                    .footer-content {
+                        padding: 0 15px;
+                    }
+
+                    .copyright-bar .container {
+                        padding: 0 15px;
                     }
 
                     .footer-grid {
@@ -444,22 +466,26 @@ class FooterComponent extends HTMLElement {
                     .footer-section h3 {
                         font-size: 1.5rem;
                         margin-bottom: 18px;
+                        word-wrap: break-word;
                     }
 
                     .footer-section p {
                         font-size: 1rem;
                         line-height: 1.7;
+                        word-wrap: break-word;
                     }
 
                     .footer-section .footer-links a {
                         font-size: 1rem;
                         padding: 12px 0;
+                        word-wrap: break-word;
                     }
 
                     .footer-section .newsletter-form .newsletter-input {
                         padding: 12px 50px 12px 16px;
                         font-size: 0.95rem;
                         height: 44px;
+                        max-width: 100%;
                     }
 
                     .newsletter-send-btn {
@@ -468,20 +494,27 @@ class FooterComponent extends HTMLElement {
                         font-size: 0.9rem;
                     }
 
+                    .footer-section .social-links {
+                        gap: 20px;
+                    }
+
                     .footer-section .social-links a {
                         width: 50px;
                         height: 50px;
                         font-size: 1.3rem;
+                        flex-shrink: 0;
                     }
 
                     .footer-section .contact-info .contact-item {
                         font-size: 1rem;
                         margin-bottom: 16px;
+                        word-wrap: break-word;
                     }
 
                     .footer-section .contact-info .contact-item i {
                         font-size: 1.2rem;
                         width: 25px;
+                        flex-shrink: 0;
                     }
 
                     .copyright-bar {
@@ -490,15 +523,59 @@ class FooterComponent extends HTMLElement {
 
                     .copyright-bar p {
                         font-size: 0.95rem;
+                        word-wrap: break-word;
                     }
 
                     .legal-links {
                         gap: 15px;
+                        flex-wrap: wrap;
                     }
 
                     .legal-links a {
                         font-size: 0.9rem;
                         padding: 6px 0;
+                        white-space: nowrap;
+                    }
+                }
+                
+                /* Extra small screens (up to 480px) */
+                @media (max-width: 480px) {
+                    .footer-content {
+                        padding: 0 10px;
+                    }
+                    
+                    .copyright-bar .container {
+                        padding: 0 10px;
+                    }
+                    
+                    .footer-section h3 {
+                        font-size: 1.4rem;
+                    }
+                    
+                    .footer-section p {
+                        font-size: 0.95rem;
+                    }
+                    
+                    .footer-section .footer-links a {
+                        font-size: 0.95rem;
+                    }
+                    
+                    .footer-section .social-links {
+                        gap: 15px;
+                    }
+                    
+                    .footer-section .social-links a {
+                        width: 45px;
+                        height: 45px;
+                        font-size: 1.2rem;
+                    }
+                    
+                    .legal-links {
+                        gap: 10px;
+                    }
+                    
+                    .legal-links a {
+                        font-size: 0.85rem;
                     }
                 }
 

@@ -1,0 +1,452 @@
+/* ===== DASHBOARD RESPONSIVE DESIGN ===== */
+
+/* General responsive adjustments for dashboard content */
+@media (max-width: 768px) {
+  /* Dashboard content area */
+  #dashboard-content {
+    margin-left: 0 !important;
+    margin-top: 120px !important;
+    padding: 15px;
+    width: 100%;
+    min-height: calc(100vh - 120px);
+    overflow-x: hidden;
+  }
+  
+  #dashboard-content.sidebar-collapsed {
+    margin-left: 0 !important;
+  }
+  
+  /* Dashboard sections */
+  .dashboard-section {
+    padding: 20px 15px;
+    margin-bottom: 20px;
+  }
+  
+  .section-header {
+    margin-bottom: 20px;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+  }
+  
+  .section-subtitle {
+    font-size: 1rem;
+  }
+  
+  /* Cards and containers */
+  .card {
+    margin-bottom: 15px;
+    border-radius: 12px;
+  }
+  
+  .card-body {
+    padding: 20px 15px;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+    margin-bottom: 10px;
+  }
+  
+  .card-text {
+    font-size: 0.95rem;
+    line-height: 1.5;
+  }
+  
+  /* Grid layouts */
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  
+  .col-md-6,
+  .col-lg-4,
+  .col-lg-6,
+  .col-xl-4,
+  .col-xl-6 {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+  
+  .btn-lg {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+  
+  .btn-sm {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  
+  /* Forms */
+  .form-control {
+    padding: 12px 15px;
+    font-size: 0.95rem;
+    border-radius: 8px;
+  }
+  
+  .form-label {
+    font-size: 0.95rem;
+    margin-bottom: 8px;
+  }
+  
+  /* Tables */
+  .table {
+    font-size: 0.9rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 12px 8px;
+  }
+  
+  /* Modals */
+  .modal-dialog {
+    margin: 10px;
+    max-width: calc(100% - 20px);
+  }
+  
+  .modal-content {
+    border-radius: 12px;
+  }
+  
+  .modal-header {
+    padding: 20px 15px;
+  }
+  
+  .modal-body {
+    padding: 20px 15px;
+  }
+  
+  .modal-footer {
+    padding: 15px;
+  }
+  
+  /* Charts and graphs */
+  .chart-container {
+    height: 300px;
+    margin-bottom: 20px;
+  }
+  
+  /* Navigation and breadcrumbs */
+  .breadcrumb {
+    padding: 10px 0;
+    font-size: 0.9rem;
+  }
+  
+  /* Alerts and notifications */
+  .alert {
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+  }
+  
+  /* Progress bars */
+  .progress {
+    height: 12px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+  }
+  
+  /* Badges */
+  .badge {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+  }
+  
+  /* Lists */
+  .list-group-item {
+    padding: 15px;
+    font-size: 0.95rem;
+  }
+  
+  /* Utilities */
+  .text-center-mobile {
+    text-align: center !important;
+  }
+  
+  .d-none-mobile {
+    display: none !important;
+  }
+  
+  .d-block-mobile {
+    display: block !important;
+  }
+  
+  .w-100-mobile {
+    width: 100% !important;
+  }
+  
+  .mb-3-mobile {
+    margin-bottom: 1rem !important;
+  }
+  
+  .mt-3-mobile {
+    margin-top: 1rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Dashboard content area */
+  #dashboard-content {
+    margin-top: 100px !important;
+    padding: 10px;
+    min-height: calc(100vh - 100px);
+  }
+  
+  /* Dashboard sections */
+  .dashboard-section {
+    padding: 15px 10px;
+    margin-bottom: 15px;
+  }
+  
+  .section-title {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+  }
+  
+  .section-subtitle {
+    font-size: 0.9rem;
+  }
+  
+  /* Cards and containers */
+  .card-body {
+    padding: 15px 10px;
+  }
+  
+  .card-title {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+  }
+  
+  .card-text {
+    font-size: 0.9rem;
+  }
+  
+  /* Grid layouts */
+  .row {
+    margin-left: -5px;
+    margin-right: -5px;
+  }
+  
+  .col-md-6,
+  .col-lg-4,
+  .col-lg-6,
+  .col-xl-4,
+  .col-xl-6 {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+  
+  /* Buttons */
+  .btn {
+    padding: 8px 16px;
+    font-size: 0.9rem;
+  }
+  
+  .btn-lg {
+    padding: 10px 20px;
+    font-size: 0.95rem;
+  }
+  
+  /* Forms */
+  .form-control {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+  
+  .form-label {
+    font-size: 0.9rem;
+    margin-bottom: 6px;
+  }
+  
+  /* Tables */
+  .table {
+    font-size: 0.85rem;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px 6px;
+  }
+  
+  /* Modals */
+  .modal-dialog {
+    margin: 5px;
+    max-width: calc(100% - 10px);
+  }
+  
+  .modal-header {
+    padding: 15px 10px;
+  }
+  
+  .modal-body {
+    padding: 15px 10px;
+  }
+  
+  .modal-footer {
+    padding: 10px;
+  }
+  
+  /* Charts and graphs */
+  .chart-container {
+    height: 250px;
+    margin-bottom: 15px;
+  }
+  
+  /* Alerts and notifications */
+  .alert {
+    padding: 12px;
+    margin-bottom: 12px;
+    font-size: 0.9rem;
+  }
+  
+  /* Progress bars */
+  .progress {
+    height: 10px;
+    margin-bottom: 12px;
+  }
+  
+  /* Lists */
+  .list-group-item {
+    padding: 12px;
+    font-size: 0.9rem;
+  }
+}
+
+/* ===== TABLET SPECIFIC STYLES ===== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  #dashboard-content {
+    margin-left: 90px !important;
+    margin-top: 180px !important;
+    padding: 20px;
+  }
+  
+  #dashboard-content.sidebar-collapsed {
+    margin-left: 90px !important;
+  }
+  
+  .dashboard-section {
+    padding: 25px 20px;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+  }
+  
+  .card-body {
+    padding: 25px 20px;
+  }
+  
+  .btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+  }
+}
+
+/* ===== LARGE TABLET STYLES ===== */
+@media (min-width: 1025px) and (max-width: 1200px) {
+  #dashboard-content {
+    margin-left: 350px !important;
+    margin-top: 180px !important;
+    padding: 25px;
+  }
+  
+  #dashboard-content.sidebar-collapsed {
+    margin-left: 90px !important;
+  }
+}
+
+/* ===== DESKTOP STYLES ===== */
+@media (min-width: 1201px) {
+  #dashboard-content {
+    margin-left: 350px !important;
+    margin-top: 180px !important;
+    padding: 30px;
+  }
+  
+  #dashboard-content.sidebar-collapsed {
+    margin-left: 90px !important;
+  }
+}
+
+/* ===== PRINT STYLES ===== */
+@media print {
+  .mobile-hamburger,
+  .mobile-overlay,
+  .sidebar {
+    display: none !important;
+  }
+  
+  #dashboard-content {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  .card {
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+  }
+}
+
+/* ===== ACCESSIBILITY IMPROVEMENTS ===== */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ===== HIGH CONTRAST MODE ===== */
+@media (prefers-contrast: high) {
+  .card {
+    border: 2px solid #000 !important;
+  }
+  
+  .btn {
+    border: 2px solid currentColor !important;
+  }
+  
+  .form-control {
+    border: 2px solid #000 !important;
+  }
+}
+
+/* ===== DARK MODE SUPPORT ===== */
+@media (prefers-color-scheme: dark) {
+  .dashboard-page {
+    background: #1a1a1a;
+    color: #ffffff;
+  }
+  
+  .card {
+    background: #2d2d2d;
+    border-color: #404040;
+  }
+  
+  .form-control {
+    background: #2d2d2d;
+    border-color: #404040;
+    color: #ffffff;
+  }
+  
+  .table {
+    color: #ffffff;
+  }
+  
+  .table th,
+  .table td {
+    border-color: #404040;
+  }
+}

@@ -70,10 +70,223 @@ p {
     overflow: hidden;
 }
 
+/* Responsive adjustments for hero section */
+@media (max-width: 768px) {
+    .hero-section {
+        background-attachment: scroll;
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+    
+    .hero-section .electronics img:first-child,
+    .hero-section .hero-tablet {
+        position: relative !important;
+        margin-left: 0 !important;
+        width: 200px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+    
+    .hero-section .electronics img:last-child,
+    .hero-section .hero-phone {
+        position: absolute !important;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        width: 140px;
+        height: auto;
+        right: 10%;
+        top: 10%;
+    }
+}
+
 .hero-section h1 {
     font-size: 5rem;
     line-height: 1.2;
     font-family: 'Poppins';
+}
+
+/* Responsive hero text */
+@media (max-width: 768px) {
+    .hero-section h1 {
+        font-size: 3rem;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-section .text-primary {
+        font-size: 1.3rem !important;
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+    
+    .hero-section .btn {
+        font-size: 1.1rem !important;
+        padding: 0.75rem 2rem !important;
+        margin: 0 auto;
+        display: block;
+        width: fit-content;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section h1 {
+        font-size: 2.5rem;
+    }
+    
+    .hero-section .text-primary {
+        font-size: 1.1rem !important;
+    }
+    
+    .hero-section .btn {
+        font-size: 1rem !important;
+        padding: 0.6rem 1.5rem !important;
+    }
+    
+    .hero-section .electronics img:first-child,
+    .hero-section .hero-tablet {
+        width: 150px;
+    }
+    
+    .hero-section .electronics img:last-child,
+    .hero-section .hero-phone {
+        width: 100px;
+        right: 5%;
+        top: 5%;
+    }
+}
+
+/* Tablet styles */
+@media (min-width: 481px) and (max-width: 768px) {
+    .hero-section .electronics img:first-child,
+    .hero-section .hero-tablet {
+        width: 250px;
+    }
+    
+    .hero-section .electronics img:last-child,
+    .hero-section .hero-phone {
+        width: 180px;
+        right: 15%;
+        top: 15%;
+    }
+}
+
+/* Medium tablet styles */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .hero-section .electronics img:first-child,
+    .hero-section .hero-tablet {
+        width: 320px;
+    }
+    
+    .hero-section .electronics img:last-child,
+    .hero-section .hero-phone {
+        width: 220px;
+    }
+}
+
+/* Medium Desktop - Stack columns to prevent overflow (900px to 1200px) */
+@media (min-width: 900px) and (max-width: 1200px) {
+    .hero-section .row {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    
+    .hero-section .col-xl-8,
+    .hero-section .col-lg-8 {
+        margin-left: 0 !important;
+        margin-bottom: 2rem;
+        width: 100% !important;
+    }
+    
+    .hero-section .col-xl-4,
+    .hero-section .col-lg-4 {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+    
+    .hero-section h1 {
+        text-align: center !important;
+        font-size: 4rem !important;
+    }
+    
+    .hero-section .text-primary {
+        text-align: center !important;
+        font-size: 1.6rem !important;
+    }
+    
+    .hero-section .btn {
+        margin: 0 auto !important;
+        display: block !important;
+        width: fit-content !important;
+    }
+    
+    .hero-section .electronics {
+        justify-content: center;
+        height: 400px;
+    }
+    
+    .hero-section .electronics img:first-child,
+    .hero-section .hero-tablet {
+        position: relative;
+        left: auto;
+        transform: none;
+        width: 320px;
+    }
+    
+    .hero-section .electronics img:last-child,
+    .hero-section .hero-phone {
+        position: absolute;
+        right: 15%;
+        top: 15%;
+        width: 220px;
+    }
+}
+
+/* Large Desktop layout - ensure original design is maintained (1201px and up) */
+@media (min-width: 1201px) {
+    .hero-section h1 {
+        text-align: left !important;
+        font-size: 5rem !important;
+    }
+    .hero-section .text-primary {
+        text-align: left !important;
+        font-size: 1.7rem !important;
+    }
+    .hero-section .btn {
+        margin: 0 !important;
+        display: inline-block !important;
+        width: auto !important;
+    }
+    .hero-section .row {
+        align-items: center;
+        flex-direction: row !important;
+    }
+    .hero-section .col-xl-8,
+    .hero-section .col-lg-8 {
+        margin-left: -100px !important;
+    }
+    .hero-section .col-xl-4,
+    .hero-section .col-lg-4 {
+        margin-left: -200px !important;
+    }
+    .hero-section .electronics {
+        justify-content: flex-end;
+        margin-top: 0;
+    }
+    .hero-section .electronics img:first-child,
+    .hero-section .hero-tablet {
+        position: relative;
+        left: auto;
+        transform: none;
+        width: 400px;
+    }
+    .hero-section .electronics img:last-child,
+    .hero-section .hero-phone {
+        position: absolute;
+        right: 10%;
+        top: 10%;
+        width: 280px;
+    }
 }
 
 .hero-section .text-primary {
@@ -106,15 +319,23 @@ p {
     transition: all 0.25s;
 }
 
-.hero-section .electronics img:first-child {
+.hero-section .electronics img:first-child,
+.hero-section .hero-tablet {
     position: absolute;
     margin-left: 150px;
+    width: 400px;
+    height: 600px;
+    object-fit: contain;
 }
 
-.hero-section .electronics img:last-child {
+.hero-section .electronics img:last-child,
+.hero-section .hero-phone {
     position: absolute;
     margin-right: 100px;
     margin-top: 80px;
+    width: 280px;
+    height: 450px;
+    object-fit: contain;
 }
 
 .hero-section .electronics img:hover {
@@ -172,24 +393,25 @@ p {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
     background-color: white;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     border-radius: 10px;
     transition: all 0.25s;
-}
-
-.reason-container h2 {
-    color: var(--pal-primary);
-    font-family: 'Poppins';
-    font-weight: bold;
+    text-align: center;
 }
 
 .reason-container:hover {
     transform: translateY(-10px);
     background-color: var(--pal-primary);
-    & h2 {
-        color: white;
-    }
+}
+
+.reason-container:hover .service-feature-title {
+    color: white;
+}
+
+.reason-container:hover .service-feature-description {
+    color: rgba(255, 255, 255, 0.9);
 }
 
 .reasons-section .reasons-heading-container {
@@ -1013,9 +1235,132 @@ body.login-bg {
     }
 }
 
+/* ===== ESTANDARIZACIÓN DE TÍTULOS Y CONTENIDO ===== */
+
+/* Títulos de Sección (Principales) */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    color: var(--pal-primary);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+/* Títulos de Subsección */
+.subsection-title {
+    font-size: 2rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: #2d4b6e;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+/* Títulos de Características/Features */
+.service-feature-title {
+    font-size: 1.4rem;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    color: #2d4b6e;
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+}
+
+/* Descripciones de Características */
+.service-feature-description {
+    font-size: 1rem;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    color: #6c757d;
+    line-height: 1.6;
+    margin-bottom: 0;
+}
+
+/* Contenido de Párrafo Regular */
+.content-text {
+    font-size: 1.1rem;
+    font-weight: 400;
+    font-family: 'Inter', sans-serif;
+    color: #495057;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+}
+
+/* ===== RESPONSIVE DESIGN PARA MÓVILES ===== */
+
+@media (max-width: 768px) {
+    /* Títulos de Sección en móviles */
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    /* Títulos de Subsección en móviles */
+    .subsection-title {
+        font-size: 1.6rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    /* Títulos de Características en móviles */
+    .service-feature-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    /* Descripciones en móviles */
+    .service-feature-description {
+        font-size: 0.95rem;
+        line-height: 1.5;
+    }
+    
+    /* Contenido de texto en móviles */
+    .content-text {
+        font-size: 1rem;
+        line-height: 1.6;
+    }
+    
+    /* Reason containers en móviles */
+    .reason-container {
+        width: 320px;
+        padding: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Títulos de Sección en móviles pequeños */
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    /* Títulos de Subsección en móviles pequeños */
+    .subsection-title {
+        font-size: 1.4rem;
+    }
+    
+    /* Títulos de Características en móviles pequeños */
+    .service-feature-title {
+        font-size: 1.1rem;
+    }
+    
+    /* Descripciones en móviles pequeños */
+    .service-feature-description {
+        font-size: 0.9rem;
+    }
+    
+    /* Reason containers en móviles pequeños */
+    .reason-container {
+        width: 280px;
+        padding: 15px;
+    }
+}
+
+/* ===== MANTENER COMPATIBILIDAD ===== */
 .service-title-lg {
-  font-size: 2rem;
-  font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: #2d4b6e;
 }
 
 /* Careers background */

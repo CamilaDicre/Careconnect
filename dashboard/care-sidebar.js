@@ -221,6 +221,55 @@ class CareSidebar extends HTMLElement {
           justify-content: center;
         }
         
+        /* Mobile hamburger button */
+        .mobile-hamburger {
+          display: none;
+          position: fixed;
+          top: 20px;
+          left: 20px;
+          width: 50px;
+          height: 50px;
+          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          border: none;
+          border-radius: 12px;
+          color: white;
+          font-size: 24px;
+          cursor: pointer;
+          z-index: 1001;
+          box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+          transition: all 0.3s ease;
+          align-items: center;
+          justify-content: center;
+        }
+        
+        .mobile-hamburger:hover {
+          transform: scale(1.05);
+          box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4);
+        }
+        
+        .mobile-hamburger.active {
+          background: linear-gradient(135deg, #ff4757 0%, #ff3742 100%);
+        }
+        
+        /* Mobile overlay */
+        .mobile-overlay {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.5);
+          backdrop-filter: blur(5px);
+          z-index: 999;
+          opacity: 0;
+          transition: opacity 0.3s ease;
+        }
+        
+        .mobile-overlay.show {
+          opacity: 1;
+        }
+        
         .logo-section {
           padding: 20px 25px;
           background: #f8f9fa;
@@ -397,10 +446,16 @@ class CareSidebar extends HTMLElement {
           border-left-color: #ff3742;
         }
         
+        /* Mobile responsive styles */
         @media (max-width: 768px) {
+          .mobile-hamburger {
+            display: flex;
+          }
+          
           nav {
             width: 100vw;
             transform: translateX(-100%);
+            transition: transform 0.4s ease;
           }
           
           nav.show-mobile {
@@ -412,15 +467,17 @@ class CareSidebar extends HTMLElement {
             transform: translateX(-100%);
           }
           
-          #dashboard-content {
-            margin-left: 0 !important;
+          nav.minimized.show-mobile {
+            transform: translateX(0);
           }
-        }
-        
-        @media (max-width: 480px) {
+          
+          .mobile-overlay {
+            display: block;
+          }
+          
           .sidebar-header {
-            padding: 30px 25px;
-            min-height: 120px;
+            padding: 20px 25px;
+            min-height: 100px;
           }
           
           .user-photo {
@@ -428,12 +485,79 @@ class CareSidebar extends HTMLElement {
             height: 60px;
           }
           
+          .user-details h4 {
+            font-size: 18px;
+          }
+          
+          .user-details p {
+            font-size: 14px;
+          }
+          
           .sidebar-btn {
-            padding: 20px 30px;
-            font-size: 17px;
+            padding: 18px 25px;
+            font-size: 16px;
+          }
+          
+          .sidebar-btn .sidebar-icon {
+            width: 20px !important;
+            height: 20px !important;
+          }
+        }
+        
+        @media (max-width: 480px) {
+          .mobile-hamburger {
+            top: 15px;
+            left: 15px;
+            width: 45px;
+            height: 45px;
+            font-size: 20px;
+          }
+          
+          .sidebar-header {
+            padding: 15px 20px;
+            min-height: 90px;
+          }
+          
+          .user-photo {
+            width: 50px;
+            height: 50px;
+          }
+          
+          .user-details h4 {
+            font-size: 16px;
+          }
+          
+          .user-details p {
+            font-size: 13px;
+          }
+          
+          .sidebar-btn {
+            padding: 15px 20px;
+            font-size: 15px;
+          }
+          
+          .logo-section {
+            padding: 15px 20px;
+          }
+          
+          .logo-text {
+            font-size: 18px;
+          }
+          
+          .logo-icon {
+            width: 40px;
+            height: 40px;
           }
         }
       </style>
+      
+      <!-- Mobile hamburger button -->
+      <button class="mobile-hamburger" id="mobile-hamburger">
+        <i class="bi bi-list"></i>
+      </button>
+      
+      <!-- Mobile overlay -->
+      <div class="mobile-overlay" id="mobile-overlay"></div>
       
       <nav class="${navClass}">
         <!-- Logo section -->
@@ -546,16 +670,53 @@ class CareSidebar extends HTMLElement {
         menu.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         this.showSection(btn.dataset.section);
+        
+        // Close mobile menu after selection
+        this.closeMobileMenu();
       });
     });
     
-    // Add event for logo as toggle button
+    // Add event for logo as toggle button (desktop only)
     const logoToggle = this.shadowRoot.querySelector('#logo-toggle');
     if (logoToggle) {
       logoToggle.addEventListener('click', () => {
-        this.toggleSidebar();
+        // Only toggle on desktop
+        if (window.innerWidth > 768) {
+          this.toggleSidebar();
+        }
       });
     }
+    
+    // Mobile hamburger menu functionality
+    const mobileHamburger = this.shadowRoot.querySelector('#mobile-hamburger');
+    const mobileOverlay = this.shadowRoot.querySelector('#mobile-overlay');
+    const nav = this.shadowRoot.querySelector('nav');
+    
+    if (mobileHamburger) {
+      mobileHamburger.addEventListener('click', () => {
+        this.toggleMobileMenu();
+      });
+    }
+    
+    if (mobileOverlay) {
+      mobileOverlay.addEventListener('click', () => {
+        this.closeMobileMenu();
+      });
+    }
+    
+    // Close mobile menu on window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) {
+        this.closeMobileMenu();
+      }
+    });
+    
+    // Close mobile menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        this.closeMobileMenu();
+      }
+    });
     
     // By default, activate the first section
     const firstBtn = menu.querySelector('.sidebar-btn');
@@ -633,6 +794,52 @@ class CareSidebar extends HTMLElement {
           main.style.marginLeft = '350px';
         }
       }
+    }
+  }
+  
+  toggleMobileMenu() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const mobileHamburger = this.shadowRoot.querySelector('#mobile-hamburger');
+    const mobileOverlay = this.shadowRoot.querySelector('#mobile-overlay');
+    
+    if (nav && mobileHamburger && mobileOverlay) {
+      const isOpen = nav.classList.contains('show-mobile');
+      
+      if (isOpen) {
+        this.closeMobileMenu();
+      } else {
+        this.openMobileMenu();
+      }
+    }
+  }
+  
+  openMobileMenu() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const mobileHamburger = this.shadowRoot.querySelector('#mobile-hamburger');
+    const mobileOverlay = this.shadowRoot.querySelector('#mobile-overlay');
+    
+    if (nav && mobileHamburger && mobileOverlay) {
+      nav.classList.add('show-mobile');
+      mobileHamburger.classList.add('active');
+      mobileOverlay.classList.add('show');
+      
+      // Prevent body scroll
+      document.body.style.overflow = 'hidden';
+    }
+  }
+  
+  closeMobileMenu() {
+    const nav = this.shadowRoot.querySelector('nav');
+    const mobileHamburger = this.shadowRoot.querySelector('#mobile-hamburger');
+    const mobileOverlay = this.shadowRoot.querySelector('#mobile-overlay');
+    
+    if (nav && mobileHamburger && mobileOverlay) {
+      nav.classList.remove('show-mobile');
+      mobileHamburger.classList.remove('active');
+      mobileOverlay.classList.remove('show');
+      
+      // Restore body scroll
+      document.body.style.overflow = '';
     }
   }
   showSection(section) {
