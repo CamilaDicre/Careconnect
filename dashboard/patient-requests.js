@@ -9,41 +9,41 @@ class PatientRequests extends HTMLElement {
   getRequests() {
     return [
       {
-        name: 'Sra. Elena Torres',
+        name: 'Mrs. Elena Torres',
         age: 72,
-        location: 'Panamá Centro',
-        service: 'Cuidado Domiciliario',
-        urgency: 'Alta',
+        location: 'Panama Center',
+        service: 'Home Care',
+        urgency: 'High',
         date: '2024-01-15',
         photo: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3',
         status: 'pending'
       },
       {
-        name: 'Sr. Roberto Méndez',
+        name: 'Mr. Roberto Mendez',
         age: 68,
         location: 'San Francisco',
-        service: 'Acompañamiento Médico',
-        urgency: 'Media',
+        service: 'Medical Accompaniment',
+        urgency: 'Medium',
         date: '2024-01-14',
         photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3',
         status: 'accepted'
       },
       {
-        name: 'Sra. Carmen Ruiz',
+        name: 'Mrs. Carmen Ruiz',
         age: 75,
         location: 'Bella Vista',
         service: 'Medication Management',
-        urgency: 'Baja',
+        urgency: 'Low',
         date: '2024-01-13',
         photo: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?ixlib=rb-4.0.3',
         status: 'pending'
       },
       {
-        name: 'Sr. José González',
+        name: 'Mr. Jose Gonzalez',
         age: 70,
         location: 'El Cangrejo',
-        service: 'Cuidado Domiciliario',
-        urgency: 'Alta',
+        service: 'Home Care',
+        urgency: 'High',
         date: '2024-01-12',
         photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3',
         status: 'rejected'

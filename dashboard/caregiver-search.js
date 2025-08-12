@@ -401,45 +401,45 @@ class CaregiverSearch extends HTMLElement {
         <div class="search-container">
           <div class="search-header">
             <h1>🔍 Find caregivers </h1>
-            <p>Encuentra cuidadores profesionales registrados en nuestra plataforma</p>
+            <p>Find professional caregivers registered on our platform</p>
           </div>
           
           <div class="search-filters">
             <div class="filter-group">
-              <label class="filter-label">Buscar por nombre o especialidad</label>
-              <input type="text" class="filter-input" id="filterInput" placeholder="Ej: María, fisioterapia..." value="${this.filterValue}">
+              <label class="filter-label">Search by name or specialty</label>
+              <input type="text" class="filter-input" id="filterInput" placeholder="Ex: Maria, physiotherapy..." value="${this.filterValue}">
             </div>
             
             <div class="filter-group">
-              <label class="filter-label">Ubicación</label>
-              <input type="text" class="filter-input" id="locationFilter" placeholder="Ej: Madrid, Barcelona..." value="${this.locationFilter}">
+              <label class="filter-label">Location</label>
+              <input type="text" class="filter-input" id="locationFilter" placeholder="Ex: Madrid, Barcelona..." value="${this.locationFilter}">
             </div>
             
             <div class="filter-group">
-              <label class="filter-label">Especialidad</label>
+              <label class="filter-label">Specialty</label>
               <select class="filter-select" id="specialtyFilter">
-                <option value="">Todas las especialidades</option>
-                <option value="cuidado de ancianos" ${this.specialtyFilter === 'cuidado de ancianos' ? 'selected' : ''}>Cuidado de ancianos</option>
-                <option value="fisioterapia" ${this.specialtyFilter === 'fisioterapia' ? 'selected' : ''}>Fisioterapia</option>
-                <option value="enfermería" ${this.specialtyFilter === 'enfermería' ? 'selected' : ''}>Enfermería</option>
-                <option value="psicología" ${this.specialtyFilter === 'psicología' ? 'selected' : ''}>Psicología</option>
-                <option value="nutrición" ${this.specialtyFilter === 'nutrición' ? 'selected' : ''}>Nutrición</option>
-                <option value="terapia ocupacional" ${this.specialtyFilter === 'terapia ocupacional' ? 'selected' : ''}>Terapia ocupacional</option>
+                <option value="">All specialties</option>
+                <option value="elderly care" ${this.specialtyFilter === 'elderly care' ? 'selected' : ''}>Elderly Care</option>
+                <option value="physiotherapy" ${this.specialtyFilter === 'physiotherapy' ? 'selected' : ''}>Physiotherapy</option>
+                <option value="nursing" ${this.specialtyFilter === 'nursing' ? 'selected' : ''}>Nursing</option>
+                <option value="psychology" ${this.specialtyFilter === 'psychology' ? 'selected' : ''}>Psychology</option>
+                <option value="nutrition" ${this.specialtyFilter === 'nutrition' ? 'selected' : ''}>Nutrition</option>
+                <option value="occupational therapy" ${this.specialtyFilter === 'occupational therapy' ? 'selected' : ''}>Occupational Therapy</option>
               </select>
             </div>
             
             <div class="filter-group">
-              <label class="filter-label">Ordenar por</label>
+              <label class="filter-label">Sort by</label>
               <select class="filter-select" id="sortBy">
-                <option value="name" ${this.sortBy === 'name' ? 'selected' : ''}>Nombre</option>
-                <option value="rating" ${this.sortBy === 'rating' ? 'selected' : ''}>Calificación</option>
-                <option value="experience" ${this.sortBy === 'experience' ? 'selected' : ''}>Experiencia</option>
-                <option value="price" ${this.sortBy === 'price' ? 'selected' : ''}>Precio</option>
+                <option value="name" ${this.sortBy === 'name' ? 'selected' : ''}>Name</option>
+                <option value="rating" ${this.sortBy === 'rating' ? 'selected' : ''}>Rating</option>
+                <option value="experience" ${this.sortBy === 'experience' ? 'selected' : ''}>Experience</option>
+                <option value="price" ${this.sortBy === 'price' ? 'selected' : ''}>Price</option>
               </select>
             </div>
             
             <button class="search-btn" id="searchBtn">
-              <i class="bi bi-search"></i> Buscar
+              <i class="bi bi-search"></i> Search
             </button>
           </div>
         </div>
@@ -447,10 +447,10 @@ class CaregiverSearch extends HTMLElement {
         <div class="results-info">
           <div class="results-count">
             <i class="bi bi-people-fill"></i>
-            ${caregivers.length} cuidador${caregivers.length !== 1 ? 'es' : ''} encontrado${caregivers.length !== 1 ? 's' : ''}
+            ${caregivers.length} caregiver${caregivers.length !== 1 ? 's' : ''} found
           </div>
           <div class="sort-controls">
-            <span class="sort-label">Ordenado por: ${this.getSortLabel()}</span>
+            <span class="sort-label">Sorted by: ${this.getSortLabel()}</span>
           </div>
         </div>
         
@@ -458,8 +458,8 @@ class CaregiverSearch extends HTMLElement {
           ${caregivers.length === 0 ? `
             <div class="no-results">
               <i class="bi bi-search"></i>
-              <h3>No se encontraron cuidadores</h3>
-              <p>Intenta con otros términos de búsqueda o filtros diferentes.</p>
+              <h3>No caregivers found</h3>
+              <p>Try different search terms or filters.</p>
             </div>
           ` : caregivers.map(caregiver => `
             <div class="caregiver-card">
@@ -477,28 +477,28 @@ class CaregiverSearch extends HTMLElement {
               
               <div class="caregiver-details">
                 <div class="detail-row">
-                  <span class="detail-label">Experiencia:</span>
+                  <span class="detail-label">Experience:</span>
                   <span class="detail-value">${caregiver.experience}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Ubicación:</span>
+                  <span class="detail-label">Location:</span>
                   <span class="detail-value">${caregiver.location}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Precio:</span>
+                  <span class="detail-label">Price:</span>
                   <span class="detail-value">${caregiver.price}</span>
                 </div>
                 <div class="detail-row">
-                  <span class="detail-label">Estado:</span>
+                  <span class="detail-label">Status:</span>
                   <span class="availability-badge ${caregiver.available ? 'available' : 'unavailable'}">
-                    ${caregiver.available ? 'Disponible' : 'No disponible'}
+                    ${caregiver.available ? 'Available' : 'Not available'}
                   </span>
                 </div>
               </div>
               
-              <button class="contact-btn" ${!caregiver.available ? 'disabled' : ''} onclick="contactCaregiver('${caregiver.id}', '${caregiver.name}')">
-                ${caregiver.available ? 'Contactar' : 'No disponible'}
-              </button>
+                             <button class="contact-btn" ${!caregiver.available ? 'disabled' : ''} onclick="contactCaregiver('${caregiver.id}', '${caregiver.name}')">
+                 ${caregiver.available ? 'Contact' : 'Not available'}
+               </button>
             </div>
           `).join('')}
         </div>
@@ -510,12 +510,12 @@ class CaregiverSearch extends HTMLElement {
 
   getSortLabel() {
     const labels = {
-      'name': 'Nombre',
-      'rating': 'Calificación',
-      'experience': 'Experiencia',
-      'price': 'Precio'
+      'name': 'Name',
+      'rating': 'Rating',
+      'experience': 'Experience',
+      'price': 'Price'
     };
-    return labels[this.sortBy] || 'Nombre';
+    return labels[this.sortBy] || 'Name';
   }
 
   attachEvents() {
@@ -563,7 +563,7 @@ class CaregiverSearch extends HTMLElement {
 
 // Global function to contact caregivers
 window.contactCaregiver = function(caregiverId, caregiverName) {
-  alert(`Contactando a ${caregiverName}...\n\nEsta funcionalidad se implementará próximamente.\n\nPor ahora, puedes usar los datos de contacto del cuidador para comunicarte directamente.`);
+  alert(`Contacting ${caregiverName}...\n\nThis functionality will be implemented soon.\n\nFor now, you can use the caregiver's contact information to communicate directly.`);
 };
 
 customElements.define('caregiver-search', CaregiverSearch); 

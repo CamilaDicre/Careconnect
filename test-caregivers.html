@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -60,34 +60,34 @@
                 <i class="bi bi-people-fill me-2"></i>
                 Test Caregivers
             </h1>
-            <p class="text-muted">Herramienta para gestionar cuidadores de prueba en CareConnect</p>
+            <p class="text-muted">Tool to manage test caregivers in CareConnect</p>
         </div>
 
         <div class="row">
             <div class="col-md-6">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-primary text-white">
-                        <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Acciones</h5>
+                        <h5 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Actions</h5>
                     </div>
                     <div class="card-body">
                         <button class="btn btn-success btn-action w-100" onclick="addCaregivers()">
                             <i class="bi bi-person-plus me-2"></i>
-                            Agregar Cuidadores de Prueba
+                            Add Test Caregivers
                         </button>
                         
                         <button class="btn btn-warning btn-action w-100" onclick="removeCaregivers()">
                             <i class="bi bi-person-x me-2"></i>
-                            Eliminar Cuidadores de Prueba
+                            Remove Test Caregivers
                         </button>
                         
                         <button class="btn btn-info btn-action w-100" onclick="listCaregivers()">
                             <i class="bi bi-list-ul me-2"></i>
-                            Ver Cuidadores Registrados
+                            View Registered Caregivers
                         </button>
                         
                         <button class="btn btn-secondary btn-action w-100" onclick="clearAllUsers()">
                             <i class="bi bi-trash me-2"></i>
-                            Limpiar Todos los Usuarios
+                            Clear All Users
                         </button>
                     </div>
                 </div>
@@ -96,138 +96,143 @@
             <div class="col-md-6">
                 <div class="card border-0 shadow-sm">
                     <div class="card-header bg-info text-white">
-                        <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Estado</h5>
+                        <h5 class="mb-0"><i class="bi bi-info-circle me-2"></i>Status</h5>
                     </div>
                     <div class="card-body">
-                        <div id="statusBox" class="status-box">
-                            <p class="mb-0">Haz clic en una acción para comenzar...</p>
+                        <div id="status" class="status-box">
+                            <p class="text-muted text-center">Status will appear here...</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="mt-4">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-success text-white">
-                    <h5 class="mb-0"><i class="bi bi-people me-2"></i>Lista de Cuidadores</h5>
-                </div>
-                <div class="card-body">
-                    <div id="caregiverList" class="caregiver-list">
-                        <p class="text-muted text-center">Los cuidadores aparecerán aquí...</p>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="bi bi-people me-2"></i>Caregiver List</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="caregiverList" class="caregiver-list">
+                            <p class="text-muted text-center">Caregivers will appear here...</p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="mt-4 text-center">
-            <a href="dashboard/dashboard.html" class="btn btn-primary btn-action">
-                <i class="bi bi-arrow-right me-2"></i>
-                Ir al Dashboard
-            </a>
-            <a href="index.html" class="btn btn-outline-primary btn-action">
-                <i class="bi bi-house me-2"></i>
-                Volver al Inicio
-            </a>
-        </div>
     </div>
 
+    <script src="js/localStorage-utils.js"></script>
     <script src="js/sample-caregivers.js"></script>
     <script>
         function updateStatus(message, type = 'info') {
-            const statusBox = document.getElementById('statusBox');
+            const statusDiv = document.getElementById('status');
             const colors = {
-                'success': '#d4edda',
-                'error': '#f8d7da',
-                'warning': '#fff3cd',
-                'info': '#d1ecf1'
-            };
-            const borders = {
                 'success': '#28a745',
                 'error': '#dc3545',
                 'warning': '#ffc107',
                 'info': '#17a2b8'
             };
             
-            statusBox.style.background = colors[type];
-            statusBox.style.borderLeftColor = borders[type];
-            statusBox.innerHTML = `<p class="mb-0">${message}</p>`;
+            statusDiv.innerHTML = `<p style="color: ${colors[type]}; font-weight: 600; margin: 0;">${message}</p>`;
         }
 
         function updateCaregiverList() {
             const caregiverList = document.getElementById('caregiverList');
             const users = JSON.parse(localStorage.getItem('users') || '[]');
-            const caregivers = users.filter(user => user.role === 'caregiver');
-            
+            const caregivers = users.filter(u => u.role === 'caregiver');
+
             if (caregivers.length === 0) {
-                caregiverList.innerHTML = '<p class="text-muted text-center">No hay cuidadores registrados</p>';
+                caregiverList.innerHTML = '<p class="text-muted text-center">No registered caregivers</p>';
                 return;
             }
-            
-            caregiverList.innerHTML = caregivers.map((caregiver, index) => `
-                <div class="caregiver-item">
-                    <div class="d-flex align-items-center">
-                        <img src="${caregiver.photo || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(caregiver.username) + '&background=1976d2&color=fff&size=40&rounded=true'}" 
-                             alt="${caregiver.username}" 
-                             class="rounded-circle me-3" 
-                             style="width: 40px; height: 40px;">
-                        <div class="flex-grow-1">
-                            <h6 class="mb-1 fw-bold">${caregiver.username}</h6>
-                            <small class="text-muted">${caregiver.skills || 'Sin especialidad'}</small>
-                        </div>
-                        <div class="text-end">
-                            <span class="badge bg-primary">${caregiver.rating || 'N/A'} ⭐</span>
-                            <br>
-                            <small class="text-muted">${caregiver.price || 'N/A'}</small>
-                        </div>
+
+            let html = '';
+            caregivers.forEach(caregiver => {
+                html += `
+                    <div class="caregiver-item">
+                        <h6 class="mb-1">${caregiver.name}</h6>
+                        <p class="mb-1 text-muted">Email: ${caregiver.email}</p>
+                        <p class="mb-0 text-muted">Phone: ${caregiver.phone || 'Not provided'}</p>
                     </div>
-                </div>
-            `).join('');
+                `;
+            });
+            caregiverList.innerHTML = html;
         }
 
         function addCaregivers() {
             try {
-                SampleCaregivers.createSampleCaregivers();
-                updateStatus('✅ Cuidadores de prueba agregados exitosamente', 'success');
+                console.log('🔄 Adding test caregivers...');
+                
+                // Get existing users
+                const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // Add sample caregivers
+                const sampleCaregivers = getSampleCaregivers();
+                const allUsers = [...existingUsers, ...sampleCaregivers];
+                
+                // Save to localStorage
+                localStorage.setItem('users', JSON.stringify(allUsers));
+                
+                updateStatus('✅ Test caregivers added successfully', 'success');
                 updateCaregiverList();
+                
             } catch (error) {
-                updateStatus('❌ Error al agregar cuidadores: ' + error.message, 'error');
+                console.error('Error adding caregivers:', error);
+                updateStatus('❌ Error adding caregivers: ' + error.message, 'error');
             }
         }
 
         function removeCaregivers() {
             try {
-                SampleCaregivers.removeSampleCaregivers();
-                updateStatus('✅ Cuidadores de prueba eliminados exitosamente', 'warning');
+                console.log('🔄 Removing test caregivers...');
+                
+                // Get existing users
+                const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
+                
+                // Filter out caregivers (keep only patients and other roles)
+                const filteredUsers = existingUsers.filter(user => user.role !== 'caregiver');
+                
+                // Save to localStorage
+                localStorage.setItem('users', JSON.stringify(filteredUsers));
+                
+                updateStatus('✅ Test caregivers removed successfully', 'warning');
                 updateCaregiverList();
+                
             } catch (error) {
-                updateStatus('❌ Error al eliminar cuidadores: ' + error.message, 'error');
+                console.error('Error removing caregivers:', error);
+                updateStatus('❌ Error removing caregivers: ' + error.message, 'error');
             }
         }
 
         function listCaregivers() {
             try {
-                SampleCaregivers.listCaregivers();
-                updateStatus('📋 Lista de cuidadores mostrada en la consola', 'info');
+                const users = JSON.parse(localStorage.getItem('users') || '[]');
+                const caregivers = users.filter(u => u.role === 'caregiver');
+                
+                console.log('📋 Registered caregivers:', caregivers);
+                updateStatus('📋 Caregiver list shown in console', 'info');
                 updateCaregiverList();
+                
             } catch (error) {
-                updateStatus('❌ Error al listar cuidadores: ' + error.message, 'error');
+                console.error('Error listing caregivers:', error);
+                updateStatus('❌ Error listing caregivers: ' + error.message, 'error');
             }
         }
 
         function clearAllUsers() {
-            if (confirm('¿Estás seguro de que quieres eliminar TODOS los usuarios del sistema? Esta acción no se puede deshacer.')) {
-                try {
-                    localStorage.removeItem('users');
-                    updateStatus('🗑️ Todos los usuarios han sido eliminados', 'warning');
-                    updateCaregiverList();
-                } catch (error) {
-                    updateStatus('❌ Error al limpiar usuarios: ' + error.message, 'error');
-                }
+            try {
+                localStorage.removeItem('users');
+                updateStatus('🗑️ All users cleared', 'warning');
+                updateCaregiverList();
+            } catch (error) {
+                console.error('Error clearing users:', error);
+                updateStatus('❌ Error clearing users: ' + error.message, 'error');
             }
         }
 
-        // Cargar lista inicial
+        // Initialize on page load
         document.addEventListener('DOMContentLoaded', function() {
             updateCaregiverList();
         });

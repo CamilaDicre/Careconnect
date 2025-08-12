@@ -156,22 +156,22 @@
     <div class="test-container">
         <div class="test-header">
             <h1>🧪 Test Caregiver Search</h1>
-            <p>Prueba la funcionalidad mejorada de búsqueda de cuidadores</p>
+            <p>Test the improved caregiver search functionality</p>
         </div>
         
         <div class="test-controls">
             <div class="control-buttons">
                 <button class="btn-test btn-success" onclick="addSampleCaregivers()">
-                    <i class="bi bi-plus-circle"></i> Agregar Cuidadores de Prueba
+                    <i class="bi bi-plus-circle"></i> Add Test Caregivers
                 </button>
                 <button class="btn-test btn-primary" onclick="listCaregivers()">
-                    <i class="bi bi-list-ul"></i> Listar Cuidadores
+                    <i class="bi bi-list-ul"></i> List Caregivers
                 </button>
                 <button class="btn-test btn-warning" onclick="clearStatus()">
-                    <i class="bi bi-trash"></i> Limpiar Estado
+                    <i class="bi bi-trash"></i> Clear Status
                 </button>
                 <button class="btn-test btn-danger" onclick="removeSampleCaregivers()">
-                    <i class="bi bi-x-circle"></i> Eliminar Cuidadores de Prueba
+                    <i class="bi bi-x-circle"></i> Remove Test Caregivers
                 </button>
             </div>
             
@@ -180,32 +180,32 @@
         
         <div class="search-section">
             <div class="instructions">
-                <h3><i class="bi bi-info-circle"></i> Instrucciones de Prueba</h3>
+                <h3><i class="bi bi-info-circle"></i> Test Instructions</h3>
                 <ol>
-                    <li><strong>Agregar Cuidadores:</strong> Haz clic en "Agregar Cuidadores de Prueba" para crear 8 cuidadores de muestra en el sistema.</li>
-                    <li><strong>Probar Búsqueda:</strong> Una vez agregados, los cuidadores aparecerán automáticamente en la sección de búsqueda de abajo.</li>
-                    <li><strong>Filtros:</strong> Prueba los diferentes filtros: búsqueda por nombre, ubicación, especialidad y ordenamiento.</li>
-                    <li><strong>Listar:</strong> Usa "Listar Cuidadores" para ver en consola todos los cuidadores registrados.</li>
-                    <li><strong>Limpiar:</strong> Usa "Eliminar Cuidadores de Prueba" para remover los cuidadores de prueba del sistema.</li>
+                    <li><strong>Add Caregivers:</strong> Click "Add Test Caregivers" to create 8 sample caregivers in the system.</li>
+                    <li><strong>Test Search:</strong> Once added, caregivers will automatically appear in the search section below.</li>
+                    <li><strong>Filters:</strong> Test the different filters: search by name, location, specialty and sorting.</li>
+                    <li><strong>List:</strong> Use "List Caregivers" to see all registered caregivers in the console.</li>
+                    <li><strong>Clean:</strong> Use "Remove Test Caregivers" to remove test caregivers from the system.</li>
                 </ol>
             </div>
             
-            <!-- El componente de búsqueda de cuidadores -->
+            <!-- The caregiver search component -->
             <caregiver-search></caregiver-search>
         </div>
     </div>
 
-    <!-- Scripts necesarios -->
+    <!-- Required Scripts -->
     <script src="js/localStorage-utils.js"></script>
     <script src="js/sample-caregivers.js"></script>
     <script src="dashboard/caregiver-search.js"></script>
     
     <script>
-        // Función para agregar cuidadores de prueba
+        // Function to add test caregivers
         function addSampleCaregivers() {
             try {
                 SampleCaregivers.createSampleCaregivers();
-                showStatus('✅ Cuidadores de prueba agregados exitosamente. Ahora aparecerán en la búsqueda.', 'success');
+                showStatus('✅ Test caregivers added successfully. They will now appear in the search.', 'success');
                 
                 // Recargar el componente de búsqueda después de 1 segundo
                 setTimeout(() => {
@@ -215,25 +215,25 @@
                     }
                 }, 1000);
             } catch (error) {
-                showStatus('❌ Error al agregar cuidadores de prueba: ' + error.message, 'error');
+                showStatus('❌ Error adding test caregivers: ' + error.message, 'error');
             }
         }
         
-        // Función para listar cuidadores
+        // Function to list caregivers
         function listCaregivers() {
             try {
                 SampleCaregivers.listCaregivers();
-                showStatus('📋 Lista de cuidadores mostrada en la consola del navegador.', 'info');
+                showStatus('📋 Caregiver list shown in browser console.', 'info');
             } catch (error) {
-                showStatus('❌ Error al listar cuidadores: ' + error.message, 'error');
+                showStatus('❌ Error listing caregivers: ' + error.message, 'error');
             }
         }
         
-        // Función para eliminar cuidadores de prueba
+        // Function to remove test caregivers
         function removeSampleCaregivers() {
             try {
                 SampleCaregivers.removeSampleCaregivers();
-                showStatus('🗑️ Cuidadores de prueba eliminados del sistema.', 'warning');
+                showStatus('🗑️ Test caregivers removed from system.', 'warning');
                 
                 // Recargar el componente de búsqueda después de 1 segundo
                 setTimeout(() => {
@@ -243,39 +243,39 @@
                     }
                 }, 1000);
             } catch (error) {
-                showStatus('❌ Error al eliminar cuidadores de prueba: ' + error.message, 'error');
+                showStatus('❌ Error removing test caregivers: ' + error.message, 'error');
             }
         }
         
-        // Función para limpiar el estado
+        // Function to clear status
         function clearStatus() {
             const statusBox = document.getElementById('statusBox');
             statusBox.style.display = 'none';
             statusBox.innerHTML = '';
         }
         
-        // Función para mostrar estado
+        // Function to show status
         function showStatus(message, type) {
             const statusBox = document.getElementById('statusBox');
             statusBox.className = `status-box status-${type}`;
             statusBox.innerHTML = message;
             statusBox.style.display = 'block';
             
-            // Ocultar automáticamente después de 5 segundos
+            // Hide automatically after 5 seconds
             setTimeout(() => {
                 statusBox.style.display = 'none';
             }, 5000);
         }
         
-        // Verificar estado inicial al cargar la página
+        // Check initial status when loading the page
         document.addEventListener('DOMContentLoaded', function() {
             const users = JSON.parse(localStorage.getItem('users') || '[]');
             const caregivers = users.filter(user => user.role === 'caregiver' || user.role === 'cuidador');
             
             if (caregivers.length > 0) {
-                showStatus(`📊 Sistema cargado con ${caregivers.length} cuidador${caregivers.length !== 1 ? 'es' : ''} registrado${caregivers.length !== 1 ? 's' : ''}.`, 'info');
+                showStatus(`📊 System loaded with ${caregivers.length} caregiver${caregivers.length !== 1 ? 's' : ''} registered.`, 'info');
             } else {
-                showStatus('💡 No hay cuidadores registrados. Haz clic en "Agregar Cuidadores de Prueba" para comenzar.', 'warning');
+                showStatus('💡 No caregivers registered. Click "Add Test Caregivers" to start.', 'warning');
             }
         });
     </script>
