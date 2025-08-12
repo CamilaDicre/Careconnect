@@ -499,6 +499,19 @@ class UserProfile extends HTMLElement {
           margin-bottom: 8px;
           border-left: 4px solid #1976d2;
         }
+
+        /* Dark mode support */
+        :host-context(.dark-mode) .profile-container { color: #e5e7eb; }
+        :host-context(.dark-mode) .profile-section { background: #0f172a; border-color: #1f2937; box-shadow: 0 8px 25px rgba(2,6,23,0.6); }
+        :host-context(.dark-mode) .section-title { color: #e5e7eb; }
+        :host-context(.dark-mode) .info-item { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #3b82f6; }
+        :host-context(.dark-mode) .info-label { color: #94a3b8; }
+        :host-context(.dark-mode) .info-value { color: #e5e7eb; }
+        :host-context(.dark-mode) .form-input, 
+        :host-context(.dark-mode) .form-select { background: #0b1220; border-color: #1f2937; color: #e5e7eb; }
+        :host-context(.dark-mode) .medical-card { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #3b82f6; }
+        :host-context(.dark-mode) .array-item { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #3b82f6; }
+        :host-context(.dark-mode) .array-item-text { color: #93c5fd; }
         
         .array-item-text {
           flex: 1;

@@ -65,6 +65,116 @@ body.dark-mode .btn-primary { background: var(--pal-primary) !important; border-
 body.dark-mode .service-icon, body.dark-mode .service-icon-box { background-color: #0b1220; }
 body.dark-mode .blog-card { background: #0f172a; }
 
+/* Articles listing (pages/articles.html) */
+body.dark-mode .search-section { background-color: #0b1220 !important; border-bottom-color: #1f2937 !important; }
+body.dark-mode .search-input { background: #0f172a !important; border-color: #1f2937 !important; color: #e5e7eb !important; }
+body.dark-mode .search-input::placeholder { color: #94a3b8 !important; }
+body.dark-mode .articles-section { background-color: #0b1220 !important; }
+body.dark-mode .section-title { color: #e5e7eb !important; }
+body.dark-mode .article-card { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .article-title { color: #e5e7eb !important; }
+body.dark-mode .article-excerpt { color: #cbd5e1 !important; }
+body.dark-mode .article-meta { color: #94a3b8 !important; border-top-color: #1f2937 !important; border-bottom-color: #1f2937 !important; }
+body.dark-mode .navigation-section { background-color: #0b1220 !important; border-top-color: #1f2937 !important; }
+body.dark-mode .page-number { background: #0f172a !important; color: #e5e7eb !important; border-color: #1f2937 !important; }
+body.dark-mode .page-number.active { background: #1e3a8a !important; color: #ffffff !important; }
+body.dark-mode .nav-btn { background: #0f172a !important; color: #93c5fd !important; border-color: #2563eb !important; }
+body.dark-mode .category-btn { background: #0f172a !important; color: #e5e7eb !important; border-color: #1f2937 !important; }
+
+/* Individual article pages (articles/*.html) */
+body.dark-mode .article-content { background: #0b1220 !important; }
+body.dark-mode .article-section h2 { color: #93c5fd !important; border-left-color: #3b82f6 !important; }
+body.dark-mode .article-section h3 { color: #e5e7eb !important; }
+body.dark-mode .article-section p, 
+body.dark-mode .article-container li { color: #cbd5e1 !important; }
+body.dark-mode .tip-box { background: linear-gradient(135deg, #0b1220, #0f172a) !important; border-left-color: #38bdf8 !important; }
+body.dark-mode .tip-box h4 { color: #38bdf8 !important; }
+body.dark-mode .warning-box { background: linear-gradient(135deg, #1f1a0a, #3a2f0c) !important; border-left-color: #f59e0b !important; }
+body.dark-mode .warning-box h4 { color: #fbbf24 !important; }
+body.dark-mode .example-box { background: linear-gradient(135deg, #0f2a1a, #0b3a24) !important; border-left-color: #10b981 !important; }
+body.dark-mode .example-box h4 { color: #34d399 !important; }
+body.dark-mode .medication-list { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .medication-item { border-bottom-color: #1f2937 !important; }
+body.dark-mode .medication-info h5 { color: #e5e7eb !important; }
+body.dark-mode .medication-info p { color: #cbd5e1 !important; }
+body.dark-mode .article-hero { box-shadow: inset 0 -60px 80px rgba(0,0,0,0.25); }
+body.dark-mode a.read-more-btn { color: #fff !important; }
+body.dark-mode .about-hero-section h1 { color: #e5e7eb !important; }
+body.dark-mode .no-results { color: #94a3b8 !important; }
+
+/* Contact page (pages/contact.html) */
+body.dark-mode .contact-info-section { background: #0b1220 !important; }
+body.dark-mode .contact-card { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .contact-card h3 { color: #e5e7eb !important; }
+body.dark-mode .contact-card p { color: #cbd5e1 !important; }
+body.dark-mode .help-section { background: #0b1220 !important; }
+body.dark-mode .help-card { background: linear-gradient(135deg, #0b1220, #0f172a) !important; border-left-color: #3b82f6 !important; }
+body.dark-mode .help-card h3 { color: #93c5fd !important; }
+body.dark-mode .help-card p { color: #cbd5e1 !important; }
+body.dark-mode .contact-form-section { background: #0b1220 !important; }
+body.dark-mode .contact-form-wrapper { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .contact-form-wrapper h2 { color: #e5e7eb !important; }
+body.dark-mode .form-control { background: #0b1220 !important; border-color: #1f2937 !important; color: #e5e7eb !important; }
+body.dark-mode .form-control::placeholder { color: #94a3b8 !important; }
+body.dark-mode .contact-map { background: #0f172a !important; border-color: #1f2937 !important; }
+
+/* Patient dashboard (dashboard/dashboard.html) */
+body.dark-mode.dashboard-page { background: #0b1220 !important; }
+body.dark-mode #dashboard-content { color: #e5e7eb !important; }
+body.dark-mode #dashboard-content .card,
+body.dark-mode #dashboard-content .dashboard-card,
+body.dark-mode #dashboard-content .medicine-card,
+body.dark-mode #dashboard-content .caregiver-card,
+body.dark-mode #dashboard-content .modal-content,
+body.dark-mode #dashboard-content .list-group-item,
+body.dark-mode #dashboard-content .table,
+body.dark-mode #dashboard-content .form-control,
+body.dark-mode #dashboard-content .form-select {
+    background: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #1f2937 !important;
+}
+body.dark-mode #dashboard-content .text-muted { color: #94a3b8 !important; }
+body.dark-mode #dashboard-content .btn-outline-primary { color: #93c5fd !important; border-color: #2563eb !important; }
+body.dark-mode #dashboard-content .btn-outline-primary:hover { background: #1e3a8a !important; color: #fff !important; }
+body.dark-mode #dashboard-content .table th,
+body.dark-mode #dashboard-content .table td { border-color: #1f2937 !important; }
+
+/* Home (index.html) adjustments */
+body.dark-mode .reasons-section { background: #0b1220 !important; }
+body.dark-mode .reason-container { background: #0f172a !important; color: #e5e7eb !important; border-color: #1f2937 !important; box-shadow: 0 0 30px rgba(2,6,23,0.6) !important; }
+body.dark-mode .reasons-section .service-feature-title { color: #e5e7eb !important; }
+body.dark-mode .reasons-section .service-feature-description { color: #cbd5e1 !important; }
+body.dark-mode .services-section { background-color: #0b1220 !important; }
+body.dark-mode .testimonials-section { background-color: #0b1220 !important; }
+body.dark-mode .dashboard-float-section { background: #0b1220 !important; }
+/* Home: Why should you choose / Services blocks */
+body.dark-mode .service-feature-title,
+body.dark-mode .service-content h3 { color: #e5e7eb !important; }
+body.dark-mode .service-content p { color: #cbd5e1 !important; }
+body.dark-mode .service-icon { background-color: #0b1220 !important; }
+body.dark-mode .carousel h2.display-4 { color: #e5e7eb !important; }
+
+/* Home: What our patients/users say (testimonials) */
+body.dark-mode .testimonial-card { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .testimonial-card .testimonial-content p { color: #cbd5e1 !important; }
+body.dark-mode .testimonial-author h4 { color: #e5e7eb !important; }
+body.dark-mode .testimonial-author p { color: #94a3b8 !important; }
+
+/* About page */
+body.dark-mode .about-hero-section { box-shadow: inset 0 -60px 80px rgba(0,0,0,0.25); }
+body.dark-mode .about-content-section { background: #0b1220 !important; }
+body.dark-mode .about-content-section .display-5,
+body.dark-mode .about-content-section h3 { color: #e5e7eb !important; }
+body.dark-mode .about-content-section .text-muted { color: #cbd5e1 !important; }
+body.dark-mode .feature-icon { background-color: #0b1220 !important; }
+body.dark-mode .why-choose-section { background: #0b1220 !important; }
+body.dark-mode .why-choose-section .feature-card { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .team-section { background: #0b1220 !important; }
+body.dark-mode .team-card { background: #0f172a !important; border-color: #1f2937 !important; }
+body.dark-mode .team-info h4 { color: #e5e7eb !important; }
+body.dark-mode .team-info p { color: #94a3b8 !important; }
+
 /* Typography for Seniors - Poppins for headings, Josefin Sans for body */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif !important;

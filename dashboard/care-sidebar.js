@@ -423,6 +423,17 @@ class CareSidebar extends HTMLElement {
           border-left-color: #667eea;
           font-weight: 600;
         }
+
+        /* Dark mode support */
+        :host-context(.dark-mode) nav { background: #0f172a; box-shadow: 2px 0 15px rgba(2,6,23,0.6); }
+        :host-context(.dark-mode) .logo-section { background: #0b1220; border-bottom-color: #1f2937; }
+        :host-context(.dark-mode) .logo-text { color: #e5e7eb; }
+        :host-context(.dark-mode) .sidebar-header { background: #0b1220; border-bottom-color: #1f2937; }
+        :host-context(.dark-mode) .user-details h4 { color: #e5e7eb; }
+        :host-context(.dark-mode) .user-details p { color: #94a3b8; }
+        :host-context(.dark-mode) .sidebar-btn { color: #cbd5e1; }
+        :host-context(.dark-mode) .sidebar-btn:hover { background: #0b1220; color: #e5e7eb; border-left-color: #3b82f6; }
+        :host-context(.dark-mode) .sidebar-btn.active { background: #0b1220; color: #93c5fd; border-left-color: #3b82f6; }
         
         .sidebar-btn i {
           font-size: 24px;

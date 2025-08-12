@@ -34,6 +34,24 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Dark mode for auth pages */
+body.dark-mode {
+    background: linear-gradient(rgba(0,0,0,0.85), rgba(0,0,0,0.85)), url(../assets/BlueIconsBlueBackgroundSpread.png);
+}
+body.dark-mode .back-home-btn { color: #e5e7eb; border-color: rgba(255,255,255,0.25); }
+body.dark-mode .back-home-btn:hover { color: #fff; }
+body.dark-mode .auth-container { background: #0f172a; box-shadow: 0 8px 40px rgba(2,6,23,0.6); }
+body.dark-mode .auth-header h1 { color: #93c5fd; }
+body.dark-mode .auth-subtitle { color: #93c5fd; }
+body.dark-mode .auth-toggle-btn { background: #0b1220; color: #93c5fd; border-color: #1f2937; }
+body.dark-mode .auth-card { background: #0b1220; box-shadow: 0 2px 12px rgba(2,6,23,0.6); }
+body.dark-mode .auth-card label { color: #93c5fd; }
+body.dark-mode .auth-card input, 
+body.dark-mode .auth-card select { background: #0f172a; border-color: #1f2937; color: #e5e7eb; }
+body.dark-mode .auth-card input::placeholder, 
+body.dark-mode .auth-card select::placeholder { color: #94a3b8; }
+body.dark-mode .auth-link { color: #93c5fd; }
+
 /* Botón de regreso mejorado */
 .back-home-btn {
     position: fixed;

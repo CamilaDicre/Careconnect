@@ -114,6 +114,35 @@ class OverviewSection extends HTMLElement {
           overflow: hidden;
         }
 
+        /* Dark mode support */
+        :host-context(.dark-mode) .overview-container { color: #e5e7eb; }
+        :host-context(.dark-mode) .dashboard-card {
+          background: #0f172a;
+          border-color: #1f2937;
+          box-shadow: 0 8px 25px rgba(2,6,23,0.6);
+          color: #e5e7eb;
+        }
+        :host-context(.dark-mode) .card-title { color: #e5e7eb; }
+        :host-context(.dark-mode) .stats-grid .stat-item,
+        :host-context(.dark-mode) .metric-item {
+          background: linear-gradient(135deg, #0b1220, #0f172a);
+          border-color: #1f2937;
+          color: #e5e7eb;
+        }
+        :host-context(.dark-mode) .stat-label,
+        :host-context(.dark-mode) .metric-label,
+        :host-context(.dark-mode) .empty-description { color: #94a3b8; }
+        :host-context(.dark-mode) .activity-item,
+        :host-context(.dark-mode) .medication-item,
+        :host-context(.dark-mode) .appointment-item { border-bottom-color: #1f2937; }
+        :host-context(.dark-mode) .medication-name,
+        :host-context(.dark-mode) .appointment-name,
+        :host-context(.dark-mode) .activity-title,
+        :host-context(.dark-mode) .empty-title { color: #e5e7eb; }
+        :host-context(.dark-mode) .overview-hero {
+          box-shadow: 0 15px 35px rgba(2,6,23,0.6);
+        }
+
         .dashboard-card::before {
           content: '';
           position: absolute;

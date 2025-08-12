@@ -305,6 +305,19 @@
     transition: all 0.3s ease;
 }
 
+/* Dark mode for team section */
+body.dark-mode .team-section { background-color: #0b1220 !important; }
+body.dark-mode .carousel { background: linear-gradient(135deg, rgba(15, 23, 42, 0.9), rgba(2, 6, 23, 0.9)) !important; box-shadow: 0 10px 30px rgba(2,6,23,0.6) !important; }
+body.dark-mode .team-card { background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9)) !important; border-color: #1f2937 !important; box-shadow: 0 8px 25px rgba(2,6,23,0.6) !important; }
+body.dark-mode .team-img-wrapper img { background-color: #0b1220 !important; }
+body.dark-mode .team-img-wrapper { background-color: #0b1220 !important; }
+body.dark-mode .team-img-wrapper::before { background: linear-gradient(180deg, rgba(0,0,0,0.35), rgba(0,0,0,0.15)) !important; opacity: 1 !important; }
+body.dark-mode .team-img-wrapper img.img-fluid { filter: brightness(0.92) contrast(1.05); }
+body.dark-mode .team-info { background: linear-gradient(135deg, #0b1220, #0f172a) !important; border-top-color: #1f2937 !important; }
+body.dark-mode .team-info h4 { color: #e5e7eb !important; }
+body.dark-mode .team-info p { color: #94a3b8 !important; }
+body.dark-mode .carousel-indicators button { border-color: rgba(255,255,255,0.2) !important; }
+
 .social-link:hover {
     background: #0b9ec2;
     color: #fff;
