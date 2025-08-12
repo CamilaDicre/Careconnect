@@ -10,7 +10,17 @@ class FooterComponent extends HTMLElement {
 
     render() {
         const isInPages = window.location.pathname.includes('/pages/');
-        const logoSrc = isInPages ? '../assets/Frame - 1.svg' : 'assets/Frame - 1.svg';
+        const isInDashboard = window.location.pathname.includes('/dashboard/');
+        const isInCaregiverPro = window.location.pathname.includes('/caregivers pro/');
+
+        // prefix to reach root files (index.html, privacy-policy.html, assets, etc.)
+        const rootPrefix = isInCaregiverPro ? '../../' : (isInDashboard || isInPages) ? '../' : '';
+        const logoSrc = `${rootPrefix}assets/Frame - 1.svg`;
+        // prefix to reach files under pages/
+        const pagesPrefix = isInCaregiverPro ? '../../pages/' : isInDashboard ? '../pages/' : isInPages ? '' : 'pages/';
+        const aboutLink = `${pagesPrefix}about.html`;
+        const articlesLink = `${pagesPrefix}articles.html`;
+        const contactLink = `${pagesPrefix}contact.html`;
         this.shadowRoot.innerHTML = `
             <style>
                 /* Root Variables */
@@ -752,7 +762,7 @@ class FooterComponent extends HTMLElement {
                         <div class="footer-col">
                             <h3 style="display:flex;align-items:center;gap:4px;">
                                 <span class="brand-logo-badge">
-                                    <img src="${isInPages ? '../assets/Frame-splash.svg' : 'assets/Frame-splash.svg'}" alt="Careconnect Logo"/>
+                                    <img src="${rootPrefix}assets/Frame-splash.svg" alt="Careconnect Logo"/>
                                 </span>
                                 areconnect
                             </h3>
@@ -778,10 +788,10 @@ class FooterComponent extends HTMLElement {
                         <div class="footer-col">
                             <h3>Quick links</h3>
                             <ul class="footer-links">
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="pages/about.html">About</a></li>
-                                <li><a href="pages/articles.html">Articles</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="${rootPrefix}index.html">Home</a></li>
+                                <li><a href="${aboutLink}">About</a></li>
+                                <li><a href="${articlesLink}">Articles</a></li>
+                                <li><a href="${contactLink}">Contact</a></li>
                             </ul>
                         </div>
 
@@ -829,14 +839,14 @@ class FooterComponent extends HTMLElement {
                     <div class="container">
                         <div class="copyright-content">
                             <div class="copyright-text">
-                                <p>&copy; ${new Date().getFullYear()} <a href="index.html">Careconnect</a>. All rights reserved.</p>
+                                <p>&copy; ${new Date().getFullYear()} <a href="${rootPrefix}index.html">Careconnect</a>. All rights reserved.</p>
                             </div>
                             <div class="legal-links">
-                                <a href="privacy-policy.html">Privacy Policy</a>
+                                <a href="${rootPrefix}privacy-policy.html">Privacy Policy</a>
                                 <a href="#" id="terms-link">Terms and Conditions</a>
                                 <a href="#" id="cookie-link">Cookie Policy</a>
-                                <a href="accessibility.html">Accessibility</a>
-                                <a href="security.html">Security</a>
+                                <a href="${rootPrefix}accessibility.html">Accessibility</a>
+                                <a href="${rootPrefix}security.html">Security</a>
                             </div>
                         </div>
                     </div>

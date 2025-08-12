@@ -83,11 +83,26 @@ class PageTransitions {
         // Handle all internal links for smooth transitions
         document.addEventListener('click', (e) => {
             const link = e.target.closest('a');
-            // Skip if it's a logout overlay button
-            if (link && link.classList.contains('logout-btn')) {
-                return; // Let the normal href handle it
+            if (!link) return;
+
+            // Skip SPA interception for specific cases
+            const hrefAttr = link.getAttribute('href') || '';
+            const relAttr = (link.getAttribute('rel') || '').toLowerCase();
+            if (
+                link.classList.contains('logout-btn') ||
+                link.classList.contains('back-home-btn') ||
+                link.classList.contains('back-button') ||
+                link.hasAttribute('data-no-transition') ||
+                link.target === '_blank' ||
+                link.hasAttribute('download') ||
+                relAttr.includes('external') ||
+                hrefAttr.startsWith('#') ||
+                !this.shouldUseSpaNavigation()
+            ) {
+                return; // Allow default navigation
             }
-            if (link && this.isInternalLink(link.href)) {
+
+            if (this.isInternalLink(link.href)) {
                 e.preventDefault();
                 this.navigateToPage(link.href);
             }
@@ -119,6 +134,14 @@ class PageTransitions {
             href.startsWith('pages/') ||
             href.startsWith('dashboard/')
         );
+    }
+
+    shouldUseSpaNavigation() {
+        // Disable SPA interception when running from file:// to avoid CORS/fetch issues
+        const isFileProtocol = window.location.protocol === 'file:';
+        // Keep auth pages simple to avoid interfering with form flows
+        const isAuthPage = /\b(login|register)\.html$/i.test(window.location.pathname);
+        return !isFileProtocol && !isAuthPage;
     }
 
     async navigateToPage(url) {
