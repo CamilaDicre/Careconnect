@@ -15,6 +15,57 @@ html, body {
   width: 100%;
 }
 
+/* ===== HEADER POSITIONING FIXES ===== */
+/* Ensure header stays in correct position across all devices */
+
+/* Header component positioning */
+header-component {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1030 !important;
+  width: 100% !important;
+}
+
+/* Navbar positioning */
+.careconnect-navbar {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  z-index: 1030 !important;
+  width: 100% !important;
+}
+
+/* Ensure body has proper padding for fixed header */
+body {
+  padding-top: 80px !important;
+}
+
+/* Mobile header adjustments */
+@media (max-width: 768px) {
+  body {
+    padding-top: 70px !important;
+  }
+  
+  header-component {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1030 !important;
+  }
+  
+  .careconnect-navbar {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1030 !important;
+  }
+}
+
 /* ===== EXTRA SMALL DEVICES (phones, 320px and up) ===== */
 @media (min-width: 320px) and (max-width: 480px) {
   /* Typography adjustments */

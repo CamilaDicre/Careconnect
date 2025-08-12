@@ -247,7 +247,9 @@ class HeaderComponent extends HTMLElement {
                     transition: all 0.3s ease;
                     background: rgba(255, 255, 255, 0.1);
                     cursor: pointer;
-                    display: none;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
                 }
 
                 .careconnect-mobile-menu-btn:hover {
@@ -586,6 +588,8 @@ class HeaderComponent extends HTMLElement {
                         cursor: pointer;
                         transition: all 0.3s ease;
                         flex-shrink: 0;
+                        grid-column: 3 !important;
+                        justify-self: end !important;
                     }
 
                     .careconnect-mobile-menu-btn:hover {
