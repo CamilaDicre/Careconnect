@@ -1,3 +1,16 @@
+// Early apply saved theme to avoid FOUC
+(function applySavedThemeEarly() {
+    try {
+        const savedTheme = localStorage.getItem('careconnect-theme');
+        if (savedTheme === 'dark') {
+            document.documentElement.classList.remove('light');
+            document.body.classList.add('dark-mode');
+        } else if (savedTheme === 'light') {
+            document.body.classList.remove('dark-mode');
+        }
+    } catch (e) {}
+})();
+
 class HeaderComponent extends HTMLElement {
     constructor() {
         super();
@@ -7,6 +20,7 @@ class HeaderComponent extends HTMLElement {
     connectedCallback() {
         this.render();
         this.attachEventListeners();
+        this.initializeTheme();
     }
 
     render() {
@@ -16,6 +30,36 @@ class HeaderComponent extends HTMLElement {
         const logoSrc = isInPages ? '../assets/Frame - 1.svg' : 'assets/Frame - 1.svg';
         this.shadowRoot.innerHTML = `
             <style>
+                :host-context(.dark-mode) .careconnect-navbar {
+                    background: rgba(20, 24, 35, 0.9) !important;
+                    border-bottom-color: rgba(255, 255, 255, 0.06) !important;
+                }
+                :host-context(.dark-mode) .careconnect-brand { color: #e5e7eb !important; }
+                :host-context(.dark-mode) .careconnect-nav-link { color: #e5e7eb !important; }
+                :host-context(.dark-mode) .careconnect-nav-link:hover { color: #93c5fd !important; }
+                :host-context(.dark-mode) #careconnectLoginSignupButton {
+                    background-color: #0f172a !important;
+                    border-color: #3b82f6 !important;
+                    color: #e5e7eb !important;
+                }
+                :host-context(.dark-mode) .careconnect-theme-toggle-hover {
+                    background: rgba(255, 255, 255, 0.08) !important;
+                    border-color: rgba(255, 255, 255, 0.12) !important;
+                    color: #e5e7eb !important;
+                }
+                :host-context(.dark-mode) .careconnect-navbar-scrolled {
+                    background: rgba(15, 23, 42, 0.92) !important;
+                }
+                :host-context(.dark-mode) .careconnect-hamburger-line { background-color: #e5e7eb !important; }
+                :host-context(.dark-mode) .careconnect-mobile-menu-overlay {
+                    background: linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.95) 100%) !important;
+                }
+                :host-context(.dark-mode) .careconnect-mobile-nav-link { color: #e5e7eb !important; }
+                :host-context(.dark-mode) .careconnect-mobile-login-btn {
+                    background: linear-gradient(135deg, #0b1220 0%, #111827 100%) !important;
+                    color: #93c5fd !important;
+                    border-color: rgba(255,255,255,0.15) !important;
+                }
                 /* Root Variables */
                 :root {
                     --pal-primary: royalblue;
@@ -1146,8 +1190,38 @@ class HeaderComponent extends HTMLElement {
         this.initializeMobileMenu();
     }
 
+    initializeTheme() {
+        try {
+            const savedTheme = localStorage.getItem('careconnect-theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
+            document.body.classList.toggle('dark-mode', isDark);
+            this.updateThemeIcons(isDark);
+        } catch (err) {
+            // Fallback without persistence
+            const isDark = document.body.classList.contains('dark-mode');
+            this.updateThemeIcons(isDark);
+        }
+    }
+
+    updateThemeIcons(isDark) {
+        const sunIcons = this.shadowRoot.querySelectorAll('.careconnect-sun-icon');
+        const moonIcons = this.shadowRoot.querySelectorAll('.careconnect-moon-icon');
+        if (isDark) {
+            sunIcons.forEach(el => { el.style.display = 'block'; el.style.color = '#ffd700'; });
+            moonIcons.forEach(el => { el.style.display = 'none'; });
+        } else {
+            sunIcons.forEach(el => { el.style.display = 'none'; });
+            moonIcons.forEach(el => { el.style.display = 'block'; el.style.color = '#ffffff'; });
+        }
+    }
+
     toggleDarkMode() {
-        document.body.classList.toggle('dark-mode');
+        const willBeDark = !document.body.classList.contains('dark-mode');
+        document.body.classList.toggle('dark-mode', willBeDark);
+        try {
+            localStorage.setItem('careconnect-theme', willBeDark ? 'dark' : 'light');
+        } catch (err) {}
         const sunIcons = this.shadowRoot.querySelectorAll('.careconnect-sun-icon');
         const moonIcons = this.shadowRoot.querySelectorAll('.careconnect-moon-icon');
         
@@ -1158,7 +1232,7 @@ class HeaderComponent extends HTMLElement {
         });
         
         setTimeout(() => {
-            if (document.body.classList.contains('dark-mode')) {
+            if (willBeDark) {
                 // Show sun icon (light mode)
                 sunIcons.forEach(sunIcon => {
                     sunIcon.style.display = 'block';

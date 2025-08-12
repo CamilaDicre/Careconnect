@@ -33,6 +33,38 @@ body {
     transition: all var(--transition-normal);
 }
 
+/* Global dark mode base */
+body.dark-mode {
+    background-color: #0b1220;
+    color: #e5e7eb;
+}
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3, 
+body.dark-mode h4, 
+body.dark-mode h5, 
+body.dark-mode h6 {
+    color: #e5e7eb;
+}
+body.dark-mode p,
+body.dark-mode .text-muted {
+    color: #cbd5e1 !important;
+}
+body.dark-mode .feature-card,
+body.dark-mode .service-card,
+body.dark-mode .testimonial-card,
+body.dark-mode .dashboard-float-section .container,
+body.dark-mode .dashboard-float-wrapper .dashboard-section,
+body.dark-mode .appointment-form {
+    background: #0f172a !important;
+    color: #e5e7eb !important;
+    border-color: #1f2937 !important;
+}
+body.dark-mode .btn-outline-light:hover { border-color: #3b82f6; }
+body.dark-mode .btn-primary { background: var(--pal-primary) !important; border-color: var(--pal-primary) !important; }
+body.dark-mode .service-icon, body.dark-mode .service-icon-box { background-color: #0b1220; }
+body.dark-mode .blog-card { background: #0f172a; }
+
 /* Typography for Seniors - Poppins for headings, Josefin Sans for body */
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Poppins', sans-serif !important;

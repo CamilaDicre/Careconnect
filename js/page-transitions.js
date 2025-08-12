@@ -1,3 +1,38 @@
+// Global Theme Initialization (applies across the whole site)
+(function applyGlobalSavedTheme() {
+    try {
+        const getSaved = () => localStorage.getItem('careconnect-theme');
+        const prefersDark = () => (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        const computeIsDark = () => {
+            const saved = getSaved();
+            return saved ? saved === 'dark' : prefersDark();
+        };
+        const setBodyTheme = (isDark) => {
+            if (document.body) {
+                document.body.classList.toggle('dark-mode', !!isDark);
+            } else {
+                document.addEventListener('DOMContentLoaded', () => document.body.classList.toggle('dark-mode', !!isDark), { once: true });
+            }
+        };
+        setBodyTheme(computeIsDark());
+        // Sync when OS preference changes, only if user didn't explicitly choose
+        if (window.matchMedia) {
+            const mq = window.matchMedia('(prefers-color-scheme: dark)');
+            if (mq.addEventListener) {
+                mq.addEventListener('change', (e) => {
+                    if (!getSaved()) setBodyTheme(e.matches);
+                });
+            } else if (mq.addListener) {
+                mq.addListener((e) => { if (!getSaved()) setBodyTheme(e.matches); });
+            }
+        }
+        // Respond to changes from other tabs/windows
+        window.addEventListener('storage', (e) => {
+            if (e.key === 'careconnect-theme') setBodyTheme(e.newValue === 'dark');
+        });
+    } catch (e) { /* no-op */ }
+})();
+
 // Page Transitions & Logout Management for Careconnect
 
 // Prevenir redeclaración
