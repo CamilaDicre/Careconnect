@@ -49,6 +49,22 @@ window.careconnectUsers = [
       });
     }
 
+    // Mostrar/ocultar campo personalizado de género
+    const regGenderSelect = document.getElementById('reg-gender');
+    const regGenderOtherWrap = document.getElementById('reg-gender-other-wrap');
+    const regGenderOtherInput = document.getElementById('reg-gender-other');
+
+    if (regGenderSelect && regGenderOtherWrap) {
+      regGenderSelect.addEventListener('change', function() {
+        const isOther = this.value === 'other';
+        regGenderOtherWrap.classList.toggle('visible', isOther);
+        if (regGenderOtherInput) {
+          regGenderOtherInput.required = isOther;
+          if (!isOther) regGenderOtherInput.value = '';
+        }
+      });
+    }
+
     // Registro de usuario desde el formulario de register-card
     const registerFormHTML = document.querySelector('#register-card form');
     if (registerFormHTML) {
@@ -60,10 +76,24 @@ window.careconnectUsers = [
         const email = document.getElementById('reg-email').value.trim();
         const password = document.getElementById('reg-pass').value.trim();
         const role = document.getElementById('reg-role').value;
-        const gender = document.getElementById('reg-gender').value;
+        const genderSelect = document.getElementById('reg-gender').value;
+        let gender = genderSelect;
+
+        if (genderSelect === 'other') {
+          const customGender = regGenderOtherInput ? regGenderOtherInput.value.trim() : '';
+          if (!customGender) {
+            alert('Please tell us how you identify.');
+            return;
+          }
+          if (customGender.length > 50) {
+            alert('Gender identity is too long. Maximum 50 characters.');
+            return;
+          }
+          gender = LocalStorageUtils.sanitizeText(customGender);
+        }
         
         // Validar campos requeridos
-        if (!name || !email || !password || !role || !gender) {
+        if (!name || !email || !password || !role || !genderSelect) {
           alert('Please fill in all fields.');
           return;
         }

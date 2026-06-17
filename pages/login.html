@@ -28,6 +28,21 @@
         #reg-gender option[value=""] {
             color: #666;
         }
+        #reg-gender option[value="other"] {
+            color: #7b1fa2;
+            font-weight: 500;
+        }
+        #reg-gender option[value="prefer not to say"] {
+            color: #666;
+            font-weight: 500;
+        }
+        #reg-gender-other-wrap {
+            display: none;
+            margin-top: 0.5rem;
+        }
+        #reg-gender-other-wrap.visible {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -72,7 +87,13 @@
                     <option value="">Select gender</option>
                     <option value="masculino">♂ Male</option>
                     <option value="femenino">♀ Female</option>
+                    <option value="other">Other</option>
+                    <option value="prefer not to say">Prefer not to say</option>
                 </select>
+                <div id="reg-gender-other-wrap">
+                    <label for="reg-gender-other"><i class="bi bi-pencil"></i> How do you identify?</label>
+                    <input type="text" id="reg-gender-other" placeholder="Tell us how you identify" maxlength="50">
+                </div>
                 <label for="reg-role"><i class="bi bi-people"></i> What are you looking for?</label>
                 <select id="reg-role" required>
                     <option value="">Select an option</option>
