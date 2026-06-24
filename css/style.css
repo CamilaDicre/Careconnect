@@ -1,6 +1,8 @@
 /* Root Variables */
 :root {
     --pal-primary: royalblue;
+    --pal-secondary : #1f2937;
+    --pal-tertiary : #4b5563;
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;
@@ -24,7 +26,7 @@ body {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 16px;
     line-height: 1.6;
-    color: #1f2937;
+    color: var(--pal-secondary);
     background-color: #f8fafc;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -193,6 +195,25 @@ p, span, div, a, button, input, textarea, label, li, td, th {
     font-family: 'Josefin Sans', sans-serif !important;
 }
 
+.btn-outline-light {
+    border-width: 2px;
+    padding: 12px 30px;
+    font-weight: 500;
+    margin-top: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+    background-color: var(--pal-primary);
+    border-color: var(--pal-primary);
+}
+
+.btn-primary {
+    background: var(--pal-primary) !important;
+    border-color: var(--pal-primary) !important;
+}
+
+
 p {
     font-size: 1.1rem;
     line-height: 1.7;
@@ -201,7 +222,7 @@ p {
 
 /* Hero Section */
 .hero-section {
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.725)),
                 url(../assets/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
     background-position: center;
@@ -243,9 +264,19 @@ p {
 }
 
 .hero-section h1 {
+    width: 90%;
     font-size: 5rem;
     line-height: 1.2;
     font-family: 'Poppins';
+}
+
+.hero-section .text-primary {
+    color: var(--pal-tertiary);
+}
+
+.hero-section .btn {
+    color: white;
+    background-color: var(--pal-primary);
 }
 
 /* Responsive hero text */
@@ -432,8 +463,8 @@ p {
 }
 
 .hero-section .text-primary {
-    color: var(--pal-primary) !important;
-    font-size: 1.7rem;
+    color: white !important;
+    font-size: 1.3rem !important;
     letter-spacing: 2px;
 }
 
@@ -461,48 +492,12 @@ p {
     transition: all 0.25s;
 }
 
-.hero-section .electronics img:first-child,
-.hero-section .hero-tablet {
-    position: absolute;
-    margin-left: 150px;
-    width: 400px;
-    height: 600px;
-    object-fit: contain;
-}
-
-.hero-section .electronics img:last-child,
-.hero-section .hero-phone {
-    position: absolute;
-    margin-right: 100px;
-    margin-top: 80px;
-    width: 280px;
-    height: 450px;
-    object-fit: contain;
-}
-
 .hero-section .electronics img:hover {
     transform: translateY(-20px);
 }
 
 
 
-.btn-outline-light {
-    border-width: 2px;
-    padding: 12px 30px;
-    font-weight: 500;
-    margin-top: 10px;
-    transition: all 0.3s ease;
-}
-
-.btn-outline-light:hover {
-    background-color: var(--pal-primary);
-    border-color: var(--pal-primary);
-}
-
-.btn-primary {
-    background: var(--pal-primary) !important;
-    border-color: var(--pal-primary) !important;
-}
 
 /* Reasons Section */
 /*.reasons-section {
