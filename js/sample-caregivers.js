@@ -120,62 +120,52 @@ class SampleCaregivers {
       }
     ];
 
-    // Obtener usuarios existentes
-    const existingUsers = JSON.parse(localStorage.getItem('users') || '[]');
-    
-    // Filtrar para no duplicar cuidadores existentes
-    const existingEmails = existingUsers.map(user => user.email);
-    const newCaregivers = sampleCaregivers.filter(caregiver => 
-      !existingEmails.includes(caregiver.email)
-    );
+    // Obtener usuarios existentes desde Supabase
+    CareConnectDB.getUsers().then((existingUsers) => {
+      const existingEmails = existingUsers.map((user) => user.email);
+      const newCaregivers = sampleCaregivers.filter(
+        (caregiver) => !existingEmails.includes(caregiver.email)
+      );
 
-    if (newCaregivers.length === 0) {
-      console.log('Todos los cuidadores de prueba ya existen en el sistema.');
-      return;
-    }
+      if (newCaregivers.length === 0) {
+        console.log('Todos los cuidadores de prueba ya existen en el sistema.');
+        return;
+      }
 
-    // Agregar nuevos cuidadores
-    const updatedUsers = [...existingUsers, ...newCaregivers];
-    
-    // Guardar en localStorage
-    try {
-      localStorage.setItem('users', JSON.stringify(updatedUsers));
-      console.log(`✅ Se agregaron ${newCaregivers.length} cuidadores de prueba al sistema:`);
-      newCaregivers.forEach(caregiver => {
-        console.log(`   - ${caregiver.username} (${caregiver.skills})`);
+      Promise.all(newCaregivers.map((c) => CareConnectDB.saveUser(c))).then(() => {
+        console.log(`✅ Se agregaron ${newCaregivers.length} cuidadores de prueba al sistema:`);
+        newCaregivers.forEach((caregiver) => {
+          console.log(`   - ${caregiver.username} (${caregiver.skills})`);
+        });
+      }).catch((error) => {
+        console.error('❌ Error al guardar los cuidadores:', error);
       });
-      console.log('\nLos cuidadores ahora aparecerán en la búsqueda del dashboard.');
-    } catch (error) {
-      console.error('❌ Error al guardar los cuidadores:', error);
-    }
+    });
   }
 
   static removeSampleCaregivers() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
     const sampleEmails = [
-      "maria.gonzalez@careconnect.com",
-      "carlos.rodriguez@careconnect.com",
-      "ana.martinez@careconnect.com",
-      "luis.fernandez@careconnect.com",
-      "carmen.lopez@careconnect.com",
-      "javier.moreno@careconnect.com",
-      "isabel.ruiz@careconnect.com",
-      "roberto.silva@careconnect.com"
+      'maria.gonzalez@careconnect.com',
+      'carlos.rodriguez@careconnect.com',
+      'ana.martinez@careconnect.com',
+      'luis.fernandez@careconnect.com',
+      'carmen.lopez@careconnect.com',
+      'javier.moreno@careconnect.com',
+      'isabel.ruiz@careconnect.com',
+      'roberto.silva@careconnect.com'
     ];
 
-    const filteredUsers = users.filter(user => !sampleEmails.includes(user.email));
-    
-    try {
-      localStorage.setItem('users', JSON.stringify(filteredUsers));
-      console.log('✅ Cuidadores de prueba eliminados del sistema.');
-    } catch (error) {
-      console.error('❌ Error al eliminar los cuidadores:', error);
-    }
+    CareConnectDB.getUsers().then((users) => {
+      const toRemove = users.filter((user) => sampleEmails.includes(user.email));
+      Promise.all(toRemove.map((u) => CareConnectDB.deleteUser(u.id))).then(() => {
+        console.log('✅ Cuidadores de prueba eliminados del sistema.');
+      });
+    });
   }
 
   static listCaregivers() {
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const caregivers = users.filter(user => user.role === 'caregiver');
+    CareConnectDB.getUsers().then((users) => {
+      const caregivers = users.filter((user) => user.role === 'caregiver' || user.role === 'cuidador');
     
     console.log(`📋 Cuidadores registrados en el sistema (${caregivers.length}):`);
     caregivers.forEach((caregiver, index) => {
@@ -187,6 +177,7 @@ class SampleCaregivers {
       console.log(`   Precio: ${caregiver.price || 'No especificado'}`);
       console.log(`   Calificación: ${caregiver.rating || 'No especificada'}`);
       console.log('---');
+    });
     });
   }
 }

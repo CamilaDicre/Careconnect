@@ -5,16 +5,20 @@ class OverviewSection extends HTMLElement {
   }
   
   connectedCallback() {
-    this.render();
+    this.loadAndRender();
   }
-  
-  render() {
-    // Get real user
-    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    const users = LocalStorageUtils.getItem('users', []);
-    const user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
-    const displayName = user ? (user.name || user.username || 'User') : 'User';
-    
+
+  async loadAndRender() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    let displayName = 'User';
+    if (loggedInUser) {
+      const user = await CareConnectDB.getUserByUsername(loggedInUser);
+      displayName = user ? (user.name || user.username || 'User') : 'User';
+    }
+    this.render(displayName);
+  }
+
+  render(displayName = 'User') {
     this.shadowRoot.innerHTML = `
       <style>
         * {

@@ -400,14 +400,12 @@ class CaregiverHeader extends HTMLElement {
   }
 
   loadUserData() {
-    try {
-      // Load user data from localStorage
-      const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-      const users = LocalStorageUtils.getItem('users', []);
-      const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
-      
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    if (!loggedInUser) return;
+
+    CareConnectDB.getUserByUsername(loggedInUser).then((user) => {
       let userData;
-      if (user) {
+      if (user && user.role === 'cuidador') {
         userData = {
           name: user.name || user.username,
           role: 'Professional Caregiver',
@@ -431,12 +429,10 @@ class CaregiverHeader extends HTMLElement {
       if (userAvatar) userAvatar.textContent = userData.avatar;
       if (statusText) statusText.textContent = userData.status;
 
-      // Update notification badge
       this.updateNotificationBadge(3);
-
-    } catch (error) {
+    }).catch((error) => {
       console.error('Error loading user data:', error);
-    }
+    });
   }
 
   updateNotificationBadge(count) {

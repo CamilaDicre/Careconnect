@@ -6,64 +6,44 @@ class CareSidebar extends HTMLElement {
     this.isCollapsed = false;
   }
   connectedCallback() {
-    // Load sidebar state from localStorage
     this.loadSidebarState();
-    
-    // Wait for LocalStorageUtils to be available
-    if (typeof LocalStorageUtils === 'undefined') {
-      setTimeout(() => {
-        this.render();
-        this.attachEvents();
-        this.adjustMainContent();
-      }, 100);
-    } else {
-      this.render();
-      this.attachEvents();
-      this.adjustMainContent();
-    }
-    
-    // Floating button to collapse/restore sidebar
+    this.loadAndRender();
     const btn = document.getElementById('sidebar-toggle-btn');
-    if (btn) {
-      btn.remove();
-    }
+    if (btn) btn.remove();
   }
+
+  async loadAndRender() {
+    const sections = this.getSections();
+    const userData = await this.getUserData();
+    this.render(sections, userData);
+    this.attachEvents();
+    this.adjustMainContent();
+  }
+
+  render(sections, userData) {
+    const initials = userData.initials;
+    this.sections = sections;
   getUserType() {
     return window.userType || 'patient';
   }
 
   loadSidebarState() {
-    // Load sidebar collapsed state from localStorage
-    if (typeof LocalStorageUtils !== 'undefined') {
-      this.isCollapsed = LocalStorageUtils.getItem('sidebarCollapsed', false);
+    if (typeof UIPreferences !== 'undefined') {
+      this.isCollapsed = UIPreferences.getSidebarCollapsed();
     } else {
-      // Fallback to localStorage directly
-      try {
-        const savedState = localStorage.getItem('sidebarCollapsed');
-        this.isCollapsed = savedState ? JSON.parse(savedState) : false;
-      } catch (error) {
-        console.error('Error loading sidebar state:', error);
-        this.isCollapsed = false;
-      }
+      this.isCollapsed = false;
     }
   }
 
   saveSidebarState() {
-    // Save sidebar collapsed state to localStorage
-    if (typeof LocalStorageUtils !== 'undefined') {
-      LocalStorageUtils.setItem('sidebarCollapsed', this.isCollapsed);
-    } else {
-      // Fallback to localStorage directly
-      try {
-        localStorage.setItem('sidebarCollapsed', JSON.stringify(this.isCollapsed));
-      } catch (error) {
-        console.error('Error saving sidebar state:', error);
-      }
+    if (typeof UIPreferences !== 'undefined') {
+      UIPreferences.setSidebarCollapsed(this.isCollapsed);
     }
   }
-  getUserData() {
-    // Check if LocalStorageUtils is available
-    if (typeof LocalStorageUtils === 'undefined') {
+
+  async getUserData() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    if (!loggedInUser) {
       return {
         name: 'Patient',
         initials: 'P',
@@ -73,19 +53,8 @@ class CareSidebar extends HTMLElement {
         username: '-'
       };
     }
-    
-    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    const users = LocalStorageUtils.getItem('users', []);
-    
-    // First try to find by username/email without role restriction
-    let user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
-    
-    // If not found, try with role restriction (check both English and Spanish roles)
-    if (!user) {
-      user = users.find(u => (u.username === loggedInUser || u.email === loggedInUser) && 
-        (u.role === 'patient' || u.role === 'paciente' || u.role === 'cuidador'));
-    }
-    
+
+    const user = await CareConnectDB.getUserByUsername(loggedInUser);
     let displayName = user ? (user.name || user.username) : 'Patient';
     
     // Calculate initials from name
@@ -144,12 +113,9 @@ class CareSidebar extends HTMLElement {
       { id: 'games', label: 'Games', icon: 'bi-controller' }
     ];
   }
-  render() {
-    const sections = this.getSections();
-    const userData = this.getUserData();
-    // Calculate initials for avatar if no custom photo
+
+  render(sections, userData) {
     const initials = userData.initials;
-    
     this.sections = sections;
     
     // Apply collapsed state to nav element

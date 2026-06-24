@@ -427,6 +427,13 @@
     <script src="dashboard-header.js"></script>
     <script src="overview-section.js"></script>
     <script src="user-profile.js?v=3.1"></script>
+    <script src="../js/supabase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase-client.js"></script>
+    <script src="../js/careconnect-session.js"></script>
+    <script src="../js/ui-preferences.js"></script>
+    <script src="../js/validation-utils.js"></script>
+    <script src="../js/careconnect-db.js"></script>
     <script src="../js/localStorage-utils.js"></script>
     <script src="../js/avatar-utils.js"></script>
     <script src="medicine-list.js"></script>
@@ -489,14 +496,9 @@
         }
         
         // Verificación de autenticación al cargar la página
-        document.addEventListener('DOMContentLoaded', function() {
-            // --- Protección de acceso para pacientes ---
-            const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-            const users = LocalStorageUtils.getItem('users', []);
-            const user = users.find(u => u.username === loggedInUser && u.role === 'paciente');
-            
-            if (!loggedInUser || !user) {
-                // Mostrar notificación modal moderna para pacientes
+        document.addEventListener('DOMContentLoaded', async function() {
+            const loggedInUser = CareConnectSession.getLoggedInUser();
+            if (!loggedInUser) {
                 showAuthModal(
                     'You must be logged in as a patient to access the dashboard. Please sign in with your patient account.',
                     '../pages/login.html',
@@ -504,7 +506,14 @@
                 );
                 return;
             }
-            // --- Fin protección de acceso ---
+            const user = await CareConnectDB.getUserByUsername(loggedInUser);
+            if (!user || user.role !== 'paciente') {
+                showAuthModal(
+                    'You must be logged in as a patient to access the dashboard. Please sign in with your patient account.',
+                    '../pages/login.html',
+                    7
+                );
+            }
         });
         
         // Set user type to patient (fixed)
@@ -580,9 +589,7 @@
                 
                 // Limpiar datos de sesión
                 setTimeout(() => {
-                    LocalStorageUtils.removeItem('loggedInUser');
-                    LocalStorageUtils.removeItem('userRole');
-                    LocalStorageUtils.removeItem('currentUserId');
+                    CareConnectSession.clear();
                     
                     // Redirigir al login
                     setTimeout(() => {

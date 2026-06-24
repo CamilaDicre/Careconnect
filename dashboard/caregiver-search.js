@@ -9,13 +9,16 @@ class CaregiverSearch extends HTMLElement {
   }
 
   connectedCallback() {
-    this.render();
+    this.loadAndRender();
   }
 
-  getCaregivers() {
+  async loadAndRender() {
+    await this.render();
+  }
+
+  async getCaregivers() {
     try {
-      // Get real caregivers from the system
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const users = await CareConnectDB.getUsers();
       
       // Only users with caregiver role
       const caregivers = users.filter(u => u.role === 'caregiver' || u.role === 'cuidador').map(u => ({
@@ -40,8 +43,8 @@ class CaregiverSearch extends HTMLElement {
     }
   }
 
-  render() {
-    let caregivers = this.getCaregivers();
+  async render() {
+    let caregivers = await this.getCaregivers();
     
     // Apply filters
     if (this.filterValue) {

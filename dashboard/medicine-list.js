@@ -4,22 +4,27 @@ class MedicineList extends HTMLElement {
     this.attachShadow({ mode: 'open' });
   }
   
-  connectedCallback() {
-    this.render();
+  disconnectedCallback() {
+    this.removeEventListeners();
+  }
+
+  async getMedicines() {
+    const userId = CareConnectSession.getCurrentUserId();
+    if (!userId) return [];
+    return CareConnectDB.getMedicines(userId);
+  }
+
+  async loadAndRender() {
+    const medicines = await this.getMedicines();
+    this.render(medicines);
     this.attachEvents();
   }
-  
-  getMedicines() {
-    // Get logged in user
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (!loggedInUser) return [];
-    // Read user-specific medications
-    const meds = JSON.parse(localStorage.getItem('medicines_' + loggedInUser) || '[]');
-    return meds;
+
+  connectedCallback() {
+    this.loadAndRender();
   }
-  
-  render() {
-    const medicines = this.getMedicines();
+
+  render(medicines = []) {
     this.shadowRoot.innerHTML = `
       <style>
         * {
@@ -521,7 +526,6 @@ class MedicineList extends HTMLElement {
   }
   
   showAddMedicineModal() {
-    // Simple prompt to add medication (you can improve this with a real modal)
     const name = prompt('Medication name:');
     if (!name) return;
     const dosage = prompt('Dosage:');
@@ -531,22 +535,23 @@ class MedicineList extends HTMLElement {
     const color = '#ffc107';
     const icon = 'bi-capsule';
     const status = 'pending';
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    if (!loggedInUser) return;
-    const medicines = JSON.parse(localStorage.getItem('medicines_' + loggedInUser) || '[]');
-    medicines.push({
-      id: Date.now(),
-      name,
-      dosage,
-      time,
-      frequency,
-      instructions,
-      color,
-      icon,
-      status
+    const userId = CareConnectSession.getCurrentUserId();
+    if (!userId) return;
+
+    this.getMedicines().then((medicines) => {
+      medicines.push({
+        id: Date.now(),
+        name,
+        dosage,
+        time,
+        frequency,
+        instructions,
+        color,
+        icon,
+        status
+      });
+      CareConnectDB.saveMedicines(userId, medicines).then(() => this.loadAndRender());
     });
-    localStorage.setItem('medicines_' + loggedInUser, JSON.stringify(medicines));
-    this.render();
   }
   
   showNotification(message, type = 'success') {

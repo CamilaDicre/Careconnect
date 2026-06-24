@@ -927,90 +927,66 @@ const sampleUsers = {
   ]
 };
 
-// Function to load sample users into localStorage
-function loadSampleUsers() {
+// Function to load sample users into Supabase
+async function loadSampleUsers() {
   try {
-    if (typeof LocalStorageUtils === 'undefined') {
-      console.warn('LocalStorageUtils is not available');
+    if (!CareConnectDB?.isReady?.()) {
+      console.warn('Supabase no está configurado');
       return false;
     }
-    
-    const existingUsers = LocalStorageUtils.getItem('users', []);
+
+    const existingUsers = await CareConnectDB.getUsers();
     const allUsers = [...sampleUsers.patients, ...sampleUsers.caregivers];
-    
-    // Add new users without duplicates
-    allUsers.forEach(newUser => {
-      const exists = existingUsers.some(existingUser => 
-        existingUser.username === newUser.username || 
-        existingUser.email === newUser.email
+
+    for (const newUser of allUsers) {
+      const exists = existingUsers.some(
+        (existingUser) =>
+          existingUser.username === newUser.username ||
+          existingUser.email === newUser.email
       );
-      
       if (!exists) {
-        existingUsers.push(newUser);
+        await CareConnectDB.saveUser(newUser);
       }
-    });
-    
-    LocalStorageUtils.setItem('users', existingUsers);
-    
+    }
+
     console.log('✅ Sample users loaded successfully');
-    console.log(`📊 Total users: ${existingUsers.length}`);
-    console.log(`👥 Patients: ${sampleUsers.patients.length}`);
-    console.log(`👨‍⚕️ Caregivers: ${sampleUsers.caregivers.length}`);
-    
     return true;
-    
   } catch (error) {
     console.error('Error loading sample users:', error);
     return false;
   }
 }
 
-// Function to create complete user profiles
-function createUserProfiles() {
+async function createUserProfiles() {
   try {
-    if (typeof LocalStorageUtils === 'undefined') {
-      console.warn('LocalStorageUtils is not available');
-      return false;
-    }
-    
-    const users = LocalStorageUtils.getItem('users', []);
-    
-    users.forEach(user => {
-      const userProfileKey = `userProfile_${user.username}`;
-      
-      // Check if profile already exists
-      const existingProfile = LocalStorageUtils.getItem(userProfileKey, null);
-      
-      if (!existingProfile) {
-        const profileData = {
-          // Basic user data
+    if (!CareConnectDB?.isReady?.()) return false;
+    const users = await CareConnectDB.getUsers();
+
+    for (const user of users) {
+      const existingProfile = await CareConnectDB.getUserProfile(user.username);
+      if (!existingProfile?.name || existingProfile.name === user.username) {
+        await CareConnectDB.saveUserProfile(user.username, {
           name: user.name || user.username || 'User',
           email: user.email || '-',
           username: user.username || '-',
           role: user.role || 'patient',
-          
-          // Additional profile data
           age: user.age || '',
           gender: user.gender || '',
           phone: user.phone || '',
           address: user.address || '',
-          
-          // Medical information (patients only)
           allergies: user.allergies || [],
           medications: user.medications || [],
           conditions: user.conditions || [],
-          emergencyContact: user.emergencyContact || {
-            name: '',
-            phone: '',
-            relationship: ''
-          },
+          emergencyContact: user.emergencyContact || { name: '', phone: '', relationship: '' },
           bloodType: user.bloodType || '',
           height: user.height || '',
           weight: user.weight || '',
           insurance: user.insurance || '',
           doctor: user.doctor || '',
-          
-          // Professional information (caregivers only)
+          preferences: { language: 'English', notifications: true, accessibility: false },
+          notes: user.notes || '',
+          photo: user.photo || null,
+          avatarColor: user.avatarColor || 'linear-gradient(135deg, #667eea, #764ba2)',
           experience: user.experience || '',
           education: user.education || '',
           certifications: user.certifications || '',
@@ -1022,66 +998,35 @@ function createUserProfiles() {
           rating: user.rating || 0,
           reviews: user.reviews || 0,
           hourlyRate: user.hourlyRate || '',
-          workPreferences: user.workPreferences || {},
-          
-          // Preferences
-          preferences: {
-            language: 'English',
-            notifications: true,
-            accessibility: false
-          },
-          
-          // Notes
-          notes: user.notes || '',
-          
-          // Avatar
-          photo: user.photo || null,
-          avatarColor: user.avatarColor || 'linear-gradient(135deg, #667eea, #764ba2)'
-        };
-        
-        LocalStorageUtils.setItem(userProfileKey, profileData);
+          workPreferences: user.workPreferences || {}
+        });
       }
-    });
-    
+    }
+
     console.log('✅ User profiles created/updated');
     return true;
-    
   } catch (error) {
     console.error('Error creating user profiles:', error);
     return false;
   }
 }
 
-// Function to simulate login for a specific user
-function loginAsUser(username) {
+async function loginAsUser(username) {
   try {
-    if (typeof LocalStorageUtils === 'undefined') {
-      console.warn('LocalStorageUtils is not available');
-      return false;
-    }
-    
-    const users = LocalStorageUtils.getItem('users', []);
-    const user = users.find(u => u.username === username || u.email === username);
-    
+    const user = await CareConnectDB.getUserByUsername(username);
     if (user) {
-      LocalStorageUtils.setItem('loggedInUser', user.username);
-      LocalStorageUtils.setItem('userRole', user.role);
-      LocalStorageUtils.setItem('currentUserId', user.id);
-      
-      console.log(`✅ Login successful as: ${user.name} (${user.role})`);
+      CareConnectSession.setUserSession(user);
+      console.log(`✅ Login successful as: ${user.name || user.username} (${user.role})`);
       return true;
-    } else {
-      console.error(`❌ User not found: ${username}`);
-      return false;
     }
-    
+    console.error(`❌ User not found: ${username}`);
+    return false;
   } catch (error) {
     console.error('Error in login:', error);
     return false;
   }
 }
 
-// Export functions for global use
 window.SampleUsers = {
   loadSampleUsers,
   createUserProfiles,
@@ -1089,8 +1034,6 @@ window.SampleUsers = {
   sampleUsers
 };
 
-// Auto-load users when script is imported
-if (typeof LocalStorageUtils !== 'undefined' && LocalStorageUtils.isAvailable()) {
-  loadSampleUsers();
-  createUserProfiles();
+if (typeof CareConnectDB !== 'undefined' && CareConnectDB.isReady()) {
+  loadSampleUsers().then(() => createUserProfiles());
 }

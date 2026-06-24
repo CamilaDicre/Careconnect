@@ -5,9 +5,13 @@ class WelcomeOverlay extends HTMLElement {
   }
   
   connectedCallback() {
-    this.render();
+    this.loadAndShow();
+  }
+
+  async loadAndShow() {
+    await this.render();
     this.initializeAnimations();
-    setTimeout(() => this.hide(), 4000); // Aumentado a 4 segundos para mejor experiencia
+    setTimeout(() => this.hide(), 4000);
   }
   
   hide() {
@@ -29,11 +33,14 @@ class WelcomeOverlay extends HTMLElement {
     setTimeout(() => this.remove(), 1200);
   }
   
-  getUserData() {
-    const loggedInUser = localStorage.getItem("loggedInUser");
+  getUserType() {
+    return window.userType || 'patient';
+  }
+
+  async getUserData() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
     if (loggedInUser) {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const user = users.find(u => u.username === loggedInUser);
+      const user = await CareConnectDB.getUserByUsername(loggedInUser);
       const displayName = user ? (user.name || user.username) : loggedInUser;
       
       // Saludos dinámicos según la hora del día
@@ -76,8 +83,8 @@ class WelcomeOverlay extends HTMLElement {
     });
   }
   
-  render() {
-    const userData = this.getUserData();
+  async render() {
+    const userData = await this.getUserData();
     this.shadowRoot.innerHTML = `
       <style>
         /* Google Fonts loaded via CDN in HTML head */

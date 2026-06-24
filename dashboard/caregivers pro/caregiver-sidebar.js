@@ -7,49 +7,32 @@ class CaregiverSidebar extends HTMLElement {
   }
 
   connectedCallback() {
-    // Load sidebar state from localStorage
     this.loadSidebarState();
-    
+    this.initSidebar();
+  }
+
+  async initSidebar() {
+    await this.loadUserData();
     this.render();
     this.attachEvents();
-    this.loadUserData();
     this.adjustMainContent();
   }
 
   loadSidebarState() {
-    // Load sidebar collapsed state from localStorage
-    if (typeof LocalStorageUtils !== 'undefined') {
-      this.isCollapsed = LocalStorageUtils.getItem('sidebarCollapsed', false);
-    } else {
-      // Fallback to localStorage directly
-      try {
-        const savedState = localStorage.getItem('sidebarCollapsed');
-        this.isCollapsed = savedState ? JSON.parse(savedState) : false;
-      } catch (error) {
-        console.error('Error loading sidebar state:', error);
-        this.isCollapsed = false;
-      }
+    if (typeof UIPreferences !== 'undefined') {
+      this.isCollapsed = UIPreferences.getSidebarCollapsed();
     }
   }
 
   saveSidebarState() {
-    // Save sidebar collapsed state to localStorage
-    if (typeof LocalStorageUtils !== 'undefined') {
-      LocalStorageUtils.setItem('sidebarCollapsed', this.isCollapsed);
-    } else {
-      // Fallback to localStorage directly
-      try {
-        localStorage.setItem('sidebarCollapsed', JSON.stringify(this.isCollapsed));
-      } catch (error) {
-        console.error('Error saving sidebar state:', error);
-      }
+    if (typeof UIPreferences !== 'undefined') {
+      UIPreferences.setSidebarCollapsed(this.isCollapsed);
     }
   }
 
-  loadUserData() {
-    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    const users = LocalStorageUtils.getItem('users', []);
-    const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+  async loadUserData() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    const user = loggedInUser ? await CareConnectDB.getUserByUsername(loggedInUser) : null;
     
     if (user) {
       this.userData = {

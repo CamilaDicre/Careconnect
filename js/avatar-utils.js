@@ -33,21 +33,9 @@ class AvatarUtils {
   }
   
   // Get user data with avatar information
-  static getUserDataWithAvatar() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    const users = JSON.parse(localStorage.getItem('users') || '[]');
-    const user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
-    
-    if (user) {
-      return {
-        name: user.name || user.username || 'User',
-        initials: this.getInitials(user.name || user.username),
-        avatarColor: this.getAvatarColor(user.name || user.username),
-        photo: user.photo || null,
-        email: user.email || '-',
-        role: user.role || '-'
-      };
-    } else {
+  static async getUserDataWithAvatar() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    if (!loggedInUser) {
       return {
         name: 'User',
         initials: 'U',
@@ -57,6 +45,42 @@ class AvatarUtils {
         role: '-'
       };
     }
+
+    const user = await CareConnectDB.getUserByUsername(loggedInUser);
+
+    if (user) {
+      return {
+        name: user.name || user.username || 'User',
+        initials: this.getInitials(user.name || user.username),
+        avatarColor: this.getAvatarColor(user.name || user.username),
+        photo: user.photo || null,
+        email: user.email || '-',
+        role: user.role || '-'
+      };
+    }
+
+    return {
+      name: 'User',
+      initials: 'U',
+      avatarColor: this.getAvatarColor('User'),
+      photo: null,
+      email: '-',
+      role: '-'
+    };
+  }
+
+  /** @deprecated Usa getUserDataWithAvatar() async */
+  static getUserDataWithAvatarSync() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    const name = loggedInUser || 'User';
+    return {
+      name,
+      initials: this.getInitials(name),
+      avatarColor: this.getAvatarColor(name),
+      photo: null,
+      email: '-',
+      role: CareConnectSession.getUserRole() || '-'
+    };
   }
   
   // Create avatar HTML element

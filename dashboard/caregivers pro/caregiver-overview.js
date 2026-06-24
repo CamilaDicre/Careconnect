@@ -6,9 +6,10 @@ class CaregiverOverview extends HTMLElement {
   }
   
   connectedCallback() {
-    this.render();
-    this.initializeCharts();
-    this.startRealTimeUpdates();
+    this.loadAndRender().then(() => {
+      this.initializeCharts();
+      this.startRealTimeUpdates();
+    });
   }
 
   getMockData() {
@@ -93,16 +94,18 @@ class CaregiverOverview extends HTMLElement {
     };
   }
   
-  render() {
-    // Get logged in caregiver data
-    let loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    let users = LocalStorageUtils.getItem('users', []);
-    let user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
-    let profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=2563eb&color=fff&size=128&rounded=true';
-    let displayName = user ? (user.name || user.username) : 'Caregiver';
-    let displayEmail = user ? (user.email || '-') : '-';
-    let displayPhone = user ? (user.phone || '-') : '-';
-    let displayTitles = user ? (user.titles || 'No especificado') : 'No especificado';
+  async loadAndRender() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    const user = loggedInUser ? await CareConnectDB.getUserByUsername(loggedInUser) : null;
+    this.render(user, loggedInUser);
+  }
+
+  render(user = null, loggedInUser = '') {
+    const profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=2563eb&color=fff&size=128&rounded=true';
+    const displayName = user ? (user.name || user.username) : 'Caregiver';
+    const displayEmail = user ? (user.email || '-') : '-';
+    const displayPhone = user ? (user.phone || '-') : '-';
+    const displayTitles = user ? (user.titles || 'No especificado') : 'No especificado';
 
     this.shadowRoot.innerHTML = `
       <style>

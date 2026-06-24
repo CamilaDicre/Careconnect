@@ -7,26 +7,22 @@ class VirtualCare extends HTMLElement {
   }
   
   connectedCallback() {
-    this.loadSessions();
+    this.loadSessionsAndRender();
+  }
+
+  async loadSessionsAndRender() {
+    await this.loadSessions();
     this.render();
     this.attachEventListeners();
   }
 
-  disconnectedCallback() {
-    // Clean up event listeners when component is removed
-    this.removeEventListeners();
-  }
-  
-  loadSessions() {
-    // Try to get sessions from localStorage first, then fall back to default data
-    if (typeof LocalStorageUtils !== 'undefined') {
-      const savedSessions = LocalStorageUtils.getItem('virtualCareSessions');
-      if (savedSessions && savedSessions.length > 0) {
-        this.sessions = savedSessions;
-        return;
-      }
+  async loadSessions() {
+    const userId = CareConnectSession.getCurrentUserId();
+    const savedSessions = await CareConnectDB.getVirtualCareSessions(userId);
+    if (savedSessions && savedSessions.length > 0) {
+      this.sessions = savedSessions;
+      return;
     }
-    
     // Default sessions with more realistic data
     this.sessions = [
       {
@@ -79,16 +75,12 @@ class VirtualCare extends HTMLElement {
       }
     ];
     
-    // Save to localStorage for persistence
-    if (typeof LocalStorageUtils !== 'undefined') {
-      LocalStorageUtils.setItem('virtualCareSessions', this.sessions);
-    }
+    await this.saveSessions();
   }
 
-  saveSessions() {
-    if (typeof LocalStorageUtils !== 'undefined') {
-      LocalStorageUtils.setItem('virtualCareSessions', this.sessions);
-    }
+  async saveSessions() {
+    const userId = CareConnectSession.getCurrentUserId();
+    await CareConnectDB.saveVirtualCareSessions(userId, this.sessions);
   }
 
   getFilteredSessions() {

@@ -10,28 +10,20 @@ class SidebarUtils {
    */
   static getSidebarState() {
     try {
-      if (typeof LocalStorageUtils !== 'undefined') {
-        return LocalStorageUtils.getItem('sidebarCollapsed', false);
-      } else {
-        const savedState = localStorage.getItem('sidebarCollapsed');
-        return savedState ? JSON.parse(savedState) : false;
+      if (typeof UIPreferences !== 'undefined') {
+        return UIPreferences.getSidebarCollapsed();
       }
+      return false;
     } catch (error) {
       console.error('Error getting sidebar state:', error);
       return false;
     }
   }
 
-  /**
-   * Guarda el estado del sidebar en localStorage
-   * @param {boolean} collapsed - true si está colapsado, false si está expandido
-   */
   static setSidebarState(collapsed) {
     try {
-      if (typeof LocalStorageUtils !== 'undefined') {
-        LocalStorageUtils.setItem('sidebarCollapsed', collapsed);
-      } else {
-        localStorage.setItem('sidebarCollapsed', JSON.stringify(collapsed));
+      if (typeof UIPreferences !== 'undefined') {
+        UIPreferences.setSidebarCollapsed(collapsed);
       }
     } catch (error) {
       console.error('Error saving sidebar state:', error);

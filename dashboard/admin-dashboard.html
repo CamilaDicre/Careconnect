@@ -337,27 +337,24 @@
     </div>
   </div>
   
+  <script src="../js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../js/supabase-client.js"></script>
+  <script src="../js/careconnect-session.js"></script>
+  <script src="../js/ui-preferences.js"></script>
+  <script src="../js/validation-utils.js"></script>
+  <script src="../js/careconnect-db.js"></script>
+  <script src="../js/localStorage-utils.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script>
-    // Utilidades para usuarios
-    function getUsers() {
-      let users = JSON.parse(localStorage.getItem('users') || '[]');
-      if (!users.length) {
-        users = [
-          { username: "admin", email: "admin@email.com", password: "admin123", role: "admin" },
-          { username: "usuario", email: "usuario@email.com", password: "pass123", role: "paciente" },
-          { username: "Ameth", email: "ameth@email.com", password: "password123", role: "admin" },
-          { username: "Josue", email: "josue@email.com", password: "testpass456", role: "cuidador" }
-        ];
-        saveUsers(users);
-      }
-      return users;
+    async function getUsers() {
+      return CareConnectDB.getUsers(true);
     }
-    function saveUsers(users) {
-      localStorage.setItem('users', JSON.stringify(users));
+    async function saveUsers(users) {
+      return CareConnectDB.saveUsers(users);
     }
-    function renderStats() {
-      const users = getUsers();
+    async function renderStats() {
+      const users = await getUsers();
       const total = users.length;
       const admins = users.filter(u => u.role === 'admin').length;
       const cuidadores = users.filter(u => u.role === 'cuidador').length;
@@ -371,8 +368,8 @@
         <div class="stat-card"><div class="stat-title">Pacientes</div><div class="stat-value">${pacientes}</div></div>
       `;
     }
-    function renderUsersTable(filter = '') {
-      const users = getUsers();
+    async function renderUsersTable(filter = '') {
+      const users = await getUsers();
       const tbody = document.querySelector('#admin-users-table tbody');
       tbody.innerHTML = '';
       const filtered = users.filter(u => {
@@ -418,9 +415,9 @@
       });
     }
     // Guardar cambios en línea
-    function handleEdit(e) {
+    async function handleEdit(e) {
       const idx = e.target.dataset.idx;
-      const users = getUsers();
+      const users = await getUsers();
       if (e.target.classList.contains('edit-name')) {
         users[idx].username = e.target.value;
       } else if (e.target.classList.contains('edit-email')) {
@@ -430,23 +427,21 @@
       } else if (e.target.classList.contains('edit-password')) {
         users[idx].password = e.target.value;
       }
-      saveUsers(users);
-      renderStats();
+      await saveUsers(users);
+      await renderStats();
     }
-    // Eliminar usuario
-    function handleDelete(e) {
+    async function handleDelete(e) {
       if (!e.target.classList.contains('delete-user')) return;
       const idx = e.target.dataset.idx;
-      let users = getUsers();
+      const users = await getUsers();
       if (confirm('¿Seguro que quieres eliminar este usuario?')) {
         users.splice(idx, 1);
-        saveUsers(users);
-        renderUsersTable(document.getElementById('searchUser').value);
-        renderStats();
+        await saveUsers(users);
+        await renderUsersTable(document.getElementById('searchUser').value);
+        await renderStats();
       }
     }
-    // Agregar usuario
-    function handleAddUser(e) {
+    async function handleAddUser(e) {
       e.preventDefault();
       const name = document.getElementById('addName').value.trim();
       const email = document.getElementById('addEmail').value.trim();
@@ -456,18 +451,17 @@
         alert('Completa todos los campos');
         return;
       }
-      let users = getUsers();
+      const users = await getUsers();
       if (users.find(u => u.username === name)) {
         alert('Ese nombre de usuario ya existe');
         return;
       }
       users.push({ username: name, email, password, role });
-      saveUsers(users);
-      renderUsersTable(document.getElementById('searchUser').value);
-      renderStats();
+      await saveUsers(users);
+      await renderUsersTable(document.getElementById('searchUser').value);
+      await renderStats();
       e.target.reset();
     }
-    // Buscar usuarios
     function handleSearch(e) {
       renderUsersTable(e.target.value);
     }
@@ -489,10 +483,10 @@
       }
     }
     // Mostrar detalles en modal
-    function handleViewDetails(e) {
+    async function handleViewDetails(e) {
       if (!e.target.classList.contains('view-details')) return;
       const idx = e.target.dataset.idx;
-      const users = getUsers();
+      const users = await getUsers();
       const user = users[idx];
       if (!user) {
         document.getElementById('userDetailModalBody').innerHTML = '<div class="text-danger">No se encontraron datos del usuario.</div>';
@@ -506,9 +500,9 @@
       document.getElementById('userDetailModalBody').innerHTML = html;
     }
     // Inicializar
-    function initAdminDashboard() {
-      renderStats();
-      renderUsersTable();
+    async function initAdminDashboard() {
+      await renderStats();
+      await renderUsersTable();
       document.getElementById('admin-users-table').addEventListener('input', handleEdit);
       document.getElementById('admin-users-table').addEventListener('click', handleDelete);
       document.getElementById('admin-users-table').addEventListener('click', handleTogglePassword);
@@ -562,9 +556,7 @@
             
             // Limpiar datos de sesión
             setTimeout(() => {
-              localStorage.removeItem('loggedInUser');
-              localStorage.removeItem('userRole');
-              localStorage.removeItem('currentUserId');
+              CareConnectSession.clear();
               
               // Redirigir al login
               setTimeout(() => {

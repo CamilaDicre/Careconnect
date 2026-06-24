@@ -359,6 +359,13 @@
       <button type="submit" class="caregiver-main-btn" id="submitBtn">Crear Perfil</button>
     </form>
   </div>
+      <script src="../js/supabase-config.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+      <script src="../js/supabase-client.js"></script>
+      <script src="../js/careconnect-session.js"></script>
+      <script src="../js/ui-preferences.js"></script>
+      <script src="../js/validation-utils.js"></script>
+      <script src="../js/careconnect-db.js"></script>
       <script src="../js/localStorage-utils.js"></script>
     <script src="../js/page-transitions.js"></script>
     <script>
@@ -384,29 +391,25 @@
     }
 
     // Función para obtener usuarios
-    function getUsers() {
+    async function getUsers() {
       try {
-        if (!LocalStorageUtils.isAvailable()) {
-          console.warn('localStorage no está disponible');
+        if (!CareConnectDB.isReady()) {
+          console.warn('Supabase no está configurado');
           return [];
         }
-        
-        const users = LocalStorageUtils.getItem('users', []);
-        return Array.isArray(users) ? users : [];
+        return await CareConnectDB.getUsers();
       } catch (error) {
         console.error('Error obteniendo usuarios:', error);
         return [];
       }
     }
 
-    // Función para guardar usuarios
-    function saveUsers(users) {
+    async function saveUsers(users) {
       try {
         if (!Array.isArray(users)) {
           throw new Error('Users debe ser un array');
         }
-        
-        return LocalStorageUtils.setItem('users', users, 5000000); // 5MB límite
+        return CareConnectDB.saveUsers(users);
       } catch (error) {
         console.error('Error guardando usuarios:', error);
         return false;
@@ -448,25 +451,21 @@
     }
 
     // Función para registrar cuidador
-    function registerCaregiver(formData) {
+    async function registerCaregiver(formData) {
       console.log('Iniciando registro de cuidador...', formData);
-      
+
       try {
-        // Verificar si localStorage está disponible
-        if (!LocalStorageUtils.isAvailable()) {
-          throw new Error('localStorage no está disponible en tu navegador. Por favor, habilítalo o prueba con un navegador diferente.');
+        if (!CareConnectDB.isReady()) {
+          throw new Error('Supabase no está configurado. Revisa js/supabase-config.js');
         }
-        
-        // Obtener usuarios existentes
-        let users = getUsers();
+
+        const users = await getUsers();
         console.log('Usuarios existentes:', users.length);
-        
-        // Verificar duplicados por email
-        if (users.some(u => u.email === formData.email.toLowerCase())) {
+
+        if (users.some((u) => u.email === formData.email.toLowerCase())) {
           throw new Error('Ya existe un usuario registrado con este correo electrónico.');
         }
-        
-        // Crear nuevo usuario cuidador
+
         const newCaregiver = {
           username: formData.fullName.trim(),
           email: formData.email.toLowerCase().trim(),
@@ -484,41 +483,23 @@
           availability: formData.availability,
           role: 'cuidador',
           registrationDate: new Date().toISOString(),
-          id: Date.now().toString() + Math.random().toString(36).substr(2, 9)
+          id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString() + Math.random().toString(36).substr(2, 9)
         };
-        
-        console.log('Nuevo cuidador creado:', newCaregiver);
-        
-        // Agregar nuevo usuario
-        users.push(newCaregiver);
-        
-        // Guardar usuarios actualizados
-        if (!saveUsers(users)) {
-          throw new Error('Error al guardar los datos. Por favor, verifica que tienes suficiente espacio de almacenamiento.');
+
+        const saved = await CareConnectDB.saveUser(newCaregiver);
+        if (!saved) {
+          throw new Error('Error al guardar los datos en Supabase.');
         }
-        
-        console.log('Usuario guardado exitosamente');
-        
-        // Guardar datos de sesión
-        LocalStorageUtils.setItem('loggedInUser', newCaregiver.username);
-        LocalStorageUtils.setItem('userRole', newCaregiver.role);
-        LocalStorageUtils.setItem('currentUserId', newCaregiver.id);
-        
-        console.log('Sesión iniciada:', {
-          loggedInUser: newCaregiver.username,
-          userRole: newCaregiver.role,
-          currentUserId: newCaregiver.id
-        });
-        
-        return newCaregiver;
+
+        CareConnectSession.setUserSession(saved);
+        return saved;
       } catch (error) {
         console.error('Error en registerCaregiver:', error);
         throw error;
       }
     }
 
-    // Manejar envío del formulario
-    document.getElementById('caregiverForm').addEventListener('submit', function(e) {
+    document.getElementById('caregiverForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       console.log('Formulario enviado');
       
@@ -561,7 +542,7 @@
         }
         
         // Registrar cuidador
-        const newCaregiver = registerCaregiver(formData);
+        const newCaregiver = await registerCaregiver(formData);
         
         // Mostrar mensaje de éxito
         showBanner('¡Registro exitoso! Redirigiendo al dashboard...', 'success');

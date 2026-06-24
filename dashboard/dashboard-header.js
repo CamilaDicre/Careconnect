@@ -541,12 +541,11 @@ class DashboardHeader extends HTMLElement {
   }
 
   loadUserData() {
-    try {
-      const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-      const users = LocalStorageUtils.getItem('users', []);
-      const user = users.find(u => u.username === loggedInUser);
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    if (!loggedInUser) return;
 
-      if (user) {
+    CareConnectDB.getUserByUsername(loggedInUser).then((user) => {
+      if (!user) return;
         const userNameElement = this.shadowRoot.querySelector('#userName');
         const userRoleElement = this.shadowRoot.querySelector('#userRole');
         const userAvatarElement = this.shadowRoot.querySelector('#userAvatar');
@@ -599,10 +598,9 @@ class DashboardHeader extends HTMLElement {
             userAvatarElement.style.background = avatarColor;
           }
         }
-      }
-    } catch (error) {
+    }).catch((error) => {
       console.error('Error loading user data:', error);
-    }
+    });
   }
 
   showNotifications() {

@@ -1,17 +1,20 @@
 class CaregiverProfileSection extends HTMLElement {
   connectedCallback() {
-    this.render();
+    this.loadAndRender();
   }
 
-  render() {
-    let loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    let users = LocalStorageUtils.getItem('users', []);
-    let user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
-    let profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=1976d2&color=fff&size=128&rounded=true';
-    let displayName = user ? (user.name || user.username) : 'Caregiver';
-    let displayEmail = user ? (user.email || '-') : '-';
-    let displayPhone = user ? (user.phone || '-') : '-';
-    let displayTitles = user ? (user.titles || 'Not specified') : 'Not specified';
+  async loadAndRender() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    const user = loggedInUser ? await CareConnectDB.getUserByUsername(loggedInUser) : null;
+    this.render(user, loggedInUser);
+  }
+
+  render(user = null, loggedInUser = '') {
+    const profilePic = user && user.photo ? user.photo : 'https://ui-avatars.com/api/?name=' + (user ? encodeURIComponent(user.username) : 'C') + '&background=1976d2&color=fff&size=128&rounded=true';
+    const displayName = user ? (user.name || user.username) : 'Caregiver';
+    const displayEmail = user ? (user.email || '-') : '-';
+    const displayPhone = user ? (user.phone || '-') : '-';
+    const displayTitles = user ? (user.titles || 'Not specified') : 'Not specified';
 
     this.innerHTML = `
       <style>
@@ -197,7 +200,7 @@ class CaregiverProfileSection extends HTMLElement {
     });
     // Logout button
     this.querySelector('#logoutBtn').addEventListener('click', () => {
-      localStorage.removeItem('loggedInUser');
+      CareConnectSession.clear();
       window.location.href = '../../pages/login.html';
     });
     // Save changes
@@ -221,21 +224,24 @@ class CaregiverProfileSection extends HTMLElement {
   }
 
   saveProfile() {
-    let loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    let users = LocalStorageUtils.getItem('users', []);
-    let idx = users.findIndex(u => u.username === loggedInUser && u.role === 'cuidador');
-    if (idx !== -1) {
-      const name = this.querySelector('#nameValue input').value.trim();
-      const email = this.querySelector('#emailValue input').value.trim();
-      const phone = this.querySelector('#phoneValue input').value.trim();
-      const titles = this.querySelector('#titlesValue input').value.trim();
-      users[idx].name = name;
-      users[idx].email = email;
-      users[idx].phone = phone;
-      users[idx].titles = titles;
-      LocalStorageUtils.setItem('users', users);
-    }
-    this.render();
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    if (!loggedInUser) return;
+
+    const name = this.querySelector('#nameValue input').value.trim();
+    const email = this.querySelector('#emailValue input').value.trim();
+    const phone = this.querySelector('#phoneValue input').value.trim();
+    const titles = this.querySelector('#titlesValue input').value.trim();
+
+    CareConnectDB.getUserByUsername(loggedInUser).then((user) => {
+      if (!user) return;
+      return CareConnectDB.saveUser({
+        ...user,
+        name,
+        email,
+        phone,
+        titles
+      });
+    }).then(() => this.loadAndRender());
   }
 }
 customElements.define('caregiver-profile-section', CaregiverProfileSection); 

@@ -7,22 +7,23 @@ class UserProfile extends HTMLElement {
   }
 
   connectedCallback() {
-    this.loadUserData();
+    this.loadDataAndRender();
+  }
+
+  async loadDataAndRender() {
+    await this.loadUserData();
     this.render();
   }
 
-  getUserType() {
-    return window.userType || 'patient';
-  }
+  async loadUserData() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
+    if (!loggedInUser) {
+      this.userProfileData = { name: 'Usuario', email: '-', username: '-', role: 'patient' };
+      return;
+    }
 
-  loadUserData() {
-    // Cargar datos del usuario desde localStorage
-    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
-    const users = LocalStorageUtils.getItem('users', []);
-    const user = users.find(u => u.username === loggedInUser || u.email === loggedInUser);
-    
-    // Cargar datos adicionales del perfil si existen
-    const userProfileData = LocalStorageUtils.getItem(`userProfile_${loggedInUser}`, {});
+    const user = await CareConnectDB.getUserByUsername(loggedInUser);
+    const userProfileData = await CareConnectDB.getUserProfile(loggedInUser);
     
     this.userProfileData = {
       // Datos básicos del usuario
@@ -67,11 +68,10 @@ class UserProfile extends HTMLElement {
     };
   }
 
-  saveUserData() {
-    const loggedInUser = LocalStorageUtils.getItem('loggedInUser');
+  async saveUserData() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
     if (loggedInUser && this.userProfileData) {
-      LocalStorageUtils.setItem(`userProfile_${loggedInUser}`, this.userProfileData);
-      return true;
+      return CareConnectDB.saveUserProfile(loggedInUser, this.userProfileData);
     }
     return false;
   }
@@ -109,13 +109,15 @@ class UserProfile extends HTMLElement {
   }
 
   saveProfile() {
-    if (this.saveUserData()) {
-      this.showNotification('Perfil actualizado exitosamente', 'success');
-      this.isEditing = false;
-      this.render();
-    } else {
-      this.showNotification('Error al guardar el perfil', 'error');
-    }
+    this.saveUserData().then((ok) => {
+      if (ok) {
+        this.showNotification('Perfil actualizado exitosamente', 'success');
+        this.isEditing = false;
+        this.render();
+      } else {
+        this.showNotification('Error al guardar el perfil', 'error');
+      }
+    });
   }
 
   showNotification(message, type = 'success') {

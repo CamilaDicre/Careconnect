@@ -5,11 +5,15 @@ class CaregiverWelcomeOverlay extends HTMLElement {
   }
   
   connectedCallback() {
-    this.render();
+    this.loadAndShow();
+  }
+
+  async loadAndShow() {
+    await this.render();
     this.initializeAnimations();
     setTimeout(() => this.hide(), 4000);
   }
-  
+
   hide() {
     const overlay = this.shadowRoot.querySelector('.overlay');
     const card = this.shadowRoot.querySelector('.welcome-card');
@@ -26,12 +30,11 @@ class CaregiverWelcomeOverlay extends HTMLElement {
     
     setTimeout(() => this.remove(), 1200);
   }
-  
-  getUserData() {
-    const loggedInUser = localStorage.getItem("loggedInUser");
+
+  async getUserData() {
+    const loggedInUser = CareConnectSession.getLoggedInUser();
     if (loggedInUser) {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const user = users.find(u => u.username === loggedInUser && u.role === 'cuidador');
+      const user = await CareConnectDB.getUserByUsername(loggedInUser);
       const displayName = user ? (user.name || user.username) : loggedInUser;
       
       const hour = new Date().getHours();
@@ -73,8 +76,8 @@ class CaregiverWelcomeOverlay extends HTMLElement {
     });
   }
   
-  render() {
-    const userData = this.getUserData();
+  async render() {
+    const userData = await this.getUserData();
     this.shadowRoot.innerHTML = `
       <style>
         .overlay {

@@ -1,7 +1,7 @@
 // Early apply saved theme to avoid FOUC
 (function applySavedThemeEarly() {
     try {
-        const savedTheme = localStorage.getItem('careconnect-theme');
+        const savedTheme = typeof UIPreferences !== 'undefined' ? UIPreferences.getTheme() : localStorage.getItem('careconnect-theme');
         if (savedTheme === 'dark') {
             document.documentElement.classList.remove('light');
             document.body.classList.add('dark-mode');
@@ -1192,7 +1192,7 @@ class HeaderComponent extends HTMLElement {
 
     initializeTheme() {
         try {
-            const savedTheme = localStorage.getItem('careconnect-theme');
+            const savedTheme = typeof UIPreferences !== 'undefined' ? UIPreferences.getTheme() : localStorage.getItem('careconnect-theme');
             const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
             const isDark = savedTheme ? savedTheme === 'dark' : prefersDark;
             document.body.classList.toggle('dark-mode', isDark);
@@ -1220,7 +1220,11 @@ class HeaderComponent extends HTMLElement {
         const willBeDark = !document.body.classList.contains('dark-mode');
         document.body.classList.toggle('dark-mode', willBeDark);
         try {
-            localStorage.setItem('careconnect-theme', willBeDark ? 'dark' : 'light');
+            if (typeof UIPreferences !== 'undefined') {
+              UIPreferences.setTheme(willBeDark ? 'dark' : 'light');
+            } else {
+              localStorage.setItem('careconnect-theme', willBeDark ? 'dark' : 'light');
+            }
         } catch (err) {}
         const sunIcons = this.shadowRoot.querySelectorAll('.careconnect-sun-icon');
         const moonIcons = this.shadowRoot.querySelectorAll('.careconnect-moon-icon');

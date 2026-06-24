@@ -547,6 +547,13 @@
     <script src="components/header-component.js"></script>
     <script src="components/footer-component.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/supabase-config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase-client.js"></script>
+    <script src="js/careconnect-session.js"></script>
+    <script src="js/ui-preferences.js"></script>
+    <script src="js/validation-utils.js"></script>
+    <script src="js/careconnect-db.js"></script>
     <script src="js/localStorage-utils.js"></script>
     <script src="js/sample-users.js"></script>
     <script src="js/page-transitions.js"></script>
@@ -590,7 +597,7 @@
         const appointmentForm = document.querySelector('.appointment-form form');
         if (appointmentForm) {
           appointmentForm.addEventListener('submit', function(e) {
-            if (!localStorage.getItem('loggedInUser')) {
+            if (!CareConnectSession.isLoggedIn()) {
               e.preventDefault();
               showLoginNotification();
             }

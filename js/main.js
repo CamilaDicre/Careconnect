@@ -151,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Hide dashboard if not logged in
   const dashboardWrapper = document.getElementById('dashboardWrapper');
   if (dashboardWrapper) {
-    const user = localStorage.getItem('loggedInUser');
+    const user = typeof CareConnectSession !== 'undefined' ? CareConnectSession.getLoggedInUser() : null;
     if (!user) {
       dashboardWrapper.style.display = 'none';
     } else {
