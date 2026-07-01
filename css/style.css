@@ -488,22 +488,9 @@ p {
     justify-content: center;
 }
 
-.hero-section .electronics img {
+.hero-section img {
     transition: all 0.25s;
 }
-
-.hero-section .electronics img:hover {
-    transform: translateY(-20px);
-}
-
-
-
-
-/* Reasons Section */
-/*.reasons-section {
-    background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
-}
-*/
 
 .reasons-section span {
     color: var(--pal-primary) !important;
