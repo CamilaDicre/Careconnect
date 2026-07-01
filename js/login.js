@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           return;
         }
 
-        if (role === 'paciente') {
+        if (role === 'paciente' || role === 'patient') {
           CareConnectSession.setUserSession(saved);
           showBanner('Patient account created and logged in!', 'success');
           setTimeout(() => {
@@ -284,12 +284,14 @@ async function login() {
         updateLoginUI();
         showBanner('Signed in successfully!', 'success');
         setTimeout(() => {
-          if (user.role === 'admin') {
+          if (CareConnectDB.isAdminRole(user.role)) {
             window.location.href = '../dashboard/admin-dashboard.html';
-          } else if (user.role === 'cuidador') {
+          } else if (CareConnectDB.isCaregiverRole(user.role)) {
             window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
-          } else {
+          } else if (CareConnectDB.isPatientRole(user.role)) {
             window.location.href = '../dashboard/dashboard.html';
+          } else {
+            showAlert('Unknown account role. Please contact support.', 'danger', 'loginError');
           }
         }, 1200);
       } catch (storageError) {

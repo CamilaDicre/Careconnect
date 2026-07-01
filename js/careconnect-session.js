@@ -1,13 +1,15 @@
 /**
- * Gestión de sesión del usuario (sessionStorage, no localStorage)
+ * Gestión de sesión del usuario.
+ * Usa sessionStorage y localStorage para mantener la sesión entre páginas.
  */
 if (typeof CareConnectSession === 'undefined') {
   const SESSION_KEYS = ['loggedInUser', 'userRole', 'currentUserId'];
 
   class CareConnectSession {
-    static get(key) {
+    static _read(key) {
       try {
-        const value = sessionStorage.getItem(key);
+        let value = sessionStorage.getItem(key);
+        if (value === null) value = localStorage.getItem(key);
         if (value === null) return null;
         try {
           return JSON.parse(value);
@@ -19,12 +21,20 @@ if (typeof CareConnectSession === 'undefined') {
       }
     }
 
+    static _write(key, value) {
+      const stored =
+        typeof value === 'string' ? value : JSON.stringify(value);
+      sessionStorage.setItem(key, stored);
+      localStorage.setItem(key, stored);
+    }
+
+    static get(key) {
+      return this._read(key);
+    }
+
     static set(key, value) {
       try {
-        sessionStorage.setItem(
-          key,
-          typeof value === 'string' ? value : JSON.stringify(value)
-        );
+        this._write(key, value);
         return true;
       } catch (error) {
         console.error(`Error saving session (${key}):`, error);
@@ -35,6 +45,7 @@ if (typeof CareConnectSession === 'undefined') {
     static remove(key) {
       try {
         sessionStorage.removeItem(key);
+        localStorage.removeItem(key);
         return true;
       } catch {
         return false;

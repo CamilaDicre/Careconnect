@@ -16,6 +16,26 @@ if (typeof CareConnectDB === 'undefined') {
       return window.CareConnectSupabase?.isConfigured() ?? false;
     }
 
+    static normalizeRole(role) {
+      if (!role) return role;
+      const normalized = String(role).toLowerCase().trim();
+      if (normalized === 'patient') return 'paciente';
+      if (normalized === 'caregiver') return 'cuidador';
+      return normalized;
+    }
+
+    static isPatientRole(role) {
+      return this.normalizeRole(role) === 'paciente';
+    }
+
+    static isCaregiverRole(role) {
+      return this.normalizeRole(role) === 'cuidador';
+    }
+
+    static isAdminRole(role) {
+      return this.normalizeRole(role) === 'admin';
+    }
+
     static _rowToUser(row) {
       if (!row) return null;
       const profileData = row.profile_data || {};
@@ -24,7 +44,7 @@ if (typeof CareConnectDB === 'undefined') {
         username: row.username,
         email: row.email,
         password: row.password,
-        role: row.role,
+        role: this.normalizeRole(row.role),
         gender: row.gender,
         registrationDate: row.registration_date,
         name: row.name || profileData.name,
@@ -86,7 +106,7 @@ if (typeof CareConnectDB === 'undefined') {
         username: user.username,
         email: user.email?.toLowerCase?.() || user.email,
         password: user.password,
-        role: user.role,
+        role: this.normalizeRole(user.role),
         gender: user.gender,
         registration_date: user.registrationDate || new Date().toISOString(),
         name: user.name || user.username,
@@ -152,15 +172,36 @@ if (typeof CareConnectDB === 'undefined') {
     }
 
     static async getUserByUsername(username) {
+      if (!username) return null;
       const users = await this.getUsers();
+      const needle = String(username).toLowerCase().trim();
       return users.find(
-        (u) => u.username === username || u.email === username?.toLowerCase?.()
+        (u) =>
+          u.username?.toLowerCase?.().trim() === needle ||
+          u.email?.toLowerCase?.().trim() === needle ||
+          u.id === username
       );
     }
 
     static async getUserById(id) {
+      if (!id) return null;
       const users = await this.getUsers();
       return users.find((u) => u.id === id);
+    }
+
+    static async resolveCurrentUser() {
+      const userId = CareConnectSession.getCurrentUserId();
+      if (userId) {
+        const byId = await this.getUserById(userId);
+        if (byId) return byId;
+      }
+
+      const loggedInUser = CareConnectSession.getLoggedInUser();
+      if (loggedInUser) {
+        return this.getUserByUsername(loggedInUser);
+      }
+
+      return null;
     }
 
     static async saveUser(user) {
