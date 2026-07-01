@@ -178,12 +178,19 @@ body.article-page h6 {
     margin-bottom: 0;
 }
 
+/* Visual separation between sections inside the reading card */
+.article-container .article-section + .article-section {
+    padding-top: 2.5rem;
+    border-top: 1px solid var(--article-gray-200);
+}
+
 .article-section h2 {
     font-size: 1.65rem;
     color: var(--article-primary);
     margin-bottom: 1.25rem;
     border-left: 4px solid var(--article-primary);
     padding-left: 1rem;
+    letter-spacing: -0.01em;
 }
 
 .article-section h3 {
@@ -191,6 +198,14 @@ body.article-page h6 {
     color: var(--article-gray-800);
     margin-bottom: 1rem;
     margin-top: 1.75rem;
+}
+
+.article-section h4 {
+    font-size: 1.2rem;
+    color: var(--article-gray-800);
+    margin-top: 1.5rem;
+    margin-bottom: 0.85rem;
+    font-weight: 600;
 }
 
 .article-section p,
@@ -204,18 +219,66 @@ body.article-page h6 {
     margin-bottom: 1.35rem;
 }
 
+/* Lead paragraph right after a section heading */
+.article-section h2 + p,
+.article-section h3 + p {
+    font-size: 1.2rem;
+    color: var(--article-gray-700);
+}
+
 .article-section ul,
 .article-section ol {
     margin-bottom: 1.35rem;
     padding-left: 1.75rem;
 }
 
-.article-section li {
-    margin-bottom: 0.65rem;
+.article-section > ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.article-section > ul > li {
+    position: relative;
+    padding-left: 1.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.article-section > ul > li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.65em;
+    width: 8px;
+    height: 8px;
+    background: var(--article-primary);
+    border-radius: 50%;
+    opacity: 0.7;
+}
+
+.article-section > ol {
+    padding-left: 1.5rem;
+}
+
+.article-section > ol > li {
+    margin-bottom: 0.75rem;
+    padding-left: 0.35rem;
+}
+
+.article-section > ol > li::marker {
+    color: var(--article-primary);
+    font-weight: 700;
 }
 
 .article-section li strong {
     color: var(--article-gray-800);
+    font-weight: 600;
+}
+
+/* Nested lists */
+.article-section li ul,
+.article-section li ol {
+    margin-top: 0.65rem;
+    margin-bottom: 0.35rem;
 }
 
 /* Info boxes */
@@ -260,6 +323,133 @@ body.article-page h6 {
 .warning-box li,
 .example-box li {
     font-size: 1.15rem;
+    margin-bottom: 0;
+}
+
+.tip-box ul,
+.warning-box ul,
+.example-box ul,
+.tip-box ol,
+.warning-box ol,
+.example-box ol {
+    margin-top: 0.75rem;
+    margin-bottom: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.tip-box ul > li,
+.warning-box ul > li,
+.example-box ul > li {
+    position: relative;
+    padding-left: 1.35rem;
+    margin-bottom: 0.55rem;
+}
+
+.tip-box ul > li::before,
+.warning-box ul > li::before,
+.example-box ul > li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: inherit;
+    opacity: 0.75;
+    background: none;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    top: 0.1em;
+}
+
+/* Info card grid — organized topic blocks */
+.info-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+    margin: 2rem 0;
+}
+
+.info-card {
+    background: var(--article-gray-100);
+    border: 1px solid var(--article-gray-200);
+    border-radius: 14px;
+    padding: 1.5rem 1.65rem;
+    transition: box-shadow 0.2s ease;
+}
+
+.info-card:hover {
+    box-shadow: var(--article-shadow-md);
+}
+
+.info-card h3,
+.info-card h4 {
+    font-size: 1.15rem;
+    color: var(--article-primary);
+    margin-bottom: 1rem;
+    margin-top: 0;
+    text-align: center;
+    font-weight: 700;
+}
+
+.info-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.info-card li {
+    font-size: 1.1rem;
+    line-height: 1.65;
+    color: var(--article-gray-600);
+    padding: 0.55rem 0;
+    border-bottom: 1px dashed var(--article-gray-200);
+    margin-bottom: 0;
+    position: static;
+    padding-left: 0;
+}
+
+.info-card li::before {
+    display: none;
+}
+
+.info-card li:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.info-card li strong {
+    color: var(--article-gray-800);
+}
+
+.info-card-cta {
+    text-align: center;
+    margin-top: 1.5rem;
+}
+
+.info-card-cta .article-finish-btn {
+    font-size: 1rem;
+    padding: 12px 24px;
+}
+
+/* Key points summary block */
+.article-key-points {
+    background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+    border: 1px solid #bbf7d0;
+    border-radius: 14px;
+    padding: 1.75rem 2rem;
+    margin-top: 1.5rem;
+}
+
+.article-key-points h4 {
+    color: var(--article-success);
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.2rem;
+}
+
+.article-key-points ul {
     margin-bottom: 0;
 }
 
@@ -583,6 +773,10 @@ body.article-page h6 {
 
     .article-section h3 {
         font-size: 1.25rem;
+    }
+
+    .info-card-grid {
+        grid-template-columns: 1fr;
     }
 
     .article-back-nav {
