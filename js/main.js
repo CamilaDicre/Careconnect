@@ -143,7 +143,7 @@ class SplashScreen {
 document.addEventListener('DOMContentLoaded', function() {
   // Solo mostrar splash en la página principal
   if (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/')) {
-    new SplashScreen();
+    // new SplashScreen();
   }
   
   // Código original
