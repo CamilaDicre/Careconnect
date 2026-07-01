@@ -20,9 +20,6 @@ class CareSidebar extends HTMLElement {
     this.adjustMainContent();
   }
 
-  render(sections, userData) {
-    const initials = userData.initials;
-    this.sections = sections;
   getUserType() {
     return window.userType || 'patient';
   }
@@ -54,7 +51,7 @@ class CareSidebar extends HTMLElement {
       };
     }
 
-    const user = await CareConnectDB.getUserByUsername(loggedInUser);
+    const user = await CareConnectDB.resolveCurrentUser();
     let displayName = user ? (user.name || user.username) : 'Patient';
     
     // Calculate initials from name

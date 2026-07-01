@@ -719,7 +719,7 @@
             
             const loggedInUser = CareConnectSession.getLoggedInUser();
             const user = loggedInUser ? await CareConnectDB.getUserByUsername(loggedInUser) : null;
-            if (!loggedInUser || !user || user.role !== 'cuidador') {
+            if (!loggedInUser || !user || !CareConnectDB.isCaregiverRole(user.role)) {
                 showAuthModal(
                     'You must be logged in as a caregiver to access the dashboard. Please log in with your caregiver account.',
                     '../../pages/login.html',

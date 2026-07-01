@@ -420,13 +420,6 @@
         </div>
     </div>
     
-    <script src="../js/components.js"></script>
-    <script src="welcome-overlay.js"></script>
-    <script src="care-sidebar.js"></script>
-    <script src="sidebar-utils.js"></script>
-    <script src="dashboard-header.js"></script>
-    <script src="overview-section.js"></script>
-    <script src="user-profile.js?v=3.1"></script>
     <script src="../js/supabase-config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="../js/supabase-client.js"></script>
@@ -436,6 +429,13 @@
     <script src="../js/careconnect-db.js"></script>
     <script src="../js/localStorage-utils.js"></script>
     <script src="../js/avatar-utils.js"></script>
+    <script src="../js/components.js"></script>
+    <script src="welcome-overlay.js"></script>
+    <script src="care-sidebar.js"></script>
+    <script src="sidebar-utils.js"></script>
+    <script src="dashboard-header.js"></script>
+    <script src="overview-section.js"></script>
+    <script src="user-profile.js?v=3.1"></script>
     <script src="medicine-list.js"></script>
     <script src="health-charts.js"></script>
     <script src="calendar-view.js"></script>
@@ -498,6 +498,8 @@
         // Verificación de autenticación al cargar la página
         document.addEventListener('DOMContentLoaded', async function() {
             const loggedInUser = CareConnectSession.getLoggedInUser();
+            const sessionRole = CareConnectSession.getUserRole();
+
             if (!loggedInUser) {
                 showAuthModal(
                     'You must be logged in as a patient to access the dashboard. Please sign in with your patient account.',
@@ -506,8 +508,13 @@
                 );
                 return;
             }
-            const user = await CareConnectDB.getUserByUsername(loggedInUser);
-            if (!user || user.role !== 'paciente') {
+
+            const user = await CareConnectDB.resolveCurrentUser();
+            const hasPatientAccess =
+                (user && CareConnectDB.isPatientRole(user.role)) ||
+                (!user && CareConnectDB.isPatientRole(sessionRole));
+
+            if (!hasPatientAccess) {
                 showAuthModal(
                     'You must be logged in as a patient to access the dashboard. Please sign in with your patient account.',
                     '../pages/login.html',
