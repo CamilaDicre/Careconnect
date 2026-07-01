@@ -233,34 +233,12 @@ p {
     overflow: hidden;
 }
 
-/* Responsive adjustments for hero section */
-@media (max-width: 768px) {
-    .hero-section {
-        background-attachment: scroll;
-        min-height: 100vh;
-        padding: 2rem 0;
-    }
-    
-    .hero-section .electronics img:first-child,
-    .hero-section .hero-tablet {
-        position: relative !important;
-        margin-left: 0 !important;
-        width: 200px;
-        height: auto;
-        display: block;
-        margin: 0 auto;
-    }
-    
-    .hero-section .electronics img:last-child,
-    .hero-section .hero-phone {
-        position: absolute !important;
-        margin-right: 0 !important;
-        margin-top: 0 !important;
-        width: 140px;
-        height: auto;
-        right: 10%;
-        top: 10%;
-    }
+.hero-section-text {
+    background-color: red;
+}
+
+.sample {
+    background-color: blue;
 }
 
 .hero-section h1 {
@@ -277,6 +255,31 @@ p {
 .hero-section .btn {
     color: white;
     background-color: var(--pal-primary);
+    transition: all 0.25s;
+}
+
+.hero-section .btn:hover {
+    background-color: var(--pal-primary);
+    transform: translateY(-5px);
+
+}
+
+/* Responsive adjustments for hero section */
+@media (max-width: 768px) {
+    .hero-section {
+        background-attachment: scroll;
+        min-height: 100vh;
+        padding: 2rem 0;
+    }
+    
+    .sample{
+        margin-left: 0 !important;
+        width: 200px;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
 }
 
 /* Responsive hero text */
@@ -316,44 +319,22 @@ p {
         padding: 0.6rem 1.5rem !important;
     }
     
-    .hero-section .electronics img:first-child,
-    .hero-section .hero-tablet {
+    .sample {
         width: 150px;
-    }
-    
-    .hero-section .electronics img:last-child,
-    .hero-section .hero-phone {
-        width: 100px;
-        right: 5%;
-        top: 5%;
     }
 }
 
 /* Tablet styles */
 @media (min-width: 481px) and (max-width: 768px) {
-    .hero-section .electronics img:first-child,
-    .hero-section .hero-tablet {
+    .hero-section img {
         width: 250px;
-    }
-    
-    .hero-section .electronics img:last-child,
-    .hero-section .hero-phone {
-        width: 180px;
-        right: 15%;
-        top: 15%;
     }
 }
 
 /* Medium tablet styles */
 @media (min-width: 769px) and (max-width: 1024px) {
-    .hero-section .electronics img:first-child,
-    .hero-section .hero-tablet {
+    .hero-section img {
         width: 320px;
-    }
-    
-    .hero-section .electronics img:last-child,
-    .hero-section .hero-phone {
-        width: 220px;
     }
 }
 
@@ -393,25 +374,9 @@ p {
         width: fit-content !important;
     }
     
-    .hero-section .electronics {
+    .sample {
         justify-content: center;
         height: 400px;
-    }
-    
-    .hero-section .electronics img:first-child,
-    .hero-section .hero-tablet {
-        position: relative;
-        left: auto;
-        transform: none;
-        width: 320px;
-    }
-    
-    .hero-section .electronics img:last-child,
-    .hero-section .hero-phone {
-        position: absolute;
-        right: 15%;
-        top: 15%;
-        width: 220px;
     }
 }
 
@@ -446,19 +411,11 @@ p {
         justify-content: flex-end;
         margin-top: 0;
     }
-    .hero-section .electronics img:first-child,
-    .hero-section .hero-tablet {
+    .sample {
         position: relative;
         left: auto;
         transform: none;
         width: 400px;
-    }
-    .hero-section .electronics img:last-child,
-    .hero-section .hero-phone {
-        position: absolute;
-        right: 10%;
-        top: 10%;
-        width: 280px;
     }
 }
 
@@ -482,7 +439,7 @@ p {
     font-weight: 500 !important;
 }
 
-.hero-section .electronics {
+.sample {
     display: flex;
     align-items: center;
     justify-content: center;
