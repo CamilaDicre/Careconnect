@@ -18,128 +18,19 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --primary-color: #1976d2;
-            --primary-dark: #1565c0;
-            --secondary-color: #63a4ff;
-            --white: #ffffff;
-            --light-bg: #f8fafc;
-            --gray-600: #4b5563;
-            --gray-800: #1f2937;
-            --gray-900: #111827;
-            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            line-height: 1.6;
-            color: var(--gray-800);
-            background-color: var(--light-bg);
-        }
-
-        .article-hero {
-            background: linear-gradient(rgba(25, 118, 210, 0.8), rgba(99, 164, 255, 0.8)),
-                        url('../assets/logo-pattern.png');
-            background-size: cover;
-            background-position: center;
-            padding: 6rem 0 4rem;
-            position: relative;
-            color: white;
-            text-align: center;
-            min-height: 60vh;
-            display: flex;
-            align-items: center;
-        }
-
-        .article-hero h1 {
-            font-size: clamp(2.5rem, 5vw, 3.5rem);
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: white;
-        }
-
-        .article-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .article-section {
-            margin-bottom: 3rem;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: var(--shadow-lg);
-        }
-
-        h2 {
-            color: var(--primary-color);
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-        }
-
-        h3 {
-            color: var(--primary-dark);
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-        }
-
-        p {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--gray-600);
-            margin-bottom: 1.5rem;
-        }
-
-        ul, ol {
-            margin-bottom: 1.5rem;
-            padding-left: 2rem;
-        }
-
-        li {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: var(--gray-600);
-            margin-bottom: 0.5rem;
-        }
-
-        .tip-box {
-            background: #e3f2fd;
-            border-left: 4px solid var(--primary-color);
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 10px 10px 0;
-        }
-
-        .warning-box {
-            background: #fff3e0;
-            border-left: 4px solid #ff9800;
-            padding: 1.5rem;
-            margin: 2rem 0;
-            border-radius: 0 10px 10px 0;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/article-reading.css">
 </head>
-<body>
-    <!-- Back button -->
-    <div style="position: fixed; top: 20px; left: 20px; z-index: 1000;">
-        <a href="../pages/articles.html" style="background: rgba(255,255,255,0.9); padding: 12px 20px; border-radius: 25px; text-decoration: none; color: #1976d2; font-weight: 600; box-shadow: 0 4px 15px rgba(0,0,0,0.1); backdrop-filter: blur(10px);">
-            <i class="bi bi-arrow-left"></i> Back to Articles
-        </a>
+<body class="article-page" data-article-id="arthritis-management">
+    <div class="article-reading-progress" aria-hidden="true">
+        <div class="article-reading-progress__bar"></div>
     </div>
 
-    <main>
+    <div class="article-back-nav">
+        <a href="../pages/articles.html" class="article-back-link">
+            <i class="bi bi-arrow-left"></i> Volver a Artículos
+        </a>
+    </div>
+<main>
         <!-- Article Hero -->
         <section class="article-hero">
             <div class="container">
@@ -343,30 +234,29 @@
             </div>
         </section>
 
-        <!-- Finish Reading Section -->
-        <section style="background: linear-gradient(135deg, #1976d2 0%, #63a4ff 100%); padding: 4rem 0; text-align: center;">
-            <div class="container">
-                <div style="background: rgba(255,255,255,0.1); border-radius: 20px; padding: 3rem; backdrop-filter: blur(10px);">
-                    <h3 style="color: white; margin-bottom: 1.5rem; font-size: 2rem;">🦴 Manage your arthritis with confidence!</h3>
-                    <p style="color: rgba(255,255,255,0.9); font-size: 1.2rem; margin-bottom: 2.5rem;">
-                        Arthritis doesn't have to limit your life. With proper treatment and gradual changes,
-                        you can maintain an active and fulfilling lifestyle.
-                    </p>
-                    
-                    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                        <a href="../pages/articles.html" style="background: white; color: #1976d2; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: 700; font-size: 1.1rem; box-shadow: 0 6px 20px rgba(0,0,0,0.2); display: inline-flex; align-items: center; gap: 0.5rem; transition: transform 0.3s ease;">
-                            <i class="bi bi-arrow-left-circle"></i> Finish and View More Articles
-                        </a>
-                        
-                        <a href="../pages/contact.html" style="background: rgba(255,255,255,0.2); color: white; padding: 15px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 1.1rem; border: 2px solid rgba(255,255,255,0.3); display: inline-flex; align-items: center; gap: 0.5rem; transition: all 0.3s ease;">
-                            <i class="bi bi-telephone"></i> Contact Specialist
-                        </a>
-                    </div>
+                <!-- Finish Reading Section -->
+        <section class="article-finish-section">
+            <div class="article-finish-section__inner">
+                <span class="article-read-badge"><i class="bi bi-check-circle-fill"></i> Artículo marcado como leído</span>
+                <h3 data-finish-title>🎯 Has terminado de leer este artículo</h3>
+                <p>
+                    Esperamos que esta información te haya sido útil.
+                    Recuerda siempre consultar con tu médico antes de hacer cambios.
+                </p>
+                <div class="article-finish-section__actions">
+                    <a href="../pages/articles.html" class="article-finish-btn article-finish-btn--primary" data-mark-read>
+                        <i class="bi bi-arrow-left-circle"></i> Ver más artículos
+                    </a>
+                    <a href="../pages/contact.html" class="article-finish-btn article-finish-btn--secondary">
+                        <i class="bi bi-telephone"></i> Contactar especialista
+                    </a>
                 </div>
             </div>
         </section>
+
     </main>
 
+    <script src="../js/article-reading.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
