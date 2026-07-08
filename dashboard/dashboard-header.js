@@ -12,6 +12,11 @@ class DashboardHeader extends HTMLElement {
     this.attachEvents();
     this.startClock();
     this.loadUserData();
+    requestAnimationFrame(() => {
+      if (window.SidebarUtils) {
+        SidebarUtils.applyHeaderState(SidebarUtils.getSidebarState());
+      }
+    });
   }
 
   render() {

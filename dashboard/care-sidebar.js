@@ -701,30 +701,23 @@ class CareSidebar extends HTMLElement {
   }
   toggleSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
-    const main = document.getElementById('dashboard-content');
     this.isCollapsed = !this.isCollapsed;
     
     if (this.isCollapsed) {
       nav.classList.add('minimized');
-      if (main) {
-        main.classList.add('sidebar-collapsed');
-        main.style.marginLeft = '90px';
-      }
     } else {
       nav.classList.remove('minimized');
-      if (main) {
-        main.classList.remove('sidebar-collapsed');
-        main.style.marginLeft = '350px';
-      }
     }
     
-    // Save state to localStorage
     this.saveSidebarState();
     
-    // Dispatch custom event
     document.dispatchEvent(new CustomEvent('sidebarToggle', {
       detail: { collapsed: this.isCollapsed }
     }));
+
+    if (window.SidebarUtils) {
+      SidebarUtils.syncLayout(this.isCollapsed);
+    }
   }
   showSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
@@ -747,27 +740,8 @@ class CareSidebar extends HTMLElement {
     this.isCollapsed = true;
   }
   adjustMainContent() {
-    const main = document.getElementById('dashboard-content');
-    const nav = this.shadowRoot.querySelector('nav');
-    if (main) {
-      main.style.transition = 'margin-left 0.4s ease';
-    }
-    
-    // Apply saved sidebar state
-    if (nav) {
-      if (this.isCollapsed) {
-        nav.classList.add('minimized');
-        if (main) {
-          main.classList.add('sidebar-collapsed');
-          main.style.marginLeft = '90px';
-        }
-      } else {
-        nav.classList.remove('minimized');
-        if (main) {
-          main.classList.remove('sidebar-collapsed');
-          main.style.marginLeft = '350px';
-        }
-      }
+    if (window.SidebarUtils) {
+      SidebarUtils.syncLayout(this.isCollapsed);
     }
   }
   
@@ -894,6 +868,9 @@ class CareSidebar extends HTMLElement {
       // Show with fade in
       setTimeout(() => {
         main.style.opacity = '1';
+        if (window.SidebarUtils) {
+          SidebarUtils.syncLayout();
+        }
       }, 50);
     }, 200);
   }

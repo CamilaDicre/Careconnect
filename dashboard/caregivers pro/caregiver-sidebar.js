@@ -527,30 +527,23 @@ class CaregiverSidebar extends HTMLElement {
 
   toggleSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
-    const main = document.getElementById('mainContent');
     this.isCollapsed = !this.isCollapsed;
     
     if (this.isCollapsed) {
       nav.classList.add('minimized');
-      if (main) {
-        main.classList.add('sidebar-collapsed');
-        main.style.marginLeft = '';
-      }
     } else {
       nav.classList.remove('minimized');
-      if (main) {
-        main.classList.remove('sidebar-collapsed');
-        main.style.marginLeft = '';
-      }
     }
     
-    // Save state to localStorage
     this.saveSidebarState();
     
-    // Dispatch custom event
     document.dispatchEvent(new CustomEvent('sidebarToggle', {
       detail: { collapsed: this.isCollapsed }
     }));
+
+    if (window.SidebarUtils) {
+      SidebarUtils.syncLayout(this.isCollapsed);
+    }
   }
 
   showSidebar() {
@@ -578,27 +571,8 @@ class CaregiverSidebar extends HTMLElement {
   }
 
   adjustMainContent() {
-    const main = document.getElementById('mainContent');
-    const nav = this.shadowRoot.querySelector('nav');
-    if (main) {
-      main.style.transition = 'all 0.4s ease';
-    }
-    
-    // Apply saved sidebar state
-    if (nav) {
-      if (this.isCollapsed) {
-        nav.classList.add('minimized');
-        if (main) {
-          main.classList.add('sidebar-collapsed');
-          main.style.marginLeft = '';
-        }
-      } else {
-        nav.classList.remove('minimized');
-        if (main) {
-          main.classList.remove('sidebar-collapsed');
-          main.style.marginLeft = '';
-        }
-      }
+    if (window.SidebarUtils) {
+      SidebarUtils.syncLayout(this.isCollapsed);
     }
   }
 
@@ -653,6 +627,10 @@ class CaregiverSidebar extends HTMLElement {
       
       main.innerHTML = sectionContent;
       main.style.opacity = '1';
+      
+      if (window.SidebarUtils) {
+        SidebarUtils.syncLayout();
+      }
       
       // Dispatch custom event
       document.dispatchEvent(new CustomEvent('sectionChange', {
