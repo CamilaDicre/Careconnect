@@ -32,7 +32,7 @@ class GamesSection extends HTMLElement {
         }
 
         .games-hero {
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 25px;
           padding: 40px;
           margin-bottom: 30px;
@@ -40,7 +40,7 @@ class GamesSection extends HTMLElement {
           text-align: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 15px 35px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 15px 35px rgba(65, 105, 225, 0.3);
         }
 
         .games-hero::before {
@@ -124,15 +124,15 @@ class GamesSection extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           transform: scaleX(0);
           transition: transform 0.3s ease;
         }
 
         .game-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(25, 118, 210, 0.15);
-          border-color: #1976d2;
+          box-shadow: 0 15px 40px rgba(65, 105, 225, 0.15);
+          border-color: #4169e1;
         }
 
         .game-card:hover::before {
@@ -143,7 +143,7 @@ class GamesSection extends HTMLElement {
           font-size: 3.5rem;
           margin-bottom: 20px;
           display: block;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -171,8 +171,8 @@ class GamesSection extends HTMLElement {
         }
 
         .feature-tag {
-          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-          color: #1976d2;
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12), rgba(65, 105, 225, 0.2));
+          color: #4169e1;
           padding: 5px 12px;
           border-radius: 15px;
           font-size: 0.8rem;
@@ -194,12 +194,12 @@ class GamesSection extends HTMLElement {
         }
 
         .difficulty-dot.active {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           transform: scale(1.2);
         }
 
         .play-btn {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 12px 25px;
@@ -215,7 +215,7 @@ class GamesSection extends HTMLElement {
 
         .play-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 20px rgba(25, 118, 210, 0.4);
+          box-shadow: 0 8px 20px rgba(65, 105, 225, 0.4);
         }
 
         .game-area {
@@ -249,13 +249,13 @@ class GamesSection extends HTMLElement {
           background: linear-gradient(135deg, #f8f9fa, #e9ecef);
           padding: 25px;
           border-radius: 20px;
-          border: 1px solid rgba(25, 118, 210, 0.1);
+          border: 1px solid rgba(65, 105, 225, 0.1);
         }
 
         .game-score {
           font-size: 1.8rem;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 10px;
         }
 
@@ -276,7 +276,7 @@ class GamesSection extends HTMLElement {
 
         .progress-bar {
           height: 100%;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           transition: width 0.3s ease;
         }
 
@@ -285,7 +285,7 @@ class GamesSection extends HTMLElement {
           padding: 30px;
           background: linear-gradient(135deg, #f8f9fa, #e9ecef);
           border-radius: 20px;
-          border: 1px solid rgba(25, 118, 210, 0.1);
+          border: 1px solid rgba(65, 105, 225, 0.1);
         }
 
         .memory-grid {
@@ -299,7 +299,7 @@ class GamesSection extends HTMLElement {
         .memory-card {
           width: 90px;
           height: 90px;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           border-radius: 15px;
           display: flex;
           align-items: center;
@@ -314,7 +314,7 @@ class GamesSection extends HTMLElement {
 
         .memory-card:hover {
           transform: scale(1.05);
-          box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 8px 20px rgba(65, 105, 225, 0.3);
         }
 
         .memory-card.flipped {
@@ -344,7 +344,7 @@ class GamesSection extends HTMLElement {
         .puzzle-tile {
           width: 100px;
           height: 100px;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border-radius: 12px;
           display: flex;
@@ -354,12 +354,12 @@ class GamesSection extends HTMLElement {
           font-weight: 700;
           cursor: pointer;
           transition: all 0.3s ease;
-          box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+          box-shadow: 0 4px 15px rgba(65, 105, 225, 0.2);
         }
 
         .puzzle-tile:hover {
           transform: scale(1.05);
-          box-shadow: 0 6px 20px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
         }
 
         .puzzle-tile.empty {
@@ -387,9 +387,9 @@ class GamesSection extends HTMLElement {
         .math-option {
           padding: 20px;
           font-size: 1.5rem;
-          border: 3px solid #1976d2;
+          border: 3px solid #4169e1;
           background: white;
-          color: #1976d2;
+          color: #4169e1;
           border-radius: 15px;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -398,7 +398,7 @@ class GamesSection extends HTMLElement {
 
         .math-option:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 20px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 8px 20px rgba(65, 105, 225, 0.3);
         }
 
         .math-option.correct {
@@ -432,9 +432,9 @@ class GamesSection extends HTMLElement {
 
         .letter-btn {
           padding: 15px;
-          border: 2px solid #1976d2;
+          border: 2px solid #4169e1;
           background: white;
-          color: #1976d2;
+          color: #4169e1;
           border-radius: 12px;
           cursor: pointer;
           transition: all 0.3s ease;
@@ -444,7 +444,7 @@ class GamesSection extends HTMLElement {
 
         .letter-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 15px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 6px 15px rgba(65, 105, 225, 0.3);
         }
 
         .letter-btn.used {
@@ -505,7 +505,7 @@ class GamesSection extends HTMLElement {
           left: 2px;
           font-size: 0.6rem;
           font-weight: 600;
-          color: #1976d2;
+          color: #4169e1;
           background: rgba(255, 255, 255, 0.9);
           border-radius: 2px;
           padding: 0 1px;
@@ -523,7 +523,7 @@ class GamesSection extends HTMLElement {
         }
 
         .crossword-cell:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: scale(1.05);
         }
 
@@ -558,11 +558,11 @@ class GamesSection extends HTMLElement {
           background: linear-gradient(135deg, #f8f9fa, #e9ecef);
           padding: 20px;
           border-radius: 15px;
-          border: 1px solid rgba(25, 118, 210, 0.1);
+          border: 1px solid rgba(65, 105, 225, 0.1);
         }
 
         .clue-section h3 {
-          color: #1976d2;
+          color: #4169e1;
           font-size: 1.2rem;
           font-weight: 600;
           margin-bottom: 15px;
@@ -574,7 +574,7 @@ class GamesSection extends HTMLElement {
           padding: 8px 12px;
           background: white;
           border-radius: 8px;
-          border-left: 4px solid #1976d2;
+          border-left: 4px solid #4169e1;
           font-size: 0.9rem;
           line-height: 1.4;
         }
@@ -597,17 +597,17 @@ class GamesSection extends HTMLElement {
         }
 
         .crossword-cell.direction-highlight {
-          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-          border-color: #1976d2;
-          box-shadow: 0 0 8px rgba(25, 118, 210, 0.3);
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12), rgba(65, 105, 225, 0.2));
+          border-color: #4169e1;
+          box-shadow: 0 0 8px rgba(65, 105, 225, 0.3);
         }
 
         .crossword-cell.selected {
-          background: linear-gradient(135deg, #1976d2, #42a5f5) !important;
+          background: linear-gradient(135deg, #4169e1, #4169e1) !important;
           color: white !important;
-          border-color: #1976d2 !important;
+          border-color: #4169e1 !important;
           transform: scale(1.1) !important;
-          box-shadow: 0 0 12px rgba(25, 118, 210, 0.5) !important;
+          box-shadow: 0 0 12px rgba(65, 105, 225, 0.5) !important;
           z-index: 10 !important;
         }
 
@@ -617,14 +617,14 @@ class GamesSection extends HTMLElement {
         }
 
         .crossword-direction-indicator {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           padding: 10px 20px;
           border-radius: 15px;
           margin-bottom: 15px;
           text-align: center;
           font-weight: 600;
-          box-shadow: 0 4px 15px rgba(25, 118, 210, 0.2);
+          box-shadow: 0 4px 15px rgba(65, 105, 225, 0.2);
         }
 
         .crossword-instructions {
@@ -635,7 +635,7 @@ class GamesSection extends HTMLElement {
           text-align: center;
           font-size: 0.9rem;
           color: #666;
-          border: 1px solid rgba(25, 118, 210, 0.1);
+          border: 1px solid rgba(65, 105, 225, 0.1);
         }
 
         @keyframes completedPulse {
@@ -681,7 +681,7 @@ class GamesSection extends HTMLElement {
         .game-level {
           font-size: 1.1rem;
           font-weight: 600;
-          color: #1976d2;
+          color: #4169e1;
         }
 
         .game-target {
@@ -710,7 +710,7 @@ class GamesSection extends HTMLElement {
         }
 
         .game-btn {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 12px 25px;
@@ -726,7 +726,7 @@ class GamesSection extends HTMLElement {
 
         .game-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 15px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 6px 15px rgba(65, 105, 225, 0.3);
         }
 
         .continue-btn {
@@ -780,7 +780,7 @@ class GamesSection extends HTMLElement {
         .modal-title {
           font-size: 2rem;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 20px;
         }
 
@@ -806,7 +806,7 @@ class GamesSection extends HTMLElement {
         }
 
         .play-again-btn {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
         }
 
@@ -2229,7 +2229,7 @@ class GamesSection extends HTMLElement {
         <div class="modal-content">
           <h2 class="modal-title">🎉 Level ${this.level} Complete!</h2>
           <div class="modal-score">
-            <div style="font-size: 3rem; color: #1976d2; margin-bottom: 10px;">🏆</div>
+            <div style="font-size: 3rem; color: #4169e1; margin-bottom: 10px;">🏆</div>
             <div style="font-size: 2rem; font-weight: 700; color: #333; margin-bottom: 10px;">
               Score: ${this.score}
             </div>

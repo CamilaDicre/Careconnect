@@ -23,7 +23,7 @@ class CaregiverProfileSection extends HTMLElement {
           margin: 0 auto;
           background: rgba(255, 255, 255, 0.9);
           border-radius: 18px;
-          box-shadow: 0 8px 40px rgba(25,118,210,0.10);
+          box-shadow: 0 8px 40px rgba(65, 105, 225,0.10);
           padding: 48px 48px 36px 48px;
           margin-top: 32px;
           animation: fadeInUp 0.7s cubic-bezier(.4,2,.6,1);
@@ -50,7 +50,7 @@ class CaregiverProfileSection extends HTMLElement {
           margin-bottom: 8px;
         }
         .profile-section-container h2 {
-          color: #1976d2;
+          color: #4169e1;
           font-size: 2rem;
           font-weight: 700;
           margin-bottom: 8px;
@@ -64,7 +64,7 @@ class CaregiverProfileSection extends HTMLElement {
           align-items: center;
         }
         .personal-info-section h3 {
-          color: #1976d2;
+          color: #4169e1;
           font-size: 1.5rem;
           font-weight: 600;
           margin-bottom: 16px;
@@ -87,7 +87,7 @@ class CaregiverProfileSection extends HTMLElement {
           justify-content: center;
         }
         .profile-photo {
-          width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #1976d2; background: #f8f9fa; display: block; margin-bottom: 18px;
+          width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 4px solid #4169e1; background: #f8f9fa; display: block; margin-bottom: 18px;
         }
         .profile-actions {
           display: flex;
@@ -96,7 +96,7 @@ class CaregiverProfileSection extends HTMLElement {
           justify-content: center;
         }
         .profile-actions button {
-          background: #1976d2;
+          background: #4169e1;
           color: #fff;
           border: none;
           border-radius: 8px;
@@ -104,14 +104,14 @@ class CaregiverProfileSection extends HTMLElement {
           font-weight: 600;
           font-size: 1rem;
           cursor: pointer;
-          box-shadow: 0 2px 8px rgba(25,118,210,0.08);
+          box-shadow: 0 2px 8px rgba(65, 105, 225,0.08);
           transition: background 0.2s, color 0.2s;
           display: flex;
           align-items: center;
           gap: 8px;
         }
         .profile-actions button:hover {
-          background: #1565c0;
+          background: #4169e1;
         }
         .profile-row {
           display: flex;
@@ -122,7 +122,7 @@ class CaregiverProfileSection extends HTMLElement {
         .profile-label {
           min-width: 36px;
           font-weight: 600;
-          color: #1976d2;
+          color: #4169e1;
           display: flex;
           align-items: center;
           gap: 6px;
@@ -171,7 +171,7 @@ class CaregiverProfileSection extends HTMLElement {
           <div class="profile-header-info">
             <span class="profile-svg" aria-hidden="true">
               <!-- SVG usuario/doctor -->
-              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
+              <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#4169e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 20v-2a4 4 0 0 1 4-4h8a4 4 0 0 1 4 4v2"/></svg>
             </span>
             <h2>Caregiver Profile</h2>
             <div class="profile-actions">
@@ -184,11 +184,11 @@ class CaregiverProfileSection extends HTMLElement {
           <h3>Personal Information</h3>
         </div>
         <form id="profileForm">
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/></svg> Name:</span><span class="profile-value" id="nameValue">${displayName}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 2v4h8V2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg> Email:</span><span class="profile-value" id="emailValue">${displayEmail}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2.08"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M2 10h20"/></svg> Phone:</span><span class="profile-value" id="phoneValue">${displayPhone}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="8" height="8" rx="4"/><rect x="13" y="3" width="8" height="8" rx="4"/><line x1="8" y1="16" x2="16" y2="8"/></svg> Titles:</span><span class="profile-value" id="titlesValue">${displayTitles}</span></div>
-          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#1976d2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="#1976d2">U</text></svg> Username:</span><span class="profile-value">${loggedInUser}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#4169e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/></svg> Name:</span><span class="profile-value" id="nameValue">${displayName}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#4169e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M4 4h16v16H4z"/><path d="M8 2v4h8V2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/></svg> Email:</span><span class="profile-value" id="emailValue">${displayEmail}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#4169e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M22 16.92V19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v2.08"/><path d="M16 2v4"/><path d="M8 2v4"/><path d="M2 10h20"/></svg> Phone:</span><span class="profile-value" id="phoneValue">${displayPhone}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#4169e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect x="3" y="11" width="8" height="8" rx="4"/><rect x="13" y="3" width="8" height="8" rx="4"/><line x1="8" y1="16" x2="16" y2="8"/></svg> Titles:</span><span class="profile-value" id="titlesValue">${displayTitles}</span></div>
+          <div class="profile-row"><span class="profile-label"><svg width="18" height="18" fill="none" stroke="#4169e1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" fill="#4169e1">U</text></svg> Username:</span><span class="profile-value">${loggedInUser}</span></div>
           <button type="submit" class="save-btn" id="saveProfileBtn" style="display:none;">Save</button>
         </form>
       </div>

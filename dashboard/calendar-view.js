@@ -17,7 +17,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-15',
         time: '10:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 2,
@@ -57,7 +57,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-20',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 7,
@@ -97,7 +97,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-28',
         time: '11:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 12,
@@ -433,7 +433,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-01',
         time: '09:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 54,
@@ -481,7 +481,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-04',
         time: '11:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 60,
@@ -529,7 +529,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-07',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 66,
@@ -545,7 +545,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-08',
         time: '10:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 68,
@@ -593,7 +593,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-15',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 74,
@@ -641,7 +641,7 @@ class CalendarView extends HTMLElement {
         date: '2024-01-22',
         time: '11:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 80,
@@ -658,7 +658,7 @@ class CalendarView extends HTMLElement {
         date: '2024-02-01',
         time: '09:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 82,
@@ -706,7 +706,7 @@ class CalendarView extends HTMLElement {
         date: '2024-02-12',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 88,
@@ -754,7 +754,7 @@ class CalendarView extends HTMLElement {
         date: '2024-02-22',
         time: '11:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 94,
@@ -787,7 +787,7 @@ class CalendarView extends HTMLElement {
         date: '2024-03-01',
         time: '10:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 98,
@@ -835,7 +835,7 @@ class CalendarView extends HTMLElement {
         date: '2024-03-12',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 104,
@@ -883,7 +883,7 @@ class CalendarView extends HTMLElement {
         date: '2024-03-22',
         time: '11:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 110,
@@ -916,7 +916,7 @@ class CalendarView extends HTMLElement {
         date: '2024-04-01',
         time: '09:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 114,
@@ -964,7 +964,7 @@ class CalendarView extends HTMLElement {
         date: '2024-04-12',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 120,
@@ -1012,7 +1012,7 @@ class CalendarView extends HTMLElement {
         date: '2024-04-22',
         time: '11:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 126,
@@ -1044,7 +1044,7 @@ class CalendarView extends HTMLElement {
         date: '2024-04-29',
         time: '14:00',
         type: 'appointment',
-        color: '#1976d2'
+        color: '#4169e1'
       },
       {
         id: 130,
@@ -1142,7 +1142,7 @@ class CalendarView extends HTMLElement {
         }
 
         .calendar-hero {
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 20px;
           padding: 30px;
           margin-bottom: 30px;
@@ -1150,7 +1150,7 @@ class CalendarView extends HTMLElement {
           text-align: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 10px 30px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 10px 30px rgba(65, 105, 225, 0.3);
         }
 
         .calendar-hero::before {
@@ -1226,7 +1226,7 @@ class CalendarView extends HTMLElement {
         }
 
         .nav-btn {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 12px 16px;
@@ -1240,12 +1240,12 @@ class CalendarView extends HTMLElement {
           justify-content: center;
           min-width: 50px;
           height: 50px;
-          box-shadow: 0 4px 15px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 4px 15px rgba(65, 105, 225, 0.3);
         }
 
         .nav-btn:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 25px rgba(25, 118, 210, 0.4);
+          box-shadow: 0 8px 25px rgba(65, 105, 225, 0.4);
         }
 
         .current-month {
@@ -1297,7 +1297,7 @@ class CalendarView extends HTMLElement {
         }
 
         .calendar-day-header {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           padding: 20px 10px;
           text-align: center;
@@ -1325,9 +1325,9 @@ class CalendarView extends HTMLElement {
         }
 
         .calendar-day.today {
-          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-          border: 3px solid #1976d2;
-          box-shadow: 0 5px 20px rgba(25, 118, 210, 0.3);
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12), rgba(65, 105, 225, 0.2));
+          border: 3px solid #4169e1;
+          box-shadow: 0 5px 20px rgba(65, 105, 225, 0.3);
         }
 
         .calendar-day.selected {
@@ -1368,7 +1368,7 @@ class CalendarView extends HTMLElement {
         }
 
         .event-indicator.appointment {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
         }
 
         .event-indicator.medicine {
@@ -1400,7 +1400,7 @@ class CalendarView extends HTMLElement {
         }
 
         .events-title {
-          color: #1976d2;
+          color: #4169e1;
           font-size: 1.5rem;
           font-weight: 700;
           margin: 0;
@@ -1431,7 +1431,7 @@ class CalendarView extends HTMLElement {
         }
 
         .event-time {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           padding: 8px 12px;
           border-radius: 10px;
@@ -1465,8 +1465,8 @@ class CalendarView extends HTMLElement {
         }
 
         .type-appointment { 
-          background: linear-gradient(135deg, #e3f2fd, #bbdefb); 
-          color: #1976d2; 
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12), rgba(65, 105, 225, 0.2)); 
+          color: #4169e1; 
         }
 
         .type-medicine { 

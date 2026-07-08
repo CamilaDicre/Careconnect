@@ -85,14 +85,14 @@ class CTAComponent extends HTMLElement {
 
                 .cta-btn-primary {
                     background: white;
-                    color: #2d4b6e;
+                    color: #4169e1;
                     box-shadow: var(--shadow-md);
                 }
 
                 .cta-btn-primary:hover {
                     transform: translateY(-3px);
                     box-shadow: var(--shadow-lg);
-                    color: #2d4b6e;
+                    color: #4169e1;
                     text-decoration: none;
                 }
 
@@ -104,7 +104,7 @@ class CTAComponent extends HTMLElement {
 
                 .cta-btn-secondary:hover {
                     background: white;
-                    color: #2d4b6e;
+                    color: #4169e1;
                     transform: translateY(-3px);
                     text-decoration: none;
                 }

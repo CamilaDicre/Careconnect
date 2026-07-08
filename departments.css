@@ -40,7 +40,7 @@
 }
 
 .departments-section .display-5 {
-    color: #2d4b6e;
+    color: #4169e1;
     margin-top: 0.5rem;
 }
 
@@ -79,7 +79,7 @@
 }
 
 .my-button {
-    background-color: royalblue;
+    background-color: #4169e1;
     padding: 5px;
     border-radius: 15px;
     color: white;
@@ -201,7 +201,7 @@
 }
 
 .departments-section .display-5 {
-    color: #2d4b6e;
+    color: #4169e1;
     margin-top: 0.5rem;
 }
 
@@ -313,14 +313,14 @@
     align-items: center;
     justify-content: center;
     background: #fff;
-    color: #0dcaf0;
+    color: #4169e1;
     border-radius: 50%;
     text-decoration: none;
     transition: all 0.3s ease;
 }
 
 .social-link:hover {
-    background: #0dcaf0;
+    background: #4169e1;
     color: #fff;
 }
 

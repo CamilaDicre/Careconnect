@@ -63,13 +63,13 @@
         }
         
         .auth-modal {
-            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
             border-radius: 20px;
             padding: 40px;
             text-align: center;
             max-width: 500px;
             width: 90%;
-            box-shadow: 0 20px 60px rgba(79, 172, 254, 0.3);
+            box-shadow: 0 20px 60px rgba(65, 105, 225, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
             animation: slideIn 0.4s ease-out;
             position: relative;
@@ -241,7 +241,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9) 0%, rgba(124, 58, 237, 0.9) 100%);
+            background: linear-gradient(135deg, rgba(65, 105, 225, 0.9) 0%, rgba(124, 58, 237, 0.9) 100%);
             backdrop-filter: blur(20px);
             display: flex;
             justify-content: center;
@@ -356,7 +356,7 @@
     </main>
     
     <!-- Custom notification -->
-    <div id="notification" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-100px);background:linear-gradient(135deg,#4facfe,#00f2fe);color:white;padding:20px 30px;border-radius:16px;box-shadow:0 12px 40px rgba(79,172,254,0.3);z-index:10000;opacity:0;transition:all 0.6s ease;max-width:350px;font-family:'Poppins',sans-serif;font-weight:500;text-align:center;backdrop-filter:blur(10px);">
+    <div id="notification" style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) translateY(-100px);background:linear-gradient(135deg,#4169e1,#4169e1);color:white;padding:20px 30px;border-radius:16px;box-shadow:0 12px 40px rgba(65, 105, 225,0.3);z-index:10000;opacity:0;transition:all 0.6s ease;max-width:350px;font-family:'Poppins',sans-serif;font-weight:500;text-align:center;backdrop-filter:blur(10px);">
         <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
             <i class="bi bi-check-circle-fill" style="font-size:24px;"></i>
             <span id="notification-text" style="font-size:16px;">Session closed successfully</span>
@@ -364,7 +364,7 @@
     </div>
     
     <!-- Enhanced Page transition overlay -->
-    <div id="page-transition" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#2196f3 0%,#1976d2 100%);z-index:99999;opacity:0;visibility:hidden;transition:all 1.5s cubic-bezier(0.23,1,0.32,1);display:flex;align-items:center;justify-content:center;overflow:hidden;">
+    <div id="page-transition" style="position:fixed;top:0;left:0;width:100%;height:100%;background:linear-gradient(135deg,#4169e1 0%,#4169e1 100%);z-index:99999;opacity:0;visibility:hidden;transition:all 1.5s cubic-bezier(0.23,1,0.32,1);display:flex;align-items:center;justify-content:center;overflow:hidden;">
         <!-- Animated background particles -->
         <div class="transition-particle" style="position:absolute;width:8px;height:8px;background:rgba(255,255,255,0.3);border-radius:50%;top:20%;left:10%;animation:particleMove 3s ease-in-out infinite;"></div>
         <div class="transition-particle" style="position:absolute;width:6px;height:6px;background:rgba(255,255,255,0.4);border-radius:50%;top:60%;left:85%;animation:particleMove 4s ease-in-out infinite 0.5s;"></div>
@@ -457,7 +457,7 @@
                 <div class="auth-modal-overlay">
                     <div class="auth-modal" style="animation: modalSlideIn 0.6s cubic-bezier(0.23, 1, 0.32, 1) 0.1s both;">
                         <div class="auth-modal-icon" style="animation: iconBounce 0.8s ease-out 0.3s both;">
-                            <i class="bi bi-shield-lock-fill" style="font-size: 48px; color: #667eea;"></i>
+                            <i class="bi bi-shield-lock-fill" style="font-size: 48px; color: #4169e1;"></i>
                         </div>
                         <h2 class="auth-modal-title" style="animation: textSlideIn 0.8s ease-out 0.4s both;">Access Restricted</h2>
                         <p class="auth-modal-message" style="animation: textSlideIn 0.8s ease-out 0.5s both;">${message}</p>
@@ -467,8 +467,8 @@
                         </a>
                         <div class="auth-modal-countdown" style="animation: textSlideIn 0.8s ease-out 0.7s both;">
                             <div style="display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px;">
-                                <div style="width: 16px; height: 16px; border: 2px solid rgba(102, 126, 234, 0.3); border-top: 2px solid #667eea; border-radius: 50%; animation: spin 1s linear infinite;"></div>
-                                <span>Redirecting automatically in <span id="countdown" style="font-weight: 600; color: #667eea;">${countdownSeconds}</span> seconds...</span>
+                                <div style="width: 16px; height: 16px; border: 2px solid rgba(65, 105, 225, 0.3); border-top: 2px solid #4169e1; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+                                <span>Redirecting automatically in <span id="countdown" style="font-weight: 600; color: #4169e1;">${countdownSeconds}</span> seconds...</span>
                             </div>
                         </div>
                     </div>
@@ -534,8 +534,8 @@
             
             // Configure colors based on type
             if (type === 'success') {
-                notification.style.background = 'linear-gradient(135deg, #4facfe, #00f2fe)';
-                notification.style.boxShadow = '0 12px 40px rgba(79,172,254,0.3)';
+                notification.style.background = 'linear-gradient(135deg, #4169e1, #4169e1)';
+                notification.style.boxShadow = '0 12px 40px rgba(65, 105, 225,0.3)';
                 notification.innerHTML = `
                     <div style="display:flex;align-items:center;justify-content:center;gap:12px;">
                         <i class="bi bi-check-circle-fill" style="font-size:24px;"></i>

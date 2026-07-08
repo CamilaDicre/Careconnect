@@ -92,7 +92,7 @@ class WelcomeOverlay extends HTMLElement {
         .overlay {
           position: fixed;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -118,7 +118,7 @@ class WelcomeOverlay extends HTMLElement {
         
         .welcome-icon {
           font-size: 56px;
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          background: linear-gradient(135deg, #4169e1, #764ba2);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -130,20 +130,20 @@ class WelcomeOverlay extends HTMLElement {
         .welcome-title {
           font-size: 3.5rem;
           font-weight: 900;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 18px;
           letter-spacing: 1px;
         }
         .welcome-greeting {
           font-size: 2.5rem;
           font-weight: 800;
-          color: #1565c0;
+          color: #4169e1;
           margin-bottom: 14px;
         }
         .welcome-name {
           font-size: 36px;
           font-weight: 800;
-          background: linear-gradient(135deg, #667eea, #764ba2);
+          background: linear-gradient(135deg, #4169e1, #764ba2);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -153,7 +153,7 @@ class WelcomeOverlay extends HTMLElement {
         
         .welcome-message {
           font-size: 1.6rem;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 28px;
         }
         

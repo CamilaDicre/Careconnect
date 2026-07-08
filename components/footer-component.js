@@ -25,12 +25,12 @@ class FooterComponent extends HTMLElement {
             <style>
                 /* Root Variables */
                 :root {
-                    --pal-primary: royalblue;
+                    --pal-primary: #4169e1;
                 }
 
                 /* Footer styles - Optimized for seniors */
                 .footer-section {
-                    background: linear-gradient(135deg, #0d47a1 0%, #1565c0 100%);
+                    background: linear-gradient(135deg, #0d47a1 0%, #4169e1 100%);
                     color: white;
                     padding: 80px 0 0;
                     position: relative;
@@ -44,7 +44,7 @@ class FooterComponent extends HTMLElement {
                     left: 0;
                     right: 0;
                     height: 6px;
-                    background: linear-gradient(90deg, #0d47a1, #1565c0);
+                    background: linear-gradient(90deg, #0d47a1, #4169e1);
                 }
 
                 .footer-content {
@@ -221,7 +221,7 @@ class FooterComponent extends HTMLElement {
                 }
 
                 .newsletter-send-btn:hover {
-                    background: #4a69bd;
+                    background: #4169e1;
                     transform: translateY(-50%) scale(1.1);
                     box-shadow: 0 4px 12px rgba(65, 105, 225, 0.4);
                 }
@@ -314,7 +314,7 @@ class FooterComponent extends HTMLElement {
                 }
 
                 .copyright-bar a:hover {
-                    color: #4a69bd;
+                    color: #4169e1;
                     text-decoration: underline;
                 }
 
@@ -902,7 +902,7 @@ class FooterComponent extends HTMLElement {
             }
             .terms-modal-content h2 {
               margin-top: 0;
-              color: royalblue;
+              color: #4169e1;
               font-size: 2rem;
               margin-bottom: 18px;
             }
@@ -917,7 +917,7 @@ class FooterComponent extends HTMLElement {
               transition: color 0.2s;
             }
             .terms-close:hover {
-              color: royalblue;
+              color: #4169e1;
             }
             .terms-checkbox-group {
               margin-bottom: 18px;
@@ -961,8 +961,8 @@ class FooterComponent extends HTMLElement {
               position: relative;
             }
             .terms-checkbox-input:checked + .terms-custom-checkbox {
-              background: royalblue;
-              border-color: royalblue;
+              background: #4169e1;
+              border-color: #4169e1;
             }
             .terms-checkbox-input:checked + .terms-custom-checkbox::after {
               content: '\u2713';
@@ -996,7 +996,7 @@ class FooterComponent extends HTMLElement {
               transform: translateY(-2px) scale(1.03);
             }
             .terms-accept-btn {
-              background: royalblue;
+              background: #4169e1;
               color: #fff;
               border: none;
               border-radius: 8px;
@@ -1013,7 +1013,7 @@ class FooterComponent extends HTMLElement {
               cursor: not-allowed;
             }
             .terms-accept-btn:not(:disabled):hover {
-              background: #274b8e;
+              background: #4169e1;
               transform: translateY(-2px) scale(1.03);
             }
             .terms-all-text {
@@ -1102,7 +1102,7 @@ class FooterComponent extends HTMLElement {
             }
             .cookie-modal-content h2 {
               margin-top: 0;
-              color: royalblue;
+              color: #4169e1;
               font-size: 2rem;
               margin-bottom: 18px;
             }
@@ -1117,7 +1117,7 @@ class FooterComponent extends HTMLElement {
               transition: color 0.2s;
             }
             .cookie-close:hover {
-              color: royalblue;
+              color: #4169e1;
             }
             .cookie-text-box {
               background: #f4f5f7;
@@ -1172,8 +1172,8 @@ class FooterComponent extends HTMLElement {
               position: relative;
             }
             .cookie-radio-input:checked + .cookie-custom-radio {
-              background: royalblue;
-              border-color: royalblue;
+              background: #4169e1;
+              border-color: #4169e1;
             }
             .cookie-radio-input:checked + .cookie-custom-radio::after {
               content: '';
@@ -1210,7 +1210,7 @@ class FooterComponent extends HTMLElement {
               transform: translateY(-2px) scale(1.03);
             }
             .cookie-save-btn {
-              background: royalblue;
+              background: #4169e1;
               color: #fff;
               border: none;
               border-radius: 8px;
@@ -1227,7 +1227,7 @@ class FooterComponent extends HTMLElement {
               cursor: not-allowed;
             }
             .cookie-save-btn:not(:disabled):hover {
-              background: #274b8e;
+              background: #4169e1;
               transform: translateY(-2px) scale(1.03);
             }
             @media (max-width: 480px) {
@@ -1352,11 +1352,11 @@ class FooterComponent extends HTMLElement {
                 left: 50%;
                 bottom: 40px;
                 transform: translateX(-50%);
-                background: linear-gradient(90deg, #1976d2 60%, #63a4ff 100%);
+                background: linear-gradient(90deg, #4169e1 60%, #4169e1 100%);
                 color: white;
                 padding: 28px 48px;
                 border-radius: 20px;
-                box-shadow: 0 8px 32px rgba(25,118,210,0.18);
+                box-shadow: 0 8px 32px rgba(65, 105, 225,0.18);
                 font-family: 'Poppins', sans-serif;
                 font-weight: 600;
                 font-size: 1.35rem;

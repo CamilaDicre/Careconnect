@@ -27,11 +27,11 @@ class CaregiverHeader extends HTMLElement {
         }
 
         .header {
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 50%, #4169e1 100%);
           color: white;
           padding: 30px 35px;
           border-radius: 0;
-          box-shadow: 0 8px 32px rgba(25, 118, 210, 0.4);
+          box-shadow: 0 8px 32px rgba(65, 105, 225, 0.4);
           margin: 0;
           position: absolute;
           top: 0;

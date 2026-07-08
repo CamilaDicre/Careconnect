@@ -2,15 +2,15 @@
 
 /* Variables globales */
 :root {
-    --auth-primary: #1976d2;
-    --auth-primary-dark: #1565c0;
-    --auth-secondary: #63a4ff;
+    --auth-primary: #4169e1;
+    --auth-primary-dark: #4169e1;
+    --auth-secondary: #4169e1;
     --auth-text: #333;
-    --auth-border: #b6c7e3;
+    --auth-border: rgba(65, 105, 225, 0.2);
     --auth-bg: #f6f8fc;
     --auth-white: #fff;
-    --auth-shadow: rgba(25, 118, 210, 0.13);
-    --auth-shadow-hover: rgba(25, 118, 210, 0.18);
+    --auth-shadow: rgba(65, 105, 225, 0.13);
+    --auth-shadow-hover: rgba(65, 105, 225, 0.18);
 }
 
 /* Estilos base del body */
@@ -41,16 +41,16 @@ body.dark-mode {
 body.dark-mode .back-home-btn { color: #e5e7eb; border-color: rgba(255,255,255,0.25); }
 body.dark-mode .back-home-btn:hover { color: #fff; }
 body.dark-mode .auth-container { background: #0f172a; box-shadow: 0 8px 40px rgba(2,6,23,0.6); }
-body.dark-mode .auth-header h1 { color: #93c5fd; }
-body.dark-mode .auth-subtitle { color: #93c5fd; }
-body.dark-mode .auth-toggle-btn { background: #0b1220; color: #93c5fd; border-color: #1f2937; }
+body.dark-mode .auth-header h1 { color: #4169e1; }
+body.dark-mode .auth-subtitle { color: #4169e1; }
+body.dark-mode .auth-toggle-btn { background: #0b1220; color: #4169e1; border-color: #1f2937; }
 body.dark-mode .auth-card { background: #0b1220; box-shadow: 0 2px 12px rgba(2,6,23,0.6); }
-body.dark-mode .auth-card label { color: #93c5fd; }
+body.dark-mode .auth-card label { color: #4169e1; }
 body.dark-mode .auth-card input, 
 body.dark-mode .auth-card select { background: #0f172a; border-color: #1f2937; color: #e5e7eb; }
 body.dark-mode .auth-card input::placeholder, 
 body.dark-mode .auth-card select::placeholder { color: #94a3b8; }
-body.dark-mode .auth-link { color: #93c5fd; }
+body.dark-mode .auth-link { color: #4169e1; }
 
 /* Botón de regreso mejorado */
 .back-home-btn {
@@ -193,7 +193,7 @@ body.dark-mode .auth-link { color: #93c5fd; }
     width: 100%;
     background: var(--auth-white);
     border-radius: 24px;
-    box-shadow: 0 2px 12px rgba(25, 118, 210, 0.07);
+    box-shadow: 0 2px 12px rgba(65, 105, 225, 0.07);
     padding: 1.5rem 1rem 1rem 1rem;
     margin-bottom: 0.5rem;
     animation: fadeIn 0.5s;
@@ -238,7 +238,7 @@ body.dark-mode .auth-link { color: #93c5fd; }
     border-color: var(--auth-primary);
     background: var(--auth-white);
     outline: none;
-    box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
     transform: translateY(-1px);
 }
 
@@ -491,8 +491,8 @@ body.dark-mode .auth-link { color: #93c5fd; }
 .loading-spinner {
     width: 40px;
     height: 40px;
-    border: 4px solid rgba(102, 126, 234, 0.2);
-    border-top: 4px solid #667eea;
+    border: 4px solid rgba(65, 105, 225, 0.2);
+    border-top: 4px solid #4169e1;
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
@@ -500,7 +500,7 @@ body.dark-mode .auth-link { color: #93c5fd; }
 .loading-text {
     margin-top: 15px;
     font-size: 14px;
-    color: #667eea;
+    color: #4169e1;
     font-weight: 500;
     animation: pulse 2s ease-in-out infinite;
 }
@@ -589,7 +589,7 @@ body.dark-mode .auth-link { color: #93c5fd; }
     font-weight: 800;
     color: var(--auth-primary-dark);
     letter-spacing: 2.5px;
-    text-shadow: 0 2px 6px rgba(25,118,210,0.10), 0 1px 0 #fff;
+    text-shadow: 0 2px 6px rgba(65, 105, 225,0.10), 0 1px 0 #fff;
     margin-top: 0.2rem;
     position: relative;
     z-index: 2;
@@ -645,7 +645,7 @@ body.dark-mode .auth-link { color: #93c5fd; }
     margin-bottom: 1.1rem;
     background: var(--auth-bg);
     border-radius: 12px;
-    box-shadow: 0 2px 8px rgba(25,118,210,0.07);
+    box-shadow: 0 2px 8px rgba(65, 105, 225,0.07);
     display: flex;
     align-items: center;
     padding: 0.1rem 0.2rem 0.1rem 0.2rem;
@@ -686,7 +686,7 @@ body.dark-mode .auth-link { color: #93c5fd; }
 .caregiver-form input:focus, 
 .caregiver-form select:focus, 
 .caregiver-form textarea:focus {
-    background: #e3eafc;
+    background: rgba(65, 105, 225, 0.12);
     box-shadow: 0 0 0 2px var(--auth-primary);
     transform: translateY(-1px);
 }

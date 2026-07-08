@@ -8,12 +8,12 @@ class AvatarUtils {
   
   // Generate unique color based on username
   static getAvatarColor(name) {
-    if (!name) return 'linear-gradient(135deg, #667eea, #764ba2)';
+    if (!name) return 'linear-gradient(135deg, #4169e1, #764ba2)';
     
     const colors = [
-      'linear-gradient(135deg, #667eea, #764ba2)', // Purple
+      'linear-gradient(135deg, #4169e1, #764ba2)', // Purple
       'linear-gradient(135deg, #f093fb, #f5576c)', // Pink
-      'linear-gradient(135deg, #4facfe, #00f2fe)', // Blue
+      'linear-gradient(135deg, #4169e1, #4169e1)', // Blue
       'linear-gradient(135deg, #43e97b, #38f9d7)', // Green
       'linear-gradient(135deg, #fa709a, #fee140)', // Orange
       'linear-gradient(135deg, #a8edea, #fed6e3)', // Mint

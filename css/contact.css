@@ -17,7 +17,7 @@
 }
 
 .contact-hero-section .text-primary {
-    color: #0dcaf0 !important;
+    color: #4169e1 !important;
     font-size: 1.1rem;
     letter-spacing: 2px;
 }
@@ -81,7 +81,7 @@
 }
 
 .contact-card h3 {
-    color: #2d4b6e;
+    color: #4169e1;
     font-size: 1.5rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -101,7 +101,7 @@
 }
 
 .contact-form-wrapper h2 {
-    color: #2d4b6e;
+    color: #4169e1;
     font-size: 2rem;
     margin-bottom: 2rem;
     font-weight: 600;
@@ -116,7 +116,7 @@
 }
 
 .contact-form-wrapper .form-control:focus {
-    border-color: #0dcaf0;
+    border-color: #4169e1;
     box-shadow: none;
 }
 

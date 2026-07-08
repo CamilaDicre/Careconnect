@@ -20,7 +20,7 @@ class CaregiverFooter extends HTMLElement {
         }
         
         .footer {
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           color: white;
           padding: 30px 0;
           margin-top: 40px;

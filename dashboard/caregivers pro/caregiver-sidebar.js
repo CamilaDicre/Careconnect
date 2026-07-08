@@ -72,9 +72,9 @@ class CaregiverSidebar extends HTMLElement {
           left: 0;
           height: 100vh;
           width: 350px;
-          background: linear-gradient(180deg, #1e40af 0%, #3b82f6 100%);
+          background: linear-gradient(180deg, #4169e1 0%, #4169e1 100%);
           color: white;
-          box-shadow: 4px 0 24px rgba(37, 99, 235, 0.15);
+          box-shadow: 4px 0 24px rgba(65, 105, 225, 0.15);
           display: flex;
           flex-direction: column;
           z-index: 1000;
@@ -213,7 +213,7 @@ class CaregiverSidebar extends HTMLElement {
           align-items: center;
           justify-content: center;
           font-size: 28px;
-          color: #2563eb;
+          color: #4169e1;
           border: 3px solid rgba(255, 255, 255, 0.2);
           overflow: hidden;
           font-weight: 700;

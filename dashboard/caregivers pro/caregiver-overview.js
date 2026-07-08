@@ -40,7 +40,7 @@ class CaregiverOverview extends HTMLElement {
           time: '4 hours ago',
           description: 'Medication reminder sent',
           icon: 'bi-capsule',
-          color: '#3b82f6'
+          color: '#4169e1'
         },
         {
           id: 3,
@@ -128,12 +128,12 @@ class CaregiverOverview extends HTMLElement {
           display: flex;
           align-items: center;
           gap: 24px;
-          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #7c3aed 100%);
           color: white;
           padding: 32px;
           border-radius: 20px;
           margin-bottom: 32px;
-          box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
+          box-shadow: 0 8px 32px rgba(65, 105, 225, 0.15);
           position: relative;
           overflow: hidden;
           animation: fadeInDown 0.8s ease-out;
@@ -246,7 +246,7 @@ class CaregiverOverview extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(90deg, #2563eb, #7c3aed);
+          background: linear-gradient(90deg, #4169e1, #7c3aed);
         }
         
         .stat-header {
@@ -267,7 +267,7 @@ class CaregiverOverview extends HTMLElement {
           color: white;
         }
         
-        .stat-icon.primary { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+        .stat-icon.primary { background: linear-gradient(135deg, #4169e1, #4169e1); }
         .stat-icon.success { background: linear-gradient(135deg, #10b981, #34d399); }
         .stat-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
         .stat-icon.purple { background: linear-gradient(135deg, #7c3aed, #a855f7); }
@@ -413,7 +413,7 @@ class CaregiverOverview extends HTMLElement {
         
         .activity-patient {
           font-weight: 600;
-          color: #2563eb;
+          color: #4169e1;
         }
         
         /* Upcoming Sessions */
@@ -452,7 +452,7 @@ class CaregiverOverview extends HTMLElement {
           border-radius: 12px;
           background: #f8fafc;
           transition: all 0.3s ease;
-          border-left: 4px solid #2563eb;
+          border-left: 4px solid #4169e1;
         }
         
         .session-item:hover {
@@ -512,7 +512,7 @@ class CaregiverOverview extends HTMLElement {
         .nav-link-btn {
           background: none;
           border: none;
-          color: #2563eb;
+          color: #4169e1;
           font-size: 0.875rem;
           cursor: pointer;
           display: inline-flex;
@@ -523,7 +523,7 @@ class CaregiverOverview extends HTMLElement {
         }
 
         .nav-link-btn:hover {
-          color: #1d4ed8;
+          color: #4169e1;
           text-decoration: underline;
         }
 
@@ -955,12 +955,12 @@ class CaregiverOverview extends HTMLElement {
           {
             label: 'Sessions',
             data: this.data.weeklyStats.sessions,
-            borderColor: '#2563eb',
-            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            borderColor: '#4169e1',
+            backgroundColor: 'rgba(65, 105, 225, 0.1)',
             borderWidth: 3,
             fill: true,
             tension: 0.4,
-            pointBackgroundColor: '#2563eb',
+            pointBackgroundColor: '#4169e1',
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
             pointRadius: 6,

@@ -268,7 +268,7 @@ class VirtualCare extends HTMLElement {
       position: fixed;
       top: 20px;
       right: 20px;
-      background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#17a2b8'};
+      background: ${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#4169e1'};
       color: white;
       padding: 15px 20px;
       border-radius: 8px;
@@ -631,8 +631,8 @@ class VirtualCare extends HTMLElement {
         }
 
         .status-upcoming {
-          background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-          color: #1976d2;
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12), rgba(65, 105, 225, 0.2));
+          color: #4169e1;
         }
 
         .status-cancelled {
@@ -710,13 +710,13 @@ class VirtualCare extends HTMLElement {
         }
 
         .view-btn {
-          background: linear-gradient(135deg, #17a2b8, #138496);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
         }
 
         .view-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+          box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
         }
 
         .empty-state {

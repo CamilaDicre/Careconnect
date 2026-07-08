@@ -44,7 +44,7 @@ class CareSidebar extends HTMLElement {
       return {
         name: 'Patient',
         initials: 'P',
-        avatarColor: 'linear-gradient(135deg, #667eea, #764ba2)',
+        avatarColor: 'linear-gradient(135deg, #4169e1, #764ba2)',
         photo: null,
         email: '-',
         username: '-'
@@ -62,12 +62,12 @@ class CareSidebar extends HTMLElement {
     
     // Generate unique color based on name
     const getAvatarColor = (name) => {
-      if (!name) return 'linear-gradient(135deg, #667eea, #764ba2)';
+      if (!name) return 'linear-gradient(135deg, #4169e1, #764ba2)';
       
       const colors = [
-        'linear-gradient(135deg, #667eea, #764ba2)', // Purple
+        'linear-gradient(135deg, #4169e1, #764ba2)', // Purple
         'linear-gradient(135deg, #f093fb, #f5576c)', // Pink
-        'linear-gradient(135deg, #4facfe, #00f2fe)', // Blue
+        'linear-gradient(135deg, #4169e1, #4169e1)', // Blue
         'linear-gradient(135deg, #43e97b, #38f9d7)', // Green
         'linear-gradient(135deg, #fa709a, #fee140)', // Orange
         'linear-gradient(135deg, #a8edea, #fed6e3)', // Mint
@@ -192,14 +192,14 @@ class CareSidebar extends HTMLElement {
           left: 20px;
           width: 50px;
           height: 50px;
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border: none;
           border-radius: 12px;
           color: white;
           font-size: 24px;
           cursor: pointer;
           z-index: 1001;
-          box-shadow: 0 4px 20px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 4px 20px rgba(65, 105, 225, 0.3);
           transition: all 0.3s ease;
           align-items: center;
           justify-content: center;
@@ -207,7 +207,7 @@ class CareSidebar extends HTMLElement {
         
         .mobile-hamburger:hover {
           transform: scale(1.05);
-          box-shadow: 0 6px 25px rgba(25, 118, 210, 0.4);
+          box-shadow: 0 6px 25px rgba(65, 105, 225, 0.4);
         }
         
         .mobile-hamburger.active {
@@ -254,7 +254,7 @@ class CareSidebar extends HTMLElement {
         }
         
         .logo-content:hover {
-          background: #e3eafc;
+          background: rgba(65, 105, 225, 0.12);
           transform: scale(1.05);
         }
         
@@ -307,7 +307,7 @@ class CareSidebar extends HTMLElement {
           align-items: center;
           justify-content: center;
           font-size: 28px;
-          color: #667eea;
+          color: #4169e1;
           border: 3px solid #e9ecef;
           overflow: hidden;
           font-weight: 700;
@@ -376,14 +376,14 @@ class CareSidebar extends HTMLElement {
         .sidebar-btn:hover {
           background: #f0f2ff;
           color: #333;
-          border-left-color: #667eea;
+          border-left-color: #4169e1;
           transform: translateX(5px);
         }
         
         .sidebar-btn.active {
-          background: #e3f2fd;
-          color: #667eea;
-          border-left-color: #667eea;
+          background: rgba(65, 105, 225, 0.12);
+          color: #4169e1;
+          border-left-color: #4169e1;
           font-weight: 600;
         }
 
@@ -395,14 +395,14 @@ class CareSidebar extends HTMLElement {
         :host-context(.dark-mode) .user-details h4 { color: #e5e7eb; }
         :host-context(.dark-mode) .user-details p { color: #94a3b8; }
         :host-context(.dark-mode) .sidebar-btn { color: #cbd5e1; }
-        :host-context(.dark-mode) .sidebar-btn:hover { background: #0b1220; color: #e5e7eb; border-left-color: #3b82f6; }
-        :host-context(.dark-mode) .sidebar-btn.active { background: #0b1220; color: #93c5fd; border-left-color: #3b82f6; }
+        :host-context(.dark-mode) .sidebar-btn:hover { background: #0b1220; color: #e5e7eb; border-left-color: #4169e1; }
+        :host-context(.dark-mode) .sidebar-btn.active { background: #0b1220; color: #4169e1; border-left-color: #4169e1; }
         
         .sidebar-btn i {
           font-size: 24px;
           width: 28px;
           text-align: center;
-          color: #667eea;
+          color: #4169e1;
           flex-shrink: 0;
         }
         

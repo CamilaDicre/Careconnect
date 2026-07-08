@@ -78,8 +78,8 @@ class GlobalLoading extends HTMLElement {
         .loading-spinner {
           width: 60px;
           height: 60px;
-          border: 4px solid rgba(102, 126, 234, 0.2);
-          border-top: 4px solid #667eea;
+          border: 4px solid rgba(65, 105, 225, 0.2);
+          border-top: 4px solid #4169e1;
           border-radius: 50%;
           margin: 0 auto 20px;
           animation: spin 1.2s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;

@@ -308,7 +308,7 @@ if (typeof CareConnectDB === 'undefined') {
         },
         notes: user.notes || '',
         photo: user.photo || null,
-        avatarColor: user.avatarColor || 'linear-gradient(135deg, #667eea, #764ba2)',
+        avatarColor: user.avatarColor || 'linear-gradient(135deg, #4169e1, #764ba2)',
         experience: user.experience || '',
         education: user.education || '',
         certifications: user.certifications || '',

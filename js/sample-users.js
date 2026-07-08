@@ -82,7 +82,7 @@ const sampleUsers = {
       
       // Avatar
       photo: null,
-      avatarColor: "linear-gradient(135deg, #667eea, #764ba2)"
+      avatarColor: "linear-gradient(135deg, #4169e1, #764ba2)"
     },
     
     {
@@ -244,7 +244,7 @@ const sampleUsers = {
       
       // Avatar
       photo: null,
-      avatarColor: "linear-gradient(135deg, #4facfe, #00f2fe)"
+      avatarColor: "linear-gradient(135deg, #4169e1, #4169e1)"
     },
     
     {
@@ -742,7 +742,7 @@ const sampleUsers = {
       
       // Avatar
       photo: null,
-      avatarColor: "linear-gradient(135deg, #667eea, #764ba2)"
+      avatarColor: "linear-gradient(135deg, #4169e1, #764ba2)"
     },
     
     {
@@ -986,7 +986,7 @@ async function createUserProfiles() {
           preferences: { language: 'English', notifications: true, accessibility: false },
           notes: user.notes || '',
           photo: user.photo || null,
-          avatarColor: user.avatarColor || 'linear-gradient(135deg, #667eea, #764ba2)',
+          avatarColor: user.avatarColor || 'linear-gradient(135deg, #4169e1, #764ba2)',
           experience: user.experience || '',
           education: user.education || '',
           certifications: user.certifications || '',

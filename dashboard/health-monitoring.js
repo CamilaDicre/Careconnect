@@ -54,7 +54,7 @@ class HealthMonitoring extends HTMLElement {
         }
         
         .header h2 {
-          color: #1976d2;
+          color: #4169e1;
           margin: 0;
           font-family: 'Poppins', sans-serif;
           font-size: 28px;
@@ -123,7 +123,7 @@ class HealthMonitoring extends HTMLElement {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -142,7 +142,7 @@ class HealthMonitoring extends HTMLElement {
         .vital-value {
           font-size: 28px;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
         }
         
@@ -187,7 +187,7 @@ class HealthMonitoring extends HTMLElement {
         }
         
         .reading-item:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateX(5px);
         }
         
@@ -195,7 +195,7 @@ class HealthMonitoring extends HTMLElement {
           width: 40px;
           height: 40px;
           border-radius: 50%;
-          background: #1976d2;
+          background: #4169e1;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -319,13 +319,13 @@ class HealthMonitoring extends HTMLElement {
         }
         
         .action-card:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateY(-2px);
         }
         
         .action-icon {
           font-size: 32px;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 10px;
         }
         
@@ -443,7 +443,7 @@ class HealthMonitoring extends HTMLElement {
             `).join('')}
             
             <div style="text-align: center; margin-top: 20px;">
-              <button style="background: #1976d2; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer;">
+              <button style="background: #4169e1; color: white; border: none; padding: 10px 20px; border-radius: 8px; font-size: 14px; cursor: pointer;">
                 View All Alerts
               </button>
             </div>

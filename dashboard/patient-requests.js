@@ -67,7 +67,7 @@ class PatientRequests extends HTMLElement {
           margin-bottom: 2.5rem;
         }
         .requests-header h2 {
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 0.8rem;
           font-family: 'Poppins', sans-serif;
           font-size: 2rem;
@@ -97,8 +97,8 @@ class PatientRequests extends HTMLElement {
         }
         .filter-select:focus {
           outline: none;
-          border-color: #1976d2;
-          box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+          border-color: #4169e1;
+          box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
         }
         .requests-grid {
           display: grid;
@@ -128,7 +128,7 @@ class PatientRequests extends HTMLElement {
           height: 65px;
           border-radius: 50%;
           object-fit: cover;
-          border: 3px solid #e3eafc;
+          border: 3px solid rgba(65, 105, 225, 0.12);
         }
         .request-info h3 {
           margin: 0 0 0.4rem 0;
@@ -238,12 +238,12 @@ class PatientRequests extends HTMLElement {
           box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
         }
         .btn-view {
-          background: #17a2b8;
+          background: #4169e1;
           color: white;
         }
         .btn-view:hover {
-          background: #138496;
-          box-shadow: 0 4px 12px rgba(23, 162, 184, 0.3);
+          background: #4169e1;
+          box-shadow: 0 4px 12px rgba(65, 105, 225, 0.3);
         }
       </style>
       <section>

@@ -37,7 +37,7 @@ class OverviewSection extends HTMLElement {
         }
 
         .overview-hero {
-          background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 25px;
           padding: 40px;
           margin-bottom: 30px;
@@ -45,7 +45,7 @@ class OverviewSection extends HTMLElement {
           text-align: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 15px 35px rgba(65, 105, 225, 0.3);
         }
 
         .overview-hero::before {
@@ -157,15 +157,15 @@ class OverviewSection extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           transform: scaleX(0);
           transition: transform 0.3s ease;
         }
 
         .dashboard-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(33, 150, 243, 0.15);
-          border-color: #2196f3;
+          box-shadow: 0 15px 40px rgba(65, 105, 225, 0.15);
+          border-color: #4169e1;
         }
 
         .dashboard-card:hover::before {
@@ -190,7 +190,7 @@ class OverviewSection extends HTMLElement {
 
         .card-icon {
           font-size: 1.5rem;
-          color: #1976d2;
+          color: #4169e1;
         }
 
         .item-icon {
@@ -206,7 +206,7 @@ class OverviewSection extends HTMLElement {
         }
 
         .item-icon.medication { background: linear-gradient(135deg, #28a745, #20c997); }
-        .item-icon.appointment { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+        .item-icon.appointment { background: linear-gradient(135deg, #4169e1, #4169e1); }
         .item-icon.hospital { background: linear-gradient(135deg, #5c6bc0, #7986cb); }
 
         .activity-icon i {
@@ -225,7 +225,7 @@ class OverviewSection extends HTMLElement {
 
         .quick-action-icon {
           font-size: 1.8rem;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
           display: block;
         }
@@ -237,7 +237,7 @@ class OverviewSection extends HTMLElement {
         }
 
         .card-action {
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 8px 15px;
@@ -250,7 +250,7 @@ class OverviewSection extends HTMLElement {
 
         .card-action:hover {
           transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+          box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
         }
 
         .stats-grid {
@@ -270,7 +270,7 @@ class OverviewSection extends HTMLElement {
         .stat-value {
           font-size: 1.8rem;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
         }
 
@@ -399,7 +399,7 @@ class OverviewSection extends HTMLElement {
           width: 35px;
           height: 35px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -414,7 +414,7 @@ class OverviewSection extends HTMLElement {
 
         .appointment-time {
           font-size: 0.8rem;
-          color: #1976d2;
+          color: #4169e1;
           font-weight: 600;
         }
 
@@ -435,7 +435,7 @@ class OverviewSection extends HTMLElement {
         .metric-value {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
         }
 
@@ -843,7 +843,7 @@ class OverviewSection extends HTMLElement {
                 </div>
               </li>
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #1976d2, #42a5f5);"><i class="bi bi-activity"></i></div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #4169e1, #4169e1);"><i class="bi bi-activity"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Blood pressure recorded</div>
                   <div class="activity-time">4 hours ago</div>
