@@ -9,6 +9,7 @@ class CaregiverOverview extends HTMLElement {
     this.loadAndRender().then(() => {
       this.initializeCharts();
       this.startRealTimeUpdates();
+      this.setupNavigation();
     });
   }
 
@@ -109,6 +110,8 @@ class CaregiverOverview extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
         * { 
           font-family: 'Poppins', sans-serif; 
           box-sizing: border-box; 
@@ -228,6 +231,7 @@ class CaregiverOverview extends HTMLElement {
           transition: all 0.3s ease;
           position: relative;
           overflow: hidden;
+          cursor: pointer;
         }
         
         .stat-card:hover {
@@ -505,7 +509,24 @@ class CaregiverOverview extends HTMLElement {
           color: #92400e;
         }
         
-        /* Animaciones */
+        .nav-link-btn {
+          background: none;
+          border: none;
+          color: #2563eb;
+          font-size: 0.875rem;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 0;
+          font-family: inherit;
+        }
+
+        .nav-link-btn:hover {
+          color: #1d4ed8;
+          text-decoration: underline;
+        }
+
         @keyframes fadeInDown {
           from { 
             opacity: 0; 
@@ -564,10 +585,10 @@ class CaregiverOverview extends HTMLElement {
             <div class="profile-email">${displayEmail}</div>
             <div class="profile-role">${displayTitles}</div>
             <div class="profile-actions">
-              <button onclick="window.notifications.show('Edit feature coming soon', 'info', 3000)">
+              <button type="button" data-nav="profile">
                 <i class="bi bi-pencil-square me-2"></i>Edit Profile
               </button>
-              <button onclick="window.notifications.show('Settings feature coming soon', 'info', 3000)">
+              <button type="button" data-nav="profile">
                 <i class="bi bi-gear me-2"></i>Settings
               </button>
             </div>
@@ -576,10 +597,10 @@ class CaregiverOverview extends HTMLElement {
 
         <!-- Métricas principales -->
         <div class="stats-grid">
-          <div class="stat-card">
+          <div class="stat-card" data-nav="profile">
             <div class="stat-header">
               <div class="stat-icon primary">
-                <i class="bi bi-heart-pulse-fill"></i>
+                <i class="bi bi-people-fill"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.totalPatients}</div>
@@ -590,10 +611,10 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-nav="virtual-care">
             <div class="stat-header">
               <div class="stat-icon success">
-                <i class="bi bi-play-circle-fill"></i>
+                <i class="bi bi-camera-video-fill"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.activeSessions}</div>
@@ -604,7 +625,7 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-nav="medication">
             <div class="stat-header">
               <div class="stat-icon warning">
                 <i class="bi bi-check2-all"></i>
@@ -618,7 +639,7 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-nav="earnings">
             <div class="stat-header">
               <div class="stat-icon purple">
                 <i class="bi bi-cash-stack"></i>
@@ -661,8 +682,8 @@ class CaregiverOverview extends HTMLElement {
               <div class="activity-title">
                 <i class="bi bi-clock-history me-2"></i>Recent Activity
               </div>
-              <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
-                <i class="bi bi-arrow-right me-1"></i>View all
+              <button type="button" class="nav-link-btn" data-nav="documents">
+                <i class="bi bi-arrow-right"></i>View all
               </button>
             </div>
             <div class="activity-list">
@@ -695,8 +716,8 @@ class CaregiverOverview extends HTMLElement {
             <div class="sessions-title">
               <i class="bi bi-calendar-event me-2"></i>Upcoming Sessions
             </div>
-            <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
-              <i class="bi bi-calendar-week me-1"></i>View calendar
+            <button type="button" class="nav-link-btn" data-nav="virtual-care">
+              <i class="bi bi-calendar-week"></i>View calendar
             </button>
           </div>
           <div class="sessions-list">
@@ -727,6 +748,18 @@ class CaregiverOverview extends HTMLElement {
         </div>
       </div>
     `;
+  }
+
+  setupNavigation() {
+    this.shadowRoot.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = el.dataset.nav;
+        if (section && window.DashboardNavigation) {
+          window.DashboardNavigation.navigateCaregiver(section);
+        }
+      });
+    });
   }
 
   initializeCharts() {

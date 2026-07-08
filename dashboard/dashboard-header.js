@@ -632,7 +632,10 @@ class DashboardHeader extends HTMLElement {
   }
 
   showGames() {
-    // Trigger sidebar navigation to games section
+    if (window.DashboardNavigation) {
+      window.DashboardNavigation.navigatePatient('games');
+      return;
+    }
     const sidebar = document.querySelector('care-sidebar');
     if (sidebar) {
       // Find the games button in the sidebar and click it

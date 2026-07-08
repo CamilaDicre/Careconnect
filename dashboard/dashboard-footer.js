@@ -6,11 +6,14 @@ class DashboardFooter extends HTMLElement {
   
   connectedCallback() {
     this.render();
+    this.setupNavigation();
   }
   
   render() {
     this.shadowRoot.innerHTML = `
       <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
         * {
           font-family: 'Poppins', sans-serif;
           box-sizing: border-box;
@@ -38,22 +41,6 @@ class DashboardFooter extends HTMLElement {
           pointer-events: none;
         }
 
-        .dashboard-footer::after {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-          animation: float 8s ease-in-out infinite reverse;
-        }
-
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(180deg); }
-        }
-
         .footer-content {
           max-width: 1200px;
           margin: 0 auto;
@@ -74,13 +61,14 @@ class DashboardFooter extends HTMLElement {
           color: rgba(255, 255, 255, 0.9);
           font-size: 15px;
           font-weight: 500;
-          text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         .footer-links {
           display: flex;
-          gap: 35px;
+          gap: 12px;
           align-items: center;
+          flex-wrap: wrap;
+          justify-content: center;
         }
 
         .footer-link {
@@ -94,6 +82,11 @@ class DashboardFooter extends HTMLElement {
           background: rgba(255, 255, 255, 0.1);
           backdrop-filter: blur(10px);
           border: 1px solid rgba(255, 255, 255, 0.2);
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          cursor: pointer;
+          font-family: inherit;
         }
 
         .footer-link:hover {
@@ -103,11 +96,14 @@ class DashboardFooter extends HTMLElement {
           box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .footer-divider {
-          width: 1px;
-          height: 25px;
-          background: rgba(255, 255, 255, 0.3);
-          border-radius: 1px;
+        .footer-link.static {
+          cursor: default;
+          opacity: 0.85;
+        }
+
+        .footer-link.static:hover {
+          transform: none;
+          box-shadow: none;
         }
 
         .footer-logo {
@@ -117,7 +113,6 @@ class DashboardFooter extends HTMLElement {
           font-weight: 700;
           font-size: 18px;
           color: white;
-          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
         .footer-logo img {
@@ -135,11 +130,7 @@ class DashboardFooter extends HTMLElement {
           
           .footer-links {
             flex-direction: column;
-            gap: 15px;
-          }
-          
-          .footer-divider {
-            display: none;
+            gap: 10px;
           }
         }
       </style>
@@ -155,17 +146,29 @@ class DashboardFooter extends HTMLElement {
               © ${new Date().getFullYear()} Careconnect. All rights reserved.
             </div>
             <div class="footer-links">
-              <a href="#" class="footer-link">Privacy Policy</a>
-              <div class="footer-divider"></div>
-              <a href="#" class="footer-link">Terms of Service</a>
-              <div class="footer-divider"></div>
-              <a href="#" class="footer-link">Cookie Policy</a>
+              <button type="button" class="footer-link" data-nav="emergency-contacts"><i class="bi bi-telephone-fill"></i>Emergency</button>
+              <button type="button" class="footer-link" data-nav="appointment-booking"><i class="bi bi-calendar-plus"></i>Appointments</button>
+              <button type="button" class="footer-link" data-nav="medicines"><i class="bi bi-capsule"></i>Medications</button>
+              <button type="button" class="footer-link" data-nav="charts"><i class="bi bi-graph-up"></i>Health Charts</button>
+              <span class="footer-link static"><i class="bi bi-shield-lock"></i>Privacy</span>
             </div>
           </div>
         </div>
       </footer>
     `;
   }
+
+  setupNavigation() {
+    this.shadowRoot.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = el.dataset.nav;
+        if (section && window.DashboardNavigation) {
+          window.DashboardNavigation.navigatePatient(section);
+        }
+      });
+    });
+  }
 }
 
-customElements.define('dashboard-footer', DashboardFooter); 
+customElements.define('dashboard-footer', DashboardFooter);

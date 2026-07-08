@@ -16,11 +16,14 @@ class OverviewSection extends HTMLElement {
       displayName = user ? (user.name || user.username || 'User') : 'User';
     }
     this.render(displayName);
+    this.setupNavigation();
   }
 
   render(displayName = 'User') {
     this.shadowRoot.innerHTML = `
       <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
         * {
           font-family: 'Poppins', sans-serif;
           box-sizing: border-box;
@@ -188,6 +191,49 @@ class OverviewSection extends HTMLElement {
         .card-icon {
           font-size: 1.5rem;
           color: #1976d2;
+        }
+
+        .item-icon {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 1rem;
+          flex-shrink: 0;
+        }
+
+        .item-icon.medication { background: linear-gradient(135deg, #28a745, #20c997); }
+        .item-icon.appointment { background: linear-gradient(135deg, #1976d2, #42a5f5); }
+        .item-icon.hospital { background: linear-gradient(135deg, #5c6bc0, #7986cb); }
+
+        .activity-icon i {
+          font-size: 1.1rem;
+        }
+
+        .quick-action-btn {
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+        }
+
+        .quick-action-btn:hover {
+          transform: scale(1.05);
+        }
+
+        .quick-action-icon {
+          font-size: 1.8rem;
+          color: #1976d2;
+          margin-bottom: 5px;
+          display: block;
+        }
+
+        .hero-wave {
+          font-size: 2.2rem;
+          vertical-align: middle;
+          margin-left: 6px;
         }
 
         .card-action {
@@ -450,7 +496,7 @@ class OverviewSection extends HTMLElement {
       <div class="overview-container">
         <div class="overview-hero">
           <div class="hero-content">
-            <h1 class="overview-title">Welcome back, ${displayName}! 👋</h1>
+            <h1 class="overview-title">Welcome back, ${displayName}! <i class="bi bi-emoji-smile hero-wave"></i></h1>
             <p class="overview-subtitle">Here's your health summary for today</p>
             <div class="quick-stats">
               <div class="quick-stat">
@@ -477,7 +523,7 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-heart-pulse card-icon"></i>
                 Health Overview
               </div>
-              <button class="card-action">View Details</button>
+              <button class="card-action" data-nav="health-monitoring">View Details</button>
             </div>
             <div class="health-metrics">
               <div class="metric-item">
@@ -506,38 +552,38 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-capsule card-icon"></i>
                 Today's Medications
               </div>
-              <button class="card-action">View All</button>
+              <button class="card-action" data-nav="medicines">View All</button>
             </div>
             <ul class="medication-list">
               <li class="medication-item">
                 <div class="medication-info">
-                  <div class="medication-icon">💊</div>
+                  <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
                     <div class="medication-name">Metformin</div>
                     <div class="medication-time">8:00 AM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Take</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="medicines">Take</button>
               </li>
               <li class="medication-item">
                 <div class="medication-info">
-                  <div class="medication-icon">💊</div>
+                  <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
                     <div class="medication-name">Aspirin</div>
                     <div class="medication-time">12:00 PM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Take</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="medicines">Take</button>
               </li>
               <li class="medication-item">
                 <div class="medication-info">
-                  <div class="medication-icon">💊</div>
+                  <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
                     <div class="medication-name">Vitamin D</div>
                     <div class="medication-time">8:00 PM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Take</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="medicines">Take</button>
               </li>
             </ul>
           </div>
@@ -549,28 +595,28 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-calendar-event card-icon"></i>
                 Upcoming Appointments
               </div>
-              <button class="card-action">View All</button>
+              <button class="card-action" data-nav="calendar">View All</button>
             </div>
             <ul class="appointment-list">
               <li class="appointment-item">
                 <div class="appointment-info">
-                  <div class="appointment-icon">👨‍⚕️</div>
+                  <div class="item-icon appointment"><i class="bi bi-person-badge"></i></div>
                   <div>
                     <div class="appointment-name">Dr. Martínez</div>
                     <div class="appointment-time">Tomorrow, 10:00 AM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Join</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="virtual-care">Join</button>
               </li>
               <li class="appointment-item">
                 <div class="appointment-info">
-                  <div class="appointment-icon">🏥</div>
+                  <div class="item-icon hospital"><i class="bi bi-hospital"></i></div>
                   <div>
                     <div class="appointment-name">Blood Test</div>
                     <div class="appointment-time">Friday, 9:00 AM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Details</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="calendar">Details</button>
               </li>
             </ul>
           </div>
@@ -582,25 +628,25 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-activity card-icon"></i>
                 Recent Activity
               </div>
-              <button class="card-action">View All</button>
+              <button class="card-action" data-nav="health-monitoring">View All</button>
             </div>
             <ul class="activity-list">
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #28a745, #20c997);">✅</div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #28a745, #20c997);"><i class="bi bi-check-lg"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Medication taken</div>
                   <div class="activity-time">2 hours ago</div>
                 </div>
               </li>
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #1976d2, #42a5f5);">📊</div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #1976d2, #42a5f5);"><i class="bi bi-activity"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Blood pressure recorded</div>
                   <div class="activity-time">4 hours ago</div>
                 </div>
               </li>
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #ffc107, #ff9800);">📅</div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #ffc107, #ff9800);"><i class="bi bi-calendar-event"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Appointment scheduled</div>
                   <div class="activity-time">Yesterday</div>
@@ -616,7 +662,7 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-graph-up card-icon"></i>
                 Health Statistics
               </div>
-              <button class="card-action">View Details</button>
+              <button class="card-action" data-nav="charts">View Details</button>
             </div>
             <div class="stats-grid">
               <div class="stat-item">
@@ -647,20 +693,20 @@ class OverviewSection extends HTMLElement {
               </div>
             </div>
             <div class="stats-grid">
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">📞</div>
+              <button class="stat-item quick-action-btn" data-nav="emergency-contacts">
+                <i class="bi bi-telephone-fill quick-action-icon"></i>
                 <div class="stat-label">Emergency Call</div>
               </button>
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">📋</div>
+              <button class="stat-item quick-action-btn" data-nav="appointment-booking">
+                <i class="bi bi-calendar-plus quick-action-icon"></i>
                 <div class="stat-label">Book Appointment</div>
               </button>
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">💊</div>
+              <button class="stat-item quick-action-btn" data-nav="medicines">
+                <i class="bi bi-capsule quick-action-icon"></i>
                 <div class="stat-label">Add Medication</div>
               </button>
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">📊</div>
+              <button class="stat-item quick-action-btn" data-nav="charts">
+                <i class="bi bi-graph-up quick-action-icon"></i>
                 <div class="stat-label">Health Report</div>
               </button>
             </div>
@@ -668,6 +714,18 @@ class OverviewSection extends HTMLElement {
         </div>
       </div>
     `;
+  }
+
+  setupNavigation() {
+    this.shadowRoot.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = el.dataset.nav;
+        if (section && window.DashboardNavigation) {
+          window.DashboardNavigation.navigatePatient(section);
+        }
+      });
+    });
   }
 }
 

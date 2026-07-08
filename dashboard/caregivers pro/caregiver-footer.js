@@ -6,11 +6,14 @@ class CaregiverFooter extends HTMLElement {
   
   connectedCallback() {
     this.render();
+    this.setupNavigation();
   }
   
   render() {
     this.shadowRoot.innerHTML = `
       <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
         * {
           font-family: 'Poppins', sans-serif;
           box-sizing: border-box;
@@ -36,22 +39,6 @@ class CaregiverFooter extends HTMLElement {
           pointer-events: none;
         }
         
-        .footer::after {
-          content: '';
-          position: absolute;
-          top: -50%;
-          left: -50%;
-          width: 200%;
-          height: 200%;
-          background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 70%);
-          animation: float 8s ease-in-out infinite reverse;
-        }
-        
-        @keyframes float {
-          0%, 100% { transform: translateY(0px) rotate(0deg); }
-          50% { transform: translateY(-15px) rotate(180deg); }
-        }
-        
         .footer-content {
           max-width: 1200px;
           margin: 0 auto;
@@ -63,7 +50,7 @@ class CaregiverFooter extends HTMLElement {
         .footer-row {
           display: flex;
           justify-content: space-between;
-          align-items: center;
+          align-items: flex-start;
           flex-wrap: wrap;
           gap: 25px;
         }
@@ -71,13 +58,13 @@ class CaregiverFooter extends HTMLElement {
         .footer-section {
           display: flex;
           flex-direction: column;
-          gap: 15px;
+          gap: 12px;
         }
         
         .footer-section-title {
           font-weight: 600;
           font-size: 16px;
-          margin-bottom: 10px;
+          margin-bottom: 4px;
           color: rgba(255, 255, 255, 0.95);
         }
         
@@ -88,63 +75,34 @@ class CaregiverFooter extends HTMLElement {
         }
         
         .footer-link {
-          color: rgba(255, 255, 255, 0.8);
+          color: rgba(255, 255, 255, 0.85);
           text-decoration: none;
           font-size: 14px;
           transition: all 0.3s ease;
           padding: 4px 0;
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          background: none;
+          border: none;
+          cursor: pointer;
+          font-family: inherit;
+          text-align: left;
+        }
+        
+        .footer-link i {
+          font-size: 1rem;
+          opacity: 0.9;
         }
         
         .footer-link:hover {
           color: white;
-          transform: translateX(5px);
-        }
-        
-        .footer-left {
-          display: flex;
-          align-items: center;
-          gap: 10px;
-        }
-        
-        .footer-logo {
-          font-size: 20px;
-          font-weight: 700;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        
-        .footer-logo i {
-          font-size: 24px;
+          transform: translateX(4px);
         }
         
         .footer-copyright {
           font-size: 14px;
           opacity: 0.9;
-        }
-        
-        .footer-right {
-          display: flex;
-          gap: 20px;
-          align-items: center;
-        }
-        
-        .footer-link {
-          color: white;
-          text-decoration: none;
-          font-size: 14px;
-          opacity: 0.9;
-          transition: opacity 0.3s;
-        }
-        
-        .footer-link:hover {
-          opacity: 1;
-        }
-        
-        .footer-divider {
-          width: 1px;
-          height: 20px;
-          background: rgba(255, 255, 255, 0.3);
         }
         
         @media (max-width: 768px) {
@@ -179,7 +137,7 @@ class CaregiverFooter extends HTMLElement {
               <div class="footer-copyright">
                 © ${new Date().getFullYear()} CareConnect. All rights reserved.
               </div>
-              <div style="font-size: 12px; opacity: 0.7; margin-top: 5px;">
+              <div style="font-size: 12px; opacity: 0.7;">
                 Professional Caregiver Platform
               </div>
             </div>
@@ -187,40 +145,30 @@ class CaregiverFooter extends HTMLElement {
             <div class="footer-section">
               <div class="footer-section-title">Quick Links</div>
               <div class="footer-links">
-                <a href="#" class="footer-link">Dashboard</a>
-                <a href="#" class="footer-link">My Schedule</a>
-                <a href="#" class="footer-link">Earnings</a>
-                <a href="#" class="footer-link">Documents</a>
+                <button type="button" class="footer-link" data-nav="overview"><i class="bi bi-speedometer2"></i>Dashboard</button>
+                <button type="button" class="footer-link" data-nav="virtual-care"><i class="bi bi-calendar-check"></i>My Schedule</button>
+                <button type="button" class="footer-link" data-nav="earnings"><i class="bi bi-cash-stack"></i>Earnings</button>
+                <button type="button" class="footer-link" data-nav="documents"><i class="bi bi-folder2-open"></i>Documents</button>
               </div>
             </div>
             
             <div class="footer-section">
               <div class="footer-section-title">Support</div>
               <div class="footer-links">
-                <a href="#" class="footer-link">Help Center</a>
-                <a href="#" class="footer-link">Contact Support</a>
-                <a href="#" class="footer-link">Emergency</a>
-                <a href="#" class="footer-link">Training</a>
+                <button type="button" class="footer-link" data-nav="profile"><i class="bi bi-question-circle"></i>Help Center</button>
+                <button type="button" class="footer-link" data-nav="profile"><i class="bi bi-headset"></i>Contact Support</button>
+                <button type="button" class="footer-link" data-nav="virtual-care"><i class="bi bi-telephone-fill"></i>Emergency</button>
+                <button type="button" class="footer-link" data-nav="medication"><i class="bi bi-mortarboard"></i>Training</button>
               </div>
             </div>
             
             <div class="footer-section">
               <div class="footer-section-title">Legal</div>
               <div class="footer-links">
-                <a href="#" class="footer-link">Privacy Policy</a>
-                <a href="#" class="footer-link">Terms of Service</a>
-                <a href="#" class="footer-link">Code of Conduct</a>
-                <a href="#" class="footer-link">Safety Guidelines</a>
-              </div>
-            </div>
-            
-            <div class="footer-section">
-              <div class="footer-section-title">Connect</div>
-              <div class="footer-links">
-                <a href="#" class="footer-link">Community</a>
-                <a href="#" class="footer-link">Feedback</a>
-                <a href="#" class="footer-link">Updates</a>
-                <a href="#" class="footer-link">Caregiver Network</a>
+                <span class="footer-link" style="cursor: default; opacity: 0.75;"><i class="bi bi-shield-lock"></i>Privacy Policy</span>
+                <span class="footer-link" style="cursor: default; opacity: 0.75;"><i class="bi bi-file-text"></i>Terms of Service</span>
+                <span class="footer-link" style="cursor: default; opacity: 0.75;"><i class="bi bi-award"></i>Code of Conduct</span>
+                <span class="footer-link" style="cursor: default; opacity: 0.75;"><i class="bi bi-shield-check"></i>Safety Guidelines</span>
               </div>
             </div>
           </div>
@@ -228,6 +176,18 @@ class CaregiverFooter extends HTMLElement {
       </footer>
     `;
   }
+
+  setupNavigation() {
+    this.shadowRoot.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = el.dataset.nav;
+        if (section && window.DashboardNavigation) {
+          window.DashboardNavigation.navigateCaregiver(section);
+        }
+      });
+    });
+  }
 }
 
-customElements.define('caregiver-footer', CaregiverFooter); 
+customElements.define('caregiver-footer', CaregiverFooter);

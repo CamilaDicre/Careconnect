@@ -602,6 +602,20 @@ class CaregiverSidebar extends HTMLElement {
     }
   }
 
+  navigateToSection(section) {
+    const menu = this.shadowRoot.querySelector('.sidebar-menu');
+    if (!menu) return false;
+
+    const btn = menu.querySelector(`[data-section="${section}"]`);
+    if (!btn || btn.classList.contains('logout-btn')) return false;
+
+    menu.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    this.currentSection = section;
+    this.showSection(section);
+    return true;
+  }
+
   showSection(section) {
     const main = document.getElementById('dashboard-content');
     if (!main) return;
