@@ -104,24 +104,81 @@ class CaregiverFooter extends HTMLElement {
           font-size: 14px;
           opacity: 0.9;
         }
-        
-        @media (max-width: 768px) {
+
+        /* Tablet */
+        @media (max-width: 1024px) {
           .footer-content {
             padding: 0 20px;
           }
+
+          .footer-row {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 24px 20px;
+          }
+
+          .footer-section:first-child {
+            grid-column: 1 / -1;
+          }
+        }
+        
+        @media (max-width: 768px) {
+          .footer {
+            padding: 24px 0;
+            margin-top: 24px;
+          }
+
+          .footer-content {
+            padding: 0 16px;
+          }
           
           .footer-row {
-            flex-direction: column;
+            grid-template-columns: 1fr;
             text-align: center;
-            gap: 30px;
+            gap: 24px;
           }
           
           .footer-section {
             align-items: center;
           }
+
+          .footer-section-title {
+            justify-content: center;
+          }
           
           .footer-links {
-            align-items: center;
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 8px 16px;
+            width: 100%;
+            max-width: 360px;
+          }
+
+          .footer-link {
+            justify-content: center;
+            min-height: 44px;
+            padding: 8px 4px;
+            font-size: 13px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .footer-content {
+            padding: 0 12px;
+          }
+
+          .footer-links {
+            grid-template-columns: 1fr;
+            max-width: 100%;
+          }
+
+          .footer-link {
+            justify-content: flex-start;
+            padding-left: 12px;
+          }
+
+          .footer-section:not(:first-child) .footer-links {
+            align-items: stretch;
           }
         }
       </style>

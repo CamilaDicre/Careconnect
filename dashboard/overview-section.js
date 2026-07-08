@@ -469,26 +469,230 @@ class OverviewSection extends HTMLElement {
           margin-bottom: 20px;
         }
 
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .overview-container {
+            padding: 20px 16px;
+            max-width: 100%;
+          }
+
+          .overview-hero {
+            padding: 32px 24px;
+            border-radius: 20px;
+          }
+
+          .overview-title {
+            font-size: 2.4rem;
+          }
+
+          .dashboard-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+          }
+
+          .quick-stats {
+            flex-wrap: wrap;
+            gap: 16px;
+          }
+
+          .quick-stat {
+            flex: 1 1 140px;
+            min-width: 120px;
+          }
+        }
+
         @media (max-width: 768px) {
           .overview-container {
-            padding: 20px;
+            padding: 16px 12px;
+            min-height: auto;
+            overflow-x: hidden;
+          }
+
+          .overview-hero {
+            padding: 28px 20px;
+            margin-bottom: 20px;
           }
           
           .overview-title {
-            font-size: 2rem;
+            font-size: 1.75rem;
+            line-height: 1.25;
+          }
+
+          .overview-subtitle {
+            font-size: 1rem;
           }
           
           .quick-stats {
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+          }
+
+          .quick-stat {
+            padding: 12px 10px;
+          }
+
+          .quick-stat-number {
+            font-size: 1.25rem;
+          }
+
+          .quick-stat-label {
+            font-size: 0.75rem;
           }
           
           .dashboard-grid {
             grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
+          .dashboard-card {
+            padding: 20px 16px;
+            border-radius: 16px;
+          }
+
+          .card-header {
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-start;
+          }
+
+          .card-title {
+            font-size: 1.15rem;
+            flex: 1 1 100%;
+          }
+
+          .card-action {
+            min-height: 44px;
+            padding: 10px 16px;
+            font-size: 0.85rem;
           }
           
           .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .health-metrics {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .medication-item,
+          .appointment-item {
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+          }
+
+          .activity-item {
+            gap: 12px;
+          }
+
+          .activity-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+          }
+
+          .quick-action-btn {
+            min-height: 88px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .overview-container {
+            padding: 10px 8px;
+          }
+
+          .overview-hero {
+            padding: 22px 16px;
+            border-radius: 16px;
+          }
+
+          .overview-title {
+            font-size: 1.45rem;
+          }
+
+          .hero-wave {
+            font-size: 1.3rem;
+            margin-left: 4px;
+          }
+
+          .overview-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+          }
+
+          .quick-stats {
+            grid-template-columns: 1fr;
+            gap: 8px;
+          }
+
+          .quick-stat {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            padding: 12px 16px;
+          }
+
+          .quick-stat-number,
+          .quick-stat-label {
+            display: inline;
+          }
+
+          .stats-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .health-metrics {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+          }
+
+          .metric-item {
+            padding: 12px 8px;
+          }
+
+          .metric-value {
+            font-size: 1.2rem;
+          }
+
+          .metric-label {
+            font-size: 0.72rem;
+          }
+
+          .card-title {
+            font-size: 1.05rem;
+          }
+
+          .card-icon {
+            font-size: 1.25rem;
+          }
+
+          .medication-item,
+          .appointment-item {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .medication-item .card-action,
+          .appointment-item .card-action {
+            width: 100%;
+            text-align: center;
+          }
+
+          .activity-title {
+            font-size: 0.9rem;
+          }
+
+          .quick-action-icon {
+            font-size: 1.5rem;
+          }
+
+          .stat-label {
+            font-size: 0.8rem;
           }
         }
       </style>

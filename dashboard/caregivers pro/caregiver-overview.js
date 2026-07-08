@@ -552,26 +552,194 @@ class CaregiverOverview extends HTMLElement {
         .stats-grid, .content-grid {
           animation: fadeInUp 0.8s ease-out 0.2s both;
         }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .overview-container {
+            padding: 0 4px;
+          }
+
+          .profile-header {
+            padding: 28px 24px;
+            margin-bottom: 24px;
+          }
+
+          .profile-name {
+            font-size: 1.85rem;
+          }
+
+          .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+          }
+
+          .content-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+
+          .chart-container {
+            height: 260px;
+          }
+        }
         
-        /* Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
           .profile-header {
             flex-direction: column;
             text-align: center;
-            padding: 24px;
+            padding: 24px 20px;
+            gap: 16px;
+          }
+
+          .profile-pic {
+            width: 84px;
+            height: 84px;
+          }
+
+          .profile-name {
+            font-size: 1.6rem;
+          }
+
+          .profile-email,
+          .profile-role {
+            font-size: 0.95rem;
+          }
+
+          .profile-actions {
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+          }
+
+          .profile-actions button {
+            flex: 1 1 140px;
+            min-height: 44px;
           }
           
           .stats-grid {
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 14px;
+          }
+
+          .stat-card {
+            padding: 20px;
           }
           
           .content-grid {
-            gap: 24px;
+            gap: 20px;
+          }
+
+          .chart-section,
+          .activity-section,
+          .sessions-section {
+            padding: 20px 16px;
+          }
+
+          .chart-header,
+          .activity-header,
+          .sessions-header {
+            flex-wrap: wrap;
+            gap: 12px;
+          }
+
+          .chart-header > div:last-child {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+          }
+
+          .chart-header button {
+            flex: 1 1 auto;
+            min-height: 40px;
+          }
+
+          .chart-container {
+            height: 220px;
           }
           
           .stat-value {
             font-size: 2rem;
+          }
+
+          .session-item {
+            flex-wrap: wrap;
+            gap: 12px;
+          }
+
+          .session-time {
+            min-width: auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            width: 100%;
+          }
+
+          .session-info {
+            flex: 1 1 100%;
+          }
+
+          .session-status {
+            margin-left: auto;
+          }
+
+          .activity-item {
+            padding: 14px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .profile-header {
+            padding: 20px 16px;
+            border-radius: 16px;
+          }
+
+          .profile-name {
+            font-size: 1.35rem;
+          }
+
+          .profile-actions {
+            flex-direction: column;
+          }
+
+          .profile-actions button {
+            width: 100%;
+          }
+
+          .stat-value {
+            font-size: 1.75rem;
+          }
+
+          .stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+          }
+
+          .chart-title,
+          .activity-title,
+          .sessions-title {
+            font-size: 1.1rem;
+          }
+
+          .chart-container {
+            height: 200px;
+          }
+
+          .session-item {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .session-status {
+            margin-left: 0;
+            align-self: flex-start;
+          }
+
+          .nav-link-btn {
+            min-height: 44px;
+            padding: 8px 0;
           }
         }
       </style>

@@ -120,17 +120,83 @@ class DashboardFooter extends HTMLElement {
           height: 34px;
           filter: brightness(0) invert(1);
         }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .footer-content {
+            padding: 0 20px;
+          }
+
+          .footer-row {
+            gap: 20px;
+          }
+
+          .footer-links {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+          }
+
+          .footer-link {
+            justify-content: center;
+            font-size: 13px;
+            padding: 10px 12px;
+          }
+        }
         
         @media (max-width: 768px) {
+          .dashboard-footer {
+            padding: 20px 0;
+          }
+
+          .footer-content {
+            padding: 0 16px;
+          }
+
           .footer-row {
             flex-direction: column;
             text-align: center;
-            gap: 15px;
+            gap: 16px;
+          }
+
+          .footer-logo {
+            justify-content: center;
           }
           
           .footer-links {
-            flex-direction: column;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 10px;
+          }
+
+          .footer-link {
+            width: 100%;
+            min-height: 44px;
+            justify-content: center;
+            font-size: 13px;
+          }
+
+          .footer-link.static {
+            grid-column: 1 / -1;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .footer-content {
+            padding: 0 12px;
+          }
+
+          .copyright {
+            font-size: 13px;
+            line-height: 1.4;
+          }
+
+          .footer-logo {
+            font-size: 16px;
+          }
+
+          .footer-links {
+            grid-template-columns: 1fr;
           }
         }
       </style>
