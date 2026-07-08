@@ -1,6 +1,6 @@
 /* Root Variables */
 :root {
-    --pal-primary: royalblue;
+    --pal-primary: #4169e1;
     --pal-secondary : #1f2937;
     --pal-tertiary : #4b5563;
     --transition-fast: 0.2s ease;
@@ -233,14 +233,6 @@ p {
     overflow: hidden;
 }
 
-.hero-section-text {
-    background-color: red;
-}
-
-.sample {
-    background-color: blue;
-}
-
 .hero-section h1 {
     width: 90%;
     font-size: 5rem;
@@ -305,15 +297,21 @@ p {
     }
 }
 
+/* Phone styles */
 @media (max-width: 480px) {
     .hero-section h1 {
         font-size: 2.5rem;
+        margin-top: 3rem !important;
     }
     
     .hero-section .text-primary {
         font-size: 1.1rem !important;
     }
-    
+
+    .hero-section {
+        margin-top: -200px;
+    }
+
     .hero-section .btn {
         font-size: 1rem !important;
         padding: 0.6rem 1.5rem !important;
@@ -321,20 +319,6 @@ p {
     
     .sample {
         width: 150px;
-    }
-}
-
-/* Tablet styles */
-@media (min-width: 481px) and (max-width: 768px) {
-    .hero-section img {
-        width: 250px;
-    }
-}
-
-/* Medium tablet styles */
-@media (min-width: 769px) and (max-width: 1024px) {
-    .hero-section img {
-        width: 320px;
     }
 }
 
@@ -376,7 +360,7 @@ p {
     
     .sample {
         justify-content: center;
-        height: 400px;
+        height: 200px;
     }
 }
 
