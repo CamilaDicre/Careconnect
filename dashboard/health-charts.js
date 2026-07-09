@@ -22,7 +22,7 @@ class HealthCharts extends HTMLElement {
         }
 
         .charts-hero {
-          background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 25px;
           padding: 40px;
           margin-bottom: 30px;
@@ -30,7 +30,7 @@ class HealthCharts extends HTMLElement {
           text-align: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 15px 35px rgba(23, 162, 184, 0.3);
+          box-shadow: 0 15px 35px rgba(65, 105, 225, 0.3);
         }
 
         .charts-hero::before {
@@ -113,15 +113,15 @@ class HealthCharts extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(135deg, #17a2b8, #138496);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           transform: scaleX(0);
           transition: transform 0.3s ease;
         }
 
         .chart-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(23, 162, 184, 0.15);
-          border-color: #17a2b8;
+          box-shadow: 0 15px 40px rgba(65, 105, 225, 0.15);
+          border-color: #4169e1;
         }
 
         .chart-card:hover::before {
@@ -146,7 +146,7 @@ class HealthCharts extends HTMLElement {
 
         .chart-icon {
           font-size: 1.8rem;
-          color: #17a2b8;
+          color: #4169e1;
         }
 
         .chart-period {
@@ -178,7 +178,7 @@ class HealthCharts extends HTMLElement {
           left: 0;
           right: 0;
           bottom: 0;
-          background: linear-gradient(45deg, rgba(23, 162, 184, 0.05) 0%, rgba(23, 162, 184, 0.02) 50%, rgba(23, 162, 184, 0.05) 100%);
+          background: linear-gradient(45deg, rgba(65, 105, 225, 0.05) 0%, rgba(65, 105, 225, 0.02) 50%, rgba(65, 105, 225, 0.05) 100%);
           pointer-events: none;
         }
 
@@ -191,7 +191,7 @@ class HealthCharts extends HTMLElement {
 
         .chart-placeholder i {
           font-size: 4rem;
-          color: #17a2b8;
+          color: #4169e1;
           margin-bottom: 15px;
           display: block;
           opacity: 0.7;
@@ -234,7 +234,7 @@ class HealthCharts extends HTMLElement {
         .stat-value {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #17a2b8;
+          color: #4169e1;
           margin-bottom: 5px;
         }
 
@@ -263,13 +263,13 @@ class HealthCharts extends HTMLElement {
         }
 
         .view-btn {
-          background: linear-gradient(135deg, #17a2b8, #138496);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
         }
 
         .view-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+          box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
         }
 
         .export-btn {
@@ -322,7 +322,7 @@ class HealthCharts extends HTMLElement {
         .quick-stat-value {
           font-size: 2rem;
           font-weight: 700;
-          color: #17a2b8;
+          color: #4169e1;
           margin-bottom: 5px;
         }
 

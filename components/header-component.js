@@ -36,10 +36,10 @@ class HeaderComponent extends HTMLElement {
                 }
                 :host-context(.dark-mode) .careconnect-brand { color: #e5e7eb !important; }
                 :host-context(.dark-mode) .careconnect-nav-link { color: #e5e7eb !important; }
-                :host-context(.dark-mode) .careconnect-nav-link:hover { color: #93c5fd !important; }
+                :host-context(.dark-mode) .careconnect-nav-link:hover { color: #4169e1 !important; }
                 :host-context(.dark-mode) #careconnectLoginSignupButton {
                     background-color: #0f172a !important;
-                    border-color: #3b82f6 !important;
+                    border-color: #4169e1 !important;
                     color: #e5e7eb !important;
                 }
                 :host-context(.dark-mode) .careconnect-theme-toggle-hover {
@@ -57,12 +57,12 @@ class HeaderComponent extends HTMLElement {
                 :host-context(.dark-mode) .careconnect-mobile-nav-link { color: #e5e7eb !important; }
                 :host-context(.dark-mode) .careconnect-mobile-login-btn {
                     background: linear-gradient(135deg, #0b1220 0%, #111827 100%) !important;
-                    color: #93c5fd !important;
+                    color: #4169e1 !important;
                     border-color: rgba(255,255,255,0.15) !important;
                 }
                 /* Root Variables */
                 :root {
-                    --pal-primary: royalblue;
+                    --pal-primary: #4169e1;
                 }
 
                 /* Header styles */
@@ -456,7 +456,7 @@ class HeaderComponent extends HTMLElement {
                     left: 0;
                     right: 0;
                     bottom: 0;
-                    background: linear-gradient(135deg, rgba(25, 118, 210, 0.98) 0%, rgba(99, 164, 255, 0.95) 100%);
+                    background: linear-gradient(135deg, rgba(65, 105, 225, 0.98) 0%, rgba(65, 105, 225, 0.95) 100%);
                     backdrop-filter: blur(15px);
                     z-index: 9998;
                     display: none;
@@ -569,7 +569,7 @@ class HeaderComponent extends HTMLElement {
                     font-weight: 700;
                     border-radius: 16px;
                     background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-                    color: #1976d2;
+                    color: #4169e1;
                     border: 2px solid rgba(255, 255, 255, 0.3);
                     transition: all 0.3s ease;
                     cursor: pointer;

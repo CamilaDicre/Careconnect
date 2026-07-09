@@ -78,7 +78,7 @@ class EmergencyContacts extends HTMLElement {
         }
         
         .header h2 {
-          color: #1976d2;
+          color: #4169e1;
           margin: 0;
           font-family: 'Poppins', sans-serif;
           font-size: 28px;
@@ -192,7 +192,7 @@ class EmergencyContacts extends HTMLElement {
         }
         
         .contact-item:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateX(5px);
         }
         
@@ -210,7 +210,7 @@ class EmergencyContacts extends HTMLElement {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          background: #1976d2;
+          background: #4169e1;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -269,12 +269,12 @@ class EmergencyContacts extends HTMLElement {
         }
         
         .btn-message {
-          background: #1976d2;
+          background: #4169e1;
           color: white;
         }
         
         .btn-message:hover {
-          background: #1565c0;
+          background: #4169e1;
         }
         
         .btn-edit {
@@ -312,7 +312,7 @@ class EmergencyContacts extends HTMLElement {
         }
         
         .quick-item:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateX(5px);
         }
         
@@ -327,7 +327,7 @@ class EmergencyContacts extends HTMLElement {
         
         .quick-item i {
           font-size: 20px;
-          color: #1976d2;
+          color: #4169e1;
         }
         
         .quick-item.emergency i {
@@ -359,13 +359,13 @@ class EmergencyContacts extends HTMLElement {
         }
         
         .action-card:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateY(-2px);
         }
         
         .action-icon {
           font-size: 32px;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 10px;
         }
         

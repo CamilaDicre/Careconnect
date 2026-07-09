@@ -72,9 +72,9 @@ class CaregiverSidebar extends HTMLElement {
           left: 0;
           height: 100vh;
           width: 350px;
-          background: linear-gradient(180deg, #1e40af 0%, #3b82f6 100%);
+          background: linear-gradient(180deg, #4169e1 0%, #4169e1 100%);
           color: white;
-          box-shadow: 4px 0 24px rgba(37, 99, 235, 0.15);
+          box-shadow: 4px 0 24px rgba(65, 105, 225, 0.15);
           display: flex;
           flex-direction: column;
           z-index: 1000;
@@ -213,7 +213,7 @@ class CaregiverSidebar extends HTMLElement {
           align-items: center;
           justify-content: center;
           font-size: 28px;
-          color: #2563eb;
+          color: #4169e1;
           border: 3px solid rgba(255, 255, 255, 0.2);
           overflow: hidden;
           font-weight: 700;
@@ -527,30 +527,23 @@ class CaregiverSidebar extends HTMLElement {
 
   toggleSidebar() {
     const nav = this.shadowRoot.querySelector('nav');
-    const main = document.getElementById('mainContent');
     this.isCollapsed = !this.isCollapsed;
     
     if (this.isCollapsed) {
       nav.classList.add('minimized');
-      if (main) {
-        main.classList.add('sidebar-collapsed');
-        main.style.marginLeft = '';
-      }
     } else {
       nav.classList.remove('minimized');
-      if (main) {
-        main.classList.remove('sidebar-collapsed');
-        main.style.marginLeft = '';
-      }
     }
     
-    // Save state to localStorage
     this.saveSidebarState();
     
-    // Dispatch custom event
     document.dispatchEvent(new CustomEvent('sidebarToggle', {
       detail: { collapsed: this.isCollapsed }
     }));
+
+    if (window.SidebarUtils) {
+      SidebarUtils.syncLayout(this.isCollapsed);
+    }
   }
 
   showSidebar() {
@@ -578,28 +571,23 @@ class CaregiverSidebar extends HTMLElement {
   }
 
   adjustMainContent() {
-    const main = document.getElementById('mainContent');
-    const nav = this.shadowRoot.querySelector('nav');
-    if (main) {
-      main.style.transition = 'all 0.4s ease';
+    if (window.SidebarUtils) {
+      SidebarUtils.syncLayout(this.isCollapsed);
     }
-    
-    // Apply saved sidebar state
-    if (nav) {
-      if (this.isCollapsed) {
-        nav.classList.add('minimized');
-        if (main) {
-          main.classList.add('sidebar-collapsed');
-          main.style.marginLeft = '';
-        }
-      } else {
-        nav.classList.remove('minimized');
-        if (main) {
-          main.classList.remove('sidebar-collapsed');
-          main.style.marginLeft = '';
-        }
-      }
-    }
+  }
+
+  navigateToSection(section) {
+    const menu = this.shadowRoot.querySelector('.sidebar-menu');
+    if (!menu) return false;
+
+    const btn = menu.querySelector(`[data-section="${section}"]`);
+    if (!btn || btn.classList.contains('logout-btn')) return false;
+
+    menu.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    this.currentSection = section;
+    this.showSection(section);
+    return true;
   }
 
   showSection(section) {
@@ -639,6 +627,10 @@ class CaregiverSidebar extends HTMLElement {
       
       main.innerHTML = sectionContent;
       main.style.opacity = '1';
+      
+      if (window.SidebarUtils) {
+        SidebarUtils.syncLayout();
+      }
       
       // Dispatch custom event
       document.dispatchEvent(new CustomEvent('sectionChange', {

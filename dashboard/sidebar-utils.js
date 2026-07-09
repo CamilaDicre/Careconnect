@@ -3,7 +3,21 @@
  */
 
 class SidebarUtils {
-  
+  static WIDTH = { expanded: 350, collapsed: 90 };
+  static CONTENT_GAP = 24;
+
+  static isMobile() {
+    return window.innerWidth <= 768;
+  }
+
+  static isTablet() {
+    return window.innerWidth > 768 && window.innerWidth <= 1024;
+  }
+
+  static isCaregiverDashboard() {
+    return !!document.querySelector('caregiver-sidebar');
+  }
+
   /**
    * Obtiene el estado actual del sidebar desde localStorage
    * @returns {boolean} - true si está colapsado, false si está expandido
@@ -31,92 +45,115 @@ class SidebarUtils {
   }
 
   /**
-   * Aplica el estado del sidebar al contenido principal
-   * @param {boolean} collapsed - true si está colapsado, false si está expandido
+   * Sincroniza sidebar, contenido principal y headers
+   * @param {boolean|null} collapsed
    */
-  static applySidebarState(collapsed) {
+  static syncLayout(collapsed = null) {
+    if (collapsed === null) {
+      collapsed = this.getSidebarState();
+    }
+
+    this.applySidebarComponentState(collapsed);
+
+    if (this.isCaregiverDashboard()) {
+      this.syncCaregiverLayout(collapsed);
+    } else {
+      this.syncPatientLayout(collapsed);
+    }
+
+    this.applyHeaderState(collapsed);
+  }
+
+  static syncPatientLayout(collapsed) {
     const main = document.getElementById('dashboard-content');
     if (!main) return;
 
-    if (collapsed) {
-      main.classList.add('sidebar-collapsed');
-      main.style.marginLeft = '90px';
-    } else {
+    main.style.marginLeft = '';
+
+    if (this.isMobile()) {
       main.classList.remove('sidebar-collapsed');
-      main.style.marginLeft = '350px';
+      return;
     }
+
+    main.classList.toggle('sidebar-collapsed', collapsed);
+  }
+
+  static syncCaregiverLayout(collapsed) {
+    const mainContent = document.getElementById('mainContent');
+    const contentArea = document.querySelector('.content-area');
+
+    if (contentArea) {
+      contentArea.style.marginLeft = '';
+    }
+
+    if (this.isMobile()) {
+      mainContent?.classList.remove('sidebar-collapsed');
+      return;
+    }
+
+    mainContent?.classList.toggle('sidebar-collapsed', collapsed);
   }
 
   /**
-   * Aplica el estado del sidebar al header
-   * @param {boolean} collapsed - true si está colapsado, false si está expandido
+   * @deprecated Usar syncLayout()
    */
+  static applySidebarState(collapsed) {
+    this.syncPatientLayout(collapsed);
+  }
+
   static applyHeaderState(collapsed) {
-    const header = document.querySelector('dashboard-header');
-    if (header && typeof header.adjustHeader === 'function') {
-      header.adjustHeader(collapsed);
-    }
-  }
+    const isMobile = this.isMobile();
 
-  /**
-   * Aplica el estado del sidebar al componente sidebar
-   * @param {boolean} collapsed - true si está colapsado, false si está expandido
-   */
-  static applySidebarComponentState(collapsed) {
-    const sidebar = document.querySelector('care-sidebar');
-    if (!sidebar || !sidebar.shadowRoot) return;
+    document.querySelectorAll('dashboard-header').forEach((header) => {
+      if (typeof header.adjustHeader === 'function') {
+        header.adjustHeader(isMobile ? false : collapsed);
+      }
+    });
 
-    const nav = sidebar.shadowRoot.querySelector('nav');
-    if (!nav) return;
-
-    if (collapsed) {
-      nav.classList.add('minimized');
-    } else {
-      nav.classList.remove('minimized');
-    }
-  }
-
-  /**
-   * Inicializa el estado del sidebar en la página actual
-   */
-  static initializeSidebarState() {
-    const collapsed = this.getSidebarState();
-    
-    // Aplicar estado al contenido principal
-    this.applySidebarState(collapsed);
-    
-    // Aplicar estado al header
-    this.applyHeaderState(collapsed);
-    
-    // Aplicar estado al componente sidebar
-    this.applySidebarComponentState(collapsed);
-    
-    // console.log('Sidebar state initialized:', collapsed ? 'collapsed' : 'expanded');
-  }
-
-  /**
-   * Escucha cambios en el estado del sidebar y los sincroniza
-   */
-  static listenForSidebarChanges() {
-    document.addEventListener('sidebarToggle', (event) => {
-      const collapsed = event.detail.collapsed;
-      
-      // Guardar el nuevo estado
-      this.setSidebarState(collapsed);
-      
-      // Aplicar el estado a todos los componentes
-      this.applySidebarState(collapsed);
-      this.applyHeaderState(collapsed);
-      
-      // console.log('Sidebar state changed:', collapsed ? 'collapsed' : 'expanded');
+    document.querySelectorAll('caregiver-header').forEach((header) => {
+      if (typeof header.adjustHeader === 'function') {
+        header.adjustHeader(isMobile ? false : collapsed);
+      }
     });
   }
 
-  /**
-   * Configura la sincronización completa del sidebar
-   */
+  static applySidebarComponentState(collapsed) {
+    const patientSidebar = document.querySelector('care-sidebar');
+    if (patientSidebar?.shadowRoot) {
+      const nav = patientSidebar.shadowRoot.querySelector('nav');
+      if (nav) {
+        nav.classList.toggle('minimized', collapsed);
+      }
+      patientSidebar.isCollapsed = collapsed;
+    }
+
+    const caregiverSidebar = document.querySelector('caregiver-sidebar');
+    if (caregiverSidebar?.shadowRoot) {
+      const nav = caregiverSidebar.shadowRoot.querySelector('nav');
+      if (nav) {
+        nav.classList.toggle('minimized', collapsed);
+      }
+      caregiverSidebar.isCollapsed = collapsed;
+    }
+  }
+
+  static initializeSidebarState() {
+    this.syncLayout(this.getSidebarState());
+  }
+
+  static listenForSidebarChanges() {
+    document.addEventListener('sidebarToggle', (event) => {
+      const collapsed = event.detail.collapsed;
+      this.setSidebarState(collapsed);
+      this.syncLayout(collapsed);
+    });
+
+    window.addEventListener('resize', () => {
+      this.syncLayout(this.getSidebarState());
+    });
+  }
+
   static setupSidebarSync() {
-    // Inicializar estado al cargar la página
     if (document.readyState === 'loading') {
       document.addEventListener('DOMContentLoaded', () => {
         this.initializeSidebarState();
@@ -124,16 +161,10 @@ class SidebarUtils {
     } else {
       this.initializeSidebarState();
     }
-    
-    // Escuchar cambios futuros
+
     this.listenForSidebarChanges();
-    
-    // console.log('Sidebar synchronization setup complete');
   }
 }
 
-// Configurar sincronización automáticamente
 SidebarUtils.setupSidebarSync();
-
-// Exportar para uso global
-window.SidebarUtils = SidebarUtils; 
+window.SidebarUtils = SidebarUtils;

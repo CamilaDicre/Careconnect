@@ -12,6 +12,11 @@ class DashboardHeader extends HTMLElement {
     this.attachEvents();
     this.startClock();
     this.loadUserData();
+    requestAnimationFrame(() => {
+      if (window.SidebarUtils) {
+        SidebarUtils.applyHeaderState(SidebarUtils.getSidebarState());
+      }
+    });
   }
 
   render() {
@@ -23,11 +28,11 @@ class DashboardHeader extends HTMLElement {
         }
 
         .header {
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 50%, #4169e1 100%);
           color: white;
           padding: 30px 35px;
           border-radius: 0;
-          box-shadow: 0 8px 32px rgba(25, 118, 210, 0.4);
+          box-shadow: 0 8px 32px rgba(65, 105, 225, 0.4);
           margin: 0;
           position: absolute;
           top: 0;
@@ -567,10 +572,10 @@ class DashboardHeader extends HTMLElement {
           
           // Generate unique color based on username
           const getAvatarColor = (name) => {
-            if (!name) return 'linear-gradient(135deg, #1976d2, #42a5f5)';
+            if (!name) return 'linear-gradient(135deg, #4169e1, #4169e1)';
             
             const colors = [
-              'linear-gradient(135deg, #1976d2, #42a5f5)', // Blue
+              'linear-gradient(135deg, #4169e1, #4169e1)', // Blue
               'linear-gradient(135deg, #4caf50, #45a049)', // Green
               'linear-gradient(135deg, #ff9800, #f57c00)', // Orange
               'linear-gradient(135deg, #9c27b0, #7b1fa2)', // Purple
@@ -632,7 +637,10 @@ class DashboardHeader extends HTMLElement {
   }
 
   showGames() {
-    // Trigger sidebar navigation to games section
+    if (window.DashboardNavigation) {
+      window.DashboardNavigation.navigatePatient('games');
+      return;
+    }
     const sidebar = document.querySelector('care-sidebar');
     if (sidebar) {
       // Find the games button in the sidebar and click it
@@ -708,9 +716,9 @@ class DashboardHeader extends HTMLElement {
             <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: #666;">×</button>
           </div>
           <div style="display: flex; flex-direction: column; gap: 15px;">
-            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #1976d2; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Edit Profile</button>
-            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #1976d2; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Notification Settings</button>
-            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #1976d2; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Privacy Settings</button>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #4169e1; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Edit Profile</button>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #4169e1; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Notification Settings</button>
+            <button onclick="this.parentElement.parentElement.parentElement.remove()" style="background: #4169e1; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Privacy Settings</button>
             <button onclick="logout()" style="background: #ff4757; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer;">Logout</button>
           </div>
         </div>

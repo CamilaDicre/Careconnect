@@ -83,7 +83,7 @@ class CaregiverWelcomeOverlay extends HTMLElement {
         .overlay {
           position: fixed;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -122,7 +122,7 @@ class CaregiverWelcomeOverlay extends HTMLElement {
         .welcome-name {
           font-size: 2.5rem;
           font-weight: 700;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;

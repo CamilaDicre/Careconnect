@@ -68,7 +68,7 @@ class VirtualCare extends HTMLElement {
         }
         
         .header h2 {
-          color: #1976d2;
+          color: #4169e1;
           margin: 0;
           font-family: 'Poppins', sans-serif;
           font-size: 28px;
@@ -119,7 +119,7 @@ class VirtualCare extends HTMLElement {
         .stat-number {
           font-size: 32px;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
         }
         
@@ -167,7 +167,7 @@ class VirtualCare extends HTMLElement {
         }
         
         .session-item:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateX(5px);
         }
         
@@ -177,8 +177,8 @@ class VirtualCare extends HTMLElement {
         }
         
         .session-item.scheduled {
-          border-left-color: #1976d2;
-          background: #e3f2fd;
+          border-left-color: #4169e1;
+          background: rgba(65, 105, 225, 0.12);
         }
         
         .session-item.completed {
@@ -190,7 +190,7 @@ class VirtualCare extends HTMLElement {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          background: #1976d2;
+          background: #4169e1;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -288,12 +288,12 @@ class VirtualCare extends HTMLElement {
         }
         
         .btn-view {
-          background: #1976d2;
+          background: #4169e1;
           color: white;
         }
         
         .btn-view:hover {
-          background: #1565c0;
+          background: #4169e1;
         }
         
         .tools-section {
@@ -324,13 +324,13 @@ class VirtualCare extends HTMLElement {
         }
         
         .tool-item:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateX(5px);
         }
         
         .tool-item i {
           font-size: 20px;
-          color: #1976d2;
+          color: #4169e1;
         }
         
         .quick-actions {
@@ -360,13 +360,13 @@ class VirtualCare extends HTMLElement {
         }
         
         .action-card:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateY(-2px);
         }
         
         .action-icon {
           font-size: 32px;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 10px;
         }
         

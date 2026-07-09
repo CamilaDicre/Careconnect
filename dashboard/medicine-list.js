@@ -321,13 +321,13 @@ class MedicineList extends HTMLElement {
         }
 
         .edit-btn {
-          background: linear-gradient(135deg, #17a2b8, #138496);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
         }
 
         .edit-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 6px 20px rgba(23, 162, 184, 0.3);
+          box-shadow: 0 6px 20px rgba(65, 105, 225, 0.3);
         }
 
         .empty-state {

@@ -2,7 +2,7 @@
 
 /* Variables CSS para consistencia */
 :root {
-  --transition-primary: #667eea;
+  --transition-primary: #4169e1;
   --transition-secondary: #764ba2;
   --transition-success: #4caf50;
   --transition-warning: #ff9800;
@@ -174,7 +174,7 @@
 .loading-spinner {
   width: 60px;
   height: 60px;
-  border: 4px solid rgba(102, 126, 234, 0.2);
+  border: 4px solid rgba(65, 105, 225, 0.2);
   border-top: 4px solid var(--transition-primary);
   border-radius: 50%;
   margin: 0 auto 20px;

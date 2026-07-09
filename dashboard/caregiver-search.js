@@ -110,11 +110,11 @@ class CaregiverSearch extends HTMLElement {
         }
 
         .search-header h1 {
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 0.5rem;
           font-size: 2.5rem;
           font-weight: 700;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -158,13 +158,13 @@ class CaregiverSearch extends HTMLElement {
 
         .filter-input:focus, .filter-select:focus {
           outline: none;
-          border-color: #1976d2;
-          box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+          border-color: #4169e1;
+          box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
           transform: translateY(-1px);
         }
 
         .search-btn {
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 0.8rem 2rem;
@@ -178,7 +178,7 @@ class CaregiverSearch extends HTMLElement {
 
         .search-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 8px 25px rgba(25, 118, 210, 0.3);
+          box-shadow: 0 8px 25px rgba(65, 105, 225, 0.3);
         }
 
         .results-info {
@@ -187,14 +187,14 @@ class CaregiverSearch extends HTMLElement {
           align-items: center;
           margin-bottom: 1.5rem;
           padding: 1rem;
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           border-radius: 12px;
-          border-left: 4px solid #1976d2;
+          border-left: 4px solid #4169e1;
         }
 
         .results-count {
           font-weight: 600;
-          color: #1976d2;
+          color: #4169e1;
         }
 
         .sort-controls {
@@ -233,7 +233,7 @@ class CaregiverSearch extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
         }
 
         .caregiver-card:hover {
@@ -253,7 +253,7 @@ class CaregiverSearch extends HTMLElement {
           height: 70px;
           border-radius: 50%;
           object-fit: cover;
-          border: 3px solid #e3f2fd;
+          border: 3px solid rgba(65, 105, 225, 0.12);
           box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
 
@@ -366,7 +366,7 @@ class CaregiverSearch extends HTMLElement {
         .loading {
           text-align: center;
           padding: 2rem;
-          color: #1976d2;
+          color: #4169e1;
         }
 
         .loading i {

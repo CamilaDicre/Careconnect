@@ -1,6 +1,6 @@
 
 :root {
-    --pal-primary: royalblue;
+    --pal-primary: #4169e1;
 }
 
 /* Contact Page Styles */
@@ -101,7 +101,7 @@
 }
 
 .contact-card h3 {
-    color: #2d4b6e;
+    color: #4169e1;
     font-size: 1.7  rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -121,7 +121,7 @@
 }
 
 .contact-form-wrapper h2 {
-    color: #2d4b6e;
+    color: #4169e1;
     font-size: 1.7rem;
     margin-bottom: 2rem;
     font-weight: 600;

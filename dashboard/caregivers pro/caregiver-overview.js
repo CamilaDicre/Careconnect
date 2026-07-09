@@ -9,6 +9,7 @@ class CaregiverOverview extends HTMLElement {
     this.loadAndRender().then(() => {
       this.initializeCharts();
       this.startRealTimeUpdates();
+      this.setupNavigation();
     });
   }
 
@@ -39,7 +40,7 @@ class CaregiverOverview extends HTMLElement {
           time: '4 hours ago',
           description: 'Medication reminder sent',
           icon: 'bi-capsule',
-          color: '#3b82f6'
+          color: '#4169e1'
         },
         {
           id: 3,
@@ -109,6 +110,8 @@ class CaregiverOverview extends HTMLElement {
 
     this.shadowRoot.innerHTML = `
       <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
         * { 
           font-family: 'Poppins', sans-serif; 
           box-sizing: border-box; 
@@ -125,12 +128,12 @@ class CaregiverOverview extends HTMLElement {
           display: flex;
           align-items: center;
           gap: 24px;
-          background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #7c3aed 100%);
           color: white;
           padding: 32px;
           border-radius: 20px;
           margin-bottom: 32px;
-          box-shadow: 0 8px 32px rgba(37, 99, 235, 0.15);
+          box-shadow: 0 8px 32px rgba(65, 105, 225, 0.15);
           position: relative;
           overflow: hidden;
           animation: fadeInDown 0.8s ease-out;
@@ -228,6 +231,7 @@ class CaregiverOverview extends HTMLElement {
           transition: all 0.3s ease;
           position: relative;
           overflow: hidden;
+          cursor: pointer;
         }
         
         .stat-card:hover {
@@ -242,7 +246,7 @@ class CaregiverOverview extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(90deg, #2563eb, #7c3aed);
+          background: linear-gradient(90deg, #4169e1, #7c3aed);
         }
         
         .stat-header {
@@ -263,7 +267,7 @@ class CaregiverOverview extends HTMLElement {
           color: white;
         }
         
-        .stat-icon.primary { background: linear-gradient(135deg, #2563eb, #3b82f6); }
+        .stat-icon.primary { background: linear-gradient(135deg, #4169e1, #4169e1); }
         .stat-icon.success { background: linear-gradient(135deg, #10b981, #34d399); }
         .stat-icon.warning { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
         .stat-icon.purple { background: linear-gradient(135deg, #7c3aed, #a855f7); }
@@ -409,7 +413,7 @@ class CaregiverOverview extends HTMLElement {
         
         .activity-patient {
           font-weight: 600;
-          color: #2563eb;
+          color: #4169e1;
         }
         
         /* Upcoming Sessions */
@@ -448,7 +452,7 @@ class CaregiverOverview extends HTMLElement {
           border-radius: 12px;
           background: #f8fafc;
           transition: all 0.3s ease;
-          border-left: 4px solid #2563eb;
+          border-left: 4px solid #4169e1;
         }
         
         .session-item:hover {
@@ -505,7 +509,24 @@ class CaregiverOverview extends HTMLElement {
           color: #92400e;
         }
         
-        /* Animaciones */
+        .nav-link-btn {
+          background: none;
+          border: none;
+          color: #4169e1;
+          font-size: 0.875rem;
+          cursor: pointer;
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          padding: 0;
+          font-family: inherit;
+        }
+
+        .nav-link-btn:hover {
+          color: #4169e1;
+          text-decoration: underline;
+        }
+
         @keyframes fadeInDown {
           from { 
             opacity: 0; 
@@ -531,26 +552,194 @@ class CaregiverOverview extends HTMLElement {
         .stats-grid, .content-grid {
           animation: fadeInUp 0.8s ease-out 0.2s both;
         }
+
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .overview-container {
+            padding: 0 4px;
+          }
+
+          .profile-header {
+            padding: 28px 24px;
+            margin-bottom: 24px;
+          }
+
+          .profile-name {
+            font-size: 1.85rem;
+          }
+
+          .stats-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+          }
+
+          .content-grid {
+            grid-template-columns: 1fr;
+            gap: 24px;
+          }
+
+          .chart-container {
+            height: 260px;
+          }
+        }
         
-        /* Responsive */
+        /* Mobile */
         @media (max-width: 768px) {
           .profile-header {
             flex-direction: column;
             text-align: center;
-            padding: 24px;
+            padding: 24px 20px;
+            gap: 16px;
+          }
+
+          .profile-pic {
+            width: 84px;
+            height: 84px;
+          }
+
+          .profile-name {
+            font-size: 1.6rem;
+          }
+
+          .profile-email,
+          .profile-role {
+            font-size: 0.95rem;
+          }
+
+          .profile-actions {
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+          }
+
+          .profile-actions button {
+            flex: 1 1 140px;
+            min-height: 44px;
           }
           
           .stats-grid {
             grid-template-columns: 1fr;
-            gap: 16px;
+            gap: 14px;
+          }
+
+          .stat-card {
+            padding: 20px;
           }
           
           .content-grid {
-            gap: 24px;
+            gap: 20px;
+          }
+
+          .chart-section,
+          .activity-section,
+          .sessions-section {
+            padding: 20px 16px;
+          }
+
+          .chart-header,
+          .activity-header,
+          .sessions-header {
+            flex-wrap: wrap;
+            gap: 12px;
+          }
+
+          .chart-header > div:last-child {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            width: 100%;
+          }
+
+          .chart-header button {
+            flex: 1 1 auto;
+            min-height: 40px;
+          }
+
+          .chart-container {
+            height: 220px;
           }
           
           .stat-value {
             font-size: 2rem;
+          }
+
+          .session-item {
+            flex-wrap: wrap;
+            gap: 12px;
+          }
+
+          .session-time {
+            min-width: auto;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            width: 100%;
+          }
+
+          .session-info {
+            flex: 1 1 100%;
+          }
+
+          .session-status {
+            margin-left: auto;
+          }
+
+          .activity-item {
+            padding: 14px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .profile-header {
+            padding: 20px 16px;
+            border-radius: 16px;
+          }
+
+          .profile-name {
+            font-size: 1.35rem;
+          }
+
+          .profile-actions {
+            flex-direction: column;
+          }
+
+          .profile-actions button {
+            width: 100%;
+          }
+
+          .stat-value {
+            font-size: 1.75rem;
+          }
+
+          .stat-icon {
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+          }
+
+          .chart-title,
+          .activity-title,
+          .sessions-title {
+            font-size: 1.1rem;
+          }
+
+          .chart-container {
+            height: 200px;
+          }
+
+          .session-item {
+            flex-direction: column;
+            align-items: flex-start;
+          }
+
+          .session-status {
+            margin-left: 0;
+            align-self: flex-start;
+          }
+
+          .nav-link-btn {
+            min-height: 44px;
+            padding: 8px 0;
           }
         }
       </style>
@@ -564,10 +753,10 @@ class CaregiverOverview extends HTMLElement {
             <div class="profile-email">${displayEmail}</div>
             <div class="profile-role">${displayTitles}</div>
             <div class="profile-actions">
-              <button onclick="window.notifications.show('Edit feature coming soon', 'info', 3000)">
+              <button type="button" data-nav="profile">
                 <i class="bi bi-pencil-square me-2"></i>Edit Profile
               </button>
-              <button onclick="window.notifications.show('Settings feature coming soon', 'info', 3000)">
+              <button type="button" data-nav="profile">
                 <i class="bi bi-gear me-2"></i>Settings
               </button>
             </div>
@@ -576,10 +765,10 @@ class CaregiverOverview extends HTMLElement {
 
         <!-- Métricas principales -->
         <div class="stats-grid">
-          <div class="stat-card">
+          <div class="stat-card" data-nav="profile">
             <div class="stat-header">
               <div class="stat-icon primary">
-                <i class="bi bi-heart-pulse-fill"></i>
+                <i class="bi bi-people-fill"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.totalPatients}</div>
@@ -590,10 +779,10 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-nav="virtual-care">
             <div class="stat-header">
               <div class="stat-icon success">
-                <i class="bi bi-play-circle-fill"></i>
+                <i class="bi bi-camera-video-fill"></i>
               </div>
             </div>
             <div class="stat-value">${this.data.stats.activeSessions}</div>
@@ -604,7 +793,7 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-nav="medication">
             <div class="stat-header">
               <div class="stat-icon warning">
                 <i class="bi bi-check2-all"></i>
@@ -618,7 +807,7 @@ class CaregiverOverview extends HTMLElement {
             </div>
           </div>
 
-          <div class="stat-card">
+          <div class="stat-card" data-nav="earnings">
             <div class="stat-header">
               <div class="stat-icon purple">
                 <i class="bi bi-cash-stack"></i>
@@ -661,8 +850,8 @@ class CaregiverOverview extends HTMLElement {
               <div class="activity-title">
                 <i class="bi bi-clock-history me-2"></i>Recent Activity
               </div>
-              <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
-                <i class="bi bi-arrow-right me-1"></i>View all
+              <button type="button" class="nav-link-btn" data-nav="documents">
+                <i class="bi bi-arrow-right"></i>View all
               </button>
             </div>
             <div class="activity-list">
@@ -695,8 +884,8 @@ class CaregiverOverview extends HTMLElement {
             <div class="sessions-title">
               <i class="bi bi-calendar-event me-2"></i>Upcoming Sessions
             </div>
-            <button style="background: none; border: none; color: #2563eb; font-size: 0.875rem; cursor: pointer;">
-              <i class="bi bi-calendar-week me-1"></i>View calendar
+            <button type="button" class="nav-link-btn" data-nav="virtual-care">
+              <i class="bi bi-calendar-week"></i>View calendar
             </button>
           </div>
           <div class="sessions-list">
@@ -729,6 +918,18 @@ class CaregiverOverview extends HTMLElement {
     `;
   }
 
+  setupNavigation() {
+    this.shadowRoot.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = el.dataset.nav;
+        if (section && window.DashboardNavigation) {
+          window.DashboardNavigation.navigateCaregiver(section);
+        }
+      });
+    });
+  }
+
   initializeCharts() {
     const canvas = this.shadowRoot.getElementById('weeklyChart');
     if (!canvas) return;
@@ -754,12 +955,12 @@ class CaregiverOverview extends HTMLElement {
           {
             label: 'Sessions',
             data: this.data.weeklyStats.sessions,
-            borderColor: '#2563eb',
-            backgroundColor: 'rgba(37, 99, 235, 0.1)',
+            borderColor: '#4169e1',
+            backgroundColor: 'rgba(65, 105, 225, 0.1)',
             borderWidth: 3,
             fill: true,
             tension: 0.4,
-            pointBackgroundColor: '#2563eb',
+            pointBackgroundColor: '#4169e1',
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
             pointRadius: 6,

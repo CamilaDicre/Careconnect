@@ -1,6 +1,6 @@
 /* Root Variables */
 :root {
-    --pal-primary: royalblue;
+    --pal-primary: #4169e1;
 }
 
 /* Blog Page Styles */
@@ -80,7 +80,7 @@
 }
 
 .blog-content h3 {
-    color: #2d4b6e;
+    color: #4169e1;
     font-size: 1.25rem;
     margin-bottom: 1rem;
     line-height: 1.4;

@@ -68,7 +68,7 @@ class AppointmentBooking extends HTMLElement {
         }
         
         .header h2 {
-          color: #1976d2;
+          color: #4169e1;
           margin: 0;
           font-family: 'Poppins', sans-serif;
           font-size: 28px;
@@ -98,7 +98,7 @@ class AppointmentBooking extends HTMLElement {
         }
         
         .step.active {
-          background: #1976d2;
+          background: #4169e1;
           color: white;
         }
         
@@ -106,8 +106,8 @@ class AppointmentBooking extends HTMLElement {
           width: 24px;
           height: 24px;
           border-radius: 50%;
-          background: #e3f2fd;
-          color: #1976d2;
+          background: rgba(65, 105, 225, 0.12);
+          color: #4169e1;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -117,7 +117,7 @@ class AppointmentBooking extends HTMLElement {
         
         .step.active .step-number {
           background: white;
-          color: #1976d2;
+          color: #4169e1;
         }
         
         .content-grid {
@@ -157,20 +157,20 @@ class AppointmentBooking extends HTMLElement {
         }
         
         .caregiver-item:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateX(5px);
         }
         
         .caregiver-item.selected {
-          border-color: #1976d2;
-          background: #e3f2fd;
+          border-color: #4169e1;
+          background: rgba(65, 105, 225, 0.12);
         }
         
         .caregiver-avatar {
           width: 60px;
           height: 60px;
           border-radius: 50%;
-          background: #1976d2;
+          background: #4169e1;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -215,8 +215,8 @@ class AppointmentBooking extends HTMLElement {
         }
         
         .specialization-tag {
-          background: #e3f2fd;
-          color: #1976d2;
+          background: rgba(65, 105, 225, 0.12);
+          color: #4169e1;
           padding: 4px 8px;
           border-radius: 12px;
           font-size: 11px;
@@ -268,7 +268,7 @@ class AppointmentBooking extends HTMLElement {
         
         .form-select:focus, .form-input:focus {
           outline: none;
-          border-color: #1976d2;
+          border-color: #4169e1;
         }
         
         .form-row {
@@ -322,13 +322,13 @@ class AppointmentBooking extends HTMLElement {
         }
         
         .action-card:hover {
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           transform: translateY(-2px);
         }
         
         .action-icon {
           font-size: 32px;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 10px;
         }
         

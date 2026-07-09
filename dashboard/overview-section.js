@@ -16,11 +16,14 @@ class OverviewSection extends HTMLElement {
       displayName = user ? (user.name || user.username || 'User') : 'User';
     }
     this.render(displayName);
+    this.setupNavigation();
   }
 
   render(displayName = 'User') {
     this.shadowRoot.innerHTML = `
       <style>
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+
         * {
           font-family: 'Poppins', sans-serif;
           box-sizing: border-box;
@@ -34,7 +37,7 @@ class OverviewSection extends HTMLElement {
         }
 
         .overview-hero {
-          background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 25px;
           padding: 40px;
           margin-bottom: 30px;
@@ -42,7 +45,7 @@ class OverviewSection extends HTMLElement {
           text-align: center;
           position: relative;
           overflow: hidden;
-          box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 15px 35px rgba(65, 105, 225, 0.3);
         }
 
         .overview-hero::before {
@@ -154,15 +157,15 @@ class OverviewSection extends HTMLElement {
           left: 0;
           right: 0;
           height: 4px;
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           transform: scaleX(0);
           transition: transform 0.3s ease;
         }
 
         .dashboard-card:hover {
           transform: translateY(-8px);
-          box-shadow: 0 15px 40px rgba(33, 150, 243, 0.15);
-          border-color: #2196f3;
+          box-shadow: 0 15px 40px rgba(65, 105, 225, 0.15);
+          border-color: #4169e1;
         }
 
         .dashboard-card:hover::before {
@@ -187,11 +190,54 @@ class OverviewSection extends HTMLElement {
 
         .card-icon {
           font-size: 1.5rem;
-          color: #1976d2;
+          color: #4169e1;
+        }
+
+        .item-icon {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: white;
+          font-size: 1rem;
+          flex-shrink: 0;
+        }
+
+        .item-icon.medication { background: linear-gradient(135deg, #28a745, #20c997); }
+        .item-icon.appointment { background: linear-gradient(135deg, #4169e1, #4169e1); }
+        .item-icon.hospital { background: linear-gradient(135deg, #5c6bc0, #7986cb); }
+
+        .activity-icon i {
+          font-size: 1.1rem;
+        }
+
+        .quick-action-btn {
+          cursor: pointer;
+          border: none;
+          transition: all 0.3s ease;
+        }
+
+        .quick-action-btn:hover {
+          transform: scale(1.05);
+        }
+
+        .quick-action-icon {
+          font-size: 1.8rem;
+          color: #4169e1;
+          margin-bottom: 5px;
+          display: block;
+        }
+
+        .hero-wave {
+          font-size: 2.2rem;
+          vertical-align: middle;
+          margin-left: 6px;
         }
 
         .card-action {
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 8px 15px;
@@ -204,7 +250,7 @@ class OverviewSection extends HTMLElement {
 
         .card-action:hover {
           transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+          box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
         }
 
         .stats-grid {
@@ -224,7 +270,7 @@ class OverviewSection extends HTMLElement {
         .stat-value {
           font-size: 1.8rem;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
         }
 
@@ -353,7 +399,7 @@ class OverviewSection extends HTMLElement {
           width: 35px;
           height: 35px;
           border-radius: 50%;
-          background: linear-gradient(135deg, #1976d2, #42a5f5);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           display: flex;
           align-items: center;
           justify-content: center;
@@ -368,7 +414,7 @@ class OverviewSection extends HTMLElement {
 
         .appointment-time {
           font-size: 0.8rem;
-          color: #1976d2;
+          color: #4169e1;
           font-weight: 600;
         }
 
@@ -389,7 +435,7 @@ class OverviewSection extends HTMLElement {
         .metric-value {
           font-size: 1.5rem;
           font-weight: 700;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 5px;
         }
 
@@ -423,26 +469,230 @@ class OverviewSection extends HTMLElement {
           margin-bottom: 20px;
         }
 
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .overview-container {
+            padding: 20px 16px;
+            max-width: 100%;
+          }
+
+          .overview-hero {
+            padding: 32px 24px;
+            border-radius: 20px;
+          }
+
+          .overview-title {
+            font-size: 2.4rem;
+          }
+
+          .dashboard-grid {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+          }
+
+          .quick-stats {
+            flex-wrap: wrap;
+            gap: 16px;
+          }
+
+          .quick-stat {
+            flex: 1 1 140px;
+            min-width: 120px;
+          }
+        }
+
         @media (max-width: 768px) {
           .overview-container {
-            padding: 20px;
+            padding: 16px 12px;
+            min-height: auto;
+            overflow-x: hidden;
+          }
+
+          .overview-hero {
+            padding: 28px 20px;
+            margin-bottom: 20px;
           }
           
           .overview-title {
-            font-size: 2rem;
+            font-size: 1.75rem;
+            line-height: 1.25;
+          }
+
+          .overview-subtitle {
+            font-size: 1rem;
           }
           
           .quick-stats {
-            flex-direction: column;
-            gap: 15px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 10px;
+            width: 100%;
+          }
+
+          .quick-stat {
+            padding: 12px 10px;
+          }
+
+          .quick-stat-number {
+            font-size: 1.25rem;
+          }
+
+          .quick-stat-label {
+            font-size: 0.75rem;
           }
           
           .dashboard-grid {
             grid-template-columns: 1fr;
+            gap: 16px;
+          }
+
+          .dashboard-card {
+            padding: 20px 16px;
+            border-radius: 16px;
+          }
+
+          .card-header {
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: flex-start;
+          }
+
+          .card-title {
+            font-size: 1.15rem;
+            flex: 1 1 100%;
+          }
+
+          .card-action {
+            min-height: 44px;
+            padding: 10px 16px;
+            font-size: 0.85rem;
           }
           
           .stats-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .health-metrics {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .medication-item,
+          .appointment-item {
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+          }
+
+          .activity-item {
+            gap: 12px;
+          }
+
+          .activity-icon {
+            width: 36px;
+            height: 36px;
+            flex-shrink: 0;
+          }
+
+          .quick-action-btn {
+            min-height: 88px;
+          }
+        }
+
+        @media (max-width: 480px) {
+          .overview-container {
+            padding: 10px 8px;
+          }
+
+          .overview-hero {
+            padding: 22px 16px;
+            border-radius: 16px;
+          }
+
+          .overview-title {
+            font-size: 1.45rem;
+          }
+
+          .hero-wave {
+            font-size: 1.3rem;
+            margin-left: 4px;
+          }
+
+          .overview-subtitle {
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+          }
+
+          .quick-stats {
+            grid-template-columns: 1fr;
+            gap: 8px;
+          }
+
+          .quick-stat {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            text-align: left;
+            padding: 12px 16px;
+          }
+
+          .quick-stat-number,
+          .quick-stat-label {
+            display: inline;
+          }
+
+          .stats-grid {
+            grid-template-columns: 1fr;
+          }
+
+          .health-metrics {
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+          }
+
+          .metric-item {
+            padding: 12px 8px;
+          }
+
+          .metric-value {
+            font-size: 1.2rem;
+          }
+
+          .metric-label {
+            font-size: 0.72rem;
+          }
+
+          .card-title {
+            font-size: 1.05rem;
+          }
+
+          .card-icon {
+            font-size: 1.25rem;
+          }
+
+          .medication-item,
+          .appointment-item {
+            flex-direction: column;
+            align-items: stretch;
+          }
+
+          .medication-item .card-action,
+          .appointment-item .card-action {
+            width: 100%;
+            text-align: center;
+          }
+
+          .activity-title {
+            font-size: 0.9rem;
+          }
+
+          .quick-action-icon {
+            font-size: 1.5rem;
+          }
+
+          .stat-label {
+            font-size: 0.8rem;
           }
         }
       </style>
@@ -450,7 +700,7 @@ class OverviewSection extends HTMLElement {
       <div class="overview-container">
         <div class="overview-hero">
           <div class="hero-content">
-            <h1 class="overview-title">Welcome back, ${displayName}! 👋</h1>
+            <h1 class="overview-title">Welcome back, ${displayName}! <i class="bi bi-emoji-smile hero-wave"></i></h1>
             <p class="overview-subtitle">Here's your health summary for today</p>
             <div class="quick-stats">
               <div class="quick-stat">
@@ -477,7 +727,7 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-heart-pulse card-icon"></i>
                 Health Overview
               </div>
-              <button class="card-action">View Details</button>
+              <button class="card-action" data-nav="health-monitoring">View Details</button>
             </div>
             <div class="health-metrics">
               <div class="metric-item">
@@ -506,38 +756,38 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-capsule card-icon"></i>
                 Today's Medications
               </div>
-              <button class="card-action">View All</button>
+              <button class="card-action" data-nav="medicines">View All</button>
             </div>
             <ul class="medication-list">
               <li class="medication-item">
                 <div class="medication-info">
-                  <div class="medication-icon">💊</div>
+                  <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
                     <div class="medication-name">Metformin</div>
                     <div class="medication-time">8:00 AM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Take</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="medicines">Take</button>
               </li>
               <li class="medication-item">
                 <div class="medication-info">
-                  <div class="medication-icon">💊</div>
+                  <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
                     <div class="medication-name">Aspirin</div>
                     <div class="medication-time">12:00 PM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Take</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="medicines">Take</button>
               </li>
               <li class="medication-item">
                 <div class="medication-info">
-                  <div class="medication-icon">💊</div>
+                  <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
                     <div class="medication-name">Vitamin D</div>
                     <div class="medication-time">8:00 PM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Take</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="medicines">Take</button>
               </li>
             </ul>
           </div>
@@ -549,28 +799,28 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-calendar-event card-icon"></i>
                 Upcoming Appointments
               </div>
-              <button class="card-action">View All</button>
+              <button class="card-action" data-nav="calendar">View All</button>
             </div>
             <ul class="appointment-list">
               <li class="appointment-item">
                 <div class="appointment-info">
-                  <div class="appointment-icon">👨‍⚕️</div>
+                  <div class="item-icon appointment"><i class="bi bi-person-badge"></i></div>
                   <div>
                     <div class="appointment-name">Dr. Martínez</div>
                     <div class="appointment-time">Tomorrow, 10:00 AM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Join</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="virtual-care">Join</button>
               </li>
               <li class="appointment-item">
                 <div class="appointment-info">
-                  <div class="appointment-icon">🏥</div>
+                  <div class="item-icon hospital"><i class="bi bi-hospital"></i></div>
                   <div>
                     <div class="appointment-name">Blood Test</div>
                     <div class="appointment-time">Friday, 9:00 AM</div>
                   </div>
                 </div>
-                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;">Details</button>
+                <button class="card-action" style="padding: 5px 10px; font-size: 0.7rem;" data-nav="calendar">Details</button>
               </li>
             </ul>
           </div>
@@ -582,25 +832,25 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-activity card-icon"></i>
                 Recent Activity
               </div>
-              <button class="card-action">View All</button>
+              <button class="card-action" data-nav="health-monitoring">View All</button>
             </div>
             <ul class="activity-list">
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #28a745, #20c997);">✅</div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #28a745, #20c997);"><i class="bi bi-check-lg"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Medication taken</div>
                   <div class="activity-time">2 hours ago</div>
                 </div>
               </li>
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #1976d2, #42a5f5);">📊</div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #4169e1, #4169e1);"><i class="bi bi-activity"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Blood pressure recorded</div>
                   <div class="activity-time">4 hours ago</div>
                 </div>
               </li>
               <li class="activity-item">
-                <div class="activity-icon" style="background: linear-gradient(135deg, #ffc107, #ff9800);">📅</div>
+                <div class="activity-icon" style="background: linear-gradient(135deg, #ffc107, #ff9800);"><i class="bi bi-calendar-event"></i></div>
                 <div class="activity-content">
                   <div class="activity-title">Appointment scheduled</div>
                   <div class="activity-time">Yesterday</div>
@@ -616,7 +866,7 @@ class OverviewSection extends HTMLElement {
                 <i class="bi bi-graph-up card-icon"></i>
                 Health Statistics
               </div>
-              <button class="card-action">View Details</button>
+              <button class="card-action" data-nav="charts">View Details</button>
             </div>
             <div class="stats-grid">
               <div class="stat-item">
@@ -647,20 +897,20 @@ class OverviewSection extends HTMLElement {
               </div>
             </div>
             <div class="stats-grid">
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">📞</div>
+              <button class="stat-item quick-action-btn" data-nav="emergency-contacts">
+                <i class="bi bi-telephone-fill quick-action-icon"></i>
                 <div class="stat-label">Emergency Call</div>
               </button>
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">📋</div>
+              <button class="stat-item quick-action-btn" data-nav="appointment-booking">
+                <i class="bi bi-calendar-plus quick-action-icon"></i>
                 <div class="stat-label">Book Appointment</div>
               </button>
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">💊</div>
+              <button class="stat-item quick-action-btn" data-nav="medicines">
+                <i class="bi bi-capsule quick-action-icon"></i>
                 <div class="stat-label">Add Medication</div>
               </button>
-              <button class="stat-item" style="cursor: pointer; border: none; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                <div class="stat-value">📊</div>
+              <button class="stat-item quick-action-btn" data-nav="charts">
+                <i class="bi bi-graph-up quick-action-icon"></i>
                 <div class="stat-label">Health Report</div>
               </button>
             </div>
@@ -668,6 +918,18 @@ class OverviewSection extends HTMLElement {
         </div>
       </div>
     `;
+  }
+
+  setupNavigation() {
+    this.shadowRoot.querySelectorAll('[data-nav]').forEach(el => {
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = el.dataset.nav;
+        if (section && window.DashboardNavigation) {
+          window.DashboardNavigation.navigatePatient(section);
+        }
+      });
+    });
   }
 }
 

@@ -238,7 +238,7 @@ class EarningsStatistics extends HTMLElement {
         }
         
         .metric-icon.earnings { background: linear-gradient(135deg, #10b981, #34d399); }
-        .metric-icon.hours { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .metric-icon.hours { background: linear-gradient(135deg, #4169e1, #4169e1); }
         .metric-icon.patients { background: linear-gradient(135deg, #8b5cf6, #a855f7); }
         .metric-icon.sessions { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
         
@@ -364,7 +364,7 @@ class EarningsStatistics extends HTMLElement {
         }
         
         .service-icon.morning { background: linear-gradient(135deg, #10b981, #34d399); }
-        .service-icon.afternoon { background: linear-gradient(135deg, #3b82f6, #60a5fa); }
+        .service-icon.afternoon { background: linear-gradient(135deg, #4169e1, #4169e1); }
         .service-icon.night { background: linear-gradient(135deg, #8b5cf6, #a855f7); }
         .service-icon.virtual { background: linear-gradient(135deg, #f59e0b, #fbbf24); }
         .service-icon.specialized { background: linear-gradient(135deg, #ef4444, #f87171); }
@@ -701,12 +701,12 @@ class EarningsStatistics extends HTMLElement {
           {
             label: 'Hours Worked',
             data: this.data.monthlyData.map(d => d.hours),
-            borderColor: '#3b82f6',
+            borderColor: '#4169e1',
             backgroundColor: 'rgba(59, 130, 246, 0.1)',
             borderWidth: 3,
             fill: true,
             tension: 0.4,
-            pointBackgroundColor: '#3b82f6',
+            pointBackgroundColor: '#4169e1',
             pointBorderColor: '#fff',
             pointBorderWidth: 2,
             pointRadius: 6,

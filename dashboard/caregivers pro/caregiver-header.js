@@ -11,6 +11,11 @@ class CaregiverHeader extends HTMLElement {
     this.attachEvents();
     this.startClock();
     this.loadUserData();
+    requestAnimationFrame(() => {
+      if (window.SidebarUtils) {
+        SidebarUtils.applyHeaderState(SidebarUtils.getSidebarState());
+      }
+    });
   }
 
   render() {
@@ -22,11 +27,11 @@ class CaregiverHeader extends HTMLElement {
         }
 
         .header {
-          background: linear-gradient(135deg, #1976d2 0%, #42a5f5 50%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 50%, #4169e1 100%);
           color: white;
           padding: 30px 35px;
           border-radius: 0;
-          box-shadow: 0 8px 32px rgba(25, 118, 210, 0.4);
+          box-shadow: 0 8px 32px rgba(65, 105, 225, 0.4);
           margin: 0;
           position: absolute;
           top: 0;
@@ -256,8 +261,16 @@ class CaregiverHeader extends HTMLElement {
 
         @media (max-width: 768px) {
           .header {
+            left: 0 !important;
+            right: 0 !important;
             padding: 20px 15px;
             min-height: 140px;
+          }
+
+          .header.sidebar-collapsed,
+          .header.sidebar-expanded {
+            left: 0 !important;
+            right: 0 !important;
           }
 
           .header-content {
@@ -365,6 +378,13 @@ class CaregiverHeader extends HTMLElement {
 
   adjustHeader(collapsed) {
     const header = this.shadowRoot.getElementById('caregiverHeader');
+    if (!header) return;
+
+    if (window.innerWidth <= 768) {
+      header.classList.remove('sidebar-expanded', 'sidebar-collapsed');
+      return;
+    }
+
     if (collapsed) {
       header.classList.remove('sidebar-expanded');
       header.classList.add('sidebar-collapsed');

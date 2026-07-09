@@ -17,7 +17,7 @@ class SplashScreen {
         left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+        background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
         display: flex;
         align-items: center;
         justify-content: center;

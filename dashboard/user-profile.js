@@ -63,7 +63,7 @@ class UserProfile extends HTMLElement {
       
       // Avatar y datos visuales
       photo: user?.photo || null,
-      avatarColor: 'linear-gradient(135deg, #667eea, #764ba2)',
+      avatarColor: 'linear-gradient(135deg, #4169e1, #764ba2)',
       initials: user ? user.username.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2) : 'U'
     };
   }
@@ -131,7 +131,7 @@ class UserProfile extends HTMLElement {
         position: fixed;
         top: 20px;
         right: 20px;
-        background: ${type === 'success' ? 'linear-gradient(135deg, #4facfe, #00f2fe)' : 'linear-gradient(135deg, #ff9a9e, #fecfef)'};
+        background: ${type === 'success' ? 'linear-gradient(135deg, #4169e1, #4169e1)' : 'linear-gradient(135deg, #ff9a9e, #fecfef)'};
         color: white;
         padding: 15px 25px;
         border-radius: 10px;
@@ -177,14 +177,14 @@ class UserProfile extends HTMLElement {
         }
         
         .profile-hero {
-          background: linear-gradient(135deg, #2196f3 0%, #1976d2 100%);
+          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 25px;
           padding: 40px;
           margin-bottom: 30px;
           position: relative;
           overflow: hidden;
           color: white;
-          box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 15px 35px rgba(65, 105, 225, 0.3);
         }
         
         .profile-hero::before {
@@ -225,7 +225,7 @@ class UserProfile extends HTMLElement {
           color: white;
           text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
           letter-spacing: 1px;
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
         }
         
         .profile-avatar:hover {
@@ -334,7 +334,7 @@ class UserProfile extends HTMLElement {
         }
         
         .section-title i {
-          color: #1976d2;
+          color: #4169e1;
           font-size: 1.3rem;
         }
         
@@ -348,15 +348,15 @@ class UserProfile extends HTMLElement {
           align-items: center;
           gap: 15px;
           padding: 15px;
-          background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12) 0%, rgba(65, 105, 225, 0.2) 100%);
           border-radius: 15px;
-          border-left: 4px solid #1976d2;
+          border-left: 4px solid #4169e1;
           transition: all 0.3s ease;
         }
         
         .info-item:hover {
           transform: translateX(5px);
-          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+          box-shadow: 0 5px 15px rgba(65, 105, 225, 0.2);
         }
         
         .info-icon {
@@ -365,12 +365,12 @@ class UserProfile extends HTMLElement {
           display: flex;
           align-items: center;
           justify-content: center;
-          background: #e3f2fd;
+          background: rgba(65, 105, 225, 0.12);
           border-radius: 50%;
         }
         .info-icon i {
           font-size: 1.3rem;
-          color: #1976d2;
+          color: #4169e1;
         }
         
         .info-content {
@@ -414,8 +414,8 @@ class UserProfile extends HTMLElement {
         
         .form-input:focus {
           outline: none;
-          border-color: #667eea;
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          border-color: #4169e1;
+          box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
         }
         
         .form-select {
@@ -431,8 +431,8 @@ class UserProfile extends HTMLElement {
         
         .form-select:focus {
           outline: none;
-          border-color: #667eea;
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          border-color: #4169e1;
+          box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
         }
         
         .array-input-container {
@@ -453,12 +453,12 @@ class UserProfile extends HTMLElement {
         
         .array-input:focus {
           outline: none;
-          border-color: #667eea;
-          box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+          border-color: #4169e1;
+          box-shadow: 0 0 0 3px rgba(65, 105, 225, 0.1);
         }
         
         .add-btn {
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
           border: none;
           padding: 10px 15px;
@@ -471,7 +471,7 @@ class UserProfile extends HTMLElement {
         
         .add-btn:hover {
           transform: translateY(-2px);
-          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
         }
         
         .remove-btn {
@@ -496,29 +496,29 @@ class UserProfile extends HTMLElement {
           align-items: center;
           gap: 10px;
           padding: 10px 15px;
-          background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12) 0%, rgba(65, 105, 225, 0.2) 100%);
           border-radius: 10px;
           margin-bottom: 8px;
-          border-left: 4px solid #1976d2;
+          border-left: 4px solid #4169e1;
         }
 
         /* Dark mode support */
         :host-context(.dark-mode) .profile-container { color: #e5e7eb; }
         :host-context(.dark-mode) .profile-section { background: #0f172a; border-color: #1f2937; box-shadow: 0 8px 25px rgba(2,6,23,0.6); }
         :host-context(.dark-mode) .section-title { color: #e5e7eb; }
-        :host-context(.dark-mode) .info-item { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #3b82f6; }
+        :host-context(.dark-mode) .info-item { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #4169e1; }
         :host-context(.dark-mode) .info-label { color: #94a3b8; }
         :host-context(.dark-mode) .info-value { color: #e5e7eb; }
         :host-context(.dark-mode) .form-input, 
         :host-context(.dark-mode) .form-select { background: #0b1220; border-color: #1f2937; color: #e5e7eb; }
-        :host-context(.dark-mode) .medical-card { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #3b82f6; }
-        :host-context(.dark-mode) .array-item { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #3b82f6; }
-        :host-context(.dark-mode) .array-item-text { color: #93c5fd; }
+        :host-context(.dark-mode) .medical-card { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #4169e1; }
+        :host-context(.dark-mode) .array-item { background: linear-gradient(135deg, #0b1220 0%, #0f172a 100%); border-left-color: #4169e1; }
+        :host-context(.dark-mode) .array-item-text { color: #4169e1; }
         
         .array-item-text {
           flex: 1;
           font-weight: 500;
-          color: #1976d2;
+          color: #4169e1;
         }
         
         .help-section {
@@ -588,18 +588,18 @@ class UserProfile extends HTMLElement {
         }
         
         .edit-btn {
-          background: linear-gradient(135deg, #2196f3, #1976d2);
+          background: linear-gradient(135deg, #4169e1, #4169e1);
           color: white;
-          box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+          box-shadow: 0 5px 15px rgba(65, 105, 225, 0.3);
         }
         
         .edit-btn:hover {
           transform: translateY(-3px);
-          box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+          box-shadow: 0 8px 25px rgba(65, 105, 225, 0.4);
         }
         
         .save-btn {
-          background: linear-gradient(135deg, #1976d2, #0d47a1);
+          background: linear-gradient(135deg, #4169e1, #0d47a1);
           color: white;
           box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
         }
@@ -642,15 +642,15 @@ class UserProfile extends HTMLElement {
         }
         
         .medical-card {
-          background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+          background: linear-gradient(135deg, rgba(65, 105, 225, 0.12) 0%, rgba(65, 105, 225, 0.2) 100%);
           padding: 20px;
           border-radius: 15px;
-          border-left: 4px solid #1976d2;
+          border-left: 4px solid #4169e1;
         }
         
         .medical-card-title {
           font-weight: 600;
-          color: #1976d2;
+          color: #4169e1;
           margin-bottom: 15px;
           font-size: 1.1rem;
           display: flex;
