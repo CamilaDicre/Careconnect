@@ -27,7 +27,7 @@ class HeaderComponent extends HTMLElement {
         // Detectar si estamos en /pages/ o en la raíz
         const isInPages = window.location.pathname.includes('/pages/');
         const prefix = isInPages ? '' : 'pages/';
-        const logoSrc = isInPages ? '../assets/Frame - 1.svg' : 'assets/Frame - 1.svg';
+        const logoSrc = isInPages ? '../assets/logos/Frame - 1.svg' : 'assets/logos/Frame - 1.svg';
         this.shadowRoot.innerHTML = `
             <style>
                 :host-context(.dark-mode) .careconnect-navbar {

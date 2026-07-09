@@ -229,7 +229,7 @@ p {
 /* Hero Section */
 .hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.725)),
-                url(../assets/BlueIconsBlueBackgroundSpread.png);
+                url(../assets/backgrounds/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -240,7 +240,7 @@ p {
 }
 
 .hero-section h1 {
-    width: 90%;
+    width: 100%;
     font-size: 5rem;
     line-height: 1.2;
     font-family: 'Poppins';
@@ -447,7 +447,7 @@ p {
     width: 350px;
     height: 400px;
 
-    background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);
+    /*background-image: url(/assets/GreyIconsWhiteBackgroundSpread.png);*/
 }
 
 .reasons-section .reason:first-child {
@@ -474,15 +474,6 @@ p {
 
 .reason-container:hover {
     transform: translateY(-10px);
-    background-color: var(--pal-primary);
-}
-
-.reason-container:hover .service-feature-title {
-    color: white;
-}
-
-.reason-container:hover .service-feature-description {
-    color: rgba(255, 255, 255, 0.9);
 }
 
 .reasons-section .reasons-heading-container {
@@ -579,7 +570,7 @@ p {
 .about-section {
     padding: 100px 0;
     background-color: #fff;
-    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(../assets/GreyIconsWhiteBackgroundSpread.png);
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(../assets/backgrounds/GreyIconsWhiteBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;
@@ -794,7 +785,7 @@ p {
 /* Statistics Section */
 .statistics-section {
     background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
-                url(../assets/BlueLogoBlueBackgroundTilted.png) center/cover fixed;
+                url(../assets/backgrounds/BlueLogoBlueBackgroundTilted.png) center/cover fixed;
     padding: 100px 0;
     color: white;
 }
