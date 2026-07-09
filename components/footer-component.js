@@ -15,7 +15,7 @@ class FooterComponent extends HTMLElement {
 
         // prefix to reach root files (index.html, privacy-policy.html, assets, etc.)
         const rootPrefix = isInCaregiverPro ? '../../' : (isInDashboard || isInPages) ? '../' : '';
-        const logoSrc = `${rootPrefix}assets/Frame - 1.svg`;
+        const logoSrc = `${rootPrefix}assets/logos/Frame - 1.svg`;
         // prefix to reach files under pages/
         const pagesPrefix = isInCaregiverPro ? '../../pages/' : isInDashboard ? '../pages/' : isInPages ? '' : 'pages/';
         const aboutLink = `${pagesPrefix}about.html`;
@@ -762,7 +762,7 @@ class FooterComponent extends HTMLElement {
                         <div class="footer-col">
                             <h3 style="display:flex;align-items:center;gap:4px;">
                                 <span class="brand-logo-badge">
-                                    <img src="${rootPrefix}assets/Frame-splash.svg" alt="Careconnect Logo"/>
+                                    <img src="${rootPrefix}assets/logos/Frame-splash.svg" alt="Careconnect Logo"/>
                                 </span>
                                 areconnect
                             </h3>
