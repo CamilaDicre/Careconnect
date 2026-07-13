@@ -44,11 +44,15 @@ class SplashScreenManager {
             "></div>`
         ).join('');
         
+        const isInSubfolder = window.location.pathname.includes('/pages/') ||
+                              window.location.pathname.includes('/dashboard/');
+        const logoSrc = isInSubfolder ? '../assets/logos/Frame - 1.svg' : 'assets/logos/Frame - 1.svg';
+
         this.splashScreen.innerHTML = `
             ${particles}
             <div class="splash-content">
                 <div class="splash-logo">
-                    <img src="assets/Frame - 1.svg" alt="Careconnect Logo">
+                    <img src="${logoSrc}" alt="Careconnect Logo">
                 </div>
                 <h1 class="splash-title">Careconnect</h1>
                 <p class="splash-subtitle">Conectamos, Tú Cuidas</p>
