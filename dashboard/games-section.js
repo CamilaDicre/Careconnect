@@ -854,7 +854,7 @@ class GamesSection extends HTMLElement {
             <p class="games-subtitle">Keep your mind sharp and have fun with these engaging games!</p>
             <div class="stats-bar">
               <div class="stat-item">
-                <span class="stat-number">6</span>
+                <span class="stat-number">9</span>
                 <span class="stat-label">Games Available</span>
               </div>
               <div class="stat-item">
@@ -989,9 +989,9 @@ class GamesSection extends HTMLElement {
               Play Now
             </button>
           </div>
-          <!--
+
           <div class="game-card" data-game="crossword">
-            <i class="bi bi-list-ol game-icon"></i>
+            <i class="bi bi-grid game-icon"></i>
             <h3 class="game-title">Crossword Puzzle</h3>
             <p class="game-description">Complete the crossword puzzle to test your vocabulary and problem-solving skills.</p>
             <div class="game-features">
@@ -1009,7 +1009,66 @@ class GamesSection extends HTMLElement {
               Play Now
             </button>
           </div>
-          -->
+
+          <div class="game-card" data-game="reaction">
+            <i class="bi bi-lightning game-icon"></i>
+            <h3 class="game-title">Reaction Time</h3>
+            <p class="game-description">Test your reflexes! Click as fast as you can when the signal turns green.</p>
+            <div class="game-features">
+              <span class="feature-tag">Reflexes</span>
+              <span class="feature-tag">Speed</span>
+              <span class="feature-tag">Attention</span>
+            </div>
+            <div class="game-difficulty">
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot"></span>
+            </div>
+            <button class="play-btn">
+              <i class="bi bi-play-circle"></i>
+              Play Now
+            </button>
+          </div>
+
+          <div class="game-card" data-game="spot">
+            <i class="bi bi-eye game-icon"></i>
+            <h3 class="game-title">Spot the Odd One</h3>
+            <p class="game-description">Find the different emoji in the grid. Great for visual attention training!</p>
+            <div class="game-features">
+              <span class="feature-tag">Visual</span>
+              <span class="feature-tag">Attention</span>
+              <span class="feature-tag">Pattern</span>
+            </div>
+            <div class="game-difficulty">
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot"></span>
+            </div>
+            <button class="play-btn">
+              <i class="bi bi-play-circle"></i>
+              Play Now
+            </button>
+          </div>
+
+          <div class="game-card" data-game="trivia">
+            <i class="bi bi-heart-pulse game-icon"></i>
+            <h3 class="game-title">Health Trivia</h3>
+            <p class="game-description">Answer health and wellness questions to learn while you play!</p>
+            <div class="game-features">
+              <span class="feature-tag">Knowledge</span>
+              <span class="feature-tag">Health</span>
+              <span class="feature-tag">Learning</span>
+            </div>
+            <div class="game-difficulty">
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot active"></span>
+              <span class="difficulty-dot"></span>
+            </div>
+            <button class="play-btn">
+              <i class="bi bi-play-circle"></i>
+              Play Now
+            </button>
+          </div>
         </div>
 
         <div class="game-area" id="gameArea">
@@ -1126,6 +1185,18 @@ class GamesSection extends HTMLElement {
       case 'crossword':
         currentGameTitle.textContent = 'Crossword Puzzle';
         this.startCrosswordGame(gameBoard);
+        break;
+      case 'reaction':
+        currentGameTitle.textContent = 'Reaction Time';
+        this.startReactionGame(gameBoard);
+        break;
+      case 'spot':
+        currentGameTitle.textContent = 'Spot the Odd One';
+        this.startSpotGame(gameBoard);
+        break;
+      case 'trivia':
+        currentGameTitle.textContent = 'Health Trivia';
+        this.startTriviaGame(gameBoard);
         break;
     }
 
@@ -1744,6 +1815,219 @@ class GamesSection extends HTMLElement {
     showSequence();
   }
 
+  startReactionGame(container) {
+    let roundsCompleted = 0;
+    const roundsToWin = 5;
+    let waiting = false;
+    let ready = false;
+    let startTime = 0;
+    let timeoutId = null;
+
+    const renderWaiting = () => {
+      waiting = true;
+      ready = false;
+      container.innerHTML = `
+        <div style="margin: 30px 0;">
+          <div style="font-size: 1.5rem; color: #666; margin-bottom: 20px;">
+            Round ${roundsCompleted + 1} of ${roundsToWin} — Wait for green...
+          </div>
+          <button id="reactionBtn" style="
+            width: 200px; height: 200px; border-radius: 50%; border: none;
+            background: #ff4757; color: white; font-size: 1.3rem; font-weight: 700;
+            cursor: pointer; transition: background 0.2s ease; box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+          ">Wait...</button>
+        </div>
+      `;
+
+      const btn = container.querySelector('#reactionBtn');
+      const delay = 1500 + Math.random() * 3000;
+
+      timeoutId = setTimeout(() => {
+        waiting = false;
+        ready = true;
+        startTime = Date.now();
+        btn.style.background = '#2ed573';
+        btn.textContent = 'Click!';
+      }, delay);
+
+      btn.addEventListener('click', () => {
+        if (waiting) {
+          clearTimeout(timeoutId);
+          container.innerHTML = `
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="font-size: 2rem; color: #ff4757; font-weight: 700; margin-bottom: 15px;">Too early!</div>
+              <div style="color: #666;">Wait for the green signal before clicking.</div>
+            </div>
+          `;
+          setTimeout(() => renderWaiting(), 1500);
+        } else if (ready) {
+          const reactionMs = Date.now() - startTime;
+          const points = Math.max(5, 30 - Math.floor(reactionMs / 50));
+          this.score += points;
+          this.updateScore();
+          roundsCompleted++;
+
+          container.innerHTML = `
+            <div style="text-align: center; margin: 30px 0;">
+              <div style="font-size: 2rem; color: #2ed573; font-weight: 700; margin-bottom: 15px;">${reactionMs} ms</div>
+              <div style="color: #666; margin-bottom: 10px;">+${points} points</div>
+            </div>
+          `;
+
+          if (roundsCompleted >= roundsToWin) {
+            this.level++;
+            this.updateScore();
+            this.showContinueButtons();
+            setTimeout(() => this.endGame(), 1000);
+          } else {
+            setTimeout(() => renderWaiting(), 1200);
+          }
+        }
+      });
+    };
+
+    renderWaiting();
+  }
+
+  startSpotGame(container) {
+    const levelConfig = this.getCurrentLevelConfig();
+    const gridSize = Math.min(3 + Math.floor(levelConfig.difficulty / 2), 5);
+    const emojis = ['🍎', '🍊', '🍋', '🍇', '🍓', '🥝', '🍑', '🍒'];
+    let baseEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    let oddEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    while (oddEmoji === baseEmoji) {
+      oddEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    }
+
+    const totalCells = gridSize * gridSize;
+    let oddIndex = Math.floor(Math.random() * totalCells);
+    let roundsWon = 0;
+    const roundsToWin = 3;
+
+    const renderRound = () => {
+      container.innerHTML = `
+        <div style="margin: 20px 0;">
+          <div style="font-size: 1.3rem; color: #333; margin-bottom: 20px;">
+            Find the different one! (${roundsWon + 1}/${roundsToWin})
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(${gridSize}, 1fr); gap: 12px; max-width: ${gridSize * 80}px; margin: 0 auto;">
+            ${Array.from({ length: totalCells }, (_, i) => `
+              <button class="spot-cell" data-index="${i}" style="
+                width: 70px; height: 70px; font-size: 2rem; border: 2px solid #e0e0e0;
+                border-radius: 15px; background: white; cursor: pointer; transition: all 0.2s ease;
+              ">${i === oddIndex ? oddEmoji : baseEmoji}</button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('.spot-cell').forEach(cell => {
+        cell.addEventListener('click', () => {
+          const index = parseInt(cell.dataset.index);
+          if (index === oddIndex) {
+            cell.style.background = '#2ed573';
+            cell.style.borderColor = '#2ed573';
+            this.score += 15;
+            this.updateScore();
+            roundsWon++;
+
+            if (roundsWon >= roundsToWin) {
+              this.level++;
+              this.updateScore();
+              this.showContinueButtons();
+              setTimeout(() => this.endGame(), 800);
+            } else {
+              setTimeout(() => {
+                baseEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                oddEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                while (oddEmoji === baseEmoji) {
+                  oddEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+                }
+                oddIndex = Math.floor(Math.random() * totalCells);
+                renderRound();
+              }, 600);
+            }
+          } else {
+            cell.style.background = '#ff4757';
+            cell.style.borderColor = '#ff4757';
+            setTimeout(() => this.endGame(), 800);
+          }
+        });
+      });
+    };
+
+    renderRound();
+  }
+
+  startTriviaGame(container) {
+    const questions = [
+      { q: 'How many glasses of water should adults drink daily (approx.)?', options: ['2-3', '6-8', '12-15', '1'], answer: 1 },
+      { q: 'Which vitamin helps strengthen bones?', options: ['Vitamin A', 'Vitamin C', 'Vitamin D', 'Vitamin K'], answer: 2 },
+      { q: 'What is a normal resting heart rate for adults (bpm)?', options: ['30-50', '60-100', '120-150', '150-200'], answer: 1 },
+      { q: 'Which activity is best for heart health?', options: ['Sitting all day', 'Regular exercise', 'Skipping meals', 'Staying up late'], answer: 1 },
+      { q: 'How many hours of sleep do adults typically need?', options: ['3-4', '5-6', '7-9', '10-12'], answer: 2 },
+      { q: 'Which food group provides the most fiber?', options: ['Meat', 'Dairy', 'Fruits & vegetables', 'Sweets'], answer: 2 },
+      { q: 'What should you do if you feel chest pain?', options: ['Ignore it', 'Call emergency services', 'Take a nap', 'Eat something'], answer: 1 },
+      { q: 'Which habit helps reduce stress?', options: ['Deep breathing', 'Overworking', 'Skipping breaks', 'Too much caffeine'], answer: 0 },
+      { q: 'What does BMI measure?', options: ['Blood pressure', 'Body weight vs height', 'Heart rate', 'Cholesterol'], answer: 1 },
+      { q: 'Which mineral helps prevent anemia?', options: ['Calcium', 'Iron', 'Sodium', 'Potassium'], answer: 1 },
+    ];
+
+    let currentIndex = 0;
+    let answered = 0;
+    const questionsPerLevel = 5;
+    const shuffled = [...questions].sort(() => Math.random() - 0.5);
+
+    const renderQuestion = () => {
+      const question = shuffled[currentIndex % shuffled.length];
+
+      container.innerHTML = `
+        <div style="margin: 20px 0;">
+          <div style="font-size: 1.1rem; color: #666; margin-bottom: 15px;">
+            Question ${answered + 1} of ${questionsPerLevel}
+          </div>
+          <div style="font-size: 1.4rem; font-weight: 600; color: #333; margin-bottom: 25px;">
+            ${question.q}
+          </div>
+          <div class="math-options">
+            ${question.options.map((opt, i) => `
+              <button class="math-option" data-answer="${i}">${opt}</button>
+            `).join('')}
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('.math-option').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const selected = parseInt(btn.dataset.answer);
+          if (selected === question.answer) {
+            btn.classList.add('correct');
+            this.score += 15;
+          } else {
+            btn.classList.add('incorrect');
+            container.querySelectorAll('.math-option')[question.answer].classList.add('correct');
+          }
+          this.updateScore();
+          answered++;
+          currentIndex++;
+
+          setTimeout(() => {
+            if (answered >= questionsPerLevel) {
+              this.level++;
+              this.updateScore();
+              this.showContinueButtons();
+              setTimeout(() => this.endGame(), 800);
+            } else {
+              renderQuestion();
+            }
+          }, 1000);
+        });
+      });
+    };
+
+    renderQuestion();
+  }
+
   startCrosswordGame(container) {
     const levelConfig = this.getCurrentLevelConfig();
     const difficulty = levelConfig.difficulty;
@@ -2349,6 +2633,15 @@ class GamesSection extends HTMLElement {
           break;
         case 'crossword':
           this.startCrosswordGame(gameBoard);
+          break;
+        case 'reaction':
+          this.startReactionGame(gameBoard);
+          break;
+        case 'spot':
+          this.startSpotGame(gameBoard);
+          break;
+        case 'trivia':
+          this.startTriviaGame(gameBoard);
           break;
       }
       
