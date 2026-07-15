@@ -1,7 +1,7 @@
 /* About Page Styles*/
 .about-hero-section {
     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                url(../assets/BlueLogoBlueBackgroundTilted.png);
+                url(../assets/backgrounds/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     padding: 8rem 0 6rem;
@@ -55,7 +55,9 @@
 }
 
 /* About Content Section */
-.about-content-section h2 {
+.about-content-section h2,
+.why-choose-section h2,
+.team-section h2 {
     color: #4169e1;
 }
 
@@ -110,7 +112,7 @@
     position: relative;
     max-width: 600px;
     margin: 0 auto;
-    background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(233, 236, 239, 0.9)), url(../assets/GreyIconsWhiteBackgroundSpread.png);
+    background: linear-gradient(135deg, rgba(248, 249, 250, 0.9), rgba(233, 236, 239, 0.9));
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;

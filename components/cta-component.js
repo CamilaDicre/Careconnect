@@ -30,7 +30,7 @@ class CTAComponent extends HTMLElement {
             <style>
                 .cta-section {
                     background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-                                url(../assets/BlueLogoBlueBackgroundTilted.png);
+                                url(../assets/backgrounds/BlueLogoBlueBackgroundTilted.png);
                     background-size: cover;
                     background-position: center;
                     padding: 100px 0;

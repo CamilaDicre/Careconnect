@@ -570,7 +570,7 @@ p {
 .about-section {
     padding: 100px 0;
     background-color: #fff;
-    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(../assets/backgrounds/GreyIconsWhiteBackgroundSpread.png);
+    background: linear-gradient(rgba(255,255,255,0.85), rgba(255,255,255,0.85)), url(../assets/backgrounds/BlueIconsBlueBackgroundSpread.png);
     background-size: cover;
     background-position: center;
     background-attachment: fixed;

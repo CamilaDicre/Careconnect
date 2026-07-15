@@ -936,6 +936,19 @@ class HeaderComponent extends HTMLElement {
                     color: var(--pal-primary);
                     border-color: var(--pal-primary);
                 }
+                                    
+                #careconnectDarkModeToggle {
+                    border-radius: 100%;
+                }
+
+                .careconnect-navbar-scrolled #careconnectDarkModeToggle svg g {
+                    color: var(--pal-primary) !important;
+                }
+                
+                .careconnect-navbar-scrolled #careconnectDarkModeToggle {
+                    background-color: white;
+                    border-color: gainsboro
+                }
 
                 .careconnect-rounded-pill {
                     border-radius: 50rem !important;
