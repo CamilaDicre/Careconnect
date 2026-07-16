@@ -62,8 +62,10 @@ if (typeof CareConnectSession === 'undefined') {
 
     static setUserSession(user) {
       if (!user) return false;
+      const role =
+        window.CareConnectDB?.normalizeRole?.(user.role) ?? user.role;
       this.set('loggedInUser', user.username);
-      this.set('userRole', user.role);
+      this.set('userRole', role);
       if (user.id) this.set('currentUserId', user.id);
       return true;
     }

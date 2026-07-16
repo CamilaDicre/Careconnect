@@ -190,15 +190,21 @@ if (typeof CareConnectDB === 'undefined') {
     }
 
     static async resolveCurrentUser() {
-      const userId = CareConnectSession.getCurrentUserId();
-      if (userId) {
-        const byId = await this.getUserById(userId);
-        if (byId) return byId;
-      }
-
       const loggedInUser = CareConnectSession.getLoggedInUser();
       if (loggedInUser) {
-        return this.getUserByUsername(loggedInUser);
+        const byUsername = await this.getUserByUsername(loggedInUser);
+        if (byUsername) {
+          const sessionId = CareConnectSession.getCurrentUserId();
+          if (byUsername.id && sessionId !== byUsername.id) {
+            CareConnectSession.set('currentUserId', byUsername.id);
+          }
+          return byUsername;
+        }
+      }
+
+      const userId = CareConnectSession.getCurrentUserId();
+      if (userId) {
+        return this.getUserById(userId);
       }
 
       return null;
