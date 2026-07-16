@@ -13,6 +13,23 @@ document.addEventListener('DOMContentLoaded', async () => {
   await CareConnectDB.verifyAndRestoreAmethAdmin();
   await preloadUsersCache();
 
+  const loggedInUser = CareConnectSession.getLoggedInUser();
+  const sessionRole = CareConnectSession.getUserRole();
+  if (loggedInUser && sessionRole) {
+    if (CareConnectDB.isAdminRole(sessionRole)) {
+      window.location.href = '../dashboard/admin-dashboard.html';
+      return;
+    }
+    if (CareConnectDB.isCaregiverRole(sessionRole)) {
+      window.location.href = '../dashboard/caregivers pro/Caregiver-pro.html';
+      return;
+    }
+    if (CareConnectDB.isPatientRole(sessionRole)) {
+      window.location.href = '../dashboard/dashboard.html';
+      return;
+    }
+  }
+
   const loginToggle = document.getElementById('loginToggle');
   const loginForm = document.getElementById('loginForm');
   const signupButton = document.getElementById('signupButton');

@@ -512,9 +512,15 @@
             }
 
             const user = await CareConnectDB.resolveCurrentUser();
+
+            if (user && CareConnectDB.isPatientRole(user.role) && !CareConnectDB.isPatientRole(sessionRole)) {
+                CareConnectSession.set('userRole', user.role);
+            }
+
+            const effectiveRole = CareConnectSession.getUserRole();
             const hasPatientAccess =
-                (user && CareConnectDB.isPatientRole(user.role)) ||
-                (!user && CareConnectDB.isPatientRole(sessionRole));
+                CareConnectDB.isPatientRole(user?.role) ||
+                CareConnectDB.isPatientRole(effectiveRole);
 
             if (!hasPatientAccess) {
                 showAuthModal(

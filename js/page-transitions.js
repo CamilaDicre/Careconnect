@@ -143,12 +143,9 @@ class PageTransitions {
             }
         });
 
-        // Handle logout buttons
+        // Handle logout buttons (explicit data-logout only to avoid false positives)
         document.addEventListener('click', (e) => {
-            if (e.target.matches('[data-logout]') || 
-                e.target.closest('[data-logout]') ||
-                e.target.textContent.toLowerCase().includes('logout') ||
-                e.target.textContent.toLowerCase().includes('sign out')) {
+            if (e.target.matches('[data-logout]') || e.target.closest('[data-logout]')) {
                 e.preventDefault();
                 this.showLogoutTransition();
             }
@@ -278,15 +275,19 @@ class PageTransitions {
     }
 
     clearUserData() {
-        // Clear localStorage items related to user session
+        if (window.CareConnectSession?.clear) {
+            CareConnectSession.clear();
+        }
+
         const keysToRemove = [
             'currentUser',
             'userToken',
-            'userRole',
             'isLoggedIn',
-            'dashboardData'
+            'dashboardData',
+            'caregiverData',
+            'patientData'
         ];
-        
+
         keysToRemove.forEach(key => {
             if (localStorage.getItem(key)) {
                 localStorage.removeItem(key);
@@ -340,20 +341,19 @@ class LogoutManager {
     }
 
     clearSessionData() {
-        // Clear session storage
-        sessionStorage.clear();
-        
-        // Clear specific localStorage items
+        if (window.CareConnectSession?.clear) {
+            CareConnectSession.clear();
+        }
+
         const userDataKeys = [
             'currentUser',
             'userToken',
-            'userRole',
             'isLoggedIn',
             'dashboardData',
             'caregiverData',
             'patientData'
         ];
-        
+
         userDataKeys.forEach(key => {
             if (localStorage.getItem(key)) {
                 localStorage.removeItem(key);
