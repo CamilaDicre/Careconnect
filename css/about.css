@@ -251,6 +251,12 @@
     color: #4169e1;
 }
 
+.team-info p {
+    font-size: 1rem;
+    color: #4b5563;
+    font-family: 'Josefin Sans' !important;
+}
+
 .team-card {
     background: #fff;
     border-radius: 8px;
