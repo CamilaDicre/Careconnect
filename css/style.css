@@ -596,13 +596,13 @@ p {
 .btn-primary {
     background-color: var(--pal-primary);
     border-color: var(--pal-primary);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease !important;
 }
 
 .btn-primary:hover {
     background-color: var(--pal-primary);
     border-color: var(--pal-primary);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
 }
 
 /* Services Section */
@@ -685,15 +685,7 @@ p {
 }
 
 /* Medical Services Section */
-.medical-services {
-    padding: 150px 0;
-    background-color: #fff;
-}
 
-.medical-services h2 {
-    color: #4169e1;
-    margin-bottom: 50px;
-}
 
 .service-card {
     background: #fff;
@@ -750,15 +742,17 @@ p {
 
 .service-card {
     height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
 }
 
 .service-display {
-    height: 60%;
+    height: 100%;
 }
 
 .service-display img {
-    width: 100%;
-    height: 100%;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
 /* Service Cards Font Size */
@@ -766,11 +760,12 @@ p {
     height: 40%;
     display: flex;
     flex-direction: column;
+    gap: 10%;
 }
 
 .service-content {
     & h3 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     & p {
         font-size: 1.2rem;
@@ -971,8 +966,8 @@ p {
 }
 
 .testimonial-author .rounded-circle {
-    width: 56px;
-    height: 56px;
+    width: 56px !important;
+    height: 56px !important;
     object-fit: cover;
 }
 
@@ -1577,6 +1572,7 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 
 .service-button {
   border-radius: 50rem !important;
+  transition: all 0.25s;
 }
 
 /* Header Interactive Effects - REMOVED: Now handled by Web Components */
