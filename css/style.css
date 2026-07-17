@@ -685,15 +685,7 @@ p {
 }
 
 /* Medical Services Section */
-.medical-services {
-    padding: 150px 0;
-    background-color: #fff;
-}
 
-.medical-services h2 {
-    color: #4169e1;
-    margin-bottom: 50px;
-}
 
 .service-card {
     background: #fff;
@@ -750,15 +742,17 @@ p {
 
 .service-card {
     height: 100%;
+    display: grid;
+    grid-template-rows: 1fr 0.5fr;
 }
 
 .service-display {
-    height: 60%;
+    height: 100%;
 }
 
 .service-display img {
-    width: 100%;
-    height: 100%;
+    height: 100% !important;
+    object-fit: cover !important;
 }
 
 /* Service Cards Font Size */
@@ -766,11 +760,12 @@ p {
     height: 40%;
     display: flex;
     flex-direction: column;
+    gap: 10%;
 }
 
 .service-content {
     & h3 {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     & p {
         font-size: 1.2rem;
