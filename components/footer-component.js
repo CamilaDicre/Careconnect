@@ -44,7 +44,7 @@ class FooterComponent extends HTMLElement {
                     left: 0;
                     right: 0;
                     height: 6px;
-                    background: linear-gradient(90deg, #0d47a1, #4169e1);
+                    background-color:#4169e1;
                 }
 
                 .footer-content {
@@ -65,7 +65,7 @@ class FooterComponent extends HTMLElement {
                 }
 
                 .footer-section h3 {
-                    color: var(--pal-primary);
+                    color: white;
                     font-size: 1.8rem;
                     font-weight: 700;
                     margin-bottom: 25px;
