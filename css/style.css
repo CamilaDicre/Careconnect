@@ -596,13 +596,13 @@ p {
 .btn-primary {
     background-color: var(--pal-primary);
     border-color: var(--pal-primary);
-    transition: all 0.3s ease;
+    transition: all 0.3s ease !important;
 }
 
 .btn-primary:hover {
     background-color: var(--pal-primary);
     border-color: var(--pal-primary);
-    transform: translateY(-2px);
+    transform: translateY(-5px);
 }
 
 /* Services Section */
@@ -971,8 +971,8 @@ p {
 }
 
 .testimonial-author .rounded-circle {
-    width: 56px;
-    height: 56px;
+    width: 56px !important;
+    height: 56px !important;
     object-fit: cover;
 }
 
@@ -1577,6 +1577,7 @@ h1, h2, h3, h4, h5, h6, .display-1, .display-2, .display-3, .display-4, .display
 
 .service-button {
   border-radius: 50rem !important;
+  transition: all 0.25s;
 }
 
 /* Header Interactive Effects - REMOVED: Now handled by Web Components */
