@@ -7,6 +7,19 @@ if (typeof CareConnectDB === 'undefined') {
     static _usersCache = null;
     static _cacheTime = 0;
     static CACHE_TTL = 30000;
+    static LOCAL_USERS_KEY = 'careconnect_local_users';
+    static AMETH_ADMIN_ID = 'a0000000-0000-4000-8000-000000000001';
+    static SUPABASE_TIMEOUT_MS = 6000;
+    static _memoryLocalUsers = [];
+
+    static _withTimeout(promise, ms = this.SUPABASE_TIMEOUT_MS) {
+      return Promise.race([
+        promise,
+        new Promise((_, reject) => {
+          setTimeout(() => reject(new Error('Supabase request timeout')), ms);
+        })
+      ]);
+    }
 
     static getClient() {
       return window.CareConnectSupabase?.getClient() ?? null;
@@ -139,6 +152,55 @@ if (typeof CareConnectDB === 'undefined') {
       this._cacheTime = 0;
     }
 
+    static _getLocalUsers() {
+      if (this._memoryLocalUsers.length) {
+        return [...this._memoryLocalUsers];
+      }
+
+      for (const storage of [localStorage, sessionStorage]) {
+        try {
+          const raw = storage.getItem(this.LOCAL_USERS_KEY);
+          const parsed = raw ? JSON.parse(raw) : [];
+          if (Array.isArray(parsed) && parsed.length) {
+            this._memoryLocalUsers = parsed;
+            return [...parsed];
+          }
+        } catch {
+          /* try next storage */
+        }
+      }
+      return [];
+    }
+
+    static _saveLocalUsers(users) {
+      const payload = JSON.stringify(users);
+      let saved = false;
+
+      for (const storage of [localStorage, sessionStorage]) {
+        try {
+          storage.setItem(this.LOCAL_USERS_KEY, payload);
+          saved = true;
+        } catch (error) {
+          console.warn('Could not persist users to storage:', error);
+        }
+      }
+
+      this._memoryLocalUsers = [...users];
+      return saved || this._memoryLocalUsers.length > 0;
+    }
+
+    static _mergeUsersByEmail(...sources) {
+      const byEmail = new Map();
+      for (const list of sources) {
+        if (!Array.isArray(list)) continue;
+        for (const user of list) {
+          const email = user?.email?.toLowerCase?.()?.trim();
+          if (email) byEmail.set(email, user);
+        }
+      }
+      return this._ensureAmethAdmin([...byEmail.values()]);
+    }
+
     static async getUsers(forceRefresh = false) {
       const now = Date.now();
       if (
@@ -149,26 +211,50 @@ if (typeof CareConnectDB === 'undefined') {
         return this._usersCache;
       }
 
+      const localUsers = this._getLocalUsers();
       const client = this.getClient();
+
       if (!client) {
-        console.warn('Supabase no configurado, usando usuarios por defecto');
-        return this._getDefaultUsers();
+        console.warn('Supabase no configurado, usando usuarios locales y por defecto');
+        this._usersCache = this._mergeUsersByEmail(
+          this._getDefaultUsers(),
+          localUsers
+        );
+        this._cacheTime = now;
+        return this._usersCache;
       }
 
-      const { data, error } = await client
-        .from('profiles')
-        .select('*')
-        .order('created_at', { ascending: true });
+      try {
+        const { data, error } = await this._withTimeout(
+          client
+            .from('profiles')
+            .select('*')
+            .order('created_at', { ascending: true })
+        );
 
-      if (error) {
-        console.error('Error fetching users:', error);
-        return this._getDefaultUsers();
+        if (error) {
+          console.error('Error fetching users:', error);
+          this._usersCache = this._mergeUsersByEmail(
+            this._getDefaultUsers(),
+            localUsers
+          );
+          this._cacheTime = now;
+          return this._usersCache;
+        }
+
+        const remoteUsers = (data || []).map((row) => this._rowToUser(row));
+        this._usersCache = this._mergeUsersByEmail(remoteUsers, localUsers);
+        this._cacheTime = now;
+        return this._usersCache;
+      } catch (fetchError) {
+        console.error('Could not reach Supabase, using local users:', fetchError);
+        this._usersCache = this._mergeUsersByEmail(
+          this._getDefaultUsers(),
+          localUsers
+        );
+        this._cacheTime = now;
+        return this._usersCache;
       }
-
-      const users = (data || []).map((row) => this._rowToUser(row));
-      this._usersCache = this._ensureAmethAdmin(users);
-      this._cacheTime = now;
-      return this._usersCache;
     }
 
     static async getUserByUsername(username) {
@@ -210,27 +296,68 @@ if (typeof CareConnectDB === 'undefined') {
       return null;
     }
 
-    static async saveUser(user) {
-      const client = this.getClient();
-      if (!client) {
-        console.error('Supabase no configurado');
-        return null;
+    static _saveUserLocally(user) {
+      const normalized = {
+        ...user,
+        email: user.email?.toLowerCase?.()?.trim() || user.email,
+        role: this.normalizeRole(user.role)
+      };
+      const localUsers = this._getLocalUsers();
+      const email = normalized.email?.toLowerCase?.();
+      const index = localUsers.findIndex(
+        (u) => u.email?.toLowerCase?.() === email
+      );
+
+      if (index >= 0) {
+        localUsers[index] = { ...localUsers[index], ...normalized };
+      } else {
+        if (!normalized.id) {
+          normalized.id = crypto.randomUUID
+            ? crypto.randomUUID()
+            : `local-${Date.now()}`;
+        }
+        localUsers.push(normalized);
       }
 
-      const row = this._userToRow(user);
-      const { data, error } = await client
-        .from('profiles')
-        .upsert(row, { onConflict: 'email' })
-        .select()
-        .single();
-
-      if (error) {
-        console.error('Error saving user:', error);
-        return null;
-      }
-
+      if (!this._saveLocalUsers(localUsers)) return null;
       this.invalidateCache();
-      return this._rowToUser(data);
+      return normalized;
+    }
+
+    static async saveUser(user) {
+      const localSaved = this._saveUserLocally(user);
+      const client = this.getClient();
+
+      if (!client) {
+        console.warn('Supabase no configurado, usuario guardado localmente');
+        return localSaved;
+      }
+
+      try {
+        const row = this._userToRow(user);
+        if (row.id && !/^[0-9a-f-]{36}$/i.test(String(row.id))) {
+          delete row.id;
+        }
+
+        const { data, error } = await this._withTimeout(
+          client
+            .from('profiles')
+            .upsert(row, { onConflict: 'email' })
+            .select()
+            .single()
+        );
+
+        if (error) {
+          console.error('Error saving user to Supabase, kept local copy:', error);
+          return localSaved;
+        }
+
+        this.invalidateCache();
+        return this._rowToUser(data) || localSaved;
+      } catch (saveError) {
+        console.error('Supabase unreachable, kept local copy:', saveError);
+        return localSaved;
+      }
     }
 
     static async saveUsers(users) {
@@ -273,11 +400,14 @@ if (typeof CareConnectDB === 'undefined') {
 
     static async login(usernameOrEmail, password) {
       const users = await this.getUsers(true);
+      const needle = String(usernameOrEmail || '').toLowerCase().trim();
+      const pass = String(password || '').trim();
+
       return users.find(
         (u) =>
-          (u.username === usernameOrEmail ||
-            u.email === usernameOrEmail?.toLowerCase?.()) &&
-          u.password === password
+          (u.username?.toLowerCase?.().trim() === needle ||
+            u.email?.toLowerCase?.().trim() === needle) &&
+          u.password === pass
       );
     }
 
@@ -511,20 +641,12 @@ if (typeof CareConnectDB === 'undefined') {
 
     static _ensureAmethAdmin(users) {
       const amethExists = users.find(
-        (u) => u.username === 'Ameth' && u.isPermanent
+        (u) =>
+          u.username?.toLowerCase?.() === 'ameth' ||
+          u.email?.toLowerCase?.() === 'ameth@careconnect.com'
       );
       if (!amethExists) {
-        users.push({
-          username: 'Ameth',
-          password: 'Ameth2024!',
-          role: 'admin',
-          email: 'ameth@careconnect.com',
-          id: 'ameth-permanent-admin',
-          isPermanent: true,
-          permissions: ['all'],
-          canDelete: false,
-          canModify: false
-        });
+        users.push(this.createPermanentAdminAmeth());
       }
       return users;
     }
@@ -535,7 +657,7 @@ if (typeof CareConnectDB === 'undefined') {
         password: 'Ameth2024!',
         role: 'admin',
         email: 'ameth@careconnect.com',
-        id: 'ameth-permanent-admin',
+        id: this.AMETH_ADMIN_ID,
         isPermanent: true,
         createdAt: new Date().toISOString(),
         permissions: ['all'],
@@ -548,7 +670,7 @@ if (typeof CareConnectDB === 'undefined') {
       try {
         const users = await this.getUsers(true);
         const amethExists = users.find(
-          (u) => u.username === 'Ameth' && u.isPermanent
+          (u) => u.username?.toLowerCase?.() === 'ameth'
         );
         if (!amethExists) {
           await this.saveUser(this.createPermanentAdminAmeth());
@@ -561,6 +683,14 @@ if (typeof CareConnectDB === 'undefined') {
       }
     }
   }
+
+  window.getUsers = async function (forceRefresh = false) {
+    return CareConnectDB.getUsers(forceRefresh);
+  };
+
+  window.saveUsers = async function (users) {
+    return CareConnectDB.saveUsers(users);
+  };
 
   window.CareConnectDB = CareConnectDB;
 }

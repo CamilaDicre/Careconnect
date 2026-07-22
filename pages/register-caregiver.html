@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="../css/auth.css">
   <link rel="stylesheet" href="../css/responsive-transitions.css">
-    <link rel="stylesheet" href="css/universal-responsive.css">
+  <link rel="stylesheet" href="../css/universal-responsive.css">
   <link rel="stylesheet" href="../css/transitions.css">
   <style>
     .caregiver-container {
@@ -263,10 +263,8 @@
   </a>
   <div class="caregiver-container">
     <div class="caregiver-logo">
-      <div style="display:flex; align-items:center; justify-content:center; gap:2px;">
-        <img src="../assets/Frame - 1.svg" alt="Careconnect Logo" style="width: 100px; height: 100px; border-radius: 0; background: transparent;">
-        <span style="font-family: 'Poppins', sans-serif; font-size: 2.3rem; font-weight: 700; color: #4169e1; letter-spacing: 2.5px; text-shadow: 0 2px 6px rgba(65, 105, 225,0.10), 0 1px 0 #fff;">areconnect</span>
-      </div>
+      <img src="../assets/logos/Frame - 1.svg" alt="Careconnect Logo" class="auth-logo" style="width: 100px; height: 100px; border-radius: 0; background: transparent;">
+      <span>Careconnect</span>
     </div>
     <div class="caregiver-header">
       <div style="font-size:1.08rem; color:#4169e1; margin-bottom:0.5rem; font-weight:500; letter-spacing:0.5px;">Completa tu información personal y profesional</div>
@@ -393,10 +391,6 @@
     // Función para obtener usuarios
     async function getUsers() {
       try {
-        if (!CareConnectDB.isReady()) {
-          console.warn('Supabase no está configurado');
-          return [];
-        }
         return await CareConnectDB.getUsers();
       } catch (error) {
         console.error('Error obteniendo usuarios:', error);
@@ -416,7 +410,77 @@
       }
     }
 
-    // Función para validar campos básicos
+    function normalizeBirthdate(value) {
+      const normalized = ValidationUtils.normalizeDate(value);
+      return normalized || value.trim();
+    }
+
+    function findCurrentSessionUser(users) {
+      try {
+        const sessionId = CareConnectSession.getCurrentUserId();
+        if (sessionId) {
+          return users.find((u) => u.id === sessionId) || null;
+        }
+
+        const loggedIn = CareConnectSession.getLoggedInUser();
+        if (loggedIn) {
+          return (
+            users.find(
+              (u) =>
+                u.username?.toLowerCase?.().trim() === loggedIn.toLowerCase().trim() ||
+                u.email?.toLowerCase?.().trim() === loggedIn.toLowerCase().trim()
+            ) || null
+          );
+        }
+
+        return null;
+      } catch (error) {
+        console.error('Error obteniendo usuario actual desde sesión:', error);
+        return null;
+      }
+    }
+
+    function fillCaregiverForm(user) {
+      if (!user) return;
+      document.getElementById('fullName').value = user.username || user.name || '';
+      document.getElementById('email').value = user.email || '';
+      document.getElementById('password').value = user.password || '';
+      document.getElementById('phone').value = user.phone || '';
+      document.getElementById('birthdate').value = user.birthdate || '';
+      document.getElementById('gender').value = user.gender || '';
+      document.getElementById('address').value = user.address || '';
+      document.getElementById('experience').value = user.experience || '';
+      document.getElementById('education').value = user.education || '';
+      document.getElementById('certifications').value = user.certifications || '';
+      document.getElementById('skills').value = user.skills || '';
+      document.getElementById('languages').value = user.languages || '';
+      document.getElementById('bio').value = user.bio || '';
+      document.getElementById('availability').value = user.availability || '';
+    }
+
+    async function initializeCaregiverPage() {
+      const users = await getUsers();
+      const currentUser = findCurrentSessionUser(users);
+      if (!currentUser) {
+        showBanner('Debes iniciar sesión primero. Redirigiendo al registro...', 'error');
+        setTimeout(() => {
+          window.location.href = 'login.html#register';
+        }, 1400);
+        return null;
+      }
+
+      if (!CareConnectDB.isCaregiverRole(currentUser.role)) {
+        showBanner('Esta sección es solo para cuidadores. Regístrate como cuidador.', 'error');
+        setTimeout(() => {
+          window.location.href = 'login.html#register';
+        }, 1400);
+        return null;
+      }
+
+      fillCaregiverForm(currentUser);
+      return currentUser;
+    }
+
     function validateBasicFields(formData) {
       const errors = [];
       
@@ -446,57 +510,53 @@
           errors.push('La experiencia debe ser un número entre 0 y 60 años.');
         }
       }
+
+      // Validar fecha de nacimiento
+      if (formData.birthdate && !ValidationUtils.normalizeDate(formData.birthdate)) {
+        errors.push('Por favor ingresa una fecha de nacimiento válida en formato DD-MM-YYYY.');
+      }
       
       return errors;
     }
 
-    // Función para registrar cuidador
-    async function registerCaregiver(formData) {
-      console.log('Iniciando registro de cuidador...', formData);
+    async function updateCaregiverProfile(formData) {
+      console.log('Actualizando perfil de cuidador...', formData);
 
-      try {
-        if (!CareConnectDB.isReady()) {
-          throw new Error('Supabase no está configurado. Revisa js/supabase-config.js');
-        }
-
-        const users = await getUsers();
-        console.log('Usuarios existentes:', users.length);
-
-        if (users.some((u) => u.email === formData.email.toLowerCase())) {
-          throw new Error('Ya existe un usuario registrado con este correo electrónico.');
-        }
-
-        const newCaregiver = {
-          username: formData.fullName.trim(),
-          email: formData.email.toLowerCase().trim(),
-          password: formData.password,
-          phone: formData.phone.trim(),
-          birthdate: formData.birthdate.trim(),
-          gender: formData.gender,
-          address: formData.address.trim(),
-          experience: formData.experience.trim(),
-          education: formData.education.trim(),
-          certifications: formData.certifications ? formData.certifications.trim() : '',
-          skills: formData.skills.trim(),
-          languages: formData.languages.trim(),
-          bio: formData.bio.trim(),
-          availability: formData.availability,
-          role: 'cuidador',
-          registrationDate: new Date().toISOString(),
-          id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString() + Math.random().toString(36).substr(2, 9)
-        };
-
-        const saved = await CareConnectDB.saveUser(newCaregiver);
-        if (!saved) {
-          throw new Error('Error al guardar los datos en Supabase.');
-        }
-
-        CareConnectSession.setUserSession(saved);
-        return saved;
-      } catch (error) {
-        console.error('Error en registerCaregiver:', error);
-        throw error;
+      const users = await getUsers();
+      const currentUser = findCurrentSessionUser(users);
+      if (!currentUser) {
+        throw new Error('Debes iniciar sesión primero para completar tu perfil.');
       }
+
+      const updatedCaregiver = {
+        ...currentUser,
+        username: formData.fullName.trim(),
+        email: formData.email.toLowerCase().trim(),
+        password: formData.password,
+        phone: formData.phone.trim(),
+        birthdate: normalizeBirthdate(formData.birthdate),
+        gender: formData.gender,
+        address: formData.address.trim(),
+        experience: formData.experience.trim(),
+        education: formData.education.trim(),
+        certifications: formData.certifications ? formData.certifications.trim() : '',
+        skills: formData.skills.trim(),
+        languages: formData.languages.trim(),
+        bio: formData.bio.trim(),
+        availability: formData.availability,
+        role: 'cuidador'
+      };
+
+      const localSaved = CareConnectDB._saveUserLocally(updatedCaregiver);
+      if (!localSaved) {
+        throw new Error('Error al guardar los datos localmente. Intenta de nuevo.');
+      }
+
+      CareConnectSession.setUserSession(localSaved);
+      CareConnectDB.saveUser(updatedCaregiver).catch((err) => {
+        console.warn('Sincronización remota del cuidador falló:', err);
+      });
+      return localSaved;
     }
 
     document.getElementById('caregiverForm').addEventListener('submit', async function(e) {
@@ -508,7 +568,7 @@
       
       // Deshabilitar botón y mostrar estado de carga
       submitBtn.disabled = true;
-      submitBtn.textContent = 'Creando perfil...';
+      submitBtn.textContent = 'Guardando perfil...';
       
       try {
         // Recopilar datos del formulario
@@ -541,11 +601,11 @@
           return;
         }
         
-        // Registrar cuidador
-        const newCaregiver = await registerCaregiver(formData);
+        // Actualizar perfil de cuidador existente
+        const updatedCaregiver = await updateCaregiverProfile(formData);
         
         // Mostrar mensaje de éxito
-        showBanner('¡Registro exitoso! Redirigiendo al dashboard...', 'success');
+        showBanner('Perfil actualizado con éxito. Redirigiendo al dashboard...', 'success');
         
         // Redirigir al dashboard de cuidadores después de 1.5 segundos
         setTimeout(() => {
@@ -554,28 +614,31 @@
         }, 1500);
         
       } catch (error) {
-        console.error('Error durante el registro:', error);
-        showBanner(error.message, 'error');
+        console.error('Error durante la actualización del perfil:', error);
+        showBanner(error.message || 'Error al guardar el perfil. Intenta de nuevo.', 'error');
         submitBtn.disabled = false;
         submitBtn.textContent = originalText;
       }
     });
 
-    // Validación en tiempo real para campos básicos
-    const fields = document.querySelectorAll('.caregiver-form input, .caregiver-form select, .caregiver-form textarea');
-    fields.forEach(field => {
-      field.addEventListener('blur', function() {
-        const value = this.value.trim();
-        
-        // Limpiar clases de error/éxito
-        this.classList.remove('error-field', 'success-field');
-        
-        // Validar campo requerido
-        if (this.hasAttribute('required') && !value) {
-          this.classList.add('error-field');
-        } else if (value) {
-          this.classList.add('success-field');
-        }
+    // Inicializar la página y cargar datos del usuario en sesión
+    initializeCaregiverPage().then((currentUser) => {
+      if (!currentUser) return;
+      const fields = document.querySelectorAll('.caregiver-form input, .caregiver-form select, .caregiver-form textarea');
+      fields.forEach(field => {
+        field.addEventListener('blur', function() {
+          const value = this.value.trim();
+          
+          // Limpiar clases de error/éxito
+          this.classList.remove('error-field', 'success-field');
+          
+          // Validar campo requerido
+          if (this.hasAttribute('required') && !value) {
+            this.classList.add('error-field');
+          } else if (value) {
+            this.classList.add('success-field');
+          }
+        });
       });
     });
   </script>
