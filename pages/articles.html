@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore health, caregiving, and wellness articles for seniors on Careconnect.">
     <title>Health Articles - Careconnect</title>
     <link rel="icon" type="image/png" href="../assets/carefavicon.png">
     <!--CSS Links-->
@@ -82,7 +83,7 @@
 
         /* Search Section - Modern Interface */
         .search-section {
-            background-color: #f8f9fa;
+            background: linear-gradient(180deg, #f8fbff 0%, #f4f8ff 100%);
             padding: 60px 0;
             border-bottom: 1px solid var(--gray-200);
         }
@@ -91,6 +92,7 @@
             max-width: 900px;
             margin: 0 auto;
         }
+
 
         .search-input-group {
             position: relative;
@@ -104,9 +106,10 @@
             border-radius: 60px;
             font-size: 1.2rem;
             transition: all 0.3s ease;
-            background: var(--gray-50);
+            background: var(--white);
             font-weight: 500;
             color: var(--gray-800);
+            box-shadow: 0 6px 18px rgba(65, 105, 225, 0.06);
         }
 
         .search-clear-btn {
@@ -184,17 +187,18 @@
         }
 
         .category-btn {
-            padding: 15px 30px;
+            padding: 14px 24px;
             border: 2px solid var(--gray-200);
             background: var(--white);
             color: var(--gray-700);
-            border-radius: 30px;
-            font-size: 1.1rem;
-            font-weight: 600;
+            border-radius: 999px;
+            font-size: 1rem;
+            font-weight: 700;
             transition: all 0.3s ease;
             cursor: pointer;
             box-shadow: var(--shadow-sm);
             user-select: none;
+            min-height: 48px;
         }
 
         .category-btn:hover,
@@ -212,6 +216,10 @@
             padding: 8rem 0 6rem;
         }
 
+        .articles-section .container {
+            max-width: 1280px;
+        }
+
         .articles-container {
             max-width: 1400px;
             margin: 0 auto;
@@ -226,7 +234,7 @@
         }
 
         .row {
-            margin-bottom: 60px;
+            margin-bottom: 48px;
         }
 
         .article-card {
@@ -240,6 +248,7 @@
             display: flex;
             flex-direction: column;
             min-height: 100%;
+            height: 100%;
             --topic-color: var(--primary-color);
             --topic-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
             --topic-soft: #f8fafc;
@@ -257,7 +266,7 @@
         }
 
         .article-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             box-shadow: var(--shadow-xl);
             border-color: rgba(148, 163, 184, 0.35);
             background: linear-gradient(180deg, var(--topic-soft) 0%, var(--white) 30%);
@@ -286,6 +295,7 @@
             display: flex;
             flex-direction: column;
             flex: 1;
+            gap: 14px;
         }
 
         .article-category {
@@ -324,9 +334,11 @@
             font-size: 1.45rem;
             font-weight: 700;
             color: var(--gray-900);
-            margin-bottom: 14px;
+            margin: 0;
             line-height: 1.35;
+            min-height: 3.8rem;
             display: -webkit-box;
+            line-clamp: 2;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
@@ -336,8 +348,9 @@
             color: var(--gray-600);
             font-size: 1rem;
             line-height: 1.8;
-            margin-bottom: 24px;
+            margin: 0;
             display: -webkit-box;
+            line-clamp: 3;
             -webkit-line-clamp: 3;
             -webkit-box-orient: vertical;
             overflow: hidden;
@@ -348,12 +361,14 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            gap: 12px;
+            margin-bottom: 0;
             font-size: 0.92rem;
             color: var(--gray-500);
             padding-top: 18px;
             border-top: 1px solid rgba(148, 163, 184, 0.18);
             margin-top: auto;
+            flex-wrap: wrap;
         }
 
         .article-meta span {
@@ -379,9 +394,11 @@
             cursor: pointer;
             width: fit-content;
             min-width: 180px;
+            min-height: 48px;
             text-align: center;
             box-shadow: var(--shadow-sm);
             letter-spacing: 0.4px;
+            align-self: flex-start;
         }
 
         .read-more-btn i {
@@ -492,9 +509,13 @@
         /* No Results Message */
         .no-results {
             text-align: center;
-            padding: 80px 0;
+            padding: 80px 24px;
             color: var(--gray-600);
             display: none;
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--gray-200);
         }
 
         .no-results i {
@@ -565,6 +586,7 @@
 
             .article-title {
                 font-size: 1.3rem;
+                line-clamp: unset;
                 -webkit-line-clamp: unset;
                 overflow: visible;
                 display: block;
@@ -572,6 +594,7 @@
 
             .article-excerpt {
                 font-size: 1rem;
+                line-clamp: unset;
                 -webkit-line-clamp: unset;
                 overflow: visible;
                 display: block;
@@ -609,7 +632,7 @@
             }
 
             .articles-row {
-                margin-bottom: 40px;
+                margin-bottom: 28px;
             }
         }
 
@@ -663,9 +686,8 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
-                        <h1 class="fw-bold mb-3">Articles</h1>
-                        <nav aria-label="breadcrumb">
-                        </nav>
+                        <h1 class="fw-bold mb-3">Health Articles</h1>
+                        <p class="hero-subtitle mb-0">Clear, practical resources to support your well-being, prevent risks, and help you make confident decisions.</p>
                     </div>
                 </div>
             </div>
@@ -678,6 +700,7 @@
             <div class="container">
                 <div class="search-container">
                     <div class="search-input-group">
+                        <label class="visually-hidden" for="searchInput">Search health articles</label>
                         <input type="text" class="search-input" id="searchInput" placeholder="Search for health topics, conditions, or wellness tips...">
                         <button class="search-clear-btn" id="clearSearchBtn" type="button" aria-label="Clear search">
                             <i class="bi bi-x-lg"></i>
@@ -687,7 +710,7 @@
                         </button>
                     </div>
                     <div class="search-summary" id="resultsSummary" aria-live="polite" aria-atomic="true">Showing 9 articles</div>
-                    <div class="category-buttons">
+                    <div class="category-buttons" aria-label="Category filters">
                         <button class="category-btn active" data-category="all" type="button">All Topics</button>
                         <button class="category-btn" data-category="diabetes" type="button">Diabetes</button>
                         <button class="category-btn" data-category="hypertension" type="button">Blood Pressure</button>
@@ -727,7 +750,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 15, 2024</span>
                                         <span><i class="bi bi-clock"></i> 8 min read</span>
                                     </div>
-                                    <a href="../articles/diabetes-management.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/diabetes-management.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -745,7 +768,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 12, 2024</span>
                                         <span><i class="bi bi-clock"></i> 6 min read</span>
                                     </div>
-                                    <a href="../articles/blood-pressure-control.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/blood-pressure-control.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -763,7 +786,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 10, 2024</span>
                                         <span><i class="bi bi-clock"></i> 7 min read</span>
                                     </div>
-                                    <a href="../articles/medication-safety.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/medication-safety.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -784,7 +807,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 8, 2024</span>
                                         <span><i class="bi bi-clock"></i> 9 min read</span>
                                     </div>
-                                    <a href="../articles/senior-exercise-guide.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/senior-exercise-guide.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -802,7 +825,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 5, 2024</span>
                                         <span><i class="bi bi-clock"></i> 8 min read</span>
                                     </div>
-                                    <a href="../articles/senior-nutrition-guide.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/senior-nutrition-guide.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -820,7 +843,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 3, 2024</span>
                                         <span><i class="bi bi-clock"></i> 6 min read</span>
                                     </div>
-                                    <a href="../articles/caregiver-selection.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/caregiver-selection.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -841,7 +864,7 @@
                                         <span><i class="bi bi-calendar3"></i> March 1, 2024</span>
                                         <span><i class="bi bi-clock"></i> 10 min read</span>
                                     </div>
-                                    <a href="../articles/heart-health-seniors.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/heart-health-seniors.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -859,7 +882,7 @@
                                         <span><i class="bi bi-calendar3"></i> February 28, 2024</span>
                                         <span><i class="bi bi-clock"></i> 11 min read</span>
                                     </div>
-                                    <a href="../articles/arthritis-management.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/arthritis-management.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -877,7 +900,7 @@
                                         <span><i class="bi bi-calendar3"></i> February 25, 2024</span>
                                         <span><i class="bi bi-clock"></i> 8 min read</span>
                                     </div>
-                                    <a href="../articles/memory-care.html" class="read-more-btn">Read Article</a>
+                                    <a href="../articles/memory-care.html" class="read-more-btn" data-no-transition>Read Article</a>
                                 </div>
                             </article>
                         </div>
@@ -888,7 +911,7 @@
                 <div class="no-results" id="noResults">
                     <i class="bi bi-search"></i>
                     <h3>No articles found</h3>
-                    <p>Try searching with different keywords or browse our categories</p>
+                    <p>Try searching with different keywords or browse our categories.</p>
                 </div>
 
                 <!-- Navigation Buttons -->
@@ -919,15 +942,11 @@
         </cta-component>
     </main>
 
-    <!-- Footer Component -->
-    <footer-component></footer-component>
-
     <!--Script code-->
+    <script src="../components/cta-component.js"></script>
     <script src="../components/header-component.js"></script>
     <script src="../components/footer-component.js"></script>
-    <script src="../components/cta-component.js"></script>
     <script src="../js/main.js"></script>
-    <script src="../js/page-transitions.js"></script>
     <script src="../js/articles-page.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
