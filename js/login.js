@@ -2,10 +2,10 @@
 
 if (typeof window.careconnectUsers === 'undefined') {
   window.careconnectUsers = [
-    { username: 'admin', password: 'admin123', role: 'admin' },
-    { username: 'user', password: 'pass123', role: 'patient' },
-    { username: 'Ameth', password: 'password123', role: 'admin' },
-    { username: 'Josue', password: 'testpass456', role: 'caregiver' }
+    { username: 'admin', password: 'admin123', role: 'admin', email: 'admin@careconnect.com' },
+    { username: 'usuario', password: 'pass123', role: 'paciente', email: 'usuario@careconnect.com' },
+    { username: 'Ameth', password: 'Ameth2024!', role: 'admin', email: 'ameth@careconnect.com' },
+    { username: 'Josue', password: 'testpass456', role: 'cuidador', email: 'josue@careconnect.com' }
   ];
 }
 
@@ -131,14 +131,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         return;
       }
 
-      if (!CareConnectDB.isReady()) {
-        alert('La base de datos no está configurada. Revisa js/supabase-config.js');
-        return;
-      }
-
       try {
         const users = await getUsers();
-        if (users.find((u) => u.email === email.toLowerCase())) {
+        if (users.find((u) => u.email?.toLowerCase?.() === email.toLowerCase())) {
           alert('A user with this email is already registered.');
           return;
         }
@@ -165,6 +160,12 @@ document.addEventListener('DOMContentLoaded', async () => {
           setTimeout(() => {
             window.location.href = '../dashboard/dashboard.html';
           }, 1200);
+        } else if (role === 'cuidador' || role === 'caregiver') {
+          CareConnectSession.setUserSession(saved);
+          showBanner('Caregiver account created! Complete your profile next.', 'success');
+          setTimeout(() => {
+            window.location.href = 'register-caregiver.html';
+          }, 1200);
         } else {
           showBanner('Your account has been created!', 'success');
           document.getElementById('show-login').click();
@@ -184,21 +185,36 @@ document.addEventListener('DOMContentLoaded', async () => {
   const registerCard = document.getElementById('register-card');
 
   function showLogin() {
+    if (!loginCard || !registerCard || !showLoginBtn || !showRegisterBtn) return;
     loginCard.style.display = '';
     registerCard.style.display = 'none';
     showLoginBtn.classList.add('active');
     showRegisterBtn.classList.remove('active');
   }
+
   function showRegister() {
+    if (!loginCard || !registerCard || !showLoginBtn || !showRegisterBtn) return;
     loginCard.style.display = 'none';
     registerCard.style.display = '';
     showLoginBtn.classList.remove('active');
     showRegisterBtn.classList.add('active');
   }
+
   if (showLoginBtn) showLoginBtn.addEventListener('click', showLogin);
   if (showRegisterBtn) showRegisterBtn.addEventListener('click', showRegister);
   if (toRegisterLink) toRegisterLink.addEventListener('click', (e) => { e.preventDefault(); showRegister(); });
   if (toLoginLink) toLoginLink.addEventListener('click', (e) => { e.preventDefault(); showLogin(); });
+
+  function syncAuthStateWithHash() {
+    if (/#register$/i.test(window.location.hash)) {
+      showRegister();
+    } else {
+      showLogin();
+    }
+  }
+
+  window.addEventListener('hashchange', syncAuthStateWithHash);
+  syncAuthStateWithHash();
 });
 
 let _usersCacheSync = null;
@@ -281,7 +297,7 @@ async function saveUsers(users) {
 async function login() {
   try {
     const usernameOrEmail = document.getElementById('login-user').value.trim();
-    const password = document.getElementById('login-pass').value;
+    const password = document.getElementById('login-pass').value.trim();
 
     if (!usernameOrEmail || !password) {
       showAlert('Please enter both username/email and password', 'danger', 'loginError');
@@ -357,7 +373,12 @@ function updateLoginUI() {
 }
 
 function redirectToSignup() {
-  window.location.href = '/signup.html';
+  const showRegisterBtn = document.getElementById('show-register');
+  if (showRegisterBtn) {
+    showRegisterBtn.click();
+    return;
+  }
+  window.location.href = 'login.html#register';
 }
 
 function showAlert(message, type = 'danger', target = 'loginError') {

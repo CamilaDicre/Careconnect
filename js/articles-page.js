@@ -90,17 +90,21 @@
 
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
+    const clearSearchBtn = document.getElementById('clearSearchBtn');
+    const resultsSummary = document.getElementById('resultsSummary');
     const categoryButtons = document.querySelectorAll('.category-btn');
     const articleItems = document.querySelectorAll('.article-item');
     const noResults = document.getElementById('noResults');
     const articlesContainer = document.getElementById('articlesContainer');
-    const articleRows = document.querySelectorAll('#articlesContainer > .articles-row');
+    const articlesGrid = document.getElementById('articlesGrid');
+    const articleRows = document.querySelectorAll('#articlesGrid > .articles-row');
+    const navigationSection = document.getElementById('navigationSection');
     const pageButtons = document.querySelectorAll('.page-number');
     const viewMoreBtn = document.getElementById('viewMoreBtn');
     const nextPageBtn = document.getElementById('nextPageBtn');
     const prevPageBtn = document.getElementById('prevPageBtn');
 
-    if (!articlesContainer || !articleItems.length) return;
+    if (!articlesContainer || !articleItems.length || !articlesGrid) return;
 
     let currentCategory = 'all';
     let currentSearch = '';
@@ -173,6 +177,18 @@
         }
     }
 
+    function updateResultsSummary(visibleCount) {
+        if (!resultsSummary) return;
+        const total = articleItems.length;
+        if (visibleCount === 0) {
+            resultsSummary.textContent = `No articles found.`;
+        } else if (isFiltered()) {
+            resultsSummary.textContent = `Showing ${visibleCount} of ${total} articles`;
+        } else {
+            resultsSummary.textContent = `Showing ${total} articles`;
+        }
+    }
+
     function showPage(pageNum) {
         currentPage = Math.max(1, Math.min(pageNum, totalPages));
 
@@ -192,12 +208,16 @@
             if (visible) visibleCount += 1;
         });
 
+        updateResultsSummary(visibleCount);
+
         if (visibleCount === 0) {
             noResults.style.display = 'block';
-            articlesContainer.style.display = 'none';
+            if (articlesGrid) articlesGrid.style.display = 'none';
+            if (navigationSection) navigationSection.style.display = 'none';
         } else {
             noResults.style.display = 'none';
-            articlesContainer.style.display = 'block';
+            if (articlesGrid) articlesGrid.style.display = '';
+            if (navigationSection) navigationSection.style.display = '';
         }
 
         if (isFiltered()) {
@@ -207,6 +227,7 @@
                 row.style.display = hasVisible ? 'flex' : 'none';
             });
         } else {
+            currentPage = 1;
             showPage(currentPage);
         }
 
@@ -215,6 +236,7 @@
 
     function performSearch() {
         currentSearch = searchInput.value.toLowerCase().trim();
+        currentPage = 1;
         filterArticles();
     }
 
@@ -234,6 +256,13 @@
         });
     }
     searchBtn?.addEventListener('click', performSearch);
+    clearSearchBtn?.addEventListener('click', () => {
+        if (!searchInput) return;
+        searchInput.value = '';
+        currentSearch = '';
+        filterArticles();
+        searchInput.focus();
+    });
 
     pageButtons.forEach((button) => {
         button.addEventListener('click', () => {
