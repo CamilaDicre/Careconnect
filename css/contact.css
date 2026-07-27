@@ -43,6 +43,10 @@
 }
 
 /* Contact Information Section */
+h3, h2 {
+    color: #4169e1;
+}
+
 .contact-info-section {
     position: relative;
     padding-top: 3rem;
