@@ -7,12 +7,36 @@
 </head>
 <body>
   <h1>Probando insert a Supabase</h1>
-  <button id="btn">Probar</button>
+  <p>Origen actual: <strong id="origin">Cargando...</strong></p>
+  <p>Supabase URL: <strong id="supabaseUrl">Cargando...</strong></p>
+  <p>En Supabase Settings → API debes autorizar exactamente el origen mostrado arriba.</p>
+  <button id="btn">Probar registro</button>
+  <button id="verifyButton">Verificar conexión Supabase</button>
   <pre id="out"></pre>
   <script src="js/supabase-config.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="js/supabase-client.js"></script>
   <script>
+    const originNode = document.getElementById('origin');
+    const supabaseUrlNode = document.getElementById('supabaseUrl');
+    if (originNode) {
+      originNode.textContent = window.location.origin;
+    }
+    if (supabaseUrlNode && window.CARECONNECT_SUPABASE) {
+      supabaseUrlNode.textContent = window.CARECONNECT_SUPABASE.url || 'No configurado';
+    }
+
+    document.getElementById('verifyButton').addEventListener('click', async () => {
+      const out = document.getElementById('out');
+      out.textContent = 'Verificando conexión...';
+      try {
+        const result = await window.CareConnectSupabase.verifyConnection();
+        out.textContent = JSON.stringify(result, null, 2);
+      } catch (error) {
+        out.textContent = String(error);
+      }
+    });
+
     document.getElementById('btn').addEventListener('click', async () => {
       const cfg = window.CARECONNECT_SUPABASE;
       const url = `${cfg.url.replace(/\/$/, '')}/rest/v1/profiles`;
@@ -55,7 +79,8 @@
           headers: {
             apikey: key,
             Authorization: `Bearer ${key}`,
-            Accept: 'application/json'
+            Accept: 'application/json',
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(payload)
         });

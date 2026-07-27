@@ -15,6 +15,17 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const loggedInUser = CareConnectSession.getLoggedInUser();
   const sessionRole = CareConnectSession.getUserRole();
+
+  if (window.location.protocol === 'file:') {
+    showAlert(
+      'No se puede usar Supabase desde file://. Inicia un servidor local (por ejemplo http://localhost) y autoriza ese origen en Supabase.',
+      'danger',
+      'loginError'
+    );
+  } else if (!window.CareConnectSupabase?.isConfigured?.()) {
+    showAlert('Supabase no está configurado correctamente. Revisa js/supabase-config.js y tu clave anon.', 'danger', 'loginError');
+  }
+
   if (loggedInUser && sessionRole) {
     if (CareConnectDB.isAdminRole(sessionRole)) {
       window.location.href = '../dashboard/admin-dashboard.html';
@@ -150,8 +161,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const saved = await CareConnectDB.saveUser(newUser);
         if (!saved) {
-          console.error('Registro fallido en Supabase para:', email);
-          alert('No se pudo conectar el registro con Supabase. Revisa la configuración o la tabla profiles.');
+          const errorReason = CareConnectDB.getLastError ? CareConnectDB.getLastError() : null;
+          const origin = window.location.origin || 'origen desconocido';
+          console.error('Registro fallido en Supabase para:', email, errorReason);
+          alert(
+            `No se pudo conectar el registro con Supabase. Motivo: ${
+              errorReason || 'Revisa la configuración o la tabla profiles.'
+            }\nOrigen actual: ${origin}`
+          );
           return;
         }
 

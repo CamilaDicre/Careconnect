@@ -8,10 +8,11 @@ if (typeof CareConnectDB === 'undefined') {
     static _cacheTime = 0;
     static CACHE_TTL = 30000;
     static LOCAL_USERS_KEY = 'careconnect_local_users';
-    static AMETH_ADMIN_ID = 'a0000000-0000-4000-8000-000000000001';
-    static SUPABASE_TIMEOUT_MS = 1200;
+    static AMETH_ADMIN_ID = 'a0000000-0000-4000-000000000001';
+    static SUPABASE_TIMEOUT_MS = 8000;
     static _memoryLocalUsers = [];
     static _usersFetchPromise = null;
+    static lastError = null;
 
     static _withTimeout(promise, ms = this.SUPABASE_TIMEOUT_MS) {
       return Promise.race([
@@ -22,7 +23,23 @@ if (typeof CareConnectDB === 'undefined') {
       ]);
     }
 
+    static _setError(error) {
+      this.lastError = error && error.message ? error.message : String(error);
+    }
+
+    static _clearError() {
+      this.lastError = null;
+    }
+
+    static getLastError() {
+      return this.lastError;
+    }
+
     static async _requestSupabase(path, options = {}) {
+      if (typeof window !== 'undefined' && window.location?.protocol === 'file:') {
+        throw new Error('No se puede conectar a Supabase desde file://. Usa un servidor local como http://localhost y añade ese origen en Allowed origins de Supabase.');
+      }
+
       const cfg = window.CARECONNECT_SUPABASE;
       if (!cfg?.url || !cfg?.anonKey) {
         throw new Error('Supabase no configurado');
@@ -33,6 +50,7 @@ if (typeof CareConnectDB === 'undefined') {
         apikey: cfg.anonKey,
         Authorization: `Bearer ${cfg.anonKey}`,
         Accept: 'application/json',
+        'Content-Type': options.body !== undefined ? 'application/json' : 'application/json',
         ...(options.headers || {})
       };
 
@@ -47,22 +65,32 @@ if (typeof CareConnectDB === 'undefined') {
         init.body = JSON.stringify(options.body);
       }
 
-      const response = await this._withTimeout(fetch(url, init), this.SUPABASE_TIMEOUT_MS);
-      const text = await response.text();
-      let data = null;
-
       try {
-        data = text ? JSON.parse(text) : null;
-      } catch {
-        data = text;
-      }
+        const response = await this._withTimeout(fetch(url, init), this.SUPABASE_TIMEOUT_MS);
+        const text = await response.text();
+        let data = null;
 
-      if (!response.ok) {
-        const message = data && typeof data === 'object' && data.message ? data.message : text;
-        throw new Error(`Supabase ${response.status}: ${message}`);
-      }
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = text;
+        }
 
-      return data;
+        if (!response.ok) {
+          const message = data && typeof data === 'object' && data.message ? data.message : text;
+          throw new Error(`Supabase ${response.status}: ${message}`);
+        }
+
+        return data;
+      } catch (error) {
+        if (typeof error?.message === 'string' && error.message.includes('Failed to fetch')) {
+          const origin = typeof window !== 'undefined' ? window.location.origin : 'origen desconocido';
+          throw new Error(
+            `Failed to fetch. Verifica que el origen ${origin} esté autorizado en Supabase Allowed origins y que tu app se sirva desde HTTP(S).`
+          );
+        }
+        throw error;
+      }
     }
 
     static getClient() {
@@ -137,6 +165,26 @@ if (typeof CareConnectDB === 'undefined') {
         hourlyRate: row.hourly_rate,
         workPreferences: row.work_preferences
       };
+    }
+
+    static _userInsertRow(user) {
+      const row = {
+        id: user.id,
+        username: user.username,
+        email: user.email?.toLowerCase?.() || user.email,
+        password: user.password,
+        role: this.normalizeRole(user.role),
+        gender: user.gender,
+        registration_date: user.registrationDate || new Date().toISOString(),
+        name: user.name || user.username,
+        is_permanent: user.isPermanent || false,
+        profile_data: {}
+      };
+
+      Object.keys(row).forEach((key) => {
+        if (row[key] === undefined) delete row[key];
+      });
+      return row;
     }
 
     static _userToRow(user) {
@@ -250,8 +298,8 @@ if (typeof CareConnectDB === 'undefined') {
 
       const client = this.getClient();
       if (!client) {
-        console.warn('Supabase no configurado');
-        this._usersCache = [];
+        console.warn('Supabase no configurado; usando usuarios por defecto en modo local.');
+        this._usersCache = this._getDefaultUsers();
         this._cacheTime = now;
         return this._usersCache;
       }
@@ -354,35 +402,40 @@ if (typeof CareConnectDB === 'undefined') {
 
       if (!client) {
         console.warn('Supabase no configurado');
+        this._setError('Supabase no configurado');
         return false;
       }
 
       try {
-        const row = this._userToRow(user);
+        const row = this._userInsertRow(user);
         if (row.id && !/^[0-9a-f-]{36}$/i.test(String(row.id))) {
           delete row.id;
         }
 
-        const payload = {
-          ...row,
-          profile_data: row.profile_data && Object.keys(row.profile_data).length ? row.profile_data : {}
-        };
+        const { data, error } = await client
+          .from('profiles')
+          .upsert(row, { onConflict: 'email', returning: 'representation' });
 
-        const insertedRows = await this._requestSupabase('profiles?on_conflict=email', {
-          method: 'POST',
-          body: payload
-        });
+        if (error) {
+          console.error('Error saving user:', error);
+          this._setError(error);
+          return false;
+        }
 
-        const savedRow = Array.isArray(insertedRows) ? insertedRows[0] : insertedRows;
+        const savedRow = Array.isArray(data) ? data[0] : data;
         if (!savedRow) {
-          console.error('Supabase no devolvió la fila insertada');
+          const errorMessage = 'Supabase no devolvió la fila insertada';
+          console.error(errorMessage);
+          this._setError(errorMessage);
           return false;
         }
 
         this.invalidateCache();
+        this._clearError();
         return this._rowToUser(savedRow) || false;
       } catch (saveError) {
         console.error('Supabase unreachable:', saveError);
+        this._setError(saveError);
         return false;
       }
     }

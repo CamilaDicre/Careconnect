@@ -27,6 +27,28 @@
     isConfigured() {
       const cfg = window.CARECONNECT_SUPABASE;
       return cfg && cfg.url && cfg.anonKey && cfg.anonKey !== 'YOUR_SUPABASE_ANON_KEY';
+    },
+    async verifyConnection() {
+      const client = getClient();
+      if (!client) {
+        return {
+          success: false,
+          error: 'Supabase no está configurado o no se pudo inicializar el cliente.'
+        };
+      }
+
+      const { data, error } = await client.from('profiles').select('id').limit(1);
+      if (error) {
+        return {
+          success: false,
+          error: error.message || JSON.stringify(error)
+        };
+      }
+
+      return {
+        success: true,
+        data: data || []
+      };
     }
   };
 })();
