@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Supabase test</title>
+</head>
+<body>
+  <h1>Probando insert a Supabase</h1>
+  <button id="btn">Probar</button>
+  <pre id="out"></pre>
+  <script src="js/supabase-config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="js/supabase-client.js"></script>
+  <script>
+    document.getElementById('btn').addEventListener('click', async () => {
+      const cfg = window.CARECONNECT_SUPABASE;
+      const url = `${cfg.url.replace(/\/$/, '')}/rest/v1/profiles`;
+      const key = cfg.anonKey;
+
+      const payload = {
+        username: 'test-user',
+        email: 'test-user@example.com',
+        password: '123456',
+        role: 'paciente',
+        gender: 'other',
+        registration_date: new Date().toISOString(),
+        name: 'Test User',
+        phone: null,
+        address: null,
+        birthdate: null,
+        age: null,
+        photo: null,
+        avatar_color: null,
+        is_permanent: false,
+        permissions: [],
+        profile_data: {},
+        experience: null,
+        education: null,
+        certifications: null,
+        skills: null,
+        languages: null,
+        bio: null,
+        availability: null,
+        specialties: [],
+        rating: 0,
+        reviews: 0,
+        hourly_rate: null,
+        work_preferences: {}
+      };
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            apikey: key,
+            Authorization: `Bearer ${key}`,
+            Accept: 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+        let parsed = null;
+        try { parsed = JSON.parse(text); } catch { parsed = text; }
+
+        document.getElementById('out').textContent = JSON.stringify({
+          status: response.status,
+          statusText: response.statusText,
+          body: parsed
+        }, null, 2);
+      } catch (error) {
+        document.getElementById('out').textContent = JSON.stringify({ error: String(error) }, null, 2);
+      }
+    });
+  </script>
+</body>
+</html>

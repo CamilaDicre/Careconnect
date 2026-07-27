@@ -10,8 +10,8 @@ if (typeof window.careconnectUsers === 'undefined') {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await CareConnectDB.verifyAndRestoreAmethAdmin();
-  await preloadUsersCache();
+  void CareConnectDB.verifyAndRestoreAmethAdmin();
+  void preloadUsersCache();
 
   const loggedInUser = CareConnectSession.getLoggedInUser();
   const sessionRole = CareConnectSession.getUserRole();
@@ -150,7 +150,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const saved = await CareConnectDB.saveUser(newUser);
         if (!saved) {
-          alert('Error al guardar los datos. Verifica la conexión con Supabase.');
+          console.error('Registro fallido en Supabase para:', email);
+          alert('No se pudo conectar el registro con Supabase. Revisa la configuración o la tabla profiles.');
           return;
         }
 
@@ -159,13 +160,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           showBanner('Patient account created and logged in!', 'success');
           setTimeout(() => {
             window.location.href = '../dashboard/dashboard.html';
-          }, 1200);
+          }, 600);
         } else if (role === 'cuidador' || role === 'caregiver') {
           CareConnectSession.setUserSession(saved);
           showBanner('Caregiver account created! Complete your profile next.', 'success');
           setTimeout(() => {
             window.location.href = 'register-caregiver.html';
-          }, 1200);
+          }, 600);
         } else {
           showBanner('Your account has been created!', 'success');
           document.getElementById('show-login').click();
@@ -326,7 +327,7 @@ async function login() {
           } else {
             showAlert('Unknown account role. Please contact support.', 'danger', 'loginError');
           }
-        }, 1200);
+        }, 600);
       } catch (storageError) {
         console.error('Error saving login data:', storageError);
         showAlert('Error saving login data', 'danger', 'loginError');
