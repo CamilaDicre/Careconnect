@@ -8,9 +8,11 @@ if (typeof CareConnectDB === 'undefined') {
     static _cacheTime = 0;
     static CACHE_TTL = 30000;
     static LOCAL_USERS_KEY = 'careconnect_local_users';
-    static AMETH_ADMIN_ID = 'a0000000-0000-4000-8000-000000000001';
-    static SUPABASE_TIMEOUT_MS = 6000;
+    static AMETH_ADMIN_ID = 'a0000000-0000-4000-000000000001';
+    static SUPABASE_TIMEOUT_MS = 8000;
     static _memoryLocalUsers = [];
+    static _usersFetchPromise = null;
+    static lastError = null;
 
     static _withTimeout(promise, ms = this.SUPABASE_TIMEOUT_MS) {
       return Promise.race([
@@ -19,6 +21,76 @@ if (typeof CareConnectDB === 'undefined') {
           setTimeout(() => reject(new Error('Supabase request timeout')), ms);
         })
       ]);
+    }
+
+    static _setError(error) {
+      this.lastError = error && error.message ? error.message : String(error);
+    }
+
+    static _clearError() {
+      this.lastError = null;
+    }
+
+    static getLastError() {
+      return this.lastError;
+    }
+
+    static async _requestSupabase(path, options = {}) {
+      if (typeof window !== 'undefined' && window.location?.protocol === 'file:') {
+        throw new Error('No se puede conectar a Supabase desde file://. Usa un servidor local como http://localhost y añade ese origen en Allowed origins de Supabase.');
+      }
+
+      const cfg = window.CARECONNECT_SUPABASE;
+      if (!cfg?.url || !cfg?.anonKey) {
+        throw new Error('Supabase no configurado');
+      }
+
+      const url = `${cfg.url.replace(/\/$/, '')}/rest/v1/${String(path).replace(/^\/+/, '')}`;
+      const headers = {
+        apikey: cfg.anonKey,
+        Authorization: `Bearer ${cfg.anonKey}`,
+        Accept: 'application/json',
+        'Content-Type': options.body !== undefined ? 'application/json' : 'application/json',
+        ...(options.headers || {})
+      };
+
+      const init = {
+        method: options.method || 'GET',
+        headers,
+        mode: 'cors',
+        credentials: 'omit'
+      };
+
+      if (options.body !== undefined) {
+        init.body = JSON.stringify(options.body);
+      }
+
+      try {
+        const response = await this._withTimeout(fetch(url, init), this.SUPABASE_TIMEOUT_MS);
+        const text = await response.text();
+        let data = null;
+
+        try {
+          data = text ? JSON.parse(text) : null;
+        } catch {
+          data = text;
+        }
+
+        if (!response.ok) {
+          const message = data && typeof data === 'object' && data.message ? data.message : text;
+          throw new Error(`Supabase ${response.status}: ${message}`);
+        }
+
+        return data;
+      } catch (error) {
+        if (typeof error?.message === 'string' && error.message.includes('Failed to fetch')) {
+          const origin = typeof window !== 'undefined' ? window.location.origin : 'origen desconocido';
+          throw new Error(
+            `Failed to fetch. Verifica que el origen ${origin} esté autorizado en Supabase Allowed origins y que tu app se sirva desde HTTP(S).`
+          );
+        }
+        throw error;
+      }
     }
 
     static getClient() {
@@ -95,6 +167,26 @@ if (typeof CareConnectDB === 'undefined') {
       };
     }
 
+    static _userInsertRow(user) {
+      const row = {
+        id: user.id,
+        username: user.username,
+        email: user.email?.toLowerCase?.() || user.email,
+        password: user.password,
+        role: this.normalizeRole(user.role),
+        gender: user.gender,
+        registration_date: user.registrationDate || new Date().toISOString(),
+        name: user.name || user.username,
+        is_permanent: user.isPermanent || false,
+        profile_data: {}
+      };
+
+      Object.keys(row).forEach((key) => {
+        if (row[key] === undefined) delete row[key];
+      });
+      return row;
+    }
+
     static _userToRow(user) {
       const profileData = {
         allergies: user.allergies,
@@ -123,27 +215,27 @@ if (typeof CareConnectDB === 'undefined') {
         gender: user.gender,
         registration_date: user.registrationDate || new Date().toISOString(),
         name: user.name || user.username,
-        phone: user.phone,
-        address: user.address,
-        birthdate: user.birthdate,
-        age: user.age,
-        photo: user.photo,
-        avatar_color: user.avatarColor,
+        phone: user.phone || null,
+        address: user.address || null,
+        birthdate: user.birthdate || null,
+        age: user.age || null,
+        photo: user.photo || null,
+        avatar_color: user.avatarColor || null,
         is_permanent: user.isPermanent || false,
         permissions: user.permissions || [],
         profile_data: profileData,
-        experience: user.experience,
-        education: user.education,
-        certifications: user.certifications,
-        skills: user.skills,
-        languages: user.languages,
-        bio: user.bio,
-        availability: user.availability,
-        specialties: user.specialties,
-        rating: user.rating,
-        reviews: user.reviews,
-        hourly_rate: user.hourlyRate,
-        work_preferences: user.workPreferences
+        experience: user.experience || null,
+        education: user.education || null,
+        certifications: user.certifications || null,
+        skills: user.skills || null,
+        languages: user.languages || null,
+        bio: user.bio || null,
+        availability: user.availability || null,
+        specialties: user.specialties || null,
+        rating: user.rating || null,
+        reviews: user.reviews || null,
+        hourly_rate: user.hourlyRate || null,
+        work_preferences: user.workPreferences || null
       };
     }
 
@@ -157,18 +249,17 @@ if (typeof CareConnectDB === 'undefined') {
         return [...this._memoryLocalUsers];
       }
 
-      for (const storage of [localStorage, sessionStorage]) {
-        try {
-          const raw = storage.getItem(this.LOCAL_USERS_KEY);
-          const parsed = raw ? JSON.parse(raw) : [];
-          if (Array.isArray(parsed) && parsed.length) {
-            this._memoryLocalUsers = parsed;
-            return [...parsed];
-          }
-        } catch {
-          /* try next storage */
+      try {
+        const raw = sessionStorage.getItem(this.LOCAL_USERS_KEY);
+        const parsed = raw ? JSON.parse(raw) : [];
+        if (Array.isArray(parsed) && parsed.length) {
+          this._memoryLocalUsers = parsed;
+          return [...parsed];
         }
+      } catch {
+        // no persisted users in session storage
       }
+
       return [];
     }
 
@@ -176,13 +267,11 @@ if (typeof CareConnectDB === 'undefined') {
       const payload = JSON.stringify(users);
       let saved = false;
 
-      for (const storage of [localStorage, sessionStorage]) {
-        try {
-          storage.setItem(this.LOCAL_USERS_KEY, payload);
-          saved = true;
-        } catch (error) {
-          console.warn('Could not persist users to storage:', error);
-        }
+      try {
+        sessionStorage.setItem(this.LOCAL_USERS_KEY, payload);
+        saved = true;
+      } catch (error) {
+        console.warn('Could not persist users in session storage:', error);
       }
 
       this._memoryLocalUsers = [...users];
@@ -203,58 +292,42 @@ if (typeof CareConnectDB === 'undefined') {
 
     static async getUsers(forceRefresh = false) {
       const now = Date.now();
-      if (
-        !forceRefresh &&
-        this._usersCache &&
-        now - this._cacheTime < this.CACHE_TTL
-      ) {
+      if (!forceRefresh && this._usersCache && now - this._cacheTime < this.CACHE_TTL) {
         return this._usersCache;
       }
 
-      const localUsers = this._getLocalUsers();
       const client = this.getClient();
-
       if (!client) {
-        console.warn('Supabase no configurado, usando usuarios locales y por defecto');
-        this._usersCache = this._mergeUsersByEmail(
-          this._getDefaultUsers(),
-          localUsers
-        );
+        console.warn('Supabase no configurado; usando usuarios por defecto en modo local.');
+        this._usersCache = this._getDefaultUsers();
         this._cacheTime = now;
         return this._usersCache;
       }
 
-      try {
-        const { data, error } = await this._withTimeout(
-          client
-            .from('profiles')
-            .select('*')
-            .order('created_at', { ascending: true })
-        );
+      if (this._usersFetchPromise) {
+        return this._usersFetchPromise;
+      }
 
-        if (error) {
-          console.error('Error fetching users:', error);
-          this._usersCache = this._mergeUsersByEmail(
-            this._getDefaultUsers(),
-            localUsers
-          );
+      this._usersFetchPromise = (async () => {
+        try {
+          const data = await this._requestSupabase('profiles?select=*', { method: 'GET' });
+          const remoteUsers = (Array.isArray(data) ? data : [])
+            .map((row) => this._rowToUser(row))
+            .filter(Boolean);
+          this._usersCache = this._mergeUsersByEmail(remoteUsers);
           this._cacheTime = now;
           return this._usersCache;
+        } catch (fetchError) {
+          console.error('No se pudo obtener usuarios desde Supabase:', fetchError);
+          this._usersCache = [];
+          this._cacheTime = now;
+          return this._usersCache;
+        } finally {
+          this._usersFetchPromise = null;
         }
+      })();
 
-        const remoteUsers = (data || []).map((row) => this._rowToUser(row));
-        this._usersCache = this._mergeUsersByEmail(remoteUsers, localUsers);
-        this._cacheTime = now;
-        return this._usersCache;
-      } catch (fetchError) {
-        console.error('Could not reach Supabase, using local users:', fetchError);
-        this._usersCache = this._mergeUsersByEmail(
-          this._getDefaultUsers(),
-          localUsers
-        );
-        this._cacheTime = now;
-        return this._usersCache;
-      }
+      return this._usersFetchPromise;
     }
 
     static async getUserByUsername(username) {
@@ -325,38 +398,45 @@ if (typeof CareConnectDB === 'undefined') {
     }
 
     static async saveUser(user) {
-      const localSaved = this._saveUserLocally(user);
       const client = this.getClient();
 
       if (!client) {
-        console.warn('Supabase no configurado, usuario guardado localmente');
-        return localSaved;
+        console.warn('Supabase no configurado');
+        this._setError('Supabase no configurado');
+        return false;
       }
 
       try {
-        const row = this._userToRow(user);
+        const row = this._userInsertRow(user);
         if (row.id && !/^[0-9a-f-]{36}$/i.test(String(row.id))) {
           delete row.id;
         }
 
-        const { data, error } = await this._withTimeout(
-          client
-            .from('profiles')
-            .upsert(row, { onConflict: 'email' })
-            .select()
-            .single()
-        );
+        const { data, error } = await client
+          .from('profiles')
+          .upsert(row, { onConflict: 'email', returning: 'representation' });
 
         if (error) {
-          console.error('Error saving user to Supabase, kept local copy:', error);
-          return localSaved;
+          console.error('Error saving user:', error);
+          this._setError(error);
+          return false;
+        }
+
+        const savedRow = Array.isArray(data) ? data[0] : data;
+        if (!savedRow) {
+          const errorMessage = 'Supabase no devolvió la fila insertada';
+          console.error(errorMessage);
+          this._setError(errorMessage);
+          return false;
         }
 
         this.invalidateCache();
-        return this._rowToUser(data) || localSaved;
+        this._clearError();
+        return this._rowToUser(savedRow) || false;
       } catch (saveError) {
-        console.error('Supabase unreachable, kept local copy:', saveError);
-        return localSaved;
+        console.error('Supabase unreachable:', saveError);
+        this._setError(saveError);
+        return false;
       }
     }
 
@@ -674,7 +754,6 @@ if (typeof CareConnectDB === 'undefined') {
         );
         if (!amethExists) {
           await this.saveUser(this.createPermanentAdminAmeth());
-          return true;
         }
         return true;
       } catch (error) {

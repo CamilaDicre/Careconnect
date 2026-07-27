@@ -10,11 +10,22 @@ if (typeof window.careconnectUsers === 'undefined') {
 }
 
 document.addEventListener('DOMContentLoaded', async () => {
-  await CareConnectDB.verifyAndRestoreAmethAdmin();
-  await preloadUsersCache();
+  void CareConnectDB.verifyAndRestoreAmethAdmin();
+  void preloadUsersCache();
 
   const loggedInUser = CareConnectSession.getLoggedInUser();
   const sessionRole = CareConnectSession.getUserRole();
+
+  if (window.location.protocol === 'file:') {
+    showAlert(
+      'No se puede usar Supabase desde file://. Inicia un servidor local (por ejemplo http://localhost) y autoriza ese origen en Supabase.',
+      'danger',
+      'loginError'
+    );
+  } else if (!window.CareConnectSupabase?.isConfigured?.()) {
+    showAlert('Supabase no está configurado correctamente. Revisa js/supabase-config.js y tu clave anon.', 'danger', 'loginError');
+  }
+
   if (loggedInUser && sessionRole) {
     if (CareConnectDB.isAdminRole(sessionRole)) {
       window.location.href = '../dashboard/admin-dashboard.html';
@@ -150,7 +161,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         const saved = await CareConnectDB.saveUser(newUser);
         if (!saved) {
-          alert('Error al guardar los datos. Verifica la conexión con Supabase.');
+          const errorReason = CareConnectDB.getLastError ? CareConnectDB.getLastError() : null;
+          const origin = window.location.origin || 'origen desconocido';
+          console.error('Registro fallido en Supabase para:', email, errorReason);
+          alert(
+            `No se pudo conectar el registro con Supabase. Motivo: ${
+              errorReason || 'Revisa la configuración o la tabla profiles.'
+            }\nOrigen actual: ${origin}`
+          );
           return;
         }
 
@@ -159,13 +177,13 @@ document.addEventListener('DOMContentLoaded', async () => {
           showBanner('Patient account created and logged in!', 'success');
           setTimeout(() => {
             window.location.href = '../dashboard/dashboard.html';
-          }, 1200);
+          }, 600);
         } else if (role === 'cuidador' || role === 'caregiver') {
           CareConnectSession.setUserSession(saved);
           showBanner('Caregiver account created! Complete your profile next.', 'success');
           setTimeout(() => {
             window.location.href = 'register-caregiver.html';
-          }, 1200);
+          }, 600);
         } else {
           showBanner('Your account has been created!', 'success');
           document.getElementById('show-login').click();
@@ -326,7 +344,7 @@ async function login() {
           } else {
             showAlert('Unknown account role. Please contact support.', 'danger', 'loginError');
           }
-        }, 1200);
+        }, 600);
       } catch (storageError) {
         console.error('Error saving login data:', storageError);
         showAlert('Error saving login data', 'danger', 'loginError');

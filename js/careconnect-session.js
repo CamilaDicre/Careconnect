@@ -4,28 +4,38 @@
  */
 if (typeof CareConnectSession === 'undefined') {
   const SESSION_KEYS = ['loggedInUser', 'userRole', 'currentUserId'];
+  const MEMORY_SESSION = {};
 
   class CareConnectSession {
     static _read(key) {
       try {
-        let value = sessionStorage.getItem(key);
-        if (value === null) value = localStorage.getItem(key);
-        if (value === null) return null;
-        try {
-          return JSON.parse(value);
-        } catch {
-          return value;
+        const value = sessionStorage.getItem(key);
+        if (value !== null) {
+          try {
+            return JSON.parse(value);
+          } catch {
+            return value;
+          }
         }
       } catch {
-        return null;
+        // fall through to memory store
       }
+
+      if (Object.prototype.hasOwnProperty.call(MEMORY_SESSION, key)) {
+        return MEMORY_SESSION[key];
+      }
+
+      return null;
     }
 
     static _write(key, value) {
-      const stored =
-        typeof value === 'string' ? value : JSON.stringify(value);
-      sessionStorage.setItem(key, stored);
-      localStorage.setItem(key, stored);
+      const stored = typeof value === 'string' ? value : JSON.stringify(value);
+      try {
+        sessionStorage.setItem(key, stored);
+      } catch {
+        // ignore storage errors
+      }
+      MEMORY_SESSION[key] = stored;
     }
 
     static get(key) {
@@ -45,11 +55,11 @@ if (typeof CareConnectSession === 'undefined') {
     static remove(key) {
       try {
         sessionStorage.removeItem(key);
-        localStorage.removeItem(key);
-        return true;
       } catch {
-        return false;
+        // ignore storage errors
       }
+      delete MEMORY_SESSION[key];
+      return true;
     }
 
     static clear() {

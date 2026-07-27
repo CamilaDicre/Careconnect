@@ -1,6 +1,9 @@
 /**
  * Configuración de Supabase para CareConnect
  * Reemplaza YOUR_SUPABASE_ANON_KEY con tu clave anon del panel de Supabase.
+ *
+ * IMPORTANTE: en Supabase Settings → API debes autorizar el origen
+ * de tu aplicación actual (por ejemplo http://127.0.0.1:5508).
  */
 window.CARECONNECT_SUPABASE = {
   url: 'https://sbhonyfcchufsthadcyg.supabase.co',
