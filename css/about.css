@@ -352,6 +352,7 @@ body.dark-mode .team-info p { color: #94a3b8 !important; }
 #groupPhoto img {
     height: 70dvh !important;
     object-fit: cover;
+    border-radius: 15px 15px 0px 0px;
 }
 
 @media (max-width: 991.98px) {
