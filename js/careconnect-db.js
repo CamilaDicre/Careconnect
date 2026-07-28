@@ -13,6 +13,7 @@ if (typeof CareConnectDB === 'undefined') {
     static _memoryLocalUsers = [];
     static _usersFetchPromise = null;
     static lastError = null;
+    static _remoteEnabled = true;
 
     static _withTimeout(promise, ms = this.SUPABASE_TIMEOUT_MS) {
       return Promise.race([
@@ -33,6 +34,11 @@ if (typeof CareConnectDB === 'undefined') {
 
     static getLastError() {
       return this.lastError;
+    }
+
+    static disableRemote(reason) {
+      this._remoteEnabled = false;
+      console.warn('Supabase remoto deshabilitado:', reason);
     }
 
     static async _requestSupabase(path, options = {}) {
@@ -83,10 +89,12 @@ if (typeof CareConnectDB === 'undefined') {
 
         return data;
       } catch (error) {
-        if (typeof error?.message === 'string' && error.message.includes('Failed to fetch')) {
+        const message = error?.message || String(error);
+        if (message.includes('Failed to fetch') || message.includes('ERR_NAME_NOT_RESOLVED') || message.includes('No se pudo encontrar el nombre de dominio')) {
+          this.disableRemote(message);
           const origin = typeof window !== 'undefined' ? window.location.origin : 'origen desconocido';
           throw new Error(
-            `Failed to fetch. Verifica que el origen ${origin} esté autorizado en Supabase Allowed origins y que tu app se sirva desde HTTP(S).`
+            `Failed to fetch. Verifica que el origen ${origin} esté autorizado en Supabase Allowed origins, que tu app se sirva desde HTTP(S) y que la URL del proyecto sea accesible.`
           );
         }
         throw error;
@@ -94,11 +102,14 @@ if (typeof CareConnectDB === 'undefined') {
     }
 
     static getClient() {
+      if (!this._remoteEnabled) {
+        return null;
+      }
       return window.CareConnectSupabase?.getClient() ?? null;
     }
 
     static isReady() {
-      return window.CareConnectSupabase?.isConfigured() ?? false;
+      return this._remoteEnabled && (window.CareConnectSupabase?.isConfigured() ?? false);
     }
 
     static normalizeRole(role) {
@@ -299,7 +310,12 @@ if (typeof CareConnectDB === 'undefined') {
       const client = this.getClient();
       if (!client) {
         console.warn('Supabase no configurado; usando usuarios por defecto en modo local.');
-        this._usersCache = this._getDefaultUsers();
+        const fallbackUsers = this._mergeUsersByEmail(
+          this._getDefaultUsers(),
+          this._getLocalUsers(),
+          window.careconnectUsers || []
+        );
+        this._usersCache = fallbackUsers;
         this._cacheTime = now;
         return this._usersCache;
       }
@@ -314,12 +330,18 @@ if (typeof CareConnectDB === 'undefined') {
           const remoteUsers = (Array.isArray(data) ? data : [])
             .map((row) => this._rowToUser(row))
             .filter(Boolean);
-          this._usersCache = this._mergeUsersByEmail(remoteUsers);
+          const localUsers = this._getLocalUsers();
+          this._usersCache = this._mergeUsersByEmail(remoteUsers, localUsers, window.careconnectUsers || []);
           this._cacheTime = now;
           return this._usersCache;
         } catch (fetchError) {
           console.error('No se pudo obtener usuarios desde Supabase:', fetchError);
-          this._usersCache = [];
+          const fallbackUsers = this._mergeUsersByEmail(
+            this._getDefaultUsers(),
+            this._getLocalUsers(),
+            window.careconnectUsers || []
+          );
+          this._usersCache = fallbackUsers;
           this._cacheTime = now;
           return this._usersCache;
         } finally {
@@ -401,8 +423,13 @@ if (typeof CareConnectDB === 'undefined') {
       const client = this.getClient();
 
       if (!client) {
-        console.warn('Supabase no configurado');
-        this._setError('Supabase no configurado');
+        console.warn('Supabase no configurado; guardando usuario localmente');
+        const saved = this._saveUserLocally(user);
+        if (saved) {
+          this._clearError();
+          return saved;
+        }
+        this._setError('No se pudo guardar localmente');
         return false;
       }
 
@@ -434,7 +461,12 @@ if (typeof CareConnectDB === 'undefined') {
         this._clearError();
         return this._rowToUser(savedRow) || false;
       } catch (saveError) {
-        console.error('Supabase unreachable:', saveError);
+        console.warn('Supabase unreachable al guardar usuario:', saveError);
+        const savedLocal = this._saveUserLocally(user);
+        if (savedLocal) {
+          this._clearError();
+          return savedLocal;
+        }
         this._setError(saveError);
         return false;
       }

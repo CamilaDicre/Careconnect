@@ -4,7 +4,13 @@
 (function () {
   if (window.CareConnectSupabase) return;
 
+  let _supabaseClient = null;
+
   function getClient() {
+    if (_supabaseClient) {
+      return _supabaseClient;
+    }
+
     if (!window.supabase || !window.CARECONNECT_SUPABASE) {
       console.error('Supabase SDK o configuración no disponible');
       return null;
@@ -19,7 +25,8 @@
       return null;
     }
 
-    return window.supabase.createClient(url, anonKey);
+    _supabaseClient = window.supabase.createClient(url, anonKey);
+    return _supabaseClient;
   }
 
   window.CareConnectSupabase = {
