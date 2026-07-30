@@ -159,17 +159,25 @@ document.addEventListener('DOMContentLoaded', async () => {
           id: crypto.randomUUID ? crypto.randomUUID() : Date.now().toString() + Math.random().toString(36).substr(2, 9)
         };
 
-        const saved = await CareConnectDB.saveUser(newUser);
+        let saved = await CareConnectDB.saveUser(newUser);
+        
         if (!saved) {
           const errorReason = CareConnectDB.getLastError ? CareConnectDB.getLastError() : null;
-          const origin = window.location.origin || 'origen desconocido';
-          console.error('Registro fallido en Supabase para:', email, errorReason);
-          alert(
-            `No se pudo conectar el registro con Supabase. Motivo: ${
-              errorReason || 'Revisa la configuración o la tabla profiles.'
-            }\nOrigen actual: ${origin}`
-          );
-          return;
+          console.warn('Supabase falló, intentando guardar localmente:', errorReason);
+          
+          saved = CareConnectDB._saveUserLocally(newUser);
+          if (!saved) {
+            const origin = window.location.origin || 'origen desconocido';
+            console.error('Registro fallido también localmente para:', email, errorReason);
+            alert(
+              `No se pudo crear la cuenta. Motivo: ${
+                errorReason || 'Revisa la configuración o intenta de nuevo.'
+              }\nOrigen actual: ${origin}`
+            );
+            return;
+          }
+          
+          showAlert('Cuenta creada localmente (Supabase no disponible)', 'warning', 'loginError');
         }
 
         if (role === 'paciente' || role === 'patient') {

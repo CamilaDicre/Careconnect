@@ -444,16 +444,31 @@ if (typeof CareConnectDB === 'undefined') {
           .upsert(row, { onConflict: 'email', returning: 'representation' });
 
         if (error) {
-          console.error('Error saving user:', error);
+          console.warn('Error saving user en Supabase:', error);
           this._setError(error);
+          
+          const localSaved = this._saveUserLocally(user);
+          if (localSaved) {
+            this.invalidateCache();
+            console.log('Usuario guardado localmente como fallback por error de Supabase');
+            return localSaved;
+          }
           return false;
         }
 
         const savedRow = Array.isArray(data) ? data[0] : data;
         if (!savedRow) {
           const errorMessage = 'Supabase no devolvió la fila insertada';
-          console.error(errorMessage);
+          console.warn(errorMessage, '- intentando guardar localmente');
           this._setError(errorMessage);
+          
+          const localSaved = this._saveUserLocally(user);
+          if (localSaved) {
+            this.invalidateCache();
+            this._clearError();
+            console.log('Usuario guardado localmente como fallback');
+            return localSaved;
+          }
           return false;
         }
 
