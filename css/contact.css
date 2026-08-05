@@ -45,9 +45,6 @@
 }
 
 /* Contact Information Section */
-h3, h2 {
-    color: #4169e1;
-}
 
 .contact-info-section {
     position: relative;
@@ -166,4 +163,8 @@ h3, h2 {
     .contact-map {
         min-height: 350px;
     }
+}
+
+h3, .title {
+    color: #4169e1 !important;
 }
