@@ -1,0 +1,65 @@
+:root {
+    --primary-color: #4169e1;
+    --primary-color-dark: #2f5ec9;
+    --secondary-color: #1f2937;
+    --tertiary-color: #4b5563;
+    --accent-color: #0891b2;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --light-bg: #f8fafc;
+    --dark-bg: #0b1220;
+    --text-color: #1f2937;
+    --text-muted: #6b7280;
+    --card-bg: #ffffff;
+    --border-color: rgba(65, 105, 225, 0.12);
+    --shadow-color: rgba(0, 0, 0, 0.08);
+
+    /* Bootstrap aliases */
+    --bs-primary: var(--primary-color);
+    --bs-primary-rgb: 65, 105, 225;
+    --bs-info: var(--primary-color);
+    --bs-info-rgb: 65, 105, 225;
+    --bs-link-color: var(--primary-color);
+    --bs-link-hover-color: var(--primary-color);
+
+    /* Legacy palette aliases */
+    --pal-primary: var(--primary-color);
+    --pal-secondary: var(--secondary-color);
+    --pal-tertiary: var(--tertiary-color);
+    --pal-primary-dark: var(--primary-color-dark);
+
+    --article-primary: var(--primary-color);
+    --article-primary-dark: var(--primary-color-dark);
+    --article-success: var(--success-color);
+    --article-success-light: #ecfdf5;
+    --article-warning: var(--warning-color);
+    --article-light-bg: #f1f5f9;
+    --article-white: #ffffff;
+    --article-gray-100: #f3f4f6;
+    --article-gray-200: #e5e7eb;
+    --article-gray-500: #6b7280;
+    --article-gray-600: #4b5563;
+    --article-gray-800: #1f2937;
+    --article-gray-900: #111827;
+
+    --auth-primary: var(--primary-color);
+    --auth-primary-dark: var(--primary-color-dark);
+    --auth-secondary: var(--primary-color);
+    --auth-text: #333;
+    --auth-border: rgba(65, 105, 225, 0.2);
+    --auth-bg: #f6f8fc;
+    --auth-white: #ffffff;
+    --auth-shadow: rgba(65, 105, 225, 0.13);
+    --auth-shadow-hover: rgba(65, 105, 225, 0.18);
+
+    --transition-primary: var(--primary-color);
+    --transition-secondary: #764ba2;
+    --transition-success: var(--success-color);
+    --transition-warning: var(--warning-color);
+    --transition-error: var(--danger-color);
+    --transition-white: #ffffff;
+    --transition-dark: #2c3e50;
+    --transition-gray: #7f8c8d;
+    --transition-shadow: rgba(0, 0, 0, 0.1);
+}

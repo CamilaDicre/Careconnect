@@ -1,7 +1,4 @@
-/* Root Variables */
-:root {
-    --pal-primary: #4169e1;
-}
+@import url('palette.css');
 
 /* Blog Page Styles */
 .blog-hero-section {

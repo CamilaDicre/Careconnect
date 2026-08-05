@@ -1,164 +1,342 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Medicines</title>
+    <title>Medication Guide - Careconnect</title>
     <link rel="icon" type="image/png" href="assets/carefavicon.png">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="departments.css">
     <link rel="stylesheet" href="css/responsive-transitions.css">
     <link rel="stylesheet" href="css/universal-responsive.css">
     <link rel="stylesheet" href="css/transitions.css">
+    <style>
+        body {
+            background: #f4f8ff;
+            color: #1f2937;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        .page-header {
+            text-align: center;
+            background: linear-gradient(135deg, #2563eb, #0ea5e9);
+            color: white;
+            padding: 3rem 1rem 2.5rem;
+        }
+        .page-header h1 {
+            margin: 0;
+            font-size: clamp(2.5rem, 4vw, 3.75rem);
+            line-height: 1.05;
+        }
+        .page-header p {
+            margin-top: 1rem;
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+            font-size: 1rem;
+            opacity: 0.85;
+        }
+        .page-actions {
+            margin-top: 1.75rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.9rem;
+        }
+        .page-actions a {
+            padding: 0.95rem 1.75rem;
+            border-radius: 999px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .btn-primary {
+            background: #0f172a;
+            color: white;
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.18);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.32);
+        }
+        .page-actions a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 38px rgba(15, 23, 42, 0.18);
+        }
+        .main-content {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 2rem 1.25rem 3rem;
+        }
+        .medicine-grid,
+        .detail-layout {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .medicine-grid {
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        }
+        .medicine-card,
+        .medicine-detail-card,
+        .medicine-specs,
+        .medicine-notes {
+            background: white;
+            border-radius: 24px;
+            padding: 1.75rem;
+            box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+            border: 1px solid rgba(15, 23, 42, 0.05);
+        }
+        .medicine-card img,
+        .detail-image {
+            width: 100%;
+            border-radius: 18px;
+            object-fit: cover;
+            max-height: 260px;
+        }
+        .medicine-card h3,
+        .detail-title {
+            margin: 1.25rem 0 0.75rem;
+            font-size: 1.5rem;
+        }
+        .medicine-card p,
+        .detail-section p {
+            color: #475569;
+            line-height: 1.8;
+        }
+        .medicine-card button,
+        .detail-action-btn {
+            margin-top: 1.35rem;
+            background: linear-gradient(135deg, #2563eb, #0ea5e9);
+            color: white;
+            border: none;
+            padding: 0.95rem 1.6rem;
+            border-radius: 999px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .medicine-card button:hover,
+        .detail-action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 36px rgba(37, 99, 235, 0.24);
+        }
+        .detail-layout {
+            grid-template-columns: 1.2fr 0.8fr;
+            align-items: start;
+        }
+        .detail-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin: 1.25rem 0;
+        }
+        .tag {
+            background: #e0f2fe;
+            color: #0c4a6e;
+            padding: 0.45rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+        }
+        .section-heading {
+            margin-bottom: 0.85rem;
+            color: #0f172a;
+        }
+        .detail-specs ul,
+        .medicine-notes ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .detail-specs li,
+        .medicine-notes li {
+            margin-bottom: 0.9rem;
+            line-height: 1.75;
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 0.95rem;
+            border-radius: 999px;
+            background: rgba(37, 99, 235, 0.12);
+            color: #1e40af;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+        @media (max-width: 960px) {
+            .detail-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="fixed-medicines-header">
-        <h1 style="margin:0;">Medicines</h1>
-        <a class="my-button" href="departments.html">Return</a>
-  <!-- Menú hamburguesa para filtrar por tipo de malestar -->
-  <div id="filter-menu" style="position:fixed; top:24px; left:24px; z-index:1000;">
-    <button id="menu-toggle" style="background:none; border:none; font-size:2rem; cursor:pointer;">
-      <span>&#9776;</span>
-    </button>
-    <div id="menu-dropdown" style="display:none; background:#fff; border-radius:10px; box-shadow:0 4px 16px rgba(0,0,0,0.12); margin-top:8px; min-width:180px;">
-      <ul style="list-style:none; margin:0; padding:10px 0;">
-        <li><a href="#" class="filter-option" data-filter="all" style="display:block; padding:8px 24px; color:#4169e1; text-decoration:none;">All</a></li>
-        <li><a href="#" class="filter-option" data-filter="estomago" style="display:block; padding:8px 24px; color:#4169e1; text-decoration:none;">Stomach</a></li>
-        <li><a href="#" class="filter-option" data-filter="dolor" style="display:block; padding:8px 24px; color:#4169e1; text-decoration:none;">Pain</a></li>
-        <li><a href="#" class="filter-option" data-filter="articulaciones" style="display:block; padding:8px 24px; color:#4169e1; text-decoration:none;">Joints</a></li>
-        <!-- Add more filters as needed -->
-      </ul>
-    </div>
-  </div>
+    <header class="page-header">
+        <div class="container">
+            <h1>Medication Guide</h1>
+            <p>Explore common medications by condition and get a clear, easy-to-read detail view for each treatment option.</p>
+            <div class="page-actions">
+                <a class="btn-secondary" href="departments.html">Back to departments</a>
+                <a class="btn-primary" href="pages/contact.html">Contact Specialist</a>
+            </div>
+        </div>
+    </header>
 
-  <div class="container">
-    <h1>Medicines for Disease Treatments</h1>
+    <main class="main-content">
+        <section id="medicineArea"></section>
+    </main>
 
-    <div class="medicine-card">
-      <img src="https://via.placeholder.com/300x200.png?text=GastroFix" alt="GastroFix">
-      <h2>GastroFix</h2>
-      <p>Relieves stomach pain and aids digestion. Ideal for mild stomach discomfort.</p>
-      <button class="button" onclick="location.href='medicina-detalle.html?medicina=GastroFix'">More Info</button>
->>>>>>> e98f0c0f949745e0a071a876bfb7517c7c80e686
-    </div>
-    <div style="max-width: 900px; margin: 2rem auto; margin-top:110px;">
-        <div id="stomach-ache" class="department-info" style="margin-bottom: 2rem;">
-    <h2>Stomach Ache</h2>
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://tse4.mm.bing.net/th/id/OIP.66uPuoZji_DdTbPPguHtOAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Acetaminophen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Acetaminophen</h3>
-            <p><b>Use:</b> Pain relief and fever reduction.<br><b>Description:</b> Commonly used for mild to moderate stomach pain and discomfort. Should be taken as directed by a physician.</p>
-        </div>
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://th.bing.com/th/id/R.a5baf1145594d8229105a7ca9b11d11e?rik=J%2b3i6nOXiNDXvQ&riu=http%3a%2f%2fwww.gianttiger.com%2fcdn%2fshop%2fproducts%2fpreview_images_188343_f_01.jpg%3fv%3d1701543401&ehk=SBNkcLiLOYNhYaC0X6w3SPG2T7kjAU%2fBlU5doo488Ck%3d&risl=&pid=ImgRaw&r=0" alt="Pepto-Bismol" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Pepto-Bismol</h3>
-            <p><b>Use:</b> Upset stomach, nausea, diarrhea.<br><b>Description:</b> Helps relieve symptoms of indigestion, nausea, and diarrhea. Not recommended for children under 12 years.</p>
-        </div>
-    </div>
-</div>
-        <div id="hipertension" class="department-info" style="margin-bottom: 2rem;">
-    <h2>Hypertension</h2>
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://tse4.mm.bing.net/th/id/OIP.G5XhKilnydEAI8XC7BdgQQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Lisinopril" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Lisinopril</h3>
-            <p><b>Use:</b> High blood pressure.<br><b>Description:</b> ACE inhibitor used to treat hypertension and heart failure. Should be taken daily as prescribed.</p>
-        </div>
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://maxhubpharm.com/wp-content/uploads/2023/10/1000010576.jpg" alt="Amlodipine" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Amlodipine</h3>
-            <p><b>Use:</b> High blood pressure, chest pain.<br><b>Description:</b> Calcium channel blocker that helps relax blood vessels. Take as directed by a doctor.</p>
-        </div>
-    </div>
-</div>
-        <div id="headache" class="department-info" style="margin-bottom: 2rem;">
-    <h2>Headache</h2>
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://tse1.mm.bing.net/th/id/OIP.Jo3m8clMv14sf2wTSekYCgHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Ibuprofen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Ibuprofen</h3>
-            <p><b>Use:</b> Pain relief, inflammation.<br><b>Description:</b> Nonsteroidal anti-inflammatory drug (NSAID) used for headache, muscle aches, and fever. Take with food to avoid stomach upset.</p>
-        </div>
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://image.made-in-china.com/2f0j00moDVdSKseMRN/Aspirin-Tablets-300mg-10X10-prime-S-Box-Western-Medicine.jpg" alt="Aspirin" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Aspirin</h3>
-            <p><b>Use:</b> Pain relief, fever, inflammation.<br><b>Description:</b> Commonly used for mild to moderate headaches. Not recommended for children with viral infections.</p>
-        </div>
-    </div>
-</div>
-        <div id="colds" class="department-info" style="margin-bottom: 2rem;">
-    <h2>Colds</h2>
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://beta1.cruzverde.com.co/dw/image/v2/BDPM_PRD/on/demandware.static/-/Sites-masterCatalog_Colombia/default/dwe21efdd0/images/large/17422_1_ACETAMINOFEN_500MG_TAB_CAJ_X_100_GENFAR_1%20(2).jpg?sw=1000&sh=1000" alt="Acetaminophen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Acetaminophen</h3>
-            <p><b>Use:</b> Fever and mild pain.<br><b>Description:</b> Helps reduce fever and relieve minor aches and pains associated with colds.</p>
-        </div>
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://cpimg.tistatic.com/07012647/b/4/Dextromethorphan-Hcl-Syrup.jpg" alt="Dextromethorphan" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Dextromethorphan</h3>
-            <p><b>Use:</b> Cough suppressant.<br><b>Description:</b> Used to relieve cough caused by colds or flu. Should not be used in children under 4 years.</p>
-        </div>
-    </div>
-</div>
-        <div id="gastritis" class="department-info" style="margin-bottom: 2rem;">
-    <h2>Gastritis</h2>
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://hebmx.vtexassets.com/arquivos/ids/584987-800-800?v=638218480330330000&width=800&height=800&aspect=true" alt="Omeprazole" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Omeprazole</h3>
-            <p><b>Use:</b> Acid reflux, gastritis.<br><b>Description:</b> Proton pump inhibitor that reduces stomach acid. Commonly prescribed for gastritis and ulcers.</p>
-        </div>
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://th.bing.com/th/id/R.8aff9eea0f1d5db450df0bd5605d9e75?rik=qsYoF%2f9ROcyD%2bQ&riu=http%3a%2f%2fwww.lasanteca.com%2fwp-content%2fuploads%2f2018%2f12%2fRANITIDINA-150MG-CAJA-POR-100-TABLETAS-INCLINADO.jpg&ehk=drPl6Ed79yDNE6fwI5%2fkE1lOyqxpeDikejPOSP1laRY%3d&risl=&pid=ImgRaw&r=0" alt="Ranitidine" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Ranitidine</h3>
-            <p><b>Use:</b> Acid reduction.<br><b>Description:</b> H2 blocker that helps decrease stomach acid. Used for short-term relief of gastritis symptoms.</p>
-        </div>
-    </div>
-</div>
-        <div id="joint-pain" class="department-info" style="margin-bottom: 2rem;">
-    <h2>Joint Pain</h2>
-    <div style="display:flex;gap:2rem;flex-wrap:wrap;justify-content:center;">
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://i5.walmartimages.com/asr/30bbd351-420a-4874-9e59-3994b3dbb30a_1.a1b144c2ff5a6464b6bc5a0a91367d55.jpeg" alt="Naproxen" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Naproxen</h3>
-            <p><b>Use:</b> Pain relief, inflammation.<br><b>Description:</b> NSAID used for joint pain and inflammation. Take with food to avoid stomach upset.</p>
-        </div>
-        <div style="background:#fff;border-radius:15px;max-width:320px;padding:1rem;text-align:center;box-shadow:0 2px 12px #e4e8eb;">
-            <img src="https://www.multicampo.com.br/wp-content/uploads/2019/03/Diclofenaco-50ml--1200x1200.png" alt="Diclofenac" style="width:120px;height:120px;object-fit:cover;border-radius:12px;">
-            <h3>Diclofenac</h3>
-            <p><b>Use:</b> Pain relief, inflammation.<br><b>Description:</b> NSAID used to treat pain and inflammation in joints, muscles, and bones.</p>
-        </div>
-    </div>
-</div>
-    </div>
+    <script>
+        const medicines = {
+            GastroFix: {
+                name: 'GastroFix',
+                condition: 'Stomach Ache',
+                image: 'https://via.placeholder.com/900x500.png?text=GastroFix',
+                description: 'GastroFix helps relieve stomach pain, acid reflux, and indigestion. It is designed for short-term relief and supports digestive comfort.',
+                dosage: 'Take one tablet after meals, up to three times per day. Do not exceed 3 tablets in 24 hours.',
+                activeIngredients: 'Calcium carbonate, simethicone, omeprazole',
+                warning: 'Avoid if you have severe abdominal pain, vomiting, or allergy to ingredients. Consult a doctor when pregnant or breastfeeding.',
+                tags: ['Stomach', 'Digestive Support', 'OTC']
+            },
+            Lisinopril: {
+                name: 'Lisinopril',
+                condition: 'Hypertension',
+                image: 'https://via.placeholder.com/900x500.png?text=Lisinopril',
+                description: 'Lisinopril is prescribed for high blood pressure and heart failure. It lowers blood pressure by relaxing blood vessels.',
+                dosage: 'Take one tablet daily with or without food. Do not stop treatment abruptly without medical advice.',
+                activeIngredients: 'Lisinopril',
+                warning: 'Monitor blood pressure and kidney function. Avoid potassium supplements unless directed by a physician.',
+                tags: ['Blood Pressure', 'Cardiac Care', 'Prescription']
+            },
+            Ibuprofen: {
+                name: 'Ibuprofen',
+                condition: 'Headache',
+                image: 'https://via.placeholder.com/900x500.png?text=Ibuprofen',
+                description: 'Ibuprofen is an NSAID used to treat headaches, muscle pain, inflammation, and fever. It reduces swelling while relieving pain.',
+                dosage: 'Take 200-400 mg every 4-6 hours as needed. Do not exceed 1200 mg in 24 hours without medical advice.',
+                activeIngredients: 'Ibuprofen',
+                warning: 'Take with food to reduce stomach irritation. Avoid use with certain blood pressure medicines and if you have ulcers.',
+                tags: ['Pain Relief', 'Anti-inflammatory', 'OTC']
+            },
+            Acetaminophen: {
+                name: 'Acetaminophen',
+                condition: 'Colds',
+                image: 'https://via.placeholder.com/900x500.png?text=Acetaminophen',
+                description: 'Acetaminophen reduces fever and relieves mild pain associated with colds and flu. It is gentler on the stomach than many NSAIDs.',
+                dosage: 'Take 500-650 mg every 4-6 hours. Do not exceed 3000 mg in 24 hours.',
+                activeIngredients: 'Acetaminophen',
+                warning: 'Do not use with other acetaminophen products. Consult a doctor if you have liver disease.',
+                tags: ['Fever', 'Pain Relief', 'OTC']
+            },
+            Omeprazole: {
+                name: 'Omeprazole',
+                condition: 'Gastritis',
+                image: 'https://via.placeholder.com/900x500.png?text=Omeprazole',
+                description: 'Omeprazole decreases stomach acid production and helps heal irritation caused by gastritis, acid reflux, and ulcers.',
+                dosage: 'Take one capsule daily before breakfast for 14 days or as prescribed by a doctor.',
+                activeIngredients: 'Omeprazole',
+                warning: 'Long-term use may require monitoring. Avoid if you have low magnesium or osteoporosis without guidance.',
+                tags: ['Acid Control', 'Gastric Health', 'Prescription']
+            },
+            Naproxen: {
+                name: 'Naproxen',
+                condition: 'Joint Pain',
+                image: 'https://via.placeholder.com/900x500.png?text=Naproxen',
+                description: 'Naproxen is an NSAID used to relieve joint pain, stiffness, and inflammation in arthritis or injury.',
+                dosage: 'Take 250-500 mg every 8-12 hours as needed. Do not exceed 1000 mg in 24 hours.',
+                activeIngredients: 'Naproxen sodium',
+                warning: 'Use with caution if you have heart, kidney, or gastrointestinal issues. Take with food to decrease stomach upset.',
+                tags: ['Joint Health', 'Inflammation', 'OTC']
+            }
+        };
 
-  <script src="js/page-transitions.js"></script>
-  <script>
-    // Mostrar/ocultar menú
-    document.getElementById('menu-toggle').onclick = function() {
-      var menu = document.getElementById('menu-dropdown');
-      menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-    };
-    // Cerrar menú al hacer clic fuera
-    document.addEventListener('click', function(e) {
-      var menu = document.getElementById('menu-dropdown');
-      var toggle = document.getElementById('menu-toggle');
-      if (!menu.contains(e.target) && !toggle.contains(e.target)) {
-        menu.style.display = 'none';
-      }
-    });
-    // Filtro (solo ejemplo, no filtra aún)
-    document.querySelectorAll('.filter-option').forEach(function(opt) {
-      opt.onclick = function(e) {
-        e.preventDefault();
-        alert('Filtrar por: ' + this.dataset.filter);
-        document.getElementById('menu-dropdown').style.display = 'none';
-      };
-    });
-  </script>
+        function renderMedicineList() {
+            const area = document.getElementById('medicineArea');
+            area.innerHTML = `
+                <div class="medicine-grid">
+                    ${Object.values(medicines).map((medicine) => `
+                        <div class="medicine-card">
+                            <img src="${medicine.image}" alt="${medicine.name}">
+                            <h3>${medicine.name}</h3>
+                            <div class="badge">${medicine.condition}</div>
+                            <p>${medicine.description}</p>
+                            <button onclick="window.location.href='medicine.html?medicina=${encodeURIComponent(medicine.name)}'">View Details</button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
 
+        function renderMedicineDetail(medicine) {
+            const area = document.getElementById('medicineArea');
+            area.innerHTML = `
+                <div class="medicine-detail-card">
+                    <div class="badge">Condition: ${medicine.condition}</div>
+                    <div class="detail-layout">
+                        <div>
+                            <img class="detail-image" src="${medicine.image}" alt="${medicine.name}">
+                        </div>
+                        <div>
+                            <h2 class="detail-title">${medicine.name}</h2>
+                            <div class="detail-meta">
+                                ${medicine.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                            </div>
+                            <p class="detail-description">${medicine.description}</p>
+                            <div class="detail-section">
+                                <h4 class="section-heading">Recommended Dosage</h4>
+                                <p>${medicine.dosage}</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="section-heading">Active Ingredients</h4>
+                                <p>${medicine.activeIngredients}</p>
+                            </div>
+                            <div class="detail-section">
+                                <h4 class="section-heading">Warnings</h4>
+                                <p>${medicine.warning}</p>
+                            </div>
+                            <div class="page-actions" style="justify-content: flex-start;">
+                                <a class="btn-secondary" href="departments.html">Back to departments</a>
+                                <a class="btn-primary" href="pages/contact.html">Contact Specialist</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="medicine-grid">
+                    <div class="medicine-specs">
+                        <h4 class="section-heading">Medication Facts</h4>
+                        <ul>
+                            <li><strong>Category:</strong> ${medicine.condition}</li>
+                            <li><strong>Form:</strong> Tablet / capsule</li>
+                            <li><strong>Availability:</strong> OTC or prescription depending on your doctor</li>
+                            <li><strong>Purpose:</strong> Symptom relief and improved daily comfort</li>
+                        </ul>
+                    </div>
+                    <div class="medicine-notes">
+                        <h4 class="section-heading">Helpful Notes</h4>
+                        <ul>
+                            <li>Always consult with a healthcare professional before starting or changing any medication.</li>
+                            <li>Keep a medication list and share it with doctors and caregivers.</li>
+                            <li>If you notice side effects, stop use and seek medical advice immediately.</li>
+                            <li>Store medications safely away from children and pets.</li>
+                        </ul>
+                    </div>
+                </div>
+            `;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const selected = params.get('medicina');
+            const medicine = selected ? medicines[selected] : null;
+
+            if (medicine) {
+                renderMedicineDetail(medicine);
+                document.title = `${medicine.name} - Careconnect`;
+            } else {
+                renderMedicineList();
+                document.title = 'Medication Guide - Careconnect';
+            }
+        });
+    </script>
 </body>
 </html>
-

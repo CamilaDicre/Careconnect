@@ -1,19 +1,8 @@
 /* Shared article reading experience — senior-friendly typography & layout */
 
+@import url('palette.css');
+
 :root {
-    --article-primary: #4169e1;
-    --article-primary-dark: #4169e1;
-    --article-success: #10b981;
-    --article-success-light: #ecfdf5;
-    --article-warning: #f59e0b;
-    --article-light-bg: #f1f5f9;
-    --article-white: #ffffff;
-    --article-gray-100: #f3f4f6;
-    --article-gray-200: #e5e7eb;
-    --article-gray-500: #6b7280;
-    --article-gray-600: #4b5563;
-    --article-gray-800: #1f2937;
-    --article-gray-900: #111827;
     --article-reading-width: 680px;
     --article-font-base: 1.125rem;
     --article-font-body: 1.25rem;
