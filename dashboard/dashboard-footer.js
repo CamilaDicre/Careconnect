@@ -205,7 +205,7 @@ class DashboardFooter extends HTMLElement {
         <div class="footer-content">
           <div class="footer-row">
             <div class="footer-logo">
-              <img src="../assets/Frame-splash.svg" alt="Careconnect Logo">
+              <img src="../assets/logos/Frame-splash.svg" alt="Careconnect Logo">
               <span>areconnect</span>
             </div>
             <div class="copyright">

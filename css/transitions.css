@@ -1,16 +1,9 @@
 /* Transiciones mejoradas para Careconnect */
 
+@import url('palette.css');
+
 /* Variables CSS para consistencia */
 :root {
-  --transition-primary: #4169e1;
-  --transition-secondary: #764ba2;
-  --transition-success: #4caf50;
-  --transition-warning: #ff9800;
-  --transition-error: #f44336;
-  --transition-white: #ffffff;
-  --transition-dark: #2c3e50;
-  --transition-gray: #7f8c8d;
-  --transition-shadow: rgba(0, 0, 0, 0.1);
   --transition-blur: blur(10px);
   --transition-timing: cubic-bezier(0.23, 1, 0.32, 1);
 }

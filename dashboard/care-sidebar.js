@@ -10,6 +10,7 @@ class CareSidebar extends HTMLElement {
     this.loadAndRender();
     const btn = document.getElementById('sidebar-toggle-btn');
     if (btn) btn.remove();
+    window.addEventListener('hashchange', () => this.navigateByHash());
   }
 
   async loadAndRender() {
@@ -18,6 +19,33 @@ class CareSidebar extends HTMLElement {
     this.render(sections, userData);
     this.attachEvents();
     this.adjustMainContent();
+    this.navigateByHash();
+  }
+
+  navigateByHash() {
+    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash.replace('#', '').trim().toLowerCase();
+    const sectionParam = params.get('section') ? params.get('section').trim().toLowerCase() : '';
+    const section = sectionParam || hash;
+    const availableSections = [
+      'overview',
+      'profile',
+      'medicines',
+      'charts',
+      'calendar',
+      'caregivers',
+      'virtual-care',
+      'appointment-booking',
+      'health-monitoring',
+      'emergency-contacts',
+      'games'
+    ];
+
+    if (!section || !availableSections.includes(section)) {
+      return;
+    }
+
+    this.navigateToSection(section);
   }
 
   getUserType() {
@@ -537,7 +565,7 @@ class CareSidebar extends HTMLElement {
         <!-- Logo section -->
         <div class="logo-section">
           <div class="logo-content" id="logo-toggle">
-            <img src="../assets/Frame - 1.svg" alt="Logo" class="logo-icon">
+            <img src="../assets/logos/Frame - 1.svg" alt="Logo" class="logo-icon">
             <h1 class="logo-text">areConnect</h1>
           </div>
         </div>

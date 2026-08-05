@@ -1,14 +1,7 @@
+@import url('palette.css');
+
 /* Root Variables */
 :root {
-    --pal-primary: #4169e1;
-    --bs-primary: #4169e1;
-    --bs-primary-rgb: 65, 105, 225;
-    --bs-info: #4169e1;
-    --bs-info-rgb: 65, 105, 225;
-    --bs-link-color: #4169e1;
-    --bs-link-hover-color: #4169e1;
-    --pal-secondary : #1f2937;
-    --pal-tertiary : #4b5563;
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.5s ease;

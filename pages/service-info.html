@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Details - Careconnect</title>
+    <link rel="icon" type="image/png" href="../assets/carefavicon.png">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/blog.css">
+    <link rel="stylesheet" href="../css/transitions.css">
+    <link rel="stylesheet" href="../css/universal-responsive.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            background: linear-gradient(180deg, #f4f8ff 0%, #f8fbff 100%);
+        }
+        .service-hero {
+            padding: 6rem 1.5rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(65, 105, 225, 0.9), rgba(8, 145, 178, 0.95));
+            color: white;
+        }
+        .service-hero h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            margin-bottom: 1rem;
+        }
+        .service-hero p {
+            max-width: 720px;
+            margin: 0 auto;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            opacity: 0.95;
+        }
+        .service-details {
+            padding: 2.5rem 1.5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .service-card {
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 18px 50px rgba(65, 105, 225, 0.08);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(65, 105, 225, 0.12);
+        }
+        .service-card h2 {
+            color: #1f2937;
+            margin-bottom: 0.75rem;
+        }
+        .service-card p {
+            color: #475569;
+            line-height: 1.85;
+        }
+        .service-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        .service-actions a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.75rem;
+            border-radius: 999px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .service-actions .btn-primary {
+            background: linear-gradient(135deg, #4169e1, #0e7490);
+            color: white;
+        }
+        .service-actions .btn-secondary {
+            background: #f8fafc;
+            color: #1f2937;
+            border: 1px solid rgba(65, 105, 225, 0.16);
+        }
+        .service-actions a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 40px rgba(65, 105, 225, 0.14);
+        }
+        @media (max-width: 768px) {
+            .service-hero {
+                padding: 4rem 1rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <section class="service-hero">
+        <div class="container">
+            <h1 id="serviceTitle">Service Details</h1>
+            <p id="serviceSubtitle">Discover how Careconnect supports patients and caregivers with specialized tools and guided experiences.</p>
+        </div>
+    </section>
+
+    <section class="service-details">
+        <div class="service-card">
+            <h2 id="detailsHeading">About this service</h2>
+            <p id="detailsText">Careconnect provides a range of services designed to make healthcare easier, safer, and more connected for seniors and their caregivers.</p>
+        </div>
+
+        <div class="service-card">
+            <h2>Why this matters</h2>
+            <p>Our platform brings together caregivers, patients, medication management, appointment planning, and secure communication into one accessible experience. These tools help reduce stress, increase safety, and improve everyday care.</p>
+        </div>
+
+        <div class="service-card">
+            <h2>How to get started</h2>
+            <p>If you want to learn more about this service, use the contact form or explore our articles and caregiver directory. We will help you get the right support and answer your questions quickly.</p>
+        </div>
+
+        <div class="service-actions">
+            <a href="../pages/contact.html" class="btn btn-primary">Contact Us</a>
+            <a href="../index.html" class="btn btn-secondary">Return to Home</a>
+        </div>
+    </section>
+
+    <script>
+        const serviceMap = {
+            'Medicine Tracker': {
+                title: 'Medicine Tracker',
+                subtitle: 'Stay on top of medication schedules and take your prescriptions safely.',
+                heading: 'Track medications with confidence',
+                details: 'Monitor doses, receive reminders, and keep a complete medicine history so you can follow your treatment plan without missing a dose.'
+            },
+            'Encrypted Chat System': {
+                title: 'Encrypted Chat System',
+                subtitle: 'Secure conversations with caregivers and family members at all times.',
+                heading: 'Keep your health conversations private and easy',
+                details: 'Send messages, share updates, and coordinate care securely using our encrypted communication tools.'
+            },
+            'Pharmacies Stock Records': {
+                title: 'Pharmacies Stock Records',
+                subtitle: 'Find medicine availability quickly and plan your purchases with confidence.',
+                heading: 'Know where medicines are in stock',
+                details: 'Access pharmacy stock information so you can locate essential medicines and avoid unnecessary trips.'
+            },
+            'Appointment Calendar': {
+                title: 'Appointment Calendar',
+                subtitle: 'Manage your medical visits efficiently and never miss an important date.',
+                heading: 'Organize your health appointments',
+                details: 'Schedule, view, and track doctor visits, lab tests, and check-ups all in one calendar built for caregivers and patients.'
+            },
+            'Connect with Caretakers': {
+                title: 'Connect with Caretakers',
+                subtitle: 'Find the right caregiver to support your daily health needs.',
+                heading: 'Meet experienced caregivers',
+                details: 'Browse caregiver profiles, review ratings, and choose a professional who fits your preferences and care requirements.'
+            },
+            'Connect with Patients': {
+                title: 'Connect with Patients',
+                subtitle: 'Help caregivers manage patients more effectively and compassionately.',
+                heading: 'Support patients with better care coordination',
+                details: 'Use our caregiver-focused tools to stay organized, communicate clearly, and deliver consistent care.'
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const serviceKey = params.get('service');
+        const serviceData = serviceKey && serviceMap[serviceKey] ? serviceMap[serviceKey] : {
+            title: 'Careconnect Service Information',
+            subtitle: 'Discover how Careconnect can support your health and caregiving needs.',
+            heading: 'Careconnect services at a glance',
+            details: 'Explore our platform features, including caregiver search, medication reminders, secure chat, and appointment scheduling.'
+        };
+
+        document.getElementById('serviceTitle').textContent = serviceData.title;
+        document.getElementById('serviceSubtitle').textContent = serviceData.subtitle;
+        document.getElementById('detailsHeading').textContent = serviceData.heading;
+        document.getElementById('detailsText').textContent = serviceData.details;
+    </script>
+</body>
+</html>

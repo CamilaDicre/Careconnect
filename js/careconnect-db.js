@@ -459,9 +459,31 @@ if (typeof CareConnectDB === 'undefined') {
         const savedRow = Array.isArray(data) ? data[0] : data;
         if (!savedRow) {
           const errorMessage = 'Supabase no devolvió la fila insertada';
-          console.warn(errorMessage, '- intentando guardar localmente');
+          console.warn(errorMessage, '- consultando registro por email');
           this._setError(errorMessage);
-          
+
+          const email = row.email || user.email;
+          if (email) {
+            try {
+              const { data: queryData, error: queryError } = await client
+                .from('profiles')
+                .select('*')
+                .eq('email', email)
+                .single();
+
+              if (!queryError && queryData) {
+                const fetchedUser = this._rowToUser(queryData);
+                if (fetchedUser) {
+                  this.invalidateCache();
+                  this._clearError();
+                  return fetchedUser;
+                }
+              }
+            } catch (queryError) {
+              console.warn('Consulta de registro fallback fallida:', queryError);
+            }
+          }
+
           const localSaved = this._saveUserLocally(user);
           if (localSaved) {
             this.invalidateCache();
