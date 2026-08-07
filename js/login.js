@@ -18,12 +18,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   if (window.location.protocol === 'file:') {
     showAlert(
-      'No se puede usar Supabase desde file://. Inicia un servidor local (por ejemplo http://localhost) y autoriza ese origen en Supabase.',
+      'Supabase cannot be used from file://. Start a local server (for example http://localhost) and authorize that origin in Supabase.',
       'danger',
       'loginError'
     );
   } else if (!window.CareConnectSupabase?.isConfigured?.()) {
-    showAlert('Supabase no está configurado correctamente. Revisa js/supabase-config.js y tu clave anon.', 'danger', 'loginError');
+    showAlert('Supabase is not configured correctly. Check js/supabase-config.js and your anonymous key.', 'danger', 'loginError');
   }
 
   if (loggedInUser && sessionRole) {
@@ -170,9 +170,9 @@ document.addEventListener('DOMContentLoaded', async () => {
             const origin = window.location.origin || 'origen desconocido';
             console.error('Registro fallido también localmente para:', email, errorReason);
             alert(
-              `No se pudo crear la cuenta. Motivo: ${
-                errorReason || 'Revisa la configuración o intenta de nuevo.'
-              }\nOrigen actual: ${origin}`
+              `The account could not be created. Reason: ${
+                errorReason || 'Please check the configuration or try again.'
+              }\nCurrent origin: ${origin}`
             );
             return;
           }
@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
       } catch (error) {
         console.error('Error during registration:', error);
-        alert('Error durante el registro. Por favor, intenta de nuevo.');
+        alert('Error during registration. Please try again.');
       }
     });
   }
@@ -315,7 +315,7 @@ async function saveUsers(users) {
     return CareConnectDB.saveUsers(usersToSave);
   } catch (error) {
     console.error('Error saving users:', error);
-    alert('Error al guardar usuarios. Verifica la conexión con Supabase.');
+    alert('Error saving users. Please check the Supabase connection.');
     return false;
   }
 }

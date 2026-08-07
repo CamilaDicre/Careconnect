@@ -18,7 +18,7 @@ class UserProfile extends HTMLElement {
   async loadUserData() {
     const loggedInUser = CareConnectSession.getLoggedInUser();
     if (!loggedInUser) {
-      this.userProfileData = { name: 'Usuario', email: '-', username: '-', role: 'patient' };
+      this.userProfileData = { name: 'User', email: '-', username: '-', role: 'patient' };
       return;
     }
 
@@ -27,7 +27,7 @@ class UserProfile extends HTMLElement {
     
     this.userProfileData = {
       // Datos básicos del usuario
-      name: user ? (user.name || user.username || 'Usuario') : 'Usuario',
+      name: user ? (user.name || user.username || 'User') : 'User',
       email: user ? user.email : '-',
       username: user ? user.username : '-',
       role: user ? user.role : 'patient',
@@ -55,7 +55,7 @@ class UserProfile extends HTMLElement {
       
       // Información adicional
       preferences: userProfileData.preferences || {
-        language: 'Español',
+        language: 'English',
         notifications: true,
         accessibility: false
       },
@@ -111,11 +111,11 @@ class UserProfile extends HTMLElement {
   saveProfile() {
     this.saveUserData().then((ok) => {
       if (ok) {
-        this.showNotification('Perfil actualizado exitosamente', 'success');
+        this.showNotification('Profile updated successfully', 'success');
         this.isEditing = false;
         this.render();
       } else {
-        this.showNotification('Error al guardar el perfil', 'error');
+        this.showNotification('Error saving the profile', 'error');
       }
     });
   }

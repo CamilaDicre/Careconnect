@@ -43,7 +43,7 @@ if (typeof CareConnectDB === 'undefined') {
 
     static async _requestSupabase(path, options = {}) {
       if (typeof window !== 'undefined' && window.location?.protocol === 'file:') {
-        throw new Error('No se puede conectar a Supabase desde file://. Usa un servidor local como http://localhost y añade ese origen en Allowed origins de Supabase.');
+        throw new Error('Cannot connect to Supabase from file://. Use a local server such as http://localhost and add that origin to Supabase Allowed origins.');
       }
 
       const cfg = window.CARECONNECT_SUPABASE;
@@ -94,7 +94,7 @@ if (typeof CareConnectDB === 'undefined') {
           this.disableRemote(message);
           const origin = typeof window !== 'undefined' ? window.location.origin : 'origen desconocido';
           throw new Error(
-            `Failed to fetch. Verifica que el origen ${origin} esté autorizado en Supabase Allowed origins, que tu app se sirva desde HTTP(S) y que la URL del proyecto sea accesible.`
+            `Failed to fetch. Verify that the origin ${origin} is authorized in Supabase Allowed origins, that your app is served over HTTP(S), and that the project URL is reachable.`
           );
         }
         throw error;
@@ -458,7 +458,7 @@ if (typeof CareConnectDB === 'undefined') {
 
         const savedRow = Array.isArray(data) ? data[0] : data;
         if (!savedRow) {
-          const errorMessage = 'Supabase no devolvió la fila insertada';
+          const errorMessage = 'Supabase did not return the inserted row';
           console.warn(errorMessage, '- consultando registro por email');
           this._setError(errorMessage);
 

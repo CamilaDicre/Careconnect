@@ -215,33 +215,33 @@
   <div class="sidebar">
     <i class="bi bi-bar-chart-line nav-icon active" title="Dashboard" data-section="stats"></i>
     <i class="bi bi-people nav-icon" title="Usuarios" data-section="users"></i>
-    <i class="bi bi-clipboard-data nav-icon" title="Auditoría" data-section="audit"></i>
-    <i class="bi bi-gear nav-icon" title="Configuración" data-section="config"></i>
-    <i class="bi bi-bell nav-icon" title="Notificaciones" data-section="notify"></i>
+    <i class="bi bi-clipboard-data nav-icon" title="Audit" data-section="audit"></i>
+    <i class="bi bi-gear nav-icon" title="Settings" data-section="config"></i>
+    <i class="bi bi-bell nav-icon" title="Notifications" data-section="notify"></i>
     <div style="flex:1"></div>
-    <button id="logoutBtn" class="btn btn-danger rounded-pill px-3 py-2 mb-2" style="width:80px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:1rem;"><i class="bi bi-box-arrow-right"></i>Salir</button>
+    <button id="logoutBtn" class="btn btn-danger rounded-pill px-3 py-2 mb-2" style="width:80px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:1rem;"><i class="bi bi-box-arrow-right"></i>Log out</button>
   </div>
   <div class="main-content">
     <div id="admin-section-stats" style="display:block;">
-      <div class="dashboard-title">Panel de Administración</div>
-      <div class="dashboard-subtitle">Control total del sistema y visualización avanzada</div>
+      <div class="dashboard-title">Admin Dashboard</div>
+      <div class="dashboard-subtitle">Full system control and advanced visualization</div>
       <div class="stats-row" id="admin-stats-row"></div>
     </div>
     <div id="admin-section-users" style="display:none;">
       <div class="section">
-        <div class="section-title">Gestión de Usuarios</div>
+        <div class="section-title">User Management</div>
         <div class="mb-3">
-          <input type="text" id="searchUser" class="form-control" placeholder="Buscar usuario por nombre, email o rol">
+          <input type="text" id="searchUser" class="form-control" placeholder="Search user by name, email or role">
         </div>
         <table class="table table-dark table-hover" id="admin-users-table">
           <thead>
             <tr>
-              <th>Nombre</th>
+              <th>Name</th>
               <th>Email</th>
-              <th>Rol</th>
-              <th>Contraseña</th>
-              <th>Acciones</th>
-              <th>Detalles</th>
+              <th>Role</th>
+              <th>Password</th>
+              <th>Actions</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
@@ -253,75 +253,75 @@
           <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header">
-                <h5 class="modal-title" id="userDetailModalLabel">Detalles del Usuario</h5>
+                <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
               </div>
               <div class="modal-body" id="userDetailModalBody">
                 <!-- Aquí se mostrarán los detalles -->
               </div>
               <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
               </div>
             </div>
           </div>
         </div>
         <hr>
-        <h5>Agregar Usuario</h5>
+        <h5>Add User</h5>
         <form id="addUserForm" class="row g-2 align-items-end">
           <div class="col-md-3">
-            <input type="text" class="form-control" id="addName" placeholder="Nombre" required>
+            <input type="text" class="form-control" id="addName" placeholder="Name" required>
           </div>
           <div class="col-md-3">
             <input type="email" class="form-control" id="addEmail" placeholder="Email" required>
           </div>
           <div class="col-md-3">
-            <input type="password" class="form-control" id="addPassword" placeholder="Contraseña" required>
+            <input type="password" class="form-control" id="addPassword" placeholder="Password" required>
           </div>
           <div class="col-md-2">
             <select class="form-select" id="addRole" required>
-              <option value="">Rol</option>
+              <option value="">Role</option>
               <option value="admin">Admin</option>
-              <option value="cuidador">Cuidador</option>
-              <option value="paciente">Paciente</option>
+              <option value="cuidador">Caregiver</option>
+              <option value="paciente">Patient</option>
             </select>
           </div>
           <div class="col-md-1">
-            <button type="submit" class="btn btn-success">Agregar</button>
+            <button type="submit" class="btn btn-success">Add</button>
           </div>
         </form>
       </div>
     </div>
     <div id="admin-section-audit" style="display:none;">
       <div class="section">
-        <div class="section-title">Panel de Auditoría</div>
+        <div class="section-title">Audit Panel</div>
         <ul class="list-group list-group-flush">
-          <li class="list-group-item bg-transparent text-light">[12:01] Ameth creó un nuevo usuario</li>
-          <li class="list-group-item bg-transparent text-light">[11:45] Josue actualizó datos de paciente</li>
-          <li class="list-group-item bg-transparent text-light">[11:30] Camila inició sesión</li>
+          <li class="list-group-item bg-transparent text-light">[12:01] Ameth created a new user</li>
+          <li class="list-group-item bg-transparent text-light">[11:45] Josue updated patient data</li>
+          <li class="list-group-item bg-transparent text-light">[11:30] Camila signed in</li>
         </ul>
       </div>
     </div>
     <div id="admin-section-config" style="display:none;">
       <div class="section">
-        <div class="section-title">Configuración Avanzada</div>
-        <button class="btn btn-custom">Gestionar Roles</button>
-        <button class="btn btn-custom ms-2">Parámetros del Sistema</button>
+        <div class="section-title">Advanced Settings</div>
+        <button class="btn btn-custom">Manage Roles</button>
+        <button class="btn btn-custom ms-2">System Parameters</button>
       </div>
     </div>
     <div id="admin-section-notify" style="display:none;">
       <div class="section">
-        <div class="section-title">Notificaciones y Alertas</div>
-        <div class="alert alert-info">No hay notificaciones nuevas.</div>
+        <div class="section-title">Notifications and Alerts</div>
+        <div class="alert alert-info">No new notifications.</div>
       </div>
     </div>
   </div>
   <!-- Modal de confirmación de logout -->
   <div id="logoutModal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.35);z-index:20000;display:flex;align-items:center;justify-content:center;">
     <div style="background:white;padding:32px 28px;border-radius:18px;box-shadow:0 8px 40px rgba(0,0,0,0.18);max-width:350px;text-align:center;">
-      <h4 style="color:#4169e1;font-weight:700;margin-bottom:18px;">¿Seguro que quieres cerrar sesión?</h4>
-      <p style="color:#555;margin-bottom:24px;">Tu sesión se cerrará y volverás al inicio.</p>
-      <button id="confirmLogoutBtn" class="btn btn-danger px-4 me-2">Cerrar sesión</button>
-      <button id="cancelLogoutBtn" class="btn btn-secondary px-4">Cancelar</button>
+      <h4 style="color:#4169e1;font-weight:700;margin-bottom:18px;">Are you sure you want to log out?</h4>
+      <p style="color:#555;margin-bottom:24px;">Your session will end and you will return to the home screen.</p>
+      <button id="confirmLogoutBtn" class="btn btn-danger px-4 me-2">Log out</button>
+      <button id="cancelLogoutBtn" class="btn btn-secondary px-4">Cancel</button>
     </div>
   </div>
   
@@ -331,9 +331,9 @@
       <div class="logout-icon">
         <i class="bi bi-box-arrow-right"></i>
       </div>
-      <div class="logout-text">¡Hasta pronto, Administrador!</div>
-      <div class="logout-subtext">Gracias por mantener el sistema funcionando</div>
-      <div class="logout-message">Tu gestión hace posible que otros cuiden mejor. ¡Esperamos verte pronto!</div>
+      <div class="logout-text">See you soon, Administrator!</div>
+      <div class="logout-subtext">Thank you for keeping the system running</div>
+      <div class="logout-message">Your leadership makes it possible for others to care better. We hope to see you soon!</div>
     </div>
   </div>
   
@@ -362,10 +362,10 @@
       const statsRow = document.getElementById('admin-stats-row');
       if (!statsRow) return;
       statsRow.innerHTML = `
-        <div class="stat-card"><div class="stat-title">Usuarios Totales</div><div class="stat-value">${total}</div></div>
+        <div class="stat-card"><div class="stat-title">Total Users</div><div class="stat-value">${total}</div></div>
         <div class="stat-card"><div class="stat-title">Admins</div><div class="stat-value">${admins}</div></div>
-        <div class="stat-card"><div class="stat-title">Cuidadores</div><div class="stat-value">${cuidadores}</div></div>
-        <div class="stat-card"><div class="stat-title">Pacientes</div><div class="stat-value">${pacientes}</div></div>
+        <div class="stat-card"><div class="stat-title">Caregivers</div><div class="stat-value">${cuidadores}</div></div>
+        <div class="stat-card"><div class="stat-title">Patients</div><div class="stat-value">${pacientes}</div></div>
       `;
     }
     async function renderUsersTable(filter = '') {
@@ -382,7 +382,7 @@
       });
       if (!filtered.length) {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td colspan="6" class="text-center">No hay usuarios registrados.</td>`;
+        tr.innerHTML = `<td colspan="6" class="text-center">No users registered.</td>`;
         tbody.appendChild(tr);
         return;
       }
@@ -394,8 +394,8 @@
           <td>
             <select class="form-select form-select-sm edit-role" data-idx="${users.indexOf(u)}">
               <option value="admin" ${u.role === 'admin' ? 'selected' : ''}>Admin</option>
-              <option value="cuidador" ${u.role === 'cuidador' ? 'selected' : ''}>Cuidador</option>
-              <option value="paciente" ${u.role === 'paciente' ? 'selected' : ''}>Paciente</option>
+              <option value="cuidador" ${u.role === 'cuidador' ? 'selected' : ''}>Caregiver</option>
+              <option value="paciente" ${u.role === 'paciente' ? 'selected' : ''}>Patient</option>
             </select>
           </td>
           <td style="position:relative;min-width:120px;">
@@ -405,10 +405,10 @@
             </button>
           </td>
           <td>
-            <button class="btn btn-danger btn-sm delete-user" data-idx="${users.indexOf(u)}">Eliminar</button>
+            <button class="btn btn-danger btn-sm delete-user" data-idx="${users.indexOf(u)}">Delete</button>
           </td>
           <td>
-            <button class="btn btn-info btn-sm view-details" data-idx="${users.indexOf(u)}" data-bs-toggle="modal" data-bs-target="#userDetailModal">Ver detalles</button>
+            <button class="btn btn-info btn-sm view-details" data-idx="${users.indexOf(u)}" data-bs-toggle="modal" data-bs-target="#userDetailModal">View details</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -434,7 +434,7 @@
       if (!e.target.classList.contains('delete-user')) return;
       const idx = e.target.dataset.idx;
       const users = await getUsers();
-      if (confirm('¿Seguro que quieres eliminar este usuario?')) {
+      if (confirm('Are you sure you want to delete this user?')) {
         users.splice(idx, 1);
         await saveUsers(users);
         await renderUsersTable(document.getElementById('searchUser').value);
@@ -448,12 +448,12 @@
       const password = document.getElementById('addPassword').value.trim();
       const role = document.getElementById('addRole').value;
       if (!name || !email || !password || !role) {
-        alert('Completa todos los campos');
+        alert('Please complete all fields');
         return;
       }
       const users = await getUsers();
       if (users.find(u => u.username === name)) {
-        alert('Ese nombre de usuario ya existe');
+        alert('That username already exists');
         return;
       }
       users.push({ username: name, email, password, role });

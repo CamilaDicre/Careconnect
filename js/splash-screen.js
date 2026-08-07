@@ -55,7 +55,7 @@ class SplashScreenManager {
                     <img src="${logoSrc}" alt="Careconnect Logo">
                 </div>
                 <h1 class="splash-title">Careconnect</h1>
-                <p class="splash-subtitle">Conectamos, Tú Cuidas</p>
+                <p class="splash-subtitle">We connect, you care</p>
                 <div class="splash-loader">
                     <div class="splash-progress">
                         <div class="splash-progress-bar"></div>
@@ -68,7 +68,7 @@ class SplashScreenManager {
                 </div>
             </div>
             <div class="welcome-message">
-                Preparando tu experiencia Careconnect...
+                Preparing your Careconnect experience...
             </div>
         `;
         

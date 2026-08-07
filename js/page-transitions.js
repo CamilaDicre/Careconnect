@@ -68,8 +68,8 @@ class PageTransitions {
             ${particles}
             <div class="page-transition-content">
                 <div class="page-transition-spinner"></div>
-                <h3>Cargando...</h3>
-                <p>Preparando tu experiencia Careconnect</p>
+                <h3>Loading...</h3>
+                <p>Preparing your Careconnect experience</p>
             </div>
         `;
         document.body.appendChild(this.transitionOverlay);

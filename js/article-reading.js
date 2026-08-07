@@ -49,7 +49,7 @@
         finishSection.classList.add('is-read');
         const title = finishSection.querySelector('[data-finish-title]');
         if (title) {
-            title.textContent = '✓ Has terminado de leer este artículo';
+            title.textContent = '✓ You have finished reading this article';
         }
     }
 

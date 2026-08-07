@@ -23,14 +23,14 @@ class CaregiverSearch extends HTMLElement {
       // Only users with caregiver role
       const caregivers = users.filter(u => u.role === 'caregiver' || u.role === 'cuidador').map(u => ({
         name: u.username || '-',
-        specialty: u.skills || u.specialty || 'Cuidado general',
+        specialty: u.skills || u.specialty || 'General care',
         rating: u.rating || 4.5,
-        experience: u.experience || '5 años',
-        location: u.address || u.location || 'Ubicación no especificada',
+        experience: u.experience || '5 years',
+        location: u.address || u.location || 'Location not specified',
         photo: u.photo || `https://ui-avatars.com/api/?name=${encodeURIComponent(u.username || '-')}&background=1976d2&color=fff&size=128&rounded=true`,
         available: u.available !== false, // Default to true if not specified
-        price: u.price || '$25/hora',
-        description: u.description || 'Cuidador profesional con experiencia en atención domiciliaria.',
+        price: u.price || '$25/hour',
+        description: u.description || 'Professional caregiver with experience in home care.',
         email: u.email || '',
         id: u.id || u.username
       }));

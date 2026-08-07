@@ -32,10 +32,10 @@
 
             const badge = document.createElement('span');
             badge.className = 'article-read-label';
-            badge.innerHTML = '<i class="bi bi-check-circle-fill"></i> Leído';
+            badge.innerHTML = '<i class="bi bi-check-circle-fill"></i> Read';
             card.querySelector('.article-content')?.prepend(badge);
 
-            link.textContent = '✓ Leído — Ver de nuevo';
+            link.textContent = '✓ Read — View again';
             link.classList.add('read-more-btn--completed');
         });
     });
