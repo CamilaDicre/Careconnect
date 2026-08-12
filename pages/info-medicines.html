@@ -3,206 +3,359 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Departments - Medick</title>
+    <title>Careconnect | Medicine Guide</title>
     <link rel="icon" type="image/png" href="../assets/carefavicon.png">
-    <!--CSS Links-->
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/departments.css">
     <link rel="stylesheet" href="../css/responsive-transitions.css">
-    <link rel="stylesheet" href="css/universal-responsive.css">
+    <link rel="stylesheet" href="../css/universal-responsive.css">
     <link rel="stylesheet" href="../css/transitions.css">
-    <!--Bootstrap Links-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!--Google Fonts Links-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
-    
+
     <style>
+        :root {
+            --primary: #3a72ff;
+            --primary-dark: #1d4fd9;
+            --secondary: #ecf3ff;
+            --text: #1d2433;
+            --muted: #65748b;
+            --surface: #f7f9fc;
+            --card: #ffffff;
+            --outline: rgba(58, 114, 255, 0.12);
+            --shadow: 0 16px 40px rgba(20, 39, 76, 0.12);
+        }
+
         body {
-            background-color: #f8f9fa;
+            background: linear-gradient(180deg, #eef5ff 0%, #f9fbff 100%);
+            color: var(--text);
         }
-        .medicine-info {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #4169e1;
+
+        .medicine-page {
+            padding-bottom: 4rem;
         }
-        .medicine-info ul {
+
+        .medicine-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 7rem 0 4rem;
+            background: linear-gradient(135deg, rgba(58, 114, 255, 0.95), rgba(18, 90, 206, 0.9));
+        }
+
+        .medicine-hero::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(circle at 15% 20%, rgba(255,255,255,0.22), transparent 26%),
+                radial-gradient(circle at 85% 12%, rgba(255,255,255,0.18), transparent 25%),
+                radial-gradient(circle at 50% 80%, rgba(255,255,255,0.12), transparent 35%);
+        }
+
+        .medicine-hero .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            background: rgba(255,255,255,0.14);
+            border: 1px solid rgba(255,255,255,0.26);
+            color: white;
+            font-weight: 600;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .medicine-hero h1 {
+            font-size: clamp(2.4rem, 5vw, 4rem);
+            font-weight: 800;
+            color: #fff;
+            margin: 1rem 0 0.75rem;
+        }
+
+        .medicine-hero p {
+            max-width: 640px;
+            margin: 0 auto;
+            color: rgba(255,255,255,0.88);
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .medicine-grid {
+            position: relative;
+            margin-top: -2rem;
+            z-index: 2;
+        }
+
+        .medicine-card {
+            height: 100%;
+            background: rgba(255,255,255,0.92);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--outline);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .medicine-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 42px rgba(27, 47, 82, 0.18);
+        }
+
+        .medicine-card .image-wrap {
+            position: relative;
+            height: 220px;
+            overflow: hidden;
+            background: linear-gradient(135deg, #dfeaff, #edf4ff);
+        }
+
+        .medicine-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.35s ease;
+        }
+
+        .medicine-card:hover img {
+            transform: scale(1.04);
+        }
+
+        .medicine-card .card-body {
+            padding: 1.4rem 1.3rem 1.5rem;
+        }
+
+        .medicine-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.38rem 0.7rem;
+            background: #edf4ff;
+            color: var(--primary-dark);
+            border-radius: 999px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .medicine-card h3 {
+            margin: 1rem 0 0.6rem;
+            font-size: 1.55rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .medicine-card p {
+            margin: 0 0 1rem;
+            color: var(--muted);
+            line-height: 1.65;
+            font-size: 0.96rem;
+        }
+
+        .medicine-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            padding: 0;
+            margin: 0 0 1.2rem;
             list-style: none;
-            padding-left: 0;
-            margin: 0;
         }
-        .medicine-info li {
-            margin: 8px 0;
-            padding: 8px;
-            background: white;
-            border-radius: 5px;
-            font-size: 0.9em;
+
+        .medicine-list li {
+            padding: 0.33rem 0.55rem;
+            border-radius: 999px;
+            background: #f6f8fb;
+            color: #42526b;
+            border: 1px solid rgba(128, 150, 180, 0.2);
+            font-size: 0.72rem;
+            font-weight: 600;
         }
-        .medicine-info strong {
-            color: #4169e1;
+
+        .primary-btn {
+            width: 100%;
+            border: none;
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 14px 24px rgba(58, 114, 255, 0.22);
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 28px rgba(58, 114, 255, 0.28);
+        }
+
+        @media (max-width: 767.98px) {
+            .medicine-hero {
+                padding-top: 5.8rem;
+            }
+            .medicine-card .image-wrap {
+                height: 200px;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Header Component -->
     <header-component></header-component>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="departments-hero-section text-center">
+    <main class="medicine-page">
+        <section class="medicine-hero text-center">
             <div class="container">
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <h1 class="fw-bold mb-3">Malestares</h1>
-                        <nav aria-label="breadcrumb">
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
+                <span class="hero-badge"><i class="bi bi-heart-pulse"></i> Care guidance</span>
+                <h1>Common symptoms</h1>
+                <p>Explore practical treatment options and medication information to better understand what may help for each situation.</p>
             </div>
         </section>
 
-        <!-- Departments Section -->
         <section class="departments-section py-5">
-            <div class="container">
-                <div class="row g-3">
-                    <!-- Department 1 -->
+            <div class="container medicine-grid">
+                <div class="row g-4">
                     <div class="col-lg-4 col-md-6">
-                        <div class="department-card">
-                            <img src="https://cegagdl.com/wp-content/uploads/2020/12/Dolor-estomacal.jpg" alt="Stomach Ache" class="img-fluid">
-                            <div class="department-info">
+                        <article class="medicine-card">
+                            <div class="image-wrap">
+                                <img src="https://cegagdl.com/wp-content/uploads/2020/12/Dolor-estomacal.jpg" alt="Stomach Ache">
+                            </div>
+                            <div class="card-body">
+                                <span class="medicine-tag">Digestive</span>
                                 <h3>Stomach Ache</h3>
-                                <div class="medicine-info" style="display: none;">
-                                    <ul>
-                                        <li><strong>Antacid (Tums, Rolaids)</strong> - Neutralizes stomach acid</li>
-                                        <li><strong>Simethicone (Gas-X)</strong> - Relieves gas and bloating</li>
-                                        <li><strong>Bismuth Subsalicylate (Pepto-Bismol)</strong> - Treats upset stomach</li>
-                                        <li><strong>Omeprazole (Prilosec)</strong> - Reduces acid production</li>
-                                    </ul>
-                                </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <p>Options commonly used to relieve bloating, discomfort, and acid-related symptoms.</p>
+                                <ul class="medicine-list">
+                                    <li>Antacid</li>
+                                    <li>Gas relief</li>
+                                    <li>Acid reducer</li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-name="Stomach Ache">See options</button>
                             </div>
-                        </div>
+                        </article>
                     </div>
 
-                    <!-- Department 2 -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="department-card">
-                            <img src="https://beebom.com/wp-content/uploads/2018/03/blood-pressure-meter.jpg?w=730&h=487&crop=1&quality=75" alt="Hipertension" class="img-fluid">
-                            <div class="department-info">
-                                <h3>Hipertension</h3>
-                                <div class="medicine-info" style="display: none;">
-                                    <ul>
-                                        <li><strong>ACE Inhibitors (Lisinopril)</strong> - Relaxes blood vessels</li>
-                                        <li><strong>Beta Blockers (Metoprolol)</strong> - Reduces heart rate</li>
-                                        <li><strong>Calcium Channel Blockers (Amlodipine)</strong> - Relaxes arteries</li>
-                                        <li><strong>Diuretics (Hydrochlorothiazide)</strong> - Removes excess fluid</li>
-                                    </ul>
-                                </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                        <article class="medicine-card">
+                            <div class="image-wrap">
+                                <img src="https://beebom.com/wp-content/uploads/2018/03/blood-pressure-meter.jpg?w=730&h=487&crop=1&quality=75" alt="Hypertension">
                             </div>
-                        </div>
+                            <div class="card-body">
+                                <span class="medicine-tag">Heart health</span>
+                                <h3>Hypertension</h3>
+                                <p>Medications that help relax blood vessels and regulate circulation.</p>
+                                <ul class="medicine-list">
+                                    <li>ACE inhibitor</li>
+                                    <li>Beta blocker</li>
+                                    <li>Diuretic</li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-name="Hypertension">See options</button>
+                            </div>
+                        </article>
                     </div>
 
-                    <!-- Department 3 -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="department-card">
-                            <img src="https://gullahcuisine.net/wp-content/uploads/2020/12/hombres-con-dolor-de-cabeza-2048x1365.jpg" alt="Headache" class="img-fluid">
-                            <div class="department-info">
+                        <article class="medicine-card">
+                            <div class="image-wrap">
+                                <img src="https://gullahcuisine.net/wp-content/uploads/2020/12/hombres-con-dolor-de-cabeza-2048x1365.jpg" alt="Headache">
+                            </div>
+                            <div class="card-body">
+                                <span class="medicine-tag">Pain relief</span>
                                 <h3>Headache</h3>
-                                <div class="medicine-info" style="display: none;">
-                                    <ul>
-                                        <li><strong>Acetaminophen (Tylenol)</strong> - Pain reliever, gentle on stomach</li>
-                                        <li><strong>Ibuprofen (Advil, Motrin)</strong> - Anti-inflammatory pain reliever</li>
-                                        <li><strong>Aspirin</strong> - Pain reliever with anti-inflammatory</li>
-                                        <li><strong>Sumatriptan (Imitrex)</strong> - For migraine headaches</li>
-                                    </ul>
-                                </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <p>Pain relievers designed to reduce pressure, inflammation, and discomfort.</p>
+                                <ul class="medicine-list">
+                                    <li>Ibuprofen</li>
+                                    <li>Tylenol</li>
+                                    <li>Aspirin</li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-name="Headache">See options</button>
                             </div>
-                        </div>
+                        </article>
                     </div>
 
-                    <!-- Department 4 -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="department-card">
-                            <img src="https://i1.wp.com/www.deportesaludable.com/wp-content/uploads/2018/11/Resfriado.jpg?fit=1600%2C1050&ssl=1" alt="Colds" class="img-fluid">
-                            <div class="department-info">
+                        <article class="medicine-card">
+                            <div class="image-wrap">
+                                <img src="https://i1.wp.com/www.deportesaludable.com/wp-content/uploads/2018/11/Resfriado.jpg?fit=1600%2C1050&ssl=1" alt="Colds">
+                            </div>
+                            <div class="card-body">
+                                <span class="medicine-tag">Cold care</span>
                                 <h3>Colds</h3>
-                                <div class="medicine-info" style="display: none;">
-                                    <ul>
-                                        <li><strong>Decongestants (Pseudoephedrine)</strong> - Reduces nasal congestion</li>
-                                        <li><strong>Antihistamines (Diphenhydramine)</strong> - Helps runny nose and sneezing</li>
-                                        <li><strong>Cough Suppressants (Dextromethorphan)</strong> - Reduces coughing</li>
-                                        <li><strong>Expectorants (Guaifenesin)</strong> - Thins mucus</li>
-                                    </ul>
-                                </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <p>Products aimed at easing congestion, cough, fever, and seasonal discomfort.</p>
+                                <ul class="medicine-list">
+                                    <li>Decongestant</li>
+                                    <li>Antihistamine</li>
+                                    <li>Cough syrup</li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-name="Colds">See options</button>
                             </div>
-                        </div>
+                        </article>
                     </div>
 
-                    <!-- Department 5 -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="department-card">
-                            <img src="https://th.bing.com/th/id/OIP.KQnWAYsxadv4lAdYwGDIbQHaEE?rs=1&pid=ImgDetMain" alt="Gastritis" class="img-fluid">
-                            <div class="department-info">
+                        <article class="medicine-card">
+                            <div class="image-wrap">
+                                <img src="https://th.bing.com/th/id/OIP.KQnWAYsxadv4lAdYwGDIbQHaEE?rs=1&pid=ImgDetMain" alt="Gastritis">
+                            </div>
+                            <div class="card-body">
+                                <span class="medicine-tag">Stomach care</span>
                                 <h3>Gastritis</h3>
-                                <div class="medicine-info" style="display: none;">
-                                    <ul>
-                                        <li><strong>Proton Pump Inhibitors (Omeprazole)</strong> - Reduces stomach acid</li>
-                                        <li><strong>H2 Blockers (Ranitidine, Famotidine)</strong> - Decreases acid production</li>
-                                        <li><strong>Antacids (Mylanta, Maalox)</strong> - Neutralizes stomach acid</li>
-                                        <li><strong>Sucralfate (Carafate)</strong> - Protects stomach lining</li>
-                                    </ul>
-                                </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                                <p>Therapies that help reduce stomach acid and protect the digestive lining.</p>
+                                <ul class="medicine-list">
+                                    <li>Omeprazole</li>
+                                    <li>H2 blocker</li>
+                                    <li>Antacid</li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-name="Gastritis">See options</button>
                             </div>
-                        </div>
+                        </article>
                     </div>
 
-                    <!-- Department 6 -->
                     <div class="col-lg-4 col-md-6">
-                        <div class="department-card">
-                            <img src="https://www.firstcontacthealth.com/wp-content/uploads/2022/11/shoulder-pain-01.jpg" alt="Joint Pain" class="img-fluid">
-                            <div class="department-info">
-                                <h3>Joint Pain</h3>
-                                <div class="medicine-info" style="display: none;">
-                                    <ul>
-                                        <li><strong>NSAIDs (Ibuprofen, Naproxen)</strong> - Anti-inflammatory for joints</li>
-                                        <li><strong>Topical pain relievers (Voltaren Gel)</strong> - Applied directly to skin</li>
-                                        <li><strong>Acetaminophen (Tylenol)</strong> - Pain reliever, easier on stomach</li>
-                                        <li><strong>Glucosamine/Chondroitin</strong> - Supplements for joint health</li>
-                                    </ul>
-                                </div>
-                                <button onclick="goToMalestar(this)">Learn more</button>
+                        <article class="medicine-card">
+                            <div class="image-wrap">
+                                <img src="https://www.firstcontacthealth.com/wp-content/uploads/2022/11/shoulder-pain-01.jpg" alt="Joint Pain">
                             </div>
-                        </div>
+                            <div class="card-body">
+                                <span class="medicine-tag">Mobility</span>
+                                <h3>Joint Pain</h3>
+                                <p>Supportive options for inflammation, stiffness, and daily movement comfort.</p>
+                                <ul class="medicine-list">
+                                    <li>NSAID</li>
+                                    <li>Topical gel</li>
+                                    <li>Joint care</li>
+                                </ul>
+                                <button type="button" class="primary-btn" data-name="Joint Pain">See options</button>
+                            </div>
+                        </article>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <!-- Footer Component -->
     <footer-component></footer-component>
-    <!--Script code-->
+
     <script src="../components/header-component.js"></script>
     <script src="../components/footer-component.js"></script>
     <script src="../js/main.js"></script>
     <script src="../js/page-transitions.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <script>
-        function goToMalestar(button) {
-            const malestar = button.parentElement.querySelector('h3').textContent.trim();
-            window.location.href = `medicinas.html?name=${encodeURIComponent(malestar)}`;
-        }
+        document.querySelectorAll('.primary-btn').forEach((button) => {
+            button.addEventListener('click', () => {
+                const selectedName = button.dataset.name || 'Stomach Ache';
+                window.location.href = `medicines.html?name=${encodeURIComponent(selectedName)}`;
+            });
+        });
     </script>
 </body>
 </html>
