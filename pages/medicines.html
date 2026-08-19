@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="../css/responsive-transitions.css">
   <link rel="stylesheet" href="../css/universal-responsive.css">
   <link rel="stylesheet" href="../css/transitions.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -36,6 +37,136 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 2rem 1.25rem 4rem;
+    }
+
+    .med-intro {
+      max-width: 700px;
+      margin: -0.5rem 0 1.5rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .med-safety-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      margin-bottom: 1.5rem;
+      padding: 1rem 1.1rem;
+      color: #7c2d12;
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 14px;
+      line-height: 1.55;
+    }
+
+    .med-safety-note i {
+      margin-top: 0.15rem;
+      color: #ea580c;
+    }
+
+    .symptom-nav {
+      display: flex;
+      gap: 0.55rem;
+      overflow-x: auto;
+      position: sticky;
+      top: 0.75rem;
+      z-index: 5;
+      padding: 0.7rem;
+      margin-bottom: 0.4rem;
+      background: rgba(247, 250, 255, 0.86);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      backdrop-filter: blur(12px);
+      scrollbar-width: thin;
+    }
+
+    .symptom-nav a {
+      flex: 0 0 auto;
+      padding: 0.55rem 0.8rem;
+      color: var(--primary-dark);
+      background: rgba(255,255,255,0.78);
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .symptom-nav a:hover,
+    .symptom-nav a:focus-visible {
+      background: #eaf1ff;
+      outline: 2px solid rgba(58, 114, 255, 0.25);
+      outline-offset: 2px;
+    }
+
+    .medicine-search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding: 0.8rem;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      box-shadow: 0 10px 24px rgba(28, 48, 81, 0.06);
+    }
+
+    .medicine-search label {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .medicine-search input {
+      width: 100%;
+      min-width: 0;
+      padding: 0.8rem 1rem;
+      color: var(--text);
+      background: #f8fbff;
+      border: 1px solid var(--line);
+      border-radius: 11px;
+      font: inherit;
+      outline: none;
+    }
+
+    .medicine-search input:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(58, 114, 255, 0.14);
+    }
+
+    .clear-search {
+      padding: 0.75rem 1rem;
+      color: var(--primary-dark);
+      background: #eaf1ff;
+      border: 0;
+      border-radius: 11px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .search-status {
+      grid-column: 1 / -1;
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .medicine-empty {
+      display: none;
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      color: var(--muted);
+      text-align: center;
+      background: rgba(255,255,255,0.82);
+      border: 1px dashed rgba(58, 114, 255, 0.3);
+      border-radius: 16px;
     }
 
     .med-header {
@@ -92,22 +223,58 @@
     }
 
     .symptom-group h2 {
-      margin: 0 0 1.2rem;
+      margin: 0;
       font-size: clamp(1.5rem, 2vw, 2rem);
       font-weight: 800;
       color: var(--text);
     }
 
-    .medicine-row {
+    .symptom-heading {
       display: flex;
-      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .symptom-title {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .symptom-title i {
+      display: grid;
+      width: 2.25rem;
+      height: 2.25rem;
+      place-items: center;
+      color: var(--primary-dark);
+      background: #eaf1ff;
+      border-radius: 12px;
+    }
+
+    .option-count {
+      flex: 0 0 auto;
+      padding: 0.4rem 0.65rem;
+      color: var(--muted);
+      background: #f6f8fb;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .medicine-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
       gap: 1.5rem;
-      justify-content: center;
     }
 
     .medicine-item {
-      flex: 1 1 280px;
-      max-width: 320px;
+      min-width: 0;
+      max-width: none;
+      display: flex;
+      flex-direction: column;
       background: var(--card);
       border-radius: 18px;
       padding: 1rem;
@@ -145,10 +312,16 @@
       color: var(--muted);
       line-height: 1.65;
       font-size: 0.93rem;
+      flex: 1;
     }
 
     .medicine-item p b {
       color: var(--text);
+    }
+
+    .symptom-group:target {
+      border-color: rgba(58, 114, 255, 0.4);
+      box-shadow: 0 0 0 4px rgba(58, 114, 255, 0.1), var(--shadow);
     }
 
     @media (max-width: 767.98px) {
@@ -163,18 +336,68 @@
       .symptom-group {
         padding: 1.1rem 0.9rem;
       }
+
+      .symptom-heading {
+        align-items: flex-start;
+      }
+
+      .option-count {
+        font-size: 0.7rem;
+      }
+
+      .med-page {
+        padding-top: 1rem;
+      }
+
+      .med-header {
+        position: static;
+      }
+
+      .medicine-search {
+        grid-template-columns: 1fr;
+      }
+
+      .search-status {
+        grid-column: auto;
+      }
     }
   </style>
 </head>
 <body>
   <div class="med-page">
     <header class="med-header">
-      <h1>Medicine options</h1>
-      <a class="back-btn" href="info-medicines.html">Return</a>
+      <div>
+        <h1>Medicine options</h1>
+        <p class="med-intro">A quick reference for common symptoms and medicines. Use it to prepare questions for a healthcare professional.</p>
+      </div>
+      <a class="back-btn" href="info-medicines.html"><i class="bi bi-arrow-left"></i> Back to symptoms</a>
     </header>
 
+    <div class="med-safety-note" role="note">
+      <i class="bi bi-exclamation-triangle-fill"></i>
+      <span>This guide is for general information only. Check the label and ask a pharmacist or clinician before taking any medicine, especially for children, pregnancy, allergies, or existing conditions.</span>
+    </div>
+
+    <nav class="symptom-nav" aria-label="Jump to symptom">
+      <a href="#stomach-ache">Stomach ache</a>
+      <a href="#hypertension">Hypertension</a>
+      <a href="#headache">Headache</a>
+      <a href="#colds">Colds</a>
+      <a href="#gastritis">Gastritis</a>
+      <a href="#joint-pain">Joint pain</a>
+    </nav>
+
+    <form class="medicine-search" id="medicineSearchForm" role="search">
+      <label for="medicineSearchInput">Search medicines</label>
+      <input id="medicineSearchInput" type="search" placeholder="Search by medicine, symptom, use, or description" autocomplete="off">
+      <button class="clear-search" id="clearMedicineSearch" type="button">Clear</button>
+      <p class="search-status" id="medicineSearchStatus" aria-live="polite">Showing all 12 medicine options</p>
+    </form>
+
+    <div class="medicine-empty" id="medicineEmpty" role="status">No medicine options matched your search. Try a different name or symptom.</div>
+
     <div id="stomach-ache" class="symptom-group">
-      <h2>Stomach Ache</h2>
+      <div class="symptom-heading"><div class="symptom-title"><i class="bi bi-emoji-frown"></i><h2>Stomach Ache</h2></div><span class="option-count">2 options</span></div>
       <div class="medicine-row">
         <div class="medicine-item">
           <img src="https://walmartni.vtexassets.com/arquivos/ids/387732/Acetaminofen-500Mg-20-Tabletas-Bayer-2-27568.jpg?v=638496886929070000" alt="Acetaminophen">
@@ -189,8 +412,8 @@
       </div>
     </div>
 
-    <div id="hipertension" class="symptom-group">
-      <h2>Hypertension</h2>
+    <div id="hypertension" class="symptom-group">
+      <div class="symptom-heading"><div class="symptom-title"><i class="bi bi-heart-pulse"></i><h2>Hypertension</h2></div><span class="option-count">2 options</span></div>
       <div class="medicine-row">
         <div class="medicine-item">
           <img src="https://tse4.mm.bing.net/th/id/OIP.G5XhKilnydEAI8XC7BdgQQHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Lisinopril">
@@ -206,7 +429,7 @@
     </div>
 
     <div id="headache" class="symptom-group">
-      <h2>Headache</h2>
+      <div class="symptom-heading"><div class="symptom-title"><i class="bi bi-bandaid"></i><h2>Headache</h2></div><span class="option-count">2 options</span></div>
       <div class="medicine-row">
         <div class="medicine-item">
           <img src="https://th.bing.com/th/id/R.2e51fc2fe1cdeecded9d7a9ea0e1e47c?rik=0RYicViCxXgpsw&pid=ImgRaw&r=0" alt="Ibuprofen">
@@ -222,7 +445,7 @@
     </div>
 
     <div id="colds" class="symptom-group">
-      <h2>Colds</h2>
+      <div class="symptom-heading"><div class="symptom-title"><i class="bi bi-thermometer-half"></i><h2>Colds</h2></div><span class="option-count">2 options</span></div>
       <div class="medicine-row">
         <div class="medicine-item">
           <img src="https://superxtrapanama.vtexassets.com/arquivos/ids/167589/7410002801735.png?v=638041335507500000" alt="Acetaminophen">
@@ -238,7 +461,7 @@
     </div>
 
     <div id="gastritis" class="symptom-group">
-      <h2>Gastritis</h2>
+      <div class="symptom-heading"><div class="symptom-title"><i class="bi bi-cup-hot"></i><h2>Gastritis</h2></div><span class="option-count">2 options</span></div>
       <div class="medicine-row">
         <div class="medicine-item">
           <img src="https://drogueriayfarmacialapaz.com/wp-content/uploads/2022/08/Omeprazol.jpg" alt="Omeprazole">
@@ -246,15 +469,15 @@
           <p><b>Use:</b> Acid reflux, gastritis.<br><b>Description:</b> Proton pump inhibitor that reduces stomach acid. Commonly prescribed for gastritis and ulcers.</p>
         </div>
         <div class="medicine-item">
-          <img src="https://5.imimg.com/data5/VK/ZD/DY/SELLER-1960031/ranitidine-tablets-150-mg-500x500.jpg" alt="Ranitidine">
-          <h3>Ranitidine</h3>
-          <p><b>Use:</b> Acid reduction.<br><b>Description:</b> H2 blocker that helps decrease stomach acid. Used for short-term relief of gastritis symptoms.</p>
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Famotidine_20mg_tablets.jpg/512px-Famotidine_20mg_tablets.jpg" alt="Famotidine">
+          <h3>Famotidine</h3>
+          <p><b>Use:</b> Acid reduction.<br><b>Description:</b> H2 blocker that reduces stomach acid. Ask a clinician whether it is suitable for your symptoms and other medicines.</p>
         </div>
       </div>
     </div>
 
     <div id="joint-pain" class="symptom-group">
-      <h2>Joint Pain</h2>
+      <div class="symptom-heading"><div class="symptom-title"><i class="bi bi-person-walking"></i><h2>Joint Pain</h2></div><span class="option-count">2 options</span></div>
       <div class="medicine-row">
         <div class="medicine-item">
           <img src="https://tse4.mm.bing.net/th/id/OIP.qiSvjFbxIbuvXxvDZTr9xAHaHa?rs=1&pid=ImgDetMain&o=7&rm=3" alt="Naproxen">
@@ -271,6 +494,50 @@
   </div>
 
   <script src="../js/page-transitions.js"></script>
+  <script>
+    const selectedSymptom = new URLSearchParams(window.location.search).get('name');
+    if (selectedSymptom) {
+      const symptomId = selectedSymptom.toLowerCase().replace(/\s+/g, '-');
+      const symptomSection = document.getElementById(symptomId);
+      if (symptomSection) {
+        window.requestAnimationFrame(() => symptomSection.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+      }
+    }
+
+    const medicineSearchInput = document.getElementById('medicineSearchInput');
+    const clearMedicineSearch = document.getElementById('clearMedicineSearch');
+    const medicineSearchStatus = document.getElementById('medicineSearchStatus');
+    const medicineEmpty = document.getElementById('medicineEmpty');
+    const medicineItems = Array.from(document.querySelectorAll('.medicine-item'));
+    const symptomGroups = Array.from(document.querySelectorAll('.symptom-group'));
+
+    function filterMedicines() {
+      const query = medicineSearchInput.value.trim().toLowerCase();
+      let visibleCount = 0;
+
+      medicineItems.forEach((item) => {
+        const matches = !query || item.textContent.toLowerCase().includes(query);
+        item.hidden = !matches;
+        if (matches) visibleCount += 1;
+      });
+
+      symptomGroups.forEach((group) => {
+        group.hidden = !group.querySelector('.medicine-item:not([hidden])');
+      });
+
+      medicineEmpty.style.display = visibleCount === 0 ? 'block' : 'none';
+      medicineSearchStatus.textContent = query
+        ? `${visibleCount} medicine option${visibleCount === 1 ? '' : 's'} found`
+        : `Showing all ${medicineItems.length} medicine options`;
+    }
+
+    medicineSearchInput.addEventListener('input', filterMedicines);
+    clearMedicineSearch.addEventListener('click', () => {
+      medicineSearchInput.value = '';
+      filterMedicines();
+      medicineSearchInput.focus();
+    });
+  </script>
 </body>
 </html>
 

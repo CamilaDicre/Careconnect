@@ -90,6 +90,59 @@
             line-height: 1.7;
         }
 
+        .hero-actions {
+            display: flex;
+            justify-content: center;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .hero-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.75rem 1rem;
+            color: #1744b8;
+            background: #fff;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            box-shadow: 0 10px 22px rgba(20, 39, 76, 0.12);
+        }
+
+        .medicine-trust {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 0 auto 2rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.84);
+            border: 1px solid var(--outline);
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(20, 39, 76, 0.07);
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            color: var(--muted);
+            font-size: 0.86rem;
+            font-weight: 600;
+        }
+
+        .trust-item i {
+            display: grid;
+            width: 2.15rem;
+            height: 2.15rem;
+            flex: 0 0 auto;
+            place-items: center;
+            color: var(--primary-dark);
+            background: #eaf1ff;
+            border-radius: 11px;
+            font-size: 1rem;
+        }
+
         .medicine-grid {
             position: relative;
             margin-top: -2rem;
@@ -131,6 +184,8 @@
         }
 
         .medicine-card .card-body {
+            display: flex;
+            flex-direction: column;
             padding: 1.4rem 1.3rem 1.5rem;
         }
 
@@ -171,6 +226,10 @@
             list-style: none;
         }
 
+        .medicine-card .primary-btn {
+            margin-top: auto;
+        }
+
         .medicine-list li {
             padding: 0.33rem 0.55rem;
             border-radius: 999px;
@@ -199,6 +258,11 @@
         }
 
         @media (max-width: 767.98px) {
+            .medicine-trust {
+                grid-template-columns: 1fr;
+                gap: 0.75rem;
+            }
+
             .medicine-hero {
                 padding-top: 5.8rem;
             }
@@ -217,12 +281,20 @@
                 <span class="hero-badge"><i class="bi bi-heart-pulse"></i> Care guidance</span>
                 <h1>Common symptoms</h1>
                 <p>Explore practical treatment options and medication information to better understand what may help for each situation.</p>
+                <div class="hero-actions">
+                    <a class="hero-link" href="#symptom-cards"><i class="bi bi-arrow-down-circle"></i> Browse symptoms</a>
+                </div>
             </div>
         </section>
 
         <section class="departments-section py-5">
             <div class="container medicine-grid">
-                <div class="row g-4">
+                <div class="medicine-trust" aria-label="Medicine guide information">
+                    <div class="trust-item"><i class="bi bi-search-heart"></i><span>Start with your symptoms</span></div>
+                    <div class="trust-item"><i class="bi bi-journal-medical"></i><span>Compare common options</span></div>
+                    <div class="trust-item"><i class="bi bi-person-check"></i><span>Discuss choices with a clinician</span></div>
+                </div>
+                <div id="symptom-cards" class="row g-4">
                     <div class="col-lg-4 col-md-6">
                         <article class="medicine-card">
                             <div class="image-wrap">
