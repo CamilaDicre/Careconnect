@@ -699,7 +699,7 @@ class OverviewSection extends HTMLElement {
       
       <div class="overview-container">
         <div class="overview-hero">
-          <div class="hero-content">
+          <div class="hero-content" style="margin-bottom: 20px;">
             <h1 class="overview-title">Welcome back, ${displayName}! <i class="bi bi-emoji-smile hero-wave"></i></h1>
             <p class="overview-subtitle">Here's your health summary for today</p>
             <div class="quick-stats">
@@ -717,6 +717,7 @@ class OverviewSection extends HTMLElement {
               </div>
             </div>
           </div>
+          <appointment-reminders-header></appointment-reminders-header>
         </div>
 
         <div class="dashboard-grid">
@@ -763,6 +764,11 @@ class OverviewSection extends HTMLElement {
                 <div class="medication-info">
                   <div class="item-icon medication"><i class="bi bi-capsule"></i></div>
                   <div>
+      
+                  <!-- Appointment Timeline Section -->
+                  <div class="overview-container" style="padding-top: 0;">
+                    <appointment-timeline></appointment-timeline>
+                  </div>
                     <div class="medication-name">Metformin</div>
                     <div class="medication-time">8:00 AM</div>
                   </div>

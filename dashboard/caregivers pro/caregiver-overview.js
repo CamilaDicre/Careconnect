@@ -916,6 +916,12 @@ class CaregiverOverview extends HTMLElement {
         </div>
       </div>
     `;
+      
+        <!-- Caregiver Appointment Timeline -->
+        <div style="margin-top: 32px;">
+          <caregiver-appointment-timeline></caregiver-appointment-timeline>
+        </div>
+      `;
   }
 
   setupNavigation() {
