@@ -24,7 +24,7 @@
         body {
             background: linear-gradient(135deg, #f0f4f8 0%, #d9e8f5 100%);
             min-height: 100vh;
-            padding: 40px 20px;
+            padding: 20px;
         }
 
         .booking-container {
@@ -374,6 +374,9 @@
         }
 
         @media (max-width: 768px) {
+            body {
+                padding: 20px 15px;
+            }
             .booking-header h1 {
                 font-size: 1.8rem;
             }
@@ -393,8 +396,6 @@
     </style>
 </head>
 <body>
-    <header-component></header-component>
-
     <div class="booking-container">
         <div class="booking-header">
             <h1>Book Your Appointment</h1>
@@ -555,7 +556,6 @@
 
     <script src="../js/careconnect-session.js"></script>
     <script src="../js/careconnect-db.js"></script>
-    <script src="../components/header-component.js"></script>
     <script src="../js/booking.js"></script>
 
     <script>

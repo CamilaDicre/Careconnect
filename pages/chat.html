@@ -578,11 +578,19 @@
         body.dark-mode .message-input:focus {
             border-color: #2563eb;
         }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px 0;
+            }
+
+            .chat-container {
+                margin-top: 0;
+            }
+        }
     </style>
 </head>
 <body>
-    <header-component></header-component>
-
     <div class="chat-container">
         <!-- Sidebar con conversaciones -->
         <div class="chat-sidebar">
@@ -612,7 +620,6 @@
 
     <script src="../js/careconnect-session.js"></script>
     <script src="../js/careconnect-db.js"></script>
-    <script src="../components/header-component.js"></script>
     <script src="../js/chat.js"></script>
 
     <script>

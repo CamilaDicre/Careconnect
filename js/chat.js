@@ -18,7 +18,10 @@ class ChatApp {
     const savedConversations = await this.getStoredConversations(userId);
     
     if (savedConversations && savedConversations.length > 0) {
-      this.conversations = savedConversations;
+      this.conversations = savedConversations.map(conv => ({
+        ...conv,
+        timestamp: this.normalizeDate(conv.timestamp)
+      }));
     } else {
       // Conversaciones por defecto
       this.conversations = [
@@ -61,7 +64,12 @@ class ChatApp {
 
   async loadMessages(conversationId) {
     const messages = await this.getStoredMessages(conversationId);
-    this.messages[conversationId] = messages || this.getDefaultMessages(conversationId);
+    const loadedMessages = messages || this.getDefaultMessages(conversationId);
+
+    this.messages[conversationId] = (loadedMessages || []).map(msg => ({
+      ...msg,
+      timestamp: this.normalizeDate(msg.timestamp)
+    }));
   }
 
   getDefaultMessages(conversationId) {
@@ -353,7 +361,14 @@ class ChatApp {
     // Ya configurado en el HTML
   }
 
-  formatTime(date) {
+  normalizeDate(value) {
+    if (!value) return new Date();
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? new Date() : parsed;
+  }
+
+  formatTime(dateValue) {
+    const date = this.normalizeDate(dateValue);
     const now = new Date();
     const diffMs = now - date;
     const diffMins = Math.floor(diffMs / 60000);
