@@ -36,6 +36,69 @@ class OverviewSection extends HTMLElement {
           min-height: calc(100vh - 200px);
         }
 
+        .message-preview {
+          width: 100%;
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          padding: 14px;
+          border: 1px solid rgba(65, 105, 225, 0.14);
+          border-radius: 12px;
+          background: #f8fafc;
+          color: #1f2937;
+          text-align: left;
+          cursor: pointer;
+          transition: all 0.2s ease;
+        }
+
+        .message-preview:hover {
+          border-color: #4169e1;
+          background: rgba(65, 105, 225, 0.06);
+          transform: translateY(-2px);
+        }
+
+        .message-preview-avatar {
+          display: grid;
+          place-items: center;
+          width: 42px;
+          height: 42px;
+          flex: 0 0 42px;
+          border-radius: 50%;
+          background: #4169e1;
+          color: #fff;
+          font-size: 0.8rem;
+          font-weight: 700;
+        }
+
+        .message-preview-content {
+          min-width: 0;
+          display: flex;
+          flex: 1;
+          flex-direction: column;
+          gap: 3px;
+        }
+
+        .message-preview-content strong,
+        .message-preview-content span {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+
+        .message-preview-content strong {
+          font-size: 0.95rem;
+        }
+
+        .message-preview-content span,
+        .message-preview-time {
+          color: #6b7280;
+          font-size: 0.82rem;
+        }
+
+        .message-preview-time {
+          flex: 0 0 auto;
+        }
+
         .overview-hero {
           background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
           border-radius: 25px;
@@ -863,6 +926,25 @@ class OverviewSection extends HTMLElement {
                 </div>
               </li>
             </ul>
+          </div>
+
+          <!-- Recent Messages -->
+          <div class="dashboard-card messages-preview-card">
+            <div class="card-header">
+              <div class="card-title">
+                <i class="bi bi-chat-dots card-icon"></i>
+                Recent Messages
+              </div>
+              <button class="card-action" data-nav="messages">Open Chat</button>
+            </div>
+            <button class="message-preview" data-nav="messages">
+              <span class="message-preview-avatar">SJ</span>
+              <span class="message-preview-content">
+                <strong>Dr. Sarah Johnson</strong>
+                <span>How are you feeling today?</span>
+              </span>
+              <span class="message-preview-time">30m ago</span>
+            </button>
           </div>
 
           <!-- Health Stats -->

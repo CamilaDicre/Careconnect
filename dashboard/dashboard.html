@@ -33,6 +33,23 @@
             padding: 0;
         }
         
+            .careers-dashboard-preview iframe {
+                min-height: 640px;
+            }
+        
+            @media (max-width: 768px) {
+                .careers-dashboard-preview {
+                    padding-left: 0.5rem !important;
+                    padding-right: 0.5rem !important;
+                }
+            
+                .careers-dashboard-preview iframe {
+                    height: 680px !important;
+                    min-height: 0;
+                    border-radius: 12px !important;
+                }
+            }
+        
         #dashboard-content {
             margin-left: 350px;
             margin-top: 180px;

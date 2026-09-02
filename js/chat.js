@@ -5,17 +5,19 @@ class ChatApp {
     this.currentUser = null;
     this.messages = {};
     this.conversationQuery = '';
+    this.storageUserId = null;
   }
 
   async initialize() {
     this.currentUser = CareConnectSession.getLoggedInUser() || 'Guest';
+    this.storageUserId = CareConnectSession.getCurrentUserId() || this.currentUser;
     await this.loadConversations();
     this.renderConversations();
     this.setupEventListeners();
   }
 
   async loadConversations() {
-    const userId = CareConnectSession.getCurrentUserId() || this.currentUser;
+    const userId = this.storageUserId;
     const savedConversations = await this.getStoredConversations(userId);
     
     if (savedConversations && savedConversations.length > 0) {
@@ -64,7 +66,7 @@ class ChatApp {
   }
 
   async loadMessages(conversationId) {
-    const messages = await this.getStoredMessages(conversationId);
+    const messages = await this.getStoredMessages(conversationId, this.storageUserId);
     const loadedMessages = messages || this.getDefaultMessages(conversationId);
 
     this.messages[conversationId] = (loadedMessages || []).map(msg => ({
@@ -113,9 +115,9 @@ class ChatApp {
     }
   }
 
-  async getStoredMessages(conversationId) {
+  async getStoredMessages(conversationId, userId = this.storageUserId) {
     try {
-      const stored = localStorage.getItem(`careconnect_messages_${conversationId}`);
+      const stored = localStorage.getItem(`careconnect_messages_${userId}_${conversationId}`);
       return stored ? JSON.parse(stored) : null;
     } catch (e) {
       console.error('Error loading messages:', e);
@@ -125,7 +127,7 @@ class ChatApp {
 
   async saveMessages(conversationId) {
     try {
-      localStorage.setItem(`careconnect_messages_${conversationId}`, JSON.stringify(this.messages[conversationId]));
+      localStorage.setItem(`careconnect_messages_${this.storageUserId}_${conversationId}`, JSON.stringify(this.messages[conversationId]));
     } catch (e) {
       console.error('Error saving messages:', e);
     }
@@ -170,7 +172,7 @@ class ChatApp {
 
   selectConversation(conversationId) {
     this.currentConversationId = conversationId;
-    const userId = CareConnectSession.getCurrentUserId() || this.currentUser;
+    const userId = this.storageUserId;
     
     // Marcar como leído
     const conv = this.conversations.find(c => c.id === conversationId);
@@ -194,6 +196,9 @@ class ChatApp {
     chatContent.innerHTML = `
       <div class="chat-header">
         <div class="chat-header-info">
+          <a class="chat-header-back" href="careers.html" aria-label="Back to caregivers" title="Back to caregivers">
+            <i class="bi bi-arrow-left"></i>
+          </a>
           <div class="chat-header-avatar">${conv.avatar}</div>
           <div class="chat-header-text">
             <h3>${conv.name}</h3>
@@ -280,7 +285,7 @@ class ChatApp {
     if (conv) {
       conv.lastMessage = text;
       conv.timestamp = new Date();
-      const userId = CareConnectSession.getCurrentUserId() || this.currentUser;
+      const userId = this.storageUserId;
       this.saveConversations(userId);
     }
 
@@ -337,7 +342,7 @@ class ChatApp {
     conv.lastMessage = randomResponse;
     conv.timestamp = new Date();
     conv.unread = (conv.unread || 0) + 1;
-    const userId = CareConnectSession.getCurrentUserId() || this.currentUser;
+    const userId = this.storageUserId;
     this.saveConversations(userId);
 
     this.renderChatArea();
@@ -361,7 +366,7 @@ class ChatApp {
     this.conversations.unshift(newConversation);
     this.messages[newConversation.id] = [];
 
-    const userId = CareConnectSession.getCurrentUserId() || this.currentUser;
+    const userId = this.storageUserId;
     this.saveConversations(userId);
     this.renderConversations();
 

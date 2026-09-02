@@ -131,6 +131,7 @@ class CareSidebar extends HTMLElement {
       { id: 'charts', label: 'Health Charts', icon: 'bi-graph-up' },
       { id: 'calendar', label: 'Calendar', icon: 'bi-calendar-event' },
       { id: 'caregivers', label: 'Find Caregivers', icon: 'bi-search' },
+      { id: 'messages', label: 'Messages', icon: 'bi-chat-dots' },
       { id: 'virtual-care', label: 'Virtual Care', icon: 'bi-camera-video' },
       { id: 'appointment-booking', label: 'Book Appointment', icon: 'bi-calendar-plus' },
       { id: 'health-monitoring', label: 'Health Monitoring', icon: 'bi-heart-pulse' },
@@ -621,6 +622,12 @@ class CareSidebar extends HTMLElement {
             </span>
             <span>Find Caregivers</span>
           </button>
+          <button class="sidebar-btn" data-section="messages">
+            <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
+              <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><path d="M20 11.5C20 15.642 16.418 19 12 19C10.7 19 9.48 18.7 8.42 18.17L4 20L5.35 16.42C4.5 15.05 4 13.35 4 11.5C4 7.358 7.582 4 12 4C16.418 4 20 7.358 20 11.5Z" stroke="#5271ff" stroke-width="2" stroke-linejoin="round"/><path d="M8 11.5H8.01M12 11.5H12.01M16 11.5H16.01" stroke="#5271ff" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </span>
+            <span>Messages</span>
+          </button>
           <button class="sidebar-btn" data-section="virtual-care">
             <span class="sidebar-icon" style="width:24px;height:24px;display:inline-block;vertical-align:middle;">
               <svg viewBox="0 0 24 24" fill="none" width="24" height="24" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="5" width="15" height="14" rx="2" stroke="#5271ff" stroke-width="2"/><path d="M21 7V17L17 14V10L21 7Z" stroke="#5271ff" stroke-width="2"/></svg>
@@ -861,8 +868,20 @@ class CareSidebar extends HTMLElement {
           sectionContent = '<calendar-view></calendar-view>';
           break;
         case 'caregivers':
-          sectionContent = '<caregiver-search></caregiver-search>';
+          sectionContent = `
+            <div class="careers-dashboard-preview" style="padding: 0 1rem 2rem;">
+              <iframe
+                src="../pages/careers.html"
+                title="Careconnect careers directory"
+                style="display:block; width:100%; height:760px; border:1px solid rgba(65,105,225,0.16); border-radius:18px; background:#f8fafc; box-shadow:0 16px 36px rgba(31,41,55,0.1);"
+                loading="lazy">
+              </iframe>
+            </div>
+          `;
           break;
+        case 'messages':
+          window.location.href = '../pages/chat.html';
+          return;
         case 'virtual-care':
           sectionContent = '<virtual-care></virtual-care>';
           break;

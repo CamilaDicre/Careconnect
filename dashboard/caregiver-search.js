@@ -127,6 +127,22 @@ class CaregiverSearch extends HTMLElement {
           margin: 0;
         }
 
+        .careers-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.45rem;
+          margin-top: 0.9rem;
+          color: #4169e1;
+          font-size: 0.95rem;
+          font-weight: 600;
+          text-decoration: none;
+        }
+
+        .careers-link:hover {
+          color: #2f5ec9;
+          text-decoration: underline;
+        }
+
         .search-filters {
           display: grid;
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -405,6 +421,9 @@ class CaregiverSearch extends HTMLElement {
           <div class="search-header">
             <h1>🔍 Find caregivers </h1>
             <p>Find professional caregivers registered on our platform</p>
+            <a class="careers-link" href="../pages/careers.html">
+              <i class="bi bi-arrow-up-right-circle"></i> View full careers directory
+            </a>
           </div>
           
           <div class="search-filters">
