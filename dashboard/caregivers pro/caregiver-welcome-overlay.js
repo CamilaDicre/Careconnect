@@ -78,12 +78,17 @@ class CaregiverWelcomeOverlay extends HTMLElement {
   
   async render() {
     const userData = await this.getUserData();
+    const backgroundUrl = new URL('../../assets/backgrounds/logo-pattern.png', window.location.href).href;
     this.shadowRoot.innerHTML = `
       <style>
         .overlay {
           position: fixed;
           top: 0; left: 0; right: 0; bottom: 0;
-          background: linear-gradient(135deg, #4169e1 0%, #4169e1 100%);
+          background-color: #4169e1;
+          background-image: url("${backgroundUrl}");
+          background-position: center;
+          background-size: cover;
+          background-repeat: no-repeat;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -91,6 +96,17 @@ class CaregiverWelcomeOverlay extends HTMLElement {
           animation: fadeIn 1s ease-out;
           font-family: 'Poppins', sans-serif;
           overflow: hidden;
+        }
+
+        .welcome-background {
+          position: absolute;
+          inset: 0;
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          z-index: 0;
+          opacity: 1;
+          pointer-events: none;
         }
         
         .welcome-card {
@@ -209,6 +225,7 @@ class CaregiverWelcomeOverlay extends HTMLElement {
       </style>
       
       <div class="overlay">
+        <img class="welcome-background" src="${backgroundUrl}" alt="">
         <div class="particle"></div>
         <div class="particle"></div>
         <div class="particle"></div>

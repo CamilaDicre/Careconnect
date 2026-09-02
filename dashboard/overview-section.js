@@ -168,9 +168,11 @@ class OverviewSection extends HTMLElement {
 
         .dashboard-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-          gap: 25px;
-          margin-bottom: 30px;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 20px;
+          width: 100%;
+          max-width: 1180px;
+          margin: 0 auto 30px;
         }
 
         .dashboard-card {
@@ -182,6 +184,9 @@ class OverviewSection extends HTMLElement {
           border: 2px solid transparent;
           position: relative;
           overflow: hidden;
+          min-width: 0;
+          display: flex;
+          flex-direction: column;
         }
 
         /* Dark mode support */
@@ -240,6 +245,7 @@ class OverviewSection extends HTMLElement {
           justify-content: space-between;
           align-items: center;
           margin-bottom: 20px;
+          gap: 12px;
         }
 
         .card-title {
@@ -483,7 +489,7 @@ class OverviewSection extends HTMLElement {
 
         .health-metrics {
           display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+          grid-template-columns: 1fr;
           gap: 15px;
         }
 
