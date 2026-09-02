@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Josefin+Sans:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/palette.css">
     <link rel="stylesheet" href="../css/responsive-transitions.css">
     <link rel="stylesheet" href="../css/universal-responsive.css">
     <link rel="stylesheet" href="../css/transitions.css">
@@ -695,6 +696,132 @@
                 justify-content: center;
                 text-align: center;
                 flex-direction: column;
+            }
+        }
+
+        /* Refined page surfaces and responsive rhythm */
+        body.careers-page {
+            background-color: #eef6f7;
+            background-image: linear-gradient(135deg, rgba(238, 246, 247, 0.94), rgba(248, 250, 252, 0.86)), url('../assets/backgrounds/BlueLogoWhiteBackgroundTilted.png');
+            color: var(--text-color);
+        }
+
+        .careers-header-card {
+            background: linear-gradient(120deg, var(--card-bg) 0%, #e8f5f3 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            box-shadow: 0 20px 45px rgba(22, 50, 79, 0.1);
+        }
+
+        .careers-header-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 52px rgba(22, 50, 79, 0.14);
+        }
+
+        .careers-header-card:hover h1,
+        .careers-header-card:hover p {
+            color: inherit;
+        }
+
+        .careers-intro p {
+            color: var(--secondary-color);
+            font-weight: 600;
+        }
+
+        .careers-icon {
+            border: 1px solid #d7ece8;
+        }
+
+        .search-group {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 18px;
+            padding: 1rem;
+        }
+
+        .search-input,
+        .filter-select {
+            border-radius: 12px;
+            min-height: 48px;
+        }
+
+        .caregiver-results {
+            flex: 0 0 auto;
+            margin: 0 0.5rem;
+        }
+
+        .care-benefits {
+            max-width: 1180px;
+            margin: 0 auto 2rem;
+        }
+
+        .benefit-pill {
+            justify-content: flex-start;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.88);
+            color: var(--secondary-color);
+        }
+
+        .benefit-pill i,
+        .caregiver-card-subtitle,
+        .caregiver-card:hover .caregiver-card-title {
+            color: var(--primary-color);
+        }
+
+        .caregiver-tag {
+            background: rgba(8, 145, 178, 0.1);
+            color: #155e75;
+        }
+
+        .caregiver-card:hover .caregiver-tag {
+            background: var(--accent-color);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-color-dark), #244ba8);
+        }
+
+        .careers-pill {
+            background: rgba(8, 145, 178, 0.1);
+            color: #155e75;
+            border-color: rgba(8, 145, 178, 0.25);
+        }
+
+        .caregiver-card {
+            border-radius: 18px;
+            box-shadow: 0 14px 30px rgba(22, 50, 79, 0.1);
+        }
+
+        .caregiver-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .caregiver-btn:focus-visible,
+        .search-input:focus-visible,
+        .filter-select:focus-visible {
+            outline: 3px solid rgba(14, 165, 233, 0.35);
+            outline-offset: 2px;
+        }
+
+        @media (max-width: 767px) {
+            .careers-header-box,
+            .careers-intro,
+            .caregiver-toolbar,
+            .care-benefits {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+
+            .careers-header-card {
+                padding: 1.25rem;
+            }
+
+            .caregiver-results {
+                width: 100%;
+                text-align: center;
             }
         }
     </style>

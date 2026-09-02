@@ -4,6 +4,7 @@ class ChatApp {
     this.currentConversationId = null;
     this.currentUser = null;
     this.messages = {};
+    this.conversationQuery = '';
   }
 
   async initialize() {
@@ -134,7 +135,17 @@ class ChatApp {
     const listContainer = document.getElementById('conversationsList');
     listContainer.innerHTML = '';
 
-    this.conversations.forEach((conv, index) => {
+    const visibleConversations = this.conversations.filter((conv) => {
+      const searchText = `${conv.name} ${conv.lastMessage}`.toLowerCase();
+      return searchText.includes(this.conversationQuery);
+    });
+
+    if (visibleConversations.length === 0) {
+      listContainer.innerHTML = '<p class="empty-conversations">No conversations found.</p>';
+      return;
+    }
+
+    visibleConversations.forEach((conv) => {
       const element = document.createElement('div');
       element.className = `conversation-item ${this.currentConversationId === conv.id ? 'active' : ''}`;
       element.onclick = () => this.selectConversation(conv.id);
@@ -142,10 +153,10 @@ class ChatApp {
       const timeFormatted = this.formatTime(conv.timestamp);
 
       element.innerHTML = `
-        <div class="conversation-avatar">${conv.avatar}</div>
+        <div class="conversation-avatar">${this.escapeHtml(conv.avatar)}</div>
         <div class="conversation-info">
-          <p class="conversation-name">${conv.name}</p>
-          <p class="conversation-preview">${conv.lastMessage}</p>
+          <p class="conversation-name">${this.escapeHtml(conv.name)}</p>
+          <p class="conversation-preview">${this.escapeHtml(conv.lastMessage)}</p>
         </div>
         <div>
           <div class="conversation-time">${timeFormatted}</div>
@@ -358,7 +369,11 @@ class ChatApp {
   }
 
   setupEventListeners() {
-    // Ya configurado en el HTML
+    const conversationSearch = document.getElementById('conversationSearch');
+    conversationSearch?.addEventListener('input', (event) => {
+      this.conversationQuery = event.target.value.trim().toLowerCase();
+      this.renderConversations();
+    });
   }
 
   normalizeDate(value) {
