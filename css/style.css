@@ -619,6 +619,116 @@ p {
     transform: scale(1.5);
 }
 
+/* Home hero layout: keep content fluid across desktop, tablet, and phone widths. */
+.hero-section {
+    min-height: calc(100dvh - 80px);
+    margin-top: -80px;
+    padding: 5.5rem 0 3rem;
+}
+
+.hero-section .hero-inner {
+    min-height: calc(100dvh - 8.5rem);
+}
+
+.hero-section .hero-section-text {
+    padding: 2rem clamp(1rem, 3vw, 3rem);
+}
+
+.hero-section h1 {
+    font-size: clamp(2.5rem, 5vw, 5rem);
+    text-wrap: balance;
+}
+
+.hero-section .text-primary {
+    font-size: clamp(1.05rem, 1.8vw, 1.35rem) !important;
+    line-height: 1.5;
+    letter-spacing: 0.04em;
+}
+
+.hero-section .sample {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    padding: 1rem clamp(1rem, 2vw, 2.5rem);
+}
+
+.hero-section .sample img {
+    display: block;
+    width: min(100%, 33rem) !important;
+    max-height: 72vh;
+    object-fit: contain;
+    margin: 0 auto;
+}
+
+@media (max-width: 991.98px) {
+    .hero-section {
+        min-height: auto;
+        padding-top: 4rem;
+    }
+
+    .hero-section .hero-inner {
+        min-height: auto;
+    }
+
+    .hero-section .hero-section-text {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+
+    .hero-section .sample img {
+        max-height: 42vh;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .hero-section {
+        margin-top: -70px;
+        padding: 4.5rem 0 2.5rem;
+    }
+
+    .hero-section .hero-section-text {
+        padding-inline: 0.75rem;
+    }
+
+    .hero-section h1 {
+        margin-bottom: 1rem !important;
+    }
+
+    .hero-section .text-primary {
+        letter-spacing: 0;
+    }
+
+    .hero-section .hero-cta {
+        padding-inline: 2rem !important;
+    }
+
+    .hero-section .sample {
+        padding-inline: 2rem;
+    }
+
+    .hero-section .sample img {
+        max-height: 35vh;
+    }
+}
+
+/* Keep the desktop and tablet hero in a horizontal composition. */
+@media (min-width: 768px) {
+    .hero-section .hero-inner {
+        flex-direction: row !important;
+        flex-wrap: nowrap;
+    }
+
+    .hero-section .hero-section-text {
+        flex: 0 0 58.333333%;
+        max-width: 58.333333%;
+    }
+
+    .hero-section .sample {
+        flex: 0 0 41.666667%;
+        max-width: 41.666667%;
+    }
+}
+
 .services-section {
     padding: 150px 50px;
     background-color: #f8f9fa;
