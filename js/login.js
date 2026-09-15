@@ -1,13 +1,4 @@
-// CareConnect login — conectado a Supabase
-
-if (typeof window.careconnectUsers === 'undefined') {
-  window.careconnectUsers = [
-    { username: 'admin', password: 'admin123', role: 'admin', email: 'admin@careconnect.com' },
-    { username: 'usuario', password: 'pass123', role: 'paciente', email: 'usuario@careconnect.com' },
-    { username: 'Ameth', password: 'Ameth2024!', role: 'admin', email: 'ameth@careconnect.com' },
-    { username: 'Josue', password: 'testpass456', role: 'cuidador', email: 'josue@careconnect.com' }
-  ];
-}
+// CareConnect login - connected to Supabase.
 
 document.addEventListener('DOMContentLoaded', async () => {
   void CareConnectDB.verifyAndRestoreAmethAdmin();

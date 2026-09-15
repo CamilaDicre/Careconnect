@@ -132,6 +132,7 @@ class PageTransitions {
                 link.hasAttribute('download') ||
                 relAttr.includes('external') ||
                 hrefAttr.startsWith('#') ||
+                this.isAuthPage(link.href) ||
                 !this.shouldUseSpaNavigation()
             ) {
                 return; // Allow default navigation
@@ -166,6 +167,14 @@ class PageTransitions {
             href.startsWith('pages/') ||
             href.startsWith('dashboard/')
         );
+    }
+
+    isAuthPage(url) {
+        try {
+            return /\b(login|register)\.html$/i.test(new URL(url, window.location.href).pathname);
+        } catch (error) {
+            return false;
+        }
     }
 
     shouldUseSpaNavigation() {
