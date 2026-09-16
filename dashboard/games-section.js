@@ -854,7 +854,7 @@ class GamesSection extends HTMLElement {
             <p class="games-subtitle">Keep your mind sharp and have fun with these engaging games!</p>
             <div class="stats-bar">
               <div class="stat-item">
-                <span class="stat-number">9</span>
+                <span class="stat-number">6</span>
                 <span class="stat-label">Games Available</span>
               </div>
               <div class="stat-item">
@@ -884,7 +884,7 @@ class GamesSection extends HTMLElement {
               <span class="difficulty-dot active"></span>
               <span class="difficulty-dot"></span>
             </div>
-            <button class="play-btn">
+            <button class="play-btn" type="button">
               <i class="bi bi-play-circle"></i>
               Play Now
             </button>
@@ -904,7 +904,7 @@ class GamesSection extends HTMLElement {
               <span class="difficulty-dot active"></span>
               <span class="difficulty-dot active"></span>
             </div>
-            <button class="play-btn">
+            <button class="play-btn" type="button">
               <i class="bi bi-play-circle"></i>
               Play Now
             </button>
@@ -924,7 +924,7 @@ class GamesSection extends HTMLElement {
               <span class="difficulty-dot active"></span>
               <span class="difficulty-dot"></span>
             </div>
-            <button class="play-btn">
+            <button class="play-btn" type="button">
               <i class="bi bi-play-circle"></i>
               Play Now
             </button>
@@ -944,47 +944,7 @@ class GamesSection extends HTMLElement {
               <span class="difficulty-dot active"></span>
               <span class="difficulty-dot active"></span>
             </div>
-            <button class="play-btn">
-              <i class="bi bi-play-circle"></i>
-              Play Now
-            </button>
-          </div>
-
-          <div class="game-card" data-game="color">
-            <i class="bi bi-palette game-icon"></i>
-            <h3 class="game-title">Color Match</h3>
-            <p class="game-description">Match colors quickly to test your reflexes and visual processing.</p>
-            <div class="game-features">
-              <span class="feature-tag">Reflexes</span>
-              <span class="feature-tag">Visual</span>
-              <span class="feature-tag">Speed</span>
-            </div>
-            <div class="game-difficulty">
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot"></span>
-            </div>
-            <button class="play-btn">
-              <i class="bi bi-play-circle"></i>
-              Play Now
-            </button>
-          </div>
-
-          <div class="game-card" data-game="sequence">
-            <i class="bi bi-list-ol game-icon"></i>
-            <h3 class="game-title">Sequence Memory</h3>
-            <p class="game-description">Remember and repeat sequences to improve your working memory.</p>
-            <div class="game-features">
-              <span class="feature-tag">Memory</span>
-              <span class="feature-tag">Sequence</span>
-              <span class="feature-tag">Focus</span>
-            </div>
-            <div class="game-difficulty">
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot active"></span>
-            </div>
-            <button class="play-btn">
+            <button class="play-btn" type="button">
               <i class="bi bi-play-circle"></i>
               Play Now
             </button>
@@ -1004,7 +964,7 @@ class GamesSection extends HTMLElement {
               <span class="difficulty-dot active"></span>
               <span class="difficulty-dot active"></span>
             </div>
-            <button class="play-btn">
+            <button class="play-btn" type="button">
               <i class="bi bi-play-circle"></i>
               Play Now
             </button>
@@ -1024,47 +984,7 @@ class GamesSection extends HTMLElement {
               <span class="difficulty-dot active"></span>
               <span class="difficulty-dot"></span>
             </div>
-            <button class="play-btn">
-              <i class="bi bi-play-circle"></i>
-              Play Now
-            </button>
-          </div>
-
-          <div class="game-card" data-game="spot">
-            <i class="bi bi-eye game-icon"></i>
-            <h3 class="game-title">Spot the Odd One</h3>
-            <p class="game-description">Find the different emoji in the grid. Great for visual attention training!</p>
-            <div class="game-features">
-              <span class="feature-tag">Visual</span>
-              <span class="feature-tag">Attention</span>
-              <span class="feature-tag">Pattern</span>
-            </div>
-            <div class="game-difficulty">
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot"></span>
-            </div>
-            <button class="play-btn">
-              <i class="bi bi-play-circle"></i>
-              Play Now
-            </button>
-          </div>
-
-          <div class="game-card" data-game="trivia">
-            <i class="bi bi-heart-pulse game-icon"></i>
-            <h3 class="game-title">Health Trivia</h3>
-            <p class="game-description">Answer health and wellness questions to learn while you play!</p>
-            <div class="game-features">
-              <span class="feature-tag">Knowledge</span>
-              <span class="feature-tag">Health</span>
-              <span class="feature-tag">Learning</span>
-            </div>
-            <div class="game-difficulty">
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot active"></span>
-              <span class="difficulty-dot"></span>
-            </div>
-            <button class="play-btn">
+            <button class="play-btn" type="button">
               <i class="bi bi-play-circle"></i>
               Play Now
             </button>
@@ -1115,27 +1035,39 @@ class GamesSection extends HTMLElement {
     const backBtn = this.shadowRoot.querySelector('#backBtn');
     const continueBtn = this.shadowRoot.querySelector('#continueBtn');
     const restartBtn = this.shadowRoot.querySelector('#restartBtn');
-    const gamesGrid = this.shadowRoot.querySelector('#gamesGrid');
-    const gameArea = this.shadowRoot.querySelector('#gameArea');
 
     gameCards.forEach(card => {
-      card.addEventListener('click', () => {
-        const gameType = card.dataset.game;
-        this.startGame(gameType);
+      const playButton = card.querySelector('.play-btn');
+
+      playButton?.addEventListener('click', (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        this.startGame(card.dataset.game);
+      });
+
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('.play-btn')) {
+          return;
+        }
+        this.startGame(card.dataset.game);
       });
     });
 
-    backBtn.addEventListener('click', () => {
-      this.showGamesList();
-    });
+    this.bindDefaultGameControls(backBtn, continueBtn, restartBtn);
+  }
 
-    continueBtn.addEventListener('click', () => {
-      this.continueGame();
-    });
+  bindDefaultGameControls(backBtn, continueBtn, restartBtn) {
+    if (backBtn) {
+      backBtn.onclick = () => this.showGamesList();
+    }
 
-    restartBtn.addEventListener('click', () => {
-      this.restartGame();
-    });
+    if (continueBtn) {
+      continueBtn.onclick = () => this.continueGame();
+    }
+
+    if (restartBtn) {
+      restartBtn.onclick = () => this.restartGame();
+    }
   }
 
   startGame(gameType, continueMode = false) {
@@ -2898,15 +2830,43 @@ class GamesSection extends HTMLElement {
     this.startCrosswordGame(gameBoard);
   }
 
+  resetGameControls() {
+    const gameControls = this.shadowRoot.querySelector('.game-controls');
+    if (!gameControls) return;
+
+    gameControls.innerHTML = `
+      <button class="game-btn continue-btn" id="continueBtn" style="display: none;">
+        <i class="bi bi-arrow-right-circle"></i>
+        Continue
+      </button>
+      <button class="game-btn restart-btn" id="restartBtn" style="display: none;">
+        <i class="bi bi-play-circle"></i>
+        Restart
+      </button>
+      <button class="back-btn" id="backBtn">
+        <i class="bi bi-arrow-left"></i>
+        Back to Games
+      </button>
+    `;
+
+    const backBtn = this.shadowRoot.querySelector('#backBtn');
+    const continueBtn = this.shadowRoot.querySelector('#continueBtn');
+    const restartBtn = this.shadowRoot.querySelector('#restartBtn');
+    this.bindDefaultGameControls(backBtn, continueBtn, restartBtn);
+  }
+
   showGamesList() {
     const gamesGrid = this.shadowRoot.querySelector('#gamesGrid');
     const gameArea = this.shadowRoot.querySelector('#gameArea');
-    
+
+    this.resetGameControls();
+    this.hideContinueButtons();
     gamesGrid.style.display = 'grid';
     gameArea.classList.remove('active');
-    
+
     if (this.gameTimer) {
       clearInterval(this.gameTimer);
+      this.gameTimer = null;
     }
   }
 }
